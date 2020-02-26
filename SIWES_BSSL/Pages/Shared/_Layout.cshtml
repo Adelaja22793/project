@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SIWES_BSSL</title>
+    <environment include="Development">
+
+        <!-- Font Awesome Icons -->
+        <link href="~/website/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+        <!-- Plugin CSS -->
+        <link href="~/website/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+        <!-- Theme CSS - Includes Bootstrap -->
+        <link href="~/website/css/creative.min.css" rel="stylesheet">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <environment include="Staging,Production">
+        <!-- Font Awesome Icons -->
+        <link href="~/website/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+        <!-- Plugin CSS -->
+        <link href="~/website/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+        <!-- Theme CSS - Includes Bootstrap -->
+        
+    </environment>
+    
+    <link href="~/website/css/creative.min.css" rel="stylesheet">
+</head>
+<body id="page-top">
+    <style>
+        .grad1 {
+        }
+
+        .col {
+            background-color: #dc3545;
+            /*background-color:white;*/
+        }
+    </style>
+
+  
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container col">
+                <a class="navbar-brand js-scroll-trigger">
+                    <img alt="Itf Logo" src="~/website/img/new.jpeg"
+                         class="grad1" />
+                </a>
+
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                    @*<ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                    </ul>*@
+                    <partial name="_LoginPartial" />
+
+                </div>
+
+            </div>
+        </nav>
+
+
+        <div class="container">
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/website/vendor/jquery/jquery.min.js"></script>
+    <script src="~/website/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="~/website/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/website/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="~/website/js/creative.min.js"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
