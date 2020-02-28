@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SIWES_BSSL.Data;
 
 namespace SIWES_BSSL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200227115416_updatetables")]
+    partial class updatetables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,23 +197,6 @@ namespace SIWES_BSSL.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Menu");
-                });
-
-            modelBuilder.Entity("SIWES_BSSL.Data.Menu.MenuAccess", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("RoleId");
-
-                    b.Property<int>("SubMenuId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubMenuId");
-
-                    b.ToTable("MenuAccess");
                 });
 
             modelBuilder.Entity("SIWES_BSSL.Data.Menu.SubMenu", b =>
@@ -530,14 +515,6 @@ namespace SIWES_BSSL.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SIWES_BSSL.Data.Menu.MenuAccess", b =>
-                {
-                    b.HasOne("SIWES_BSSL.Data.Menu.SubMenu", "SubMenu")
-                        .WithMany()
-                        .HasForeignKey("SubMenuId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
