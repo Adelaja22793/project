@@ -3,211 +3,210 @@
 @{
     ViewData["Title"] = "Scaff_Form";
 }
-
 <div class="content-wrapper" style="margin-top:0.5%">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Student Commencement of Attachment Form (SCAF)</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form role="form">
-                            <div class="card-body">
-                                <div class="justify-content-center" style="float:right;">
-                                    <button type="submit" class="btn btn-warning">Download SCAF</button>
-                                </div>
-                                <p style="clear:both"></p>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label for="refno">Reference Number </label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="refno" readonly="readonly">
-
-                                                <div class="input-group-append">
-                                                    <input class="btn btn-primary" type="button" value="Search" id="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="date" class="form-control" placeholder="Enter Date">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Matric. Number</label>
-                                            <input type="text" class="form-control" readonly="readonly">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Student Name</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Course of Study</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>ITF Area Office</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-search-location"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Commencement Date</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="date" id="commence_Date" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Completion Date</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()" class="form-control" placeholder="Enter Date">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Duration</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                                </div>
-                                                <input type="text" id="duration" readonly="readonly" class="form-control" >
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Enter Name of Organisation</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Enter Name of Organisation">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Organisation Location Address</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Enter Organisation Location Address">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Phone No. of Organisation</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Enter Phone No. of Organisation">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Email of Organisation</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                                </div>
-                                                <input type="email" class="form-control" placeholder="Enter Email of Organisation">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Name of Organisation Representative</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Enter Name of Organisation Representative">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Remarks</label>
-                                            <textarea class="form-control" rows="3" placeholder="Enter Remarks"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-
-                            <div class="justify-content-center" style="margin-left:23%; margin-bottom:3%;">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="button" class="btn btn-warning"> Print and Preview SCAF</button>
-                                <button type="button" class="btn btn-info">Upload Pre-Filled Form</button>
-                            </div>
-                        </form>
-                    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Student Commencement of Attachment Form (SCAF)</h3>
                 </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="card-body">
+                        <div class="justify-content-center" style="float:right;">
+                            <button type="submit" class="btn btn-warning">Download SCAF</button>
+                        </div>
+                        <p style="clear:both"></p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label for="refno">Reference Number </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="refno" readonly="readonly">
+
+                                        <div class="input-group-append">
+                                            <input class="btn btn-primary" type="button" value="Search" id="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" class="form-control" placeholder="Enter Date">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Matric. Number</label>
+                                    <input type="text" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Student Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Course of Study</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>ITF Area Office</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-search-location"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Commencement Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" id="commence_Date" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Completion Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()" class="form-control" placeholder="Enter Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Duration</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="text" id="duration" readonly="readonly" class="form-control">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Enter Name of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter Name of Organisation">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Organisation Location Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter Organisation Location Address">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Phone No. of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter Phone No. of Organisation">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                        <input type="email" class="form-control" placeholder="Enter Email of Organisation">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Name of Organisation Representative</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter Name of Organisation Representative">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter Remarks"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="justify-content-center" style="margin-left:23%; margin-bottom:3%;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-warning"> Print and Preview SCAF</button>
+                        <button type="button" class="btn btn-info">Upload Pre-Filled Form</button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
 </div>
 
 <!-- jQuery -->
@@ -231,19 +230,19 @@
     //$(window).load(function(){
     $(document).ready(function () {
         var dt = new Date();
-         var today = new Date();
+        var today = new Date();
         var month = dt.getMonth();
-         var dd = String(today.getDate()).padStart(2, '0');
+        var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         //alert(mm);
-        var time = "ITF" + "/" + dt.getFullYear() + "/" + mm + "/" + dd  + dt.getHours() + dt.getMinutes() + dt.getSeconds();
+        var time = "ITF" + "/" + dt.getFullYear() + "/" + mm + "/" + dd + dt.getHours() + dt.getMinutes() + dt.getSeconds();
         //alert(month);
         $('#refno').val(time);
 
     });
     function MyFunctionCommDate() {
-            $('#complete_Date').val("");
-             $('#duration').val("");
+        $('#complete_Date').val("");
+        $('#duration').val("");
     }
     function MyFunctionCompleteDate() {
         first = $('#commence_Date').val();
@@ -255,7 +254,7 @@
         if (secondDate < firstDate) {
             alert("Completion Date Cannot be Less than Commencement Date");
             $('#complete_Date').val("");
-             $('#duration').val("");
+            $('#duration').val("");
             $('#complete_Date').focus();
             return false;
         }
@@ -263,4 +262,9 @@
         var noDays = diffDays + ' ' + "Days";
         $('#duration').val(noDays);
     }
- </script>
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
