@@ -1,9 +1,48 @@
-﻿<!DOCTYPE html>
+﻿@inject SIWES_BSSL.Data.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+
+@{
+    //var ListCategories = db.mainCategories.Include(m => m.SubCategories);
+
+    // var menulist = db.SubMenu.Include(m => m.MenuAccesses);
+
+    var menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+     .Where(k => k.macc2.RoleId == "01")
+     .Select(m => new
+     {
+         MenuName = m.Macc.m.Name,
+         Menuid = m.Macc.m.Id,
+         SubMenuid = m.Macc.sub.Id,
+         Pageurl = m.Macc.sub.PageUrl,
+         SubMenuName = m.Macc.sub.Name
+
+
+     }).ToList();
+
+
+    var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+     .Where(k => k.macc2.RoleId == "01")
+     //  .GroupBy( k = k )
+     .Select(m => new
+     {
+         MenuName = m.Macc.m.Name,
+         Menuid = m.Macc.m.Id
+
+
+     }).ToList();
+
+    var menulist = menulist4.GroupBy(c => c.Menuid,  (key, c) => c.FirstOrDefault());
+
+
+}
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title - New_Siwes_Application</title>
+    <title>@ViewBag.Title - New_Siwes_App</title>
     <environment include="Development">
 
         <!-- Tell the browser to be responsive to screen width -->
@@ -72,8 +111,19 @@
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
 
-                    <a href="/_Welcome.cshtml" class="nav-link">Home</a>
+                    @*<a href="~/Areas/Identity/Pages/Account/Login" class="nav-link">Register</a>
+                    <a asp-page="Areas/Identity/Pages/Account/Login" class="nav-link">
 
+                        <p>
+                            Log ins
+                            <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>*@
+                <li class="nav-item">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                        <button type="submit" class="nav-link btn btn-link">Log in</button>
+                    </form>
+                </li>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -82,7 +132,7 @@
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
+            @*<form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
                     <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
@@ -91,7 +141,7 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            </form>*@
 
             <!-- Right navbar links -->
 
@@ -129,6 +179,12 @@
             </a>
 
             <!-- Sidebar -->
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+             
+                <partial name="_LoginPartial" />
+
+            </div>
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -144,81 +200,43 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Students
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-page="/Students/Scaff_Form" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Student Commencement of Attachment Form (SCAF)</p>
+    with font-awesome or any other icon font library -->
+                        @{
+                         
+                            foreach (var dd in menulist)
+                            {
+
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+
+                                            @dd.MenuName.ToString().Trim();
+
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
                                     </a>
+                                    @{
+                                        var submenulist =
+                                        (from p in menulist3
+                                         where p.Menuid.ToString().Contains(dd.Menuid.ToString())
+                                         select p);
+
+                                        foreach (var ddlist in submenulist)
+                                        {
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a asp-page="@ddlist.Pageurl.ToString()" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p> @ddlist.SubMenuName.ToString().Trim() </p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        }
+                                    }
                                 </li>
-                                <li class="nav-item">
-                                    <a href="/Students/Form8" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ITF FORM 8 - SIWES End of Year Program Report Sheet</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Students/EmployerForm8" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ITF FORM 8</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Students/InstitusionSupervisor" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ITF FORM 8</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/Student_Visit_Form" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Supervisor Student Visit Form</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/DailyActivities" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Daily/weekly Records</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/SupervisorCerif" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Approvals</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/MonthlyAssessment" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Monthly Assessment</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/Indus_MonthlyAssessment" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Industry-Based Monthly Assessment</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                        }
+                        }
 
 
                     </ul>
@@ -231,6 +249,22 @@
     <div class="container">
         @*<partial name="_CookieConsentPartial" />*@
         <main role="main" class="pb-3">
+            @*@{
+
+                foreach (var dd in menulist)
+                {
+                        <div style="margin-left:500px">
+                         
+                            <li>
+                                <span> @dd.Menuid</span>
+                                <span> @dd.MenuName</span>
+                           
+
+                            </li> <br />
+                        </div>
+                }
+            }*@
+
             @RenderBody()
         </main>
     </div>

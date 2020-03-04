@@ -12,6 +12,6 @@ namespace SIWES_BSSL.Data.Menu
         public string PageUrl { get; set; }
         public int MenuId { get; set; }
         public Menu Menu { get; set; }
-        //public ICollection<MenuAccess> MenuAccesses { get; set; }
+        public ICollection<MenuAccess> MenuAccesses { get; set; }
     }
 }

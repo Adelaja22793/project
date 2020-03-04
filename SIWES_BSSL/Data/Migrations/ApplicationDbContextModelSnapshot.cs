@@ -214,6 +214,21 @@ namespace SIWES_BSSL.Data.Migrations
                     b.ToTable("MenuAccess");
                 });
 
+            modelBuilder.Entity("SIWES_BSSL.Data.Menu.MessageTb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Description");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageTb");
+                });
+
             modelBuilder.Entity("SIWES_BSSL.Data.Menu.SubMenu", b =>
                 {
                     b.Property<int>("Id")

@@ -21,6 +21,8 @@ namespace SIWES_BSSL.Data
         public DbSet<Menu.Menu> Menu { get; set; }
         public DbSet<Menu.MenuAccess> MenuAccess { get; set; }
         public DbSet<Menu.SubMenu> SubMenu { get; set; }
+        public DbSet<Menu.MessageTb> MessageTb { get; set; }
+        
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
