@@ -1,0 +1,50 @@
+﻿@page
+@model SIWES_BSSL.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Courses</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Courses.Id" />
+            <div class="form-group">
+                <label asp-for="Courses.Code" class="control-label"></label>
+                <input asp-for="Courses.Code" class="form-control" />
+                <span asp-validation-for="Courses.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courses.ShortCode" class="control-label"></label>
+                <input asp-for="Courses.ShortCode" class="form-control" />
+                <span asp-validation-for="Courses.ShortCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courses.Name" class="control-label"></label>
+                <input asp-for="Courses.Name" class="form-control" />
+                <span asp-validation-for="Courses.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courses.CourseGrpSetupId" class="control-label"></label>
+                <select asp-for="Courses.CourseGrpSetupId" class="form-control" asp-items="ViewBag.CourseGrpSetupId"></select>
+                <span asp-validation-for="Courses.CourseGrpSetupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
