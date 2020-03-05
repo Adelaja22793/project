@@ -5,14 +5,12 @@
 }
 
 <div class="content-wrapper" style="margin-top:0.5%">
-    <section class="content">
-        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Industrial Based Supervisor Certification</h3>
+                            <h3 class="card-title">Industry-Based Supervisor Certification</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -22,23 +20,22 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Select Student to Certify</label>
-                                            <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                                                <option selected="selected">Alabama</option>
-                                                <option>Alaska</option>
-                                                <option>California</option>
-                                                <option>Delaware</option>
-                                                <option>Tennessee</option>
-                                                <option>Texas</option>
-                                                <option>Washington</option>
+                                            <select class="form-control select2 select2-danger" id="studentSelected" data-dropdown-css-class="select2-danger"
+                                                    asp-items="Model.StudentName" style="width: 100%;" onchange="MyFunctionStudentSelected()">
+                                                <option selected="selected" value="-1">--Select Student to Certify--</option>
                                             </select>
                                         </div>
                                     </div>
-
+                                    <div class="col-sm-6">
+                                        <div class="form-group" style="margin-top:33px;">
+                                                <button id="btnShowModal" type="button" class="btn btn-outline-info">View Selected Student Daily/Weekly Records</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label>Industrial Based Supervisor Remarks</label>
+                                            <label>Industry-Based Supervisor Remarks</label>
                                             <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px;
                                             font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                         </div>
@@ -47,7 +44,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>Supervisor Name</label>
+                                            <label>Industry-Based Supervisor Name</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -76,11 +73,36 @@
                             </div>
 
                         </form>
+                        <div class="modal fade" tabindex="-1" id="loginModal"
+                             data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-lg" style="width:100%; margin-left:27%;">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color:seagreen">
+                                        <h4 class="modal-title" id="monthname" style="margin-left:100px">Assessment For the Month of </h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            ×
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Comment By Student</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex" style="">
+                                        <button type="button" id="btnHideModal" class="btn btn-primary button button4">
+                                            Hide
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 </div>
 
 <script src="../../~/template/plugins/jquery/jquery.min.js"></script>
@@ -105,10 +127,33 @@
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
-
-        today = mm + '/' + dd + '/' + yyyy;
+        today = dd + '/' + mm + '/' + yyyy;
         $('#certdate').val(today);
+         $("#btnShowModal").click(function () {
+            var StudentName = $("#studentSelected option:selected").val();
+            var studentDesc = $("#studentSelected option:selected").text();
+            if (StudentName == "-1") {
+                alert("PLEASE SELECT STUDENT TO VIEW DETAILS OF DAILY/WEEKLY RECORDS");
+                    return false;
+            }
+            $("#loginModal").modal('show');
+             //$("#divreject2").modal('show');
+             $('#monthname').html("DAILY/WEEKLY RECORDS OF " + studentDesc.toUpperCase() + "")
+        });
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        }); 
     });
+    function MyFunctionStudentSelected() {
+        var StudentName = $("#studentSelected option:selected").val();
+        var studentDesc = $("#studentSelected option:selected").text();
+        if (StudentName == "-1") {
+            $('#btnShowModal').html("View Selected Student Daily/Weekly Records");
+        }
+        else {
+            $('#btnShowModal').html("View " + studentDesc + " Daily/Weekly Records");
+        }
+    }
 </script>
 
 @section Scripts {

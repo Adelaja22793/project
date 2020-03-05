@@ -61,7 +61,7 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                                <div class="row">
+                                <div class="row" style="display:none">
                                     <div class="col-sm-8">
                                         <div class="form-group">
                                             <label>Department/Section</label>
@@ -116,15 +116,26 @@
     $(document).ready(function () {
         $('.textarea').summernote();
         var lastWeek = getLastWeek();
-        //alert(lastWeek);
-        var lastWeekMonth = lastWeek.getMonth() + 1;
-        var lastWeekDay = lastWeek.getDate();
-        var lastWeekYear = lastWeek.getFullYear();
+
+        var getTosday = dates();
+        //alert(getTosday);
+        //var lastWeekMonth = lastWeek.getMonth() + 1;
+        //var lastWeekDay = lastWeek.getDate();
+        //var lastWeekYear = lastWeek.getFullYear();
+
+        //var lastWeekDisplay = lastWeekMonth + "/" + lastWeekDay + "/" + lastWeekYear;
+        //var lastWeekDisplayPadded = ("00" + lastWeekMonth.toString()).slice(-2) + "/" + ("00" + lastWeekDay.toString()).slice(-2)
+        //    + "/" + ("0000" + lastWeekYear.toString()).slice(-4);
+        ////alert(lastWeekDisplay);
+        //$('#weekend').val(lastWeekDisplayPadded);
+
+         var lastWeekMonth = getTosday.getMonth() + 1;
+        var lastWeekDay = getTosday.getDate();
+        var lastWeekYear = getTosday.getFullYear();
 
         var lastWeekDisplay = lastWeekMonth + "/" + lastWeekDay + "/" + lastWeekYear;
-        var lastWeekDisplayPadded = ("00" + lastWeekMonth.toString()).slice(-2) + "/" + ("00" + lastWeekDay.toString()).slice(-2)
+        var lastWeekDisplayPadded = ("00" + lastWeekDay.toString()).slice(-2) + "/" + ("00" + lastWeekMonth.toString()).slice(-2)
             + "/" + ("0000" + lastWeekYear.toString()).slice(-4);
-        //alert(lastWeekDisplay);
          $('#weekend').val(lastWeekDisplayPadded);
 
     });
@@ -133,10 +144,23 @@
          var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate());
          //alert(lastWeek);
           return lastWeek;
-     }
+    }
+    function dates() {
+    var dayOfWeek = 5;//friday
+    var date = new Date();
+        var diff = date.getDay() - dayOfWeek;
+        //alert(diff);
+    if (diff > 0) {
+        date.setDate(date.getDate() + 6);
+    }
+    else if (diff < 0) {
+        date.setDate(date.getDate() + ((-1) * diff))
+        }
+        return date;
+
+}
 </script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
