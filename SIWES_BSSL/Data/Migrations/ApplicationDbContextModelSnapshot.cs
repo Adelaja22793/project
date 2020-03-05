@@ -197,6 +197,38 @@ namespace SIWES_BSSL.Data.Migrations
                     b.ToTable("Menu");
                 });
 
+            modelBuilder.Entity("SIWES_BSSL.Data.Menu.MenuAccess", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleId");
+
+                    b.Property<int>("SubMenuId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubMenuId");
+
+                    b.ToTable("MenuAccess");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Menu.MessageTb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Description");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageTb");
+                });
+
             modelBuilder.Entity("SIWES_BSSL.Data.Menu.SubMenu", b =>
                 {
                     b.Property<int>("Id")
@@ -214,6 +246,261 @@ namespace SIWES_BSSL.Data.Migrations
                     b.HasIndex("MenuId");
 
                     b.ToTable("SubMenu");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.AgencySuperSetup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address1");
+
+                    b.Property<string>("Address2");
+
+                    b.Property<string>("CPersonEmail");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Country");
+
+                    b.Property<DateTime>("DeactDate");
+
+                    b.Property<bool>("Deactivate");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("NameOfCPerson");
+
+                    b.Property<string>("PhoneNo");
+
+                    b.Property<string>("ShortCode");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("WebAddress");
+
+                    b.Property<string>("ZipCode");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AgencySuperSetup");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.CourseGrpSetup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("InstTypeId");
+
+                    b.Property<int?>("InstTypeSetupId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("ShortCode");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstTypeSetupId");
+
+                    b.ToTable("CourseGrpSetup");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.Courses", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<int>("CourseGrpSetupId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("ShortCode");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseGrpSetupId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.InstCarryCap", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("AllowDisporal");
+
+                    b.Property<bool>("DelistInst");
+
+                    b.Property<string>("InstypeId");
+
+                    b.Property<DateTime>("MasterListDate");
+
+                    b.Property<int>("MaxSiwesCap");
+
+                    b.Property<int>("MinVisit4Super");
+
+                    b.Property<bool>("MustNotExcCap");
+
+                    b.Property<decimal>("StudentAmt");
+
+                    b.Property<decimal>("SuperAmt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InstCarryCap");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.InstCatSetup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InstCatSetup");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.InstLevelStudy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<int>("Duration");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InstLevelStudy");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.InstTypeSetup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AgencySuperSetupId");
+
+                    b.Property<string>("Code");
+
+                    b.Property<int>("InstCatSetupId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgencySuperSetupId");
+
+                    b.HasIndex("InstCatSetupId");
+
+                    b.ToTable("InstTypeSetup");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.Institution", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address1");
+
+                    b.Property<string>("Address2");
+
+                    b.Property<string>("AffiliateInst");
+
+                    b.Property<string>("AreaOffice");
+
+                    b.Property<int>("CapacityNo");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Country");
+
+                    b.Property<DateTime>("Datedectivated");
+
+                    b.Property<bool>("Deactivate");
+
+                    b.Property<string>("InstCatSetupId");
+
+                    b.Property<int?>("InstCatSetupId1");
+
+                    b.Property<string>("InstTypeSetupId");
+
+                    b.Property<int?>("InstTypeSetupId1");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("PhoneNo1");
+
+                    b.Property<string>("PhoneNo2");
+
+                    b.Property<string>("ShortCode");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("ZipCode");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstCatSetupId1");
+
+                    b.HasIndex("InstTypeSetupId1");
+
+                    b.ToTable("Institution");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.PolicyTb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("AllowDisporal");
+
+                    b.Property<bool>("DelistInst");
+
+                    b.Property<string>("InstypeId");
+
+                    b.Property<DateTime>("MasterListDate");
+
+                    b.Property<int>("MaxSiwesCap");
+
+                    b.Property<int>("MinVisit4Super");
+
+                    b.Property<bool>("MustNotExcCap");
+
+                    b.Property<decimal>("StudentAmt");
+
+                    b.Property<decimal>("SuperAmt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PolicyTb");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -261,12 +548,59 @@ namespace SIWES_BSSL.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("SIWES_BSSL.Data.Menu.MenuAccess", b =>
+                {
+                    b.HasOne("SIWES_BSSL.Data.Menu.SubMenu", "SubMenu")
+                        .WithMany()
+                        .HasForeignKey("SubMenuId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SIWES_BSSL.Data.Menu.SubMenu", b =>
                 {
                     b.HasOne("SIWES_BSSL.Data.Menu.Menu", "Menu")
                         .WithMany("SubMenus")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.CourseGrpSetup", b =>
+                {
+                    b.HasOne("SIWES_BSSL.Data.Setup.InstTypeSetup", "InstTypeSetup")
+                        .WithMany()
+                        .HasForeignKey("InstTypeSetupId");
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.Courses", b =>
+                {
+                    b.HasOne("SIWES_BSSL.Data.Setup.CourseGrpSetup", "CourseGrpSetup")
+                        .WithMany()
+                        .HasForeignKey("CourseGrpSetupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.InstTypeSetup", b =>
+                {
+                    b.HasOne("SIWES_BSSL.Data.Setup.AgencySuperSetup", "AgencySuperSetup")
+                        .WithMany()
+                        .HasForeignKey("AgencySuperSetupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SIWES_BSSL.Data.Setup.InstCatSetup", "InstCatSetup")
+                        .WithMany("InstTypes")
+                        .HasForeignKey("InstCatSetupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SIWES_BSSL.Data.Setup.Institution", b =>
+                {
+                    b.HasOne("SIWES_BSSL.Data.Setup.InstCatSetup", "InstCatSetup")
+                        .WithMany()
+                        .HasForeignKey("InstCatSetupId1");
+
+                    b.HasOne("SIWES_BSSL.Data.Setup.InstTypeSetup", "InstTypeSetup")
+                        .WithMany()
+                        .HasForeignKey("InstTypeSetupId1");
                 });
 #pragma warning restore 612, 618
         }
