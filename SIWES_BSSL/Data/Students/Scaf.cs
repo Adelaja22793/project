@@ -8,18 +8,16 @@ namespace SIWES_BSSL.Data.Students
     public class Scaf
     {
         public int Id { get; set; }
-        //public string RefNo { get; set; }
-        //public DateTime Scaf_Date { get; set; }
-        public int StudentSetUpId { get; set; }
+        public string RefNo { get; set; }
+        public DateTime Scaf_Date { get; set; }
         public DateTime Commence_Date { get; set; }
         public DateTime Complete_Date { get; set; }
         public int Duration { get; set; }
         public int EmployerSuperSetupId { get; set; }
-        public int EmployerSupervisorId { get; set; }
+        public int EmployerSupervisorSetupId { get; set; }
         public string Remarks { get; set; }
 
-        public Students.StudentSetUp StudentSetUp { get; set; }
-        public Employer.EmployerSuperSetup EmployerSuperSetup { get; set; }
-        //public Employer.EmployerSupervisor EmployerSupervisor { get; set; }
+        //public Employers.EmployerSuperSetup EmployerSuperSetup { get; set; }
+        //public Employers.EmployerSupervisorSetup EmployerSupervisor { get; set; }
     }
 }

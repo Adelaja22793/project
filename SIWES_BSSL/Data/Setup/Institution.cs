@@ -23,12 +23,13 @@ namespace SIWES_BSSL.Data.Setup
 
         public string AffiliateInst { get; set; }
         public int CapacityNo { get; set; }
+
         public Boolean Deactivate { get; set; }
         public DateTime Datedectivated { get; set; }
-        //public int InstCatSetupId { get; set; }
-        public int InstTypeSetupId { get; set; }
+        public string InstCatSetupId { get; set; }
+        public InstCatSetup InstCatSetup { get; set; }
 
-        //public InstCatSetup InstCatSetup { get; set; }
+        public string InstTypeSetupId { get; set; }
         public InstTypeSetup InstTypeSetup { get; set; }
     }
 }

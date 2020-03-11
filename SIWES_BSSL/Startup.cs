@@ -43,10 +43,10 @@ namespace SIWES_BSSL
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            //  .AddJsonOptions(option => option.SerializerSettings.ReferenceLoopHandling =
-            //   Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+              .AddJsonOptions(option => option.SerializerSettings.ReferenceLoopHandling =
+               Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

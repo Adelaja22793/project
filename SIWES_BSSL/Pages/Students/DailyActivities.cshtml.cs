@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SIWES_BSSL
 {
-    public class Scaff_FormModel : PageModel
+    public class DailyActivitiesModel : PageModel
     {
         public void OnGet()
         {

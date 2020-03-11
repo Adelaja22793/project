@@ -12,8 +12,5 @@ namespace SIWES_BSSL.Data.Setup
 
         public string Name { get; set; }
         public int Duration { get; set; }
-        public int InstTypeSetupId { get; set; }
-
-        public InstTypeSetup InstTypeSetup { get; set; }
     }
 }
