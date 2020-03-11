@@ -22,9 +22,11 @@ namespace SIWES_BSSL.API
         public string Message { get; set; }
         // GET: api/Menus
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenu()
+        public List<Menu> GetMenu()
         {
-            return await _context.Menu.ToListAsync();
+            var MenuList =  _context.Menu.Where(x =>x.Name.Contains('e')).ToList();
+
+            return MenuList;
         }
 
         // GET: api/Menus/5
@@ -40,7 +42,6 @@ namespace SIWES_BSSL.API
 
             return menu;
         }
-
         // PUT: api/Menus/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMenu(int id, Menu menu)
@@ -98,7 +99,7 @@ namespace SIWES_BSSL.API
 
             _context.Menu.Remove(menu);
             await _context.SaveChangesAsync();
-
+            //return DeleteMenu(id, menu.Name);
             return menu;
         }
 

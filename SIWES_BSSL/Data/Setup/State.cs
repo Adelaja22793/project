@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SIWES_BSSL.Data.Setup
 {
-    public class InstLevelStudy
+    public class State
     {
         public int Id { get; set; }
-        public string Code { get; set; }
-
+        [DisplayName("State")]
         public string Name { get; set; }
-        public int Duration { get; set; }
-        public int InstTypeSetupId { get; set; }
-
-        public InstTypeSetup InstTypeSetup { get; set; }
+        [DisplayName("Nationality")]
+        public int NationalityId { get; set; }
+        public Nationality Nationality { get; set; }
     }
 }

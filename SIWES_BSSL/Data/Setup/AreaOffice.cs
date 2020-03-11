@@ -5,15 +5,10 @@ using System.Threading.Tasks;
 
 namespace SIWES_BSSL.Data.Setup
 {
-    public class InstLevelStudy
+    public class AreaOffice
     {
         public int Id { get; set; }
         public string Code { get; set; }
-
-        public string Name { get; set; }
-        public int Duration { get; set; }
-        public int InstTypeSetupId { get; set; }
-
-        public InstTypeSetup InstTypeSetup { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -22,7 +22,7 @@
                                     <button type="submit" class="btn btn-warning">Download SCAF</button>
                                 </div>
                                 <p style="clear:both"></p>
-                                <div class="row">
+                                <div class="row" style="display:none">
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
@@ -37,18 +37,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="text" id="mydate" class="form-control" readonly="readonly">
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <div class="row" style="display:none">
                                     <div class="col-sm-6">
@@ -81,12 +70,13 @@
                                     <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="matric">Select Matric No of Student</label>
+                                            <label for="matric">Enter Matric. No. of Student</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control">
-                                                <div class="input-group-append">
-                                                    <input class="btn btn-primary" type="button" value="Search" id="">
+
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
                                                 </div>
+                                                <input type="text" class="form-control" id="matricNo">
                                             </div>
 
                                         </div>
@@ -110,7 +100,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" readonly="readonly">
                                             </div>
 
                                         </div>
@@ -120,7 +110,24 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="exampleInputFile">Employer's Name</label>
-                                            <input type="text" class="form-control" readonly="readonly">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Date Visted</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                </div>
+                                                <input type="text" id="mydate" class="form-control" readonly="readonly">
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
