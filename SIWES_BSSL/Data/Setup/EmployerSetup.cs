@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIWES_BSSL.Data.InstitiutionOfficer
+namespace SIWES_BSSL.Data.Employer
 {
     public class EmployerSetup
     {

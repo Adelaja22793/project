@@ -15,6 +15,11 @@
     <Compile Remove="Data\Migrations\20200227112659_updatetables.Designer.cs" />
     <Compile Remove="Data\Migrations\20200227113208_updatetables.cs" />
     <Compile Remove="Data\Migrations\20200227113208_updatetables.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200309090454_new.cs" />
+    <Compile Remove="Data\Migrations\20200309090454_new.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200309090733_news.cs" />
+    <Compile Remove="Data\Migrations\20200309090733_news.Designer.cs" />
+    <Compile Remove="Data\Students\StudentSetup1.cs" />
   </ItemGroup>
 
 
