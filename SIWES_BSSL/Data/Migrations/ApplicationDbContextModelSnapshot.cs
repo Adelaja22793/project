@@ -214,6 +214,21 @@ namespace SIWES_BSSL.Data.Migrations
                     b.ToTable("MenuAccess");
                 });
 
+            modelBuilder.Entity("SIWES_BSSL.Data.Menu.MessageTb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Description");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageTb");
+                });
+
             modelBuilder.Entity("SIWES_BSSL.Data.Menu.SubMenu", b =>
                 {
                     b.Property<int>("Id")
@@ -430,13 +445,7 @@ namespace SIWES_BSSL.Data.Migrations
 
                     b.Property<bool>("Deactivate");
 
-                    b.Property<string>("InstCatSetupId");
-
-                    b.Property<int?>("InstCatSetupId1");
-
-                    b.Property<string>("InstTypeSetupId");
-
-                    b.Property<int?>("InstTypeSetupId1");
+                    b.Property<int>("InstTypeSetupId");
 
                     b.Property<string>("Name");
 
@@ -452,9 +461,7 @@ namespace SIWES_BSSL.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstCatSetupId1");
-
-                    b.HasIndex("InstTypeSetupId1");
+                    b.HasIndex("InstTypeSetupId");
 
                     b.ToTable("Institution");
                 });
@@ -536,7 +543,7 @@ namespace SIWES_BSSL.Data.Migrations
             modelBuilder.Entity("SIWES_BSSL.Data.Menu.MenuAccess", b =>
                 {
                     b.HasOne("SIWES_BSSL.Data.Menu.SubMenu", "SubMenu")
-                        .WithMany()
+                        .WithMany("MenuAccesses")
                         .HasForeignKey("SubMenuId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -579,13 +586,10 @@ namespace SIWES_BSSL.Data.Migrations
 
             modelBuilder.Entity("SIWES_BSSL.Data.Setup.Institution", b =>
                 {
-                    b.HasOne("SIWES_BSSL.Data.Setup.InstCatSetup", "InstCatSetup")
-                        .WithMany()
-                        .HasForeignKey("InstCatSetupId1");
-
                     b.HasOne("SIWES_BSSL.Data.Setup.InstTypeSetup", "InstTypeSetup")
                         .WithMany()
-                        .HasForeignKey("InstTypeSetupId1");
+                        .HasForeignKey("InstTypeSetupId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

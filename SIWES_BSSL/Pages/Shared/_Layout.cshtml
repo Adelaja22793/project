@@ -1,4 +1,43 @@
-﻿<!DOCTYPE html>
+﻿@inject SIWES_BSSL.Data.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+
+@{
+    //var ListCategories = db.mainCategories.Include(m => m.SubCategories);
+
+    // var menulist = db.SubMenu.Include(m => m.MenuAccesses);
+
+    var menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+     .Where(k => k.macc2.RoleId == "01")
+     .Select(m => new
+     {
+         MenuName = m.Macc.m.Name,
+         Menuid = m.Macc.m.Id,
+         SubMenuid = m.Macc.sub.Id,
+         Pageurl = m.Macc.sub.PageUrl,
+         SubMenuName = m.Macc.sub.Name
+
+
+     }).ToList();
+
+
+    var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+     .Where(k => k.macc2.RoleId == "01")
+     //  .GroupBy( k = k )
+     .Select(m => new
+     {
+         MenuName = m.Macc.m.Name,
+         Menuid = m.Macc.m.Id
+
+
+     }).ToList();
+
+    var menulist = menulist4.GroupBy(c => c.Menuid,  (key, c) => c.FirstOrDefault());
+
+
+}
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -43,8 +82,19 @@
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
 
-                    <a href="/_Welcome.cshtml" class="nav-link">Home</a>
+                    @*<a href="~/Areas/Identity/Pages/Account/Login" class="nav-link">Register</a>
+                    <a asp-page="Areas/Identity/Pages/Account/Login" class="nav-link">
 
+                        <p>
+                            Log ins
+                            <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>*@
+                <li class="nav-item">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                        <button type="submit" class="nav-link btn btn-link">Log in</button>
+                    </form>
+                </li>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -52,7 +102,7 @@
 
             </ul>
 
-            <!-- SEARCH FORM -->
+             SEARCH FORM 
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
                     <input id="tags" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -93,13 +143,19 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+         <a href="index3.html" class="brand-link">
                 <img src="~/website/img/new.jpeg" class="brand-image img-circle elevation-3"
                      style="opacity: .8">
                 <span class="brand-text font-weight-light">ITF Nigeria</span>
             </a>
 
             <!-- Sidebar -->
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+             
+                <partial name="_LoginPartial" />
+
+            </div>
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -254,6 +310,22 @@
     <div class="container">
         @*<partial name="_CookieConsentPartial" />*@
         <main role="main" class="pb-3">
+            @*@{
+
+                foreach (var dd in menulist)
+                {
+                        <div style="margin-left:500px">
+                         
+                            <li>
+                                <span> @dd.Menuid</span>
+                                <span> @dd.MenuName</span>
+                           
+
+                            </li> <br />
+                        </div>
+                }
+            }*@
+
             @RenderBody()
         </main>
     </div>

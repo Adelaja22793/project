@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,13 +9,12 @@ namespace SIWES_BSSL.Data.Menu
     public class SubMenu
     {
         public int Id { get; set; }
-        [DisplayName("Sub-Menu")]
+        public int SubId { get; set; }
         public string Name { get; set; }
         public string PageUrl { get; set; }
-        [DisplayName("Menu")]
+        
         public int MenuId { get; set; }
         public Menu Menu { get; set; }
         //public ICollection<MenuAccess> MenuAccesses { get; set; }
-
     }
 }

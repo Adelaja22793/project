@@ -13,8 +13,9 @@ using Microsoft.Extensions.Logging;
 namespace SIWES_BSSL.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+
     public class RegisterModel : PageModel
-    {
+    { 
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -40,12 +41,14 @@ namespace SIWES_BSSL.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(100, ErrorMessage = "Please  email address is compulsory")]
             [EmailAddress]
             [Display(Name = "Email")]
+         
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -53,7 +56,25 @@ namespace SIWES_BSSL.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+
             public string ConfirmPassword { get; set; }
+             
+            [Required]
+            [StringLength(100, ErrorMessage = "Matric No is required")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Matric Number")]
+          
+
+            public string MatricNo { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Name")]
+
+
+            public string Name { get; set; }
+
+
+
         }
 
         public void OnGet(string returnUrl = null)
