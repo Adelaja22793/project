@@ -8,7 +8,7 @@ namespace SIWES_BSSL.Data.Students
     public class DailyActivities
     {
         public int Id { get; set; }
-        public int StudentId { get; set; }
+        public int StudentSetUpId { get; set; }
         public DateTime WeekendDate { get; set; }
         public string Day1 { get; set; }
         public string Day1Description { get; set; }
@@ -21,13 +21,13 @@ namespace SIWES_BSSL.Data.Students
         public string Day5 { get; set; }
         public string Day5Description { get; set; }
         public string Remarks { get; set; }
-        public int SupervisorId { get; set; }
+        public int EmployerSupervisorId { get; set; }
         public DateTime CerifiedDate { get; set; }
         public string SupervisorRemarks { get; set; }
         public bool Approved { get; set; }
 
         //navigation properties
-        //public Student Student { get; set; }
-        //public Supervisor Supervisor { get; set; }
+        public StudentSetUp StudentSetUp { get; set; }
+        public Employer.EmployerSupervisor EmployerSupervisor { get; set; }
     }
 }
