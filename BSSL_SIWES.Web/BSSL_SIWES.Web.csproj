@@ -1,0 +1,658 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-BSSL_SIWES.Web-2A172FAD-27BD-483E-997C-A91153BA0A4C</UserSecretsId>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="Areas\Identity\Pages\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Identity\Pages\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Privacy.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Shared\_Layout.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Shared\_LoginPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Shared\_RegLayout.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Shared\_ValidationScriptsPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Shared\_Welcome.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\CourseSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\CourseSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Lockout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Login.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Logout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Register.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Institution\CreateStudent.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\CourseSetup.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\EmployerSetup.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\EmployerSupervisor.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\InstitutionCategory.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\InstitutionCatSetup.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\InstitutionSetup.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\PolicySetup.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\SubMenu.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Setup\SupervisoryAgency.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Shared\_AuthLayout.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Shared\_CookieConsentPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\EmployerForm8.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Form8.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Indus_MonthlyAssessment.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\InstitusionSupervisor.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\MonthlyAssessment.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Scaff_Form.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Student_Visit_Form.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\SupervisorCerif.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\EmployerSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\EmployerSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\EmployerSupervisor.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\EmployerSupervisor.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\InstitutionCategory.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\InstitutionCategory.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\InstitutionCatSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\InstitutionCatSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\InstitutionSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\InstitutionSetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\PolicySetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\PolicySetup.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\SubMenu.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\SubMenu.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Setup\SupervisoryAgency.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Setup\SupervisoryAgency.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\EmployerForm8.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\EmployerForm8.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\Form8.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\Form8.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\Indus_MonthlyAssessment.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\Indus_MonthlyAssessment.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\InstitusionSupervisor.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\InstitusionSupervisor.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\MonthlyAssessment.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\MonthlyAssessment.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\Scaff_Form.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\Scaff_Form.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\Student_Visit_Form.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\Student_Visit_Form.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Students\SupervisorCerif.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Students\SupervisorCerif.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Institution\CreateStudent.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Institution\CreateStudent.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Shared\_AuthLayout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Shared\_AuthLayout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Pages\Shared\_CookieConsentPartial.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Shared\_CookieConsentPartial.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\SiwesData\SiwesData.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Lockout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Lockout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Login.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Login.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Logout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Logout.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\Register.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Register.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Remove="Areas\Identity\Pages\_ViewImports.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\_ViewImports.cshtml" />
+  </ItemGroup>
+
+</Project>

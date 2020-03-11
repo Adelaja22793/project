@@ -1,0 +1,421 @@
+﻿@page
+@model BSSL_SIWES.Web.CreateStudentModel
+@{
+    ViewData["Title"] = "CreateStudent";
+}
+<div class="content-wrapper" style="margin-top:0.5%">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Student Bio Data</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Registration/Matric. Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user-check"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter Registration/Matric No.">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Surname</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter Surname">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Other Name(s)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter Other Name(s)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Select Reg. Year/Year of Matric</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                                id="regYear" style="width: 100%;">
+                                            <option selected="selected" value="-1">--Select Reg. Year/Year of Matric--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Course of Study</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="courseStudy">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Level of Study</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <option selected="selected" id="lvlStudy">--Select Level of Studey</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Select Nationality</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                                asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
+                                                onchange="MyFunctionNationality()" id="nationChange">
+                                            <option selected="selected" value="-1">-- Select Nationality--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Select State of Origin</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                               id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                            <option selected="selected" value="-1">-- Select State--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Select LGA of Origin</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                                id="myLGA" style="width: 100%;">
+                                            <option selected="selected" value="-1">--Select LGA--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-swimming-pool"></i></span>
+                                        </div>
+                                        <input type="hidden" id="orgNameId" />
+                                        <input type="text" id="orgName" class="form-control" placeholder="Enter Phone No.">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                        <input type="text" id="orgAddress" class="form-control" readonly="readonly">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Is this student a diasporal student?</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <option selected="selected" value="1">NO</option>
+                                            <option value="2">YES</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Specify SIWES Year</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <option selected="selected">Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Batch No</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <option selected="selected">Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Commencement Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" id="commence_Date" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Completion Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()" class="form-control" placeholder="Enter Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Duration</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="text" id="duration" readonly="readonly" class="form-control">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Enter Name of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="hidden" id="orgNameId" />
+                                        <input type="text" id="orgName" onchange="MyFunctionOrganName()" class="form-control" placeholder="Enter Name of Organisation">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Organisation Location Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                        </div>
+                                        <input type="text" id="orgAddress" class="form-control" readonly="readonly">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone No. of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" id="orgPhone" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                        <input type="email" id="orgEmail" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>ITF Area Office</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-search-location"></i></span>
+                                        </div>
+                                        <input type="text" id="orgAreaITF" class="form-control" readonly="readonly">
+                                        <input type="hidden" id="orgAreaITFId" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Name of Organisation Representative</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="orgRep" class="form-control">
+                                        <input type="hidden" id="orgRepId" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter Remarks"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="justify-content-center" style="margin-left:23%; margin-bottom:3%;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-warning"> Print and Preview SCAF</button>
+                        <button type="button" class="btn btn-info">Upload Pre-Filled Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var thisYear = new Date().getFullYear();
+       
+        var optionReg = ''; var optionLevel = '';
+        for (var i = 0; i <= 5; i++) {
+            var year = thisYear - i;
+            optionReg += '<option value="' + year + '">' + year + '</option>';
+        }
+        $('#regYear').append(optionReg);
+    });
+
+
+    function MyFunctionNationality() {
+        var nationId = document.getElementById('nationChange').value;
+        var d = {
+                "Id": nationId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/States/' + nationId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++){
+                    option += '<option value="'+ data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myState').empty();
+                    $('#myState').append('<option value=-1>--Select State--</option>');
+                }
+                $('#myState').append(option);
+                    
+            },
+        });
+
+    }
+    function MyFunctionState() {
+        var stateId = document.getElementById('myState').value;
+       // alert(stateId);
+        var d = {
+                "Id": stateId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/LGAs/' + stateId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+               // console.log(data);
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++){
+                    option += '<option value="'+ data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myLGA').empty();
+                    $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                }
+                
+                //$('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                $('#myLGA').append(option);
+                    
+            },
+        });
+
+    }
+</script>

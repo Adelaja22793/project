@@ -1,0 +1,341 @@
+﻿@page
+@inject SiwesData.Data.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+@model BSSL_SIWES.Web.Scaff_FormModel
+@{
+    ViewData["Title"] = "Scaff_Form";
+}
+<div class="content-wrapper" style="margin-top:0.5%">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Student Commencement of Attachment Form (SCAF)</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="card-body">
+                        <div class="justify-content-center" style="float:right;">
+                            <button type="submit" class="btn btn-warning">Download SCAF</button>
+                        </div>
+                        <p style="clear:both"></p>
+                        <div class="row" style="display:none">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label for="refno">Reference Number </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="refno" readonly="readonly">
+
+                                        <div class="input-group-append">
+                                            <input class="btn btn-primary" type="button" value="Search" id="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" class="form-control" placeholder="Enter Date">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Matric. Number</label>
+                                    <input type="text" asp-for="StudentSetUp.MatricNumber" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Student Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" asp-for="StudentName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Name of Institution</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
+                                        </div>
+                                        <input type="text" asp-for="StudentSetUp.Institution.Name" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Course of Study</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                        </div>
+                                        <input type="text" asp-for="StudentSetUp.Courses.Name" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Commencement Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" id="commence_Date" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Completion Date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()" class="form-control" placeholder="Enter Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Duration</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="text" id="duration" readonly="readonly" class="form-control">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Enter Name of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="hidden" id="orgNameId" />
+                                        <input type="text" id="orgName" onchange="MyFunctionOrganName()" class="form-control" placeholder="Enter Name of Organisation">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Organisation Location Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                        </div>
+                                        <input type="text" id="orgAddress" class="form-control" readonly="readonly">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone No. of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" id="orgPhone" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email of Organisation</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                        <input type="email" id="orgEmail" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>ITF Area Office</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-search-location"></i></span>
+                                        </div>
+                                        <input type="text" id="orgAreaITF" class="form-control" readonly="readonly">
+                                        <input type="hidden" id="orgAreaITFId" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Name of Organisation Representative</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="orgRep" class="form-control">
+                                        <input type="hidden" id="orgRepId" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter Remarks"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="justify-content-center" style="margin-left:23%; margin-bottom:3%;">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-warning"> Print and Preview SCAF</button>
+                        <button type="button" class="btn btn-info">Upload Pre-Filled Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+
+
+<script type="text/javascript">
+     var orgName = [];
+    var orgRepName = [];
+    function AddOrgName(lbl, val) {
+        orgName.push({ label: lbl, value: val});
+    }
+    function AddOrgRepName(lbl, val) {
+        orgRepName.push({ label: lbl, value: val});
+    }
+    $(document).ready(function () {
+        @foreach (var item in Model.EmployerSuperSetup)
+        {
+            @:AddOrgName('@item.Name', '@item.Id');
+        }
+        $( "#orgName" ).autocomplete({
+            source: orgName,
+            select: function (event, ui) {
+                $('#orgNameId').val(ui.item.value);
+                $('#orgName').val(ui.item.label);
+                return false;
+            }
+        });
+        $( "#orgRep" ).autocomplete({
+            source: orgRepName,
+            select: function (event, ui) {
+                $('#orgRepId').val(ui.item.value);
+                $('#orgRep').val(ui.item.label);
+                return false;
+            }
+        });
+
+    });
+    function onSelectedOrg() {
+        
+        @foreach (var item in Model.EmployerSupervisor)
+        {
+            //int orgId = $('#orgNameId').val();
+            var orgRep = await db.EmployerSupervisors.Include(n => n.EmployerSuperSetup).
+                Where(employerName => employerName.EmployerSuperSetup.Id == employerName.Id).ToListAsync();
+
+            @:AddOrgRepName('@item.Name', '@item.Id');
+        }
+    }
+    function MyFunctionCommDate() {
+        $('#complete_Date').val("");
+        $('#duration').val("");
+    }
+    function MyFunctionCompleteDate() {
+        first = $('#commence_Date').val();
+        second = $('#complete_Date').val();
+        duration = "";
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        const firstDate = new Date(first);
+        const secondDate = new Date(second);
+        if (secondDate < firstDate) {
+            alert("Completion Date Cannot be Less than Commencement Date");
+            $('#complete_Date').val("");
+            $('#duration').val("");
+            $('#complete_Date').focus();
+            return false;
+        }
+        const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+        var noDays = diffDays + ' ' + "Days";
+        $('#duration').val(noDays);
+    }
+    function MyFunctionOrganName() {
+        var orgNameId = document.getElementById('orgNameId').value;
+        var d = {
+                "Id": orgNameId
+            };
+        var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/EmployerSuperSetups/' + orgNameId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    var orgAddress = data['address1']
+                    var orgPhone = data['phoneNo'];
+                    var orgEmail = data['email'];
+                    var areaOffice = data['areaOffice']['description'];
+                    var areaOfficeId = data['areaOfficeId'];
+
+                    $('#orgAddress').val(orgAddress);
+                    $('#orgPhone').val(orgPhone);
+                    $('#orgEmail').val(orgEmail);
+                    $('#orgAreaITF').val(areaOffice);
+                    $('#orgAreaITFId').val(areaOfficeId);
+                    onSelectedOrg();
+                },
+            });
+
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
