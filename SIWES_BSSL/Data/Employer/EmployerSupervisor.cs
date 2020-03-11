@@ -17,7 +17,8 @@ namespace SIWES_BSSL.Data.Employer
         public string Email { get; set; }
         public string AreaOfficeId { get; set; }
         public int EmployerSuperSetupId { get; set; }
-
+        
         public EmployerSuperSetup EmployerSuperSetup { get; set; }
+        
     }
 }

@@ -1,0 +1,400 @@
+﻿@page
+@model SIWES_BSSL.SubMenuModel
+@{
+    ViewData["Title"] = "SubMenu";
+}
+
+<div class="content-wrapper" id="newtab">
+    <div class="container-fluid" style="min-height:50px">
+        <div class="col-md-12">
+            <button id="btnShowModal" type="button" style="margin-left:300px"
+                    class="btn btn-sm btn-default pull-left col-lg-4 button button4">
+                Add More Sub-Menu
+            </button>
+            <div class="modal fade" tabindex="-1" id="loginModal"
+                 data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-lg" style="width:40%; margin-left:35%;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:steelblue">
+                            <h4 class="modal-title" id="monthname" style="margin-left:130px">Setup New Sub-Menu</h4>
+                            <button type="button" class="close" data-dismiss="modal">
+                                ×
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Menu Name</label>
+                                        <div class="input-group ui-widget">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input id="mainMenu" placeholder="Search Menu Name With Keyword" style="height:30px;" class="form-control" type="text">
+                                            <input id="mainMenuId" type="hidden"/>
+                                            @*<select asp-for="SubMenu.Menu.Id" class="form-control"
+                                                    asp-items="ViewBag.MenuId" id="combobox">
+                                                <option selected="selected" value="-1">--Select Main Menu--</option>
+                                            </select>*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Sub-Menu Name</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            </div>
+                                            <input asp-for="SubMenu.Name" id="subMenu" placeholder="Enter Sub-Menu Name" style="height:30px;" class="form-control" type="text">
+                                            <input asp-for="SubMenu.Id" id="myidd" type="hidden" class="form-control" />
+                                            <input id="rowIndex" type="hidden" class="form-control" />
+                                            <span asp-validation-for="SubMenu.Name" class="text-danger replace"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Page URL</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            </div>
+                                            <input asp-for="SubMenu.PageUrl" id="pageURL" placeholder="Enter Page Url to Sub-Menu" style="height:30px;" class="form-control" type="text">
+                                            <span asp-validation-for="SubMenu.PageUrl" class="text-danger replace"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                            <button type="submit" id="BtnSubMenu" class="btn btn-primary button button4">Save Sub-Menu</button>
+                            <button type="submit" style="display:none;" id="BtnEditSubMenu" class="btn btn-primary button button4">Update Sub-sMenu</button>
+                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                                Hide
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                    <table id="tabId" class="table table-bordered" border="0">
+                        <thead style="background-color:steelblue;">
+                            <tr>
+                                <th style="width:0.25%; text-align:center">S/N</th>
+                                <th style="width:20%; text-align:center">Menu Name</th>
+                                <th style="width:30%; text-align:center">Sub-Menu Name</th>
+                                <th style="width:20%; text-align:center">Page Url</th>
+                                <th style="width:20%; text-align:center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.MainSubMenu.Count; i++)
+                            {
+                                var items = Model.MainSubMenu[i];
+                                //var news = await db.Customers
+
+                                <tr>
+                                    <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                    <td class="MainMenuId @i" style="width:20%; text-align:left">@items.Menu.Name</td>
+                                    <td class="subMenu @i" style="width:20%; text-align:left">@items.Name</td>
+                                    <td class="pageUrl @i" style="width:20%; text-align:left">@items.PageUrl</td>
+
+                                    <td style="width:20%;">
+                                        <input type="hidden" class="menuID" value="@items.MenuId" />
+                                        <input type="hidden" class="readid @i" value="@items.Id">
+                                        <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a> |
+                                        <a id="myDelete" AddreDelete="@i" asp-route-id="@items.Id">Delete</a>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button1 {
+        border-radius: 2px;
+    }
+
+    .button2 {
+        border-radius: 4px;
+    }
+
+    .button3 {
+        border-radius: 8px;
+    }
+
+    .button4 {
+        border-radius: 12px;
+    }
+
+    .button5 {
+        border-radius: 50%;
+    }
+
+    .ui-autocomplete{
+        z-index:10000;
+    }
+</style>
+<script type="text/javascript">
+    var availableTags = [];
+
+    function addAvailableTags(lbl, val) {
+        availableTags.push({label: lbl, value: val});
+    }
+    $(document).ready(function () {
+        @foreach (var item in Model.MenuList)
+        {
+            @:addAvailableTags('@item.Name', '@item.Id');
+        }
+
+        $( "#mainMenu" ).autocomplete({
+            source: availableTags,
+            select: function (event, ui) { 
+                $('#mainMenuId').val(ui.item.value);
+                $('#mainMenu').val(ui.item.label);
+                return false;
+            }
+        });
+
+        $("#btnShowModal").click(function () {
+            $('#monthname').html("SETUP NEW SUB-MENU");
+            $('#mainMenu').val("");
+            $('#mainMenuId').val("");
+            $('#subMenu').val("");
+            $('#rowIndex').val("");
+            $('#myidd').val("");
+            $('#pageURL').val("");
+
+            $("#loginModal").modal('show');
+            document.getElementById('BtnEditSubMenu').style.display = "none";
+            document.getElementById('BtnSubMenu').style.display = "inline-block";
+        });
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        });
+        $("#tabId").on('click', '#myEdit', function () {
+            $('#monthname').html("EDIT/UPDATE SUB-MENU");
+            var currentRow = $(this).closest("tr");
+            var selectedIndex = currentRow.find("td:eq(0)").html(); // get current row 1st TD value
+            var selectedIndex1 = currentRow.find("td:eq(1)").html();
+
+            $("#loginModal").modal('show');
+            var editindex = $(this).attr('AddreEdit');
+            var menuName = $('.MainMenuId.' + editindex).text();
+            var menuNameId = $('.menuID').val();
+            var subMenuName = $('.subMenu.' + editindex).text();
+            var pageURL = $('.pageUrl.' + editindex).text();
+            var myid = $('.readid.' + editindex).val();
+
+           
+            document.getElementById('BtnEditSubMenu').style.display = "inline-block";
+            document.getElementById('BtnSubMenu').style.display = "none";
+            $("#mainMenu").val(menuName);
+            $('#mainMenuId').val(menuNameId);
+            $('#subMenu').val(subMenuName);
+            $('#pageURL').val(pageURL);
+            $('#myidd').val(myid);
+            $('#rowIndex').val(selectedIndex);
+            //alert(menuName); alert(menuNameId);
+            return false;
+
+        });
+        $('#BtnSubMenu').on('click', function () {
+            var mainMenuValue = document.getElementById('mainMenu').value;
+            var mainMenu = document.getElementById('mainMenuId').value;
+            var subMenu = document.getElementById('subMenu').value;
+            var pageURL = document.getElementById('pageURL').value;
+            var selectedMenu = $("#mainMenu option:selected").html();
+           
+            if (mainMenu == "") {
+                alert("PLEASE SELECT A MENU NAME");
+                return false;
+            }
+            if (subMenu == "") {
+                alert("PLEASE ENTER A SUB-MENU NAME");
+                return false;
+            }
+            if (pageURL == "") {
+                alert("PLEASE ENTER SUB-MENU PAGE URL");
+                return false;
+            }
+            var d = {
+                "Name": subMenu,
+                "MenuId": mainMenu,
+                "PageUrl": pageURL
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO ADD " + subMenu.toUpperCase() + " AS SUB-MENU TO " + mainMenuValue.toUpperCase() + " MENU ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/Api/SubMenus',
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("" + subMenu.toUpperCase() + " WAS SUCCESSFULLY ADDED AS A SUB-MENU TO " + mainMenuValue.toUpperCase() + " MENU");
+
+                    $("#loginModal").modal('hide');
+
+                    console.log(data);
+                    var myid = data['id'];
+                    var subMenuName = data['name']
+                    var menuId = data['menuId'];
+                    var pageURL = data['pageUrl']
+                    var html = "";
+                    var rowCount = $('#tabId tr').length;
+
+                    html = `<tr>
+                            <td class="se_no" style="width:0.25%; text-align:left">${rowCount}</td>
+                            <td class="MainMenuId" style="width:20%; text-align:left">${mainMenuValue}</td>
+                            <td class="subMenu" style="width:20%; text-align:left">${subMenuName}</td>
+                            <td class="pageUrl" style="width:20%; text-align:left">${pageURL}</td>
+                            <td style="width:20%;" class="action">
+                            <a href="/Setup/SubMenu/Edit?id=${myid}">Edit</a> |
+                            <a href="/Setup/SubMenu/Delete?id=${myid}">Delete</a> </td>
+                        </tr>`
+
+                    $('#tabId').append(html);
+
+                },
+            });
+        });
+        //End of AJAX error function
+        $('#BtnEditSubMenu').on('click', function () {
+            var menuName = document.getElementById('mainMenuId').value;
+            var subMenuName = document.getElementById('subMenu').value;
+            var pageURL = document.getElementById('pageURL').value;
+            var editindex = document.getElementById('myidd').value;
+            var selectedMenu = $("#mainMenu option:selected").html();
+            alert(editindex); alert(subMenuName);
+            alert(pageURL); alert(menuName);
+            var d = {
+                "Id": editindex,
+                "Name": subMenuName,
+                "PageUrl": pageURL,
+                "MenuId": menuName,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO EDIT ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/SubMenus/ ' + editindex,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //alert(data.d);
+                    alert("Update Successful");
+                    $("#loginModal").modal('hide');
+                    var menuChanged = data['menuid'];
+                    var SubmenuChanged = data['name'];
+                    var pageUrlChanged = data['pageurl'];
+                    var myid = data['id'];
+                    var IndexSelected = $('#rowIndex').val();
+                    //alert(IndexSelected)
+                    var mainIndex = IndexSelected;
+                    //$('.nameclass.' + editindex).html(actu);
+                    var arrData = [];
+                    // loop over each table row (tr)
+                    var col1_value = "";
+                    var currentRow = "";
+                    $("#tabId tr").each(function () {
+                        currentRow = $(this);
+
+                    });
+                    //if (IndexSelected == mainIndex) {
+                    currentRow.find("td:eq(1)").html(selectedMenu);
+                    currentRow.find("td:eq(2)").html(SubmenuChanged);
+                    currentRow.find("td:eq(3)").html(pageUrlChanged);
+                    location.reload();
+
+                },
+            });
+        });
+
+        $("#tabId").on('click', '#myDelete', function () {
+            var editindex = $(this).attr('AddreDelete');
+            alert(editindex);
+            var d = {
+                "Id": editindex,
+
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "Delete",
+                url: baseUrl + '/Api/Menus/ ' + editindex,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert("dffvdsfvdvcsssssssssssssssss");
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert("dffvdsfvdvcqqqqqqqqqqqqqqq");
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("dffvdsfvdvc");
+                    alert("Menu Successfully Deleted");
+
+                },
+            });
+
+        });
+
+    })
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

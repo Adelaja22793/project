@@ -8,14 +8,14 @@ namespace SIWES_BSSL.Data.Students
     public class Form8
     {
         public int Id { get; set; }
-        public int StudentId { get; set; }
+        public int StudentSetUpId { get; set; }
         public DateTime  Date_Filled { get; set; }
         public DateTime Commence_Date { get; set; }
         public DateTime Complete_Date { get; set; }
         public int Duration { get; set; }
         public string TotalWeeks { get; set; }
         public string WorkExperience { get; set; }
-        public int SupervisorId { get; set; }
+        public int EmployerSupervisorId { get; set; }
         public DateTime DateIn { get; set; }
         public int Performance { get; set; }
         public int StudentExperience { get; set; }
@@ -34,8 +34,8 @@ namespace SIWES_BSSL.Data.Students
         public bool InstSupApproved { get; set; }
 
         //navigation properties
-        //public Student Student { get; set; }
-        //public Supervisor Supervisor { get; set; }
+        public StudentSetUp StudentSetUp { get; set; }
+        public Employer.EmployerSupervisor EmployerSupervisor { get; set; }
         //public InstSupervisor Supervisor { get; set; }
     }
 }

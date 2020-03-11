@@ -20,7 +20,9 @@ namespace SIWES_BSSL.Data.Employer
         public string PhoneNo { get; set; }
         public string Email { get; set; }
         public string WebAddress { get; set; }
-  
         public string YearOfIncop { get; set; }
+        public int AreaOfficeId { get; set; }
+
+        public Setup.AreaOffice AreaOffice { get; set; }
     }
 }

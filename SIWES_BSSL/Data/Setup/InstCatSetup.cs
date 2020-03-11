@@ -10,6 +10,7 @@ namespace SIWES_BSSL.Data.Setup
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public Boolean Deactivate { get; set; }
         public ICollection<InstTypeSetup> InstTypes { get; set; }
     }
 }

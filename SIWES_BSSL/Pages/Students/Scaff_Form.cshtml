@@ -1,4 +1,7 @@
 ﻿@page
+@inject SIWES_BSSL.Data.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
 @model SIWES_BSSL.Scaff_FormModel
 @{
     ViewData["Title"] = "Scaff_Form";
@@ -19,7 +22,7 @@
                             <button type="submit" class="btn btn-warning">Download SCAF</button>
                         </div>
                         <p style="clear:both"></p>
-                        <div class="row">
+                        <div class="row" style="display:none">
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
@@ -49,8 +52,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Matric. Number</label>
-                                    <input type="text" class="form-control" readonly="readonly">
+                                    <label>Matric. Number</label>
+                                    <input type="text" asp-for="StudentSetUp.MatricNumber" class="form-control" readonly="readonly">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -60,7 +63,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" readonly="readonly">
+                                        <input type="text" asp-for="StudentName" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
@@ -68,23 +71,23 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Course of Study</label>
+                                    <label>Name of Institution</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" readonly="readonly">
+                                        <input type="text" asp-for="StudentSetUp.Institution.Name" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>ITF Area Office</label>
+                                    <label for="exampleInputFile">Course of Study</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-search-location"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" readonly="readonly">
+                                        <input type="text" asp-for="StudentSetUp.Courses.Name" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
@@ -128,12 +131,13 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Enter Name of Organisation</label>
+                                    <label>Enter Name of Organisation</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Name of Organisation">
+                                        <input type="hidden" id="orgNameId" />
+                                        <input type="text" id="orgName" onchange="MyFunctionOrganName()" class="form-control" placeholder="Enter Name of Organisation">
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +148,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Organisation Location Address">
+                                        <input type="text" id="orgAddress" class="form-control" readonly="readonly">
                                     </div>
 
                                 </div>
@@ -153,12 +157,12 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Phone No. of Organisation</label>
+                                    <label>Phone No. of Organisation</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Phone No. of Organisation">
+                                        <input type="text" id="orgPhone" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +173,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                         </div>
-                                        <input type="email" class="form-control" placeholder="Enter Email of Organisation">
+                                        <input type="email" id="orgEmail" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
@@ -177,12 +181,25 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
+                                    <label>ITF Area Office</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-search-location"></i></span>
+                                        </div>
+                                        <input type="text" id="orgAreaITF" class="form-control" readonly="readonly">
+                                        <input type="hidden" id="orgAreaITFId" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
                                     <label>Name of Organisation Representative</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Name of Organisation Representative">
+                                        <input type="text" id="orgRep" class="form-control">
+                                        <input type="hidden" id="orgRepId" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -211,35 +228,50 @@
 
 <!-- jQuery -->
 
-<script src="../../~/template/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-@*<script src="~/template/"></script>*@
-
-<!-- AdminLTE App -->
-<script src="../../~/template/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../~/template/dist/js/demo.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-    //$(window).load(function(){
+     var orgName = [];
+    var orgRepName = [];
+    function AddOrgName(lbl, val) {
+        orgName.push({ label: lbl, value: val});
+    }
+    function AddOrgRepName(lbl, val) {
+        orgRepName.push({ label: lbl, value: val});
+    }
     $(document).ready(function () {
-        var dt = new Date();
-        var today = new Date();
-        var month = dt.getMonth();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        //alert(mm);
-        var time = "ITF" + "/" + dt.getFullYear() + "/" + mm + "/" + dd + dt.getHours() + dt.getMinutes() + dt.getSeconds();
-        //alert(month);
-        $('#refno').val(time);
+        @foreach (var item in Model.EmployerSuperSetup)
+        {
+            @:AddOrgName('@item.Name', '@item.Id');
+        }
+        $( "#orgName" ).autocomplete({
+            source: orgName,
+            select: function (event, ui) {
+                $('#orgNameId').val(ui.item.value);
+                $('#orgName').val(ui.item.label);
+                return false;
+            }
+        });
+        $( "#orgRep" ).autocomplete({
+            source: orgRepName,
+            select: function (event, ui) {
+                $('#orgRepId').val(ui.item.value);
+                $('#orgRep').val(ui.item.label);
+                return false;
+            }
+        });
 
     });
+    function onSelectedOrg() {
+        
+        @foreach (var item in Model.EmployerSupervisor)
+        {
+            //int orgId = $('#orgNameId').val();
+            var orgRep = await db.EmployerSupervisors.Include(n => n.EmployerSuperSetup).
+                Where(employerName => employerName.EmployerSuperSetup.Id == employerName.Id).ToListAsync();
+
+            @:AddOrgRepName('@item.Name', '@item.Id');
+        }
+    }
     function MyFunctionCommDate() {
         $('#complete_Date').val("");
         $('#duration').val("");
@@ -261,6 +293,45 @@
         const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
         var noDays = diffDays + ' ' + "Days";
         $('#duration').val(noDays);
+    }
+    function MyFunctionOrganName() {
+        var orgNameId = document.getElementById('orgNameId').value;
+        var d = {
+                "Id": orgNameId
+            };
+        var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/EmployerSuperSetups/' + orgNameId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    var orgAddress = data['address1']
+                    var orgPhone = data['phoneNo'];
+                    var orgEmail = data['email'];
+                    var areaOffice = data['areaOffice']['description'];
+                    var areaOfficeId = data['areaOfficeId'];
+
+                    $('#orgAddress').val(orgAddress);
+                    $('#orgPhone').val(orgPhone);
+                    $('#orgEmail').val(orgEmail);
+                    $('#orgAreaITF').val(areaOffice);
+                    $('#orgAreaITFId').val(areaOfficeId);
+                    onSelectedOrg();
+                },
+            });
+
     }
 </script>
 

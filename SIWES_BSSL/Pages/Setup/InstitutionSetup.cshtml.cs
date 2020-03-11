@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SIWES_BSSL
 {
-    public class DailyActivitiesModel : PageModel
+    public class InstitutionSetupModel : PageModel
     {
         public void OnGet()
         {
