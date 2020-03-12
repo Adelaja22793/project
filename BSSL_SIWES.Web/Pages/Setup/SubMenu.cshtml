@@ -30,7 +30,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-search"></i></span>
                                             </div>
-                                            <input id="mainMenu" placeholder="Search Menu Name With Keyword" style="height:30px;" class="form-control" type="text">
+                                            <input id="mainMenu" placeholder="Search Menu Name With Keyword" style="height:30px;" onchange="MyFunctionSubMenu()" class="form-control" type="text">
                                             <input id="mainMenuId" type="hidden"/>
                                             @*<select asp-for="SubMenu.Menu.Id" class="form-control"
                                                     asp-items="ViewBag.MenuId" id="combobox">
@@ -177,7 +177,7 @@
                 return false;
             }
         });
-
+        
         $("#btnShowModal").click(function () {
             $('#monthname').html("SETUP NEW SUB-MENU");
             $('#mainMenu').val("");
@@ -190,6 +190,9 @@
             $("#loginModal").modal('show');
             document.getElementById('BtnEditSubMenu').style.display = "none";
             document.getElementById('BtnSubMenu').style.display = "inline-block";
+
+            $('#subMenu').prop("readonly", true);
+            $('#pageURL').prop("readonly", true);
         });
         $("#btnHideModal").click(function () {
             $("#loginModal").modal('hide');
@@ -393,6 +396,37 @@
         });
 
     })
+    function MyFunctionSubMenu() {
+        alert("sss");
+        var menuId = document.getElementById('mainMenu').value;
+        alert(menuId);
+        var d = {
+                "Id": menuId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/Menu/' + menuId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                
+                $('#subMenu').prop("readonly", false);
+                $('#pageURL').prop("readonly", false);
+                    
+            },
+        });
+
+    }
 </script>
 
 @section Scripts {

@@ -37,5 +37,12 @@ namespace SiwesData.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Data.Menu.Menu>().HasIndex(b => b.Name).IsUnique();
+            base.OnModelCreating(builder);
+            
+        }
     }
 }

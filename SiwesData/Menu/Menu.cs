@@ -9,7 +9,6 @@ namespace SiwesData.Data.Menu
     public class Menu
     {
         public int Id { get; set; }
-        public int Namecode { get; set; }
         public string Name { get; set; }
         public ICollection<SubMenu> SubMenus { get; set; }
     }
