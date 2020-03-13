@@ -9,28 +9,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SiwesData;
+using SiwesData.Menu;
 
 namespace BSSL_SIWES.Web
 {
     public class SubMenuModel : PageModel
     {
 
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        public SubMenuModel(SiwesData.Data.ApplicationDbContext context,
+        public SubMenuModel(SiwesData.ApplicationDbContext context,
             UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        public List<SiwesData.Data.Menu.Menu> MenuList { get; set; }
-        public List<SiwesData.Data.Menu.SubMenu> SubMenus { get; set; }
-        public IList<SiwesData.Data.Menu.SubMenu> MainSubMenu { get; set; }
+        public List<Menu> MenuList { get; set; }
+        public List<SubMenu> SubMenus { get; set; }
+        public IList<SubMenu> MainSubMenu { get; set; }
         [BindProperty]
-        public SiwesData.Data.Menu.SubMenu SubMenu { get; set; }
+        public SubMenu SubMenu { get; set; }
         public string SubMenuName { get; set; }
-        public IList<SiwesData.Data.Menu.Menu> Menus { get; set; }
+        public IList<Menu> Menus { get; set; }
         public string Message { get; set; }
         public string PageURL { get; set; }
         public async Task OnGet(string pageURL = null)

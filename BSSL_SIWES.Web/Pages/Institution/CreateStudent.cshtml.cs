@@ -11,9 +11,9 @@ namespace BSSL_SIWES.Web
 {
     public class CreateStudentModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        public CreateStudentModel(SiwesData.Data.ApplicationDbContext context,
+        public CreateStudentModel(SiwesData.ApplicationDbContext context,
             UserManager<IdentityUser> userManager)
         {
             _context = context;

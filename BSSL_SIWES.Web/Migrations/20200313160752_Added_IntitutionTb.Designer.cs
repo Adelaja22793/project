@@ -10,8 +10,8 @@ using SiwesData;
 namespace BSSL_SIWES.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200312101332_Authenticating_Menu_Table_Columns")]
-    partial class Authenticating_Menu_Table_Columns
+    [Migration("20200313160752_Added_IntitutionTb")]
+    partial class Added_IntitutionTb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,7 +221,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Employer.EmployerSuperSetup", b =>
+            modelBuilder.Entity("SiwesData.Employer.EmployerSuperSetup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -277,7 +277,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("EmployerSuperSetups");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Employer.EmployerSupervisor", b =>
+            modelBuilder.Entity("SiwesData.Employer.EmployerSupervisor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -318,7 +318,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("EmployerSupervisors");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Menu.Menu", b =>
+            modelBuilder.Entity("SiwesData.Menu.Menu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -337,7 +337,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("Menu");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Menu.MenuAccess", b =>
+            modelBuilder.Entity("SiwesData.Menu.MenuAccess", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -357,7 +357,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("MenuAccess");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Menu.SubMenu", b =>
+            modelBuilder.Entity("SiwesData.Menu.SubMenu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -380,7 +380,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("SubMenu");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.AgencySuperSetup", b =>
+            modelBuilder.Entity("SiwesData.Setup.AgencySuperSetup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -440,7 +440,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("AgencySuperSetup");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.AreaOffice", b =>
+            modelBuilder.Entity("SiwesData.Setup.AreaOffice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -458,7 +458,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("AreaOffices");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.CourseGrpSetup", b =>
+            modelBuilder.Entity("SiwesData.Setup.CourseGrpSetup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -487,7 +487,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("CourseGrpSetup");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.Courses", b =>
+            modelBuilder.Entity("SiwesData.Setup.Courses", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -513,7 +513,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.InstCarryCap", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstCarryCap", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -552,7 +552,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("InstCarryCap");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.InstCatSetup", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstCatSetup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -573,7 +573,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("InstCatSetup");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.InstLevelStudy", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstLevelStudy", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -599,7 +599,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("InstLevelStudy");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.InstTypeSetup", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstTypeSetup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -627,7 +627,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("InstTypeSetup");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.Institution", b =>
+            modelBuilder.Entity("SiwesData.Setup.Institution", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -692,7 +692,79 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("Institution");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.LGA", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstitutionOfficer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AccountNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateActivated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deactivate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IntOfficerDesig")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IntOfficerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NationalityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NumberOfStudent")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OfficerType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StatesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SwitchCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstitutionId");
+
+                    b.HasIndex("NationalityId");
+
+                    b.HasIndex("StatesId");
+
+                    b.ToTable("InstitutionOfficers");
+                });
+
+            modelBuilder.Entity("SiwesData.Setup.LGA", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -712,7 +784,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("LGAs");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.Nationality", b =>
+            modelBuilder.Entity("SiwesData.Setup.Nationality", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -727,7 +799,27 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("Nationalities");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.PolicyTb", b =>
+            modelBuilder.Entity("SiwesData.Setup.NewCourseRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InstitiutionOfficerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstitiutionOfficerId");
+
+                    b.ToTable("NewCourseRequests");
+                });
+
+            modelBuilder.Entity("SiwesData.Setup.PolicyTb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -766,7 +858,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("PolicyTb");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.State", b =>
+            modelBuilder.Entity("SiwesData.Setup.State", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -786,7 +878,61 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("States");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Students.Scaf", b =>
+            modelBuilder.Entity("SiwesData.Setup.SupervisoryAgency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AgencyOfficerDesig")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AgencyOfficerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AgencySuperSetupId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateActivated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deactivate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NationalityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StatesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgencySuperSetupId");
+
+                    b.HasIndex("NationalityId");
+
+                    b.HasIndex("StatesId");
+
+                    b.ToTable("SupervisoryAgencies");
+                });
+
+            modelBuilder.Entity("SiwesData.Students.Scaf", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -823,7 +969,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("Scafs");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Students.StudentSetUp", b =>
+            modelBuilder.Entity("SiwesData.Students.StudentSetUp", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -920,133 +1066,176 @@ namespace BSSL_SIWES.Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Employer.EmployerSuperSetup", b =>
+            modelBuilder.Entity("SiwesData.Employer.EmployerSuperSetup", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.AreaOffice", "AreaOffice")
+                    b.HasOne("SiwesData.Setup.AreaOffice", "AreaOffice")
                         .WithMany()
                         .HasForeignKey("AreaOfficeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Employer.EmployerSupervisor", b =>
+            modelBuilder.Entity("SiwesData.Employer.EmployerSupervisor", b =>
                 {
-                    b.HasOne("SiwesData.Data.Employer.EmployerSuperSetup", "EmployerSuperSetup")
+                    b.HasOne("SiwesData.Employer.EmployerSuperSetup", "EmployerSuperSetup")
                         .WithMany()
                         .HasForeignKey("EmployerSuperSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Menu.MenuAccess", b =>
+            modelBuilder.Entity("SiwesData.Menu.MenuAccess", b =>
                 {
-                    b.HasOne("SiwesData.Data.Menu.SubMenu", "SubMenu")
+                    b.HasOne("SiwesData.Menu.SubMenu", "SubMenu")
                         .WithMany()
                         .HasForeignKey("SubMenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Menu.SubMenu", b =>
+            modelBuilder.Entity("SiwesData.Menu.SubMenu", b =>
                 {
-                    b.HasOne("SiwesData.Data.Menu.Menu", "Menu")
+                    b.HasOne("SiwesData.Menu.Menu", "Menu")
                         .WithMany("SubMenus")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.CourseGrpSetup", b =>
+            modelBuilder.Entity("SiwesData.Setup.CourseGrpSetup", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.InstTypeSetup", "InstTypeSetup")
+                    b.HasOne("SiwesData.Setup.InstTypeSetup", "InstTypeSetup")
                         .WithMany()
                         .HasForeignKey("InstTypeSetupId");
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.Courses", b =>
+            modelBuilder.Entity("SiwesData.Setup.Courses", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.CourseGrpSetup", "CourseGrpSetup")
+                    b.HasOne("SiwesData.Setup.CourseGrpSetup", "CourseGrpSetup")
                         .WithMany()
                         .HasForeignKey("CourseGrpSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.InstLevelStudy", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstLevelStudy", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.InstTypeSetup", "InstTypeSetup")
+                    b.HasOne("SiwesData.Setup.InstTypeSetup", "InstTypeSetup")
                         .WithMany()
                         .HasForeignKey("InstTypeSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.InstTypeSetup", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstTypeSetup", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.AgencySuperSetup", "AgencySuperSetup")
+                    b.HasOne("SiwesData.Setup.AgencySuperSetup", "AgencySuperSetup")
                         .WithMany()
                         .HasForeignKey("AgencySuperSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiwesData.Data.Setup.InstCatSetup", "InstCatSetup")
+                    b.HasOne("SiwesData.Setup.InstCatSetup", "InstCatSetup")
                         .WithMany("InstTypes")
                         .HasForeignKey("InstCatSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.Institution", b =>
+            modelBuilder.Entity("SiwesData.Setup.Institution", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.InstTypeSetup", "InstTypeSetup")
+                    b.HasOne("SiwesData.Setup.InstTypeSetup", "InstTypeSetup")
                         .WithMany()
                         .HasForeignKey("InstTypeSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.LGA", b =>
+            modelBuilder.Entity("SiwesData.Setup.InstitutionOfficer", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.State", "State")
+                    b.HasOne("SiwesData.Setup.Institution", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SiwesData.Setup.Nationality", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId");
+
+                    b.HasOne("SiwesData.Setup.State", "States")
+                        .WithMany()
+                        .HasForeignKey("StatesId");
+                });
+
+            modelBuilder.Entity("SiwesData.Setup.LGA", b =>
+                {
+                    b.HasOne("SiwesData.Setup.State", "State")
                         .WithMany()
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Setup.State", b =>
+            modelBuilder.Entity("SiwesData.Setup.NewCourseRequest", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.Nationality", "Nationality")
+                    b.HasOne("SiwesData.Setup.InstitutionOfficer", "InstitiutionOfficer")
+                        .WithMany()
+                        .HasForeignKey("InstitiutionOfficerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SiwesData.Setup.State", b =>
+                {
+                    b.HasOne("SiwesData.Setup.Nationality", "Nationality")
                         .WithMany("States")
                         .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Students.Scaf", b =>
+            modelBuilder.Entity("SiwesData.Setup.SupervisoryAgency", b =>
                 {
-                    b.HasOne("SiwesData.Data.Employer.EmployerSuperSetup", "EmployerSuperSetup")
+                    b.HasOne("SiwesData.Setup.AgencySuperSetup", "AgencySuperSetup")
+                        .WithMany()
+                        .HasForeignKey("AgencySuperSetupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SiwesData.Setup.Nationality", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId");
+
+                    b.HasOne("SiwesData.Setup.State", "States")
+                        .WithMany()
+                        .HasForeignKey("StatesId");
+                });
+
+            modelBuilder.Entity("SiwesData.Students.Scaf", b =>
+                {
+                    b.HasOne("SiwesData.Employer.EmployerSuperSetup", "EmployerSuperSetup")
                         .WithMany()
                         .HasForeignKey("EmployerSuperSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiwesData.Data.Students.StudentSetUp", "StudentSetUp")
+                    b.HasOne("SiwesData.Students.StudentSetUp", "StudentSetUp")
                         .WithMany()
                         .HasForeignKey("StudentSetUpId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SiwesData.Data.Students.StudentSetUp", b =>
+            modelBuilder.Entity("SiwesData.Students.StudentSetUp", b =>
                 {
-                    b.HasOne("SiwesData.Data.Setup.Courses", "Courses")
+                    b.HasOne("SiwesData.Setup.Courses", "Courses")
                         .WithMany()
                         .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiwesData.Data.Setup.Institution", "Institution")
+                    b.HasOne("SiwesData.Setup.Institution", "Institution")
                         .WithMany()
                         .HasForeignKey("InstitutionId")
                         .OnDelete(DeleteBehavior.Cascade)

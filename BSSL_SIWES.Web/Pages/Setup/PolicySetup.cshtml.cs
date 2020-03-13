@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SiwesData.Data;
-using SiwesData.Data.Setup;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web
 {
     public class PolicySetupModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
 
-        public PolicySetupModel(SiwesData.Data.ApplicationDbContext context)
+        public PolicySetupModel(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }

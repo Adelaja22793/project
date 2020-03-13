@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data.Students;
+using SiwesData.Employer;
+using SiwesData.Setup;
+using SiwesData.Students;
 
 namespace BSSL_SIWES.Web
 {
     public class Scaff_FormModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public Scaff_FormModel(SiwesData.Data.ApplicationDbContext context,
+        public Scaff_FormModel(SiwesData.ApplicationDbContext context,
             UserManager<IdentityUser> userManager)
         {
             _context = context;
@@ -24,11 +26,11 @@ namespace BSSL_SIWES.Web
         public StudentSetUp StudentSetUp { get; set; }
         [BindProperty]
         public Scaf Scafs  { get; set; }
-        public List<SiwesData.Data.Employer.EmployerSuperSetup> EmployerSuperSetup { get; set; }
-        public List<SiwesData.Data.Employer.EmployerSupervisor> EmployerSupervisor { get; set; }
+        public List<EmployerSuperSetup> EmployerSuperSetup { get; set; }
+        public List<EmployerSupervisor> EmployerSupervisor { get; set; }
         //public Data.set.EmployerSupervisor EmployerSupervisor { get; set; }
-        public SiwesData.Data.Setup.Institution Institution { get; set; }
-        public SiwesData.Data.Setup.CourseGrpSetup CourseGrp { get; set; }
+        public Institution Institution { get; set; }
+        public CourseGrpSetup CourseGrp { get; set; }
         public string Message { get; set; }
         public string StudentName { get; set; }
         public async Task<IActionResult> OnGetAsync(int id)
