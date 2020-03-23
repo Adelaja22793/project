@@ -3,395 +3,218 @@
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity;
 @model BSSL_SIWES.Web.MenuModel
+
 @{
     ViewData["Title"] = "Menu";
 }
 
-<div class="content-wrapper" id="newtab">
-    <div class="container-fluid" style="min-height:50px">
-        <div class="col-md-12">
-            <button id="btnShowModal" type="button" style="margin-left:350px"
-                    class="btn btn-sm btn-default pull-left col-lg-3 button button4">
-                Add More Menu
-            </button>
-            <div class="modal fade" tabindex="-1" id="loginModal"
-                 data-keyboard="false" data-backdrop="static">
-                <div class="modal-dialog modal-lg" style="width:40%; margin-left:35%;">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color:steelblue">
-                            <h4 class="modal-title" id="monthname" style="margin-left:120px">Setup New Menu</h4>
-                            <button type="button" class="close" data-dismiss="modal">
-                                ×
-                            </button>
+<div class="content-wrapper" style="margin-top:-50px">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">SetUp Menus</h3>
                         </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Menu Name</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            </div>
-                                            <input asp-for="Menu.Name" id="myMenu" style="height:30px;" class="form-control" type="text">
-                                            <input id="myMenuhdd" class="form-control" type="hidden">
+                        <form>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <div class="form-group">
                                             <input asp-for="Menu.Id" id="myidd" type="hidden" class="form-control" />
-                                            <input id="rowIndex" type="hidden" class="form-control" />
-                                            <span asp-validation-for="Menu.Name" class="text-danger replace"></span>
+                                            <input type="hidden" id="menuhdd" class="form-control"/>
+                                            <input type="hidden" id="rowIndex" class="form-control" />
+                                            <label asp-for="Menu.Name" class="control-label"></label>
+                                            <input asp-for="Menu.Name" id="MENUNAME" class="form-control" />
+                                            <span asp-validation-for="Menu.Name" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
+                               
+                                    <div class="form-group">
+                                        <button type="submit" id="BtnMenu" style="width:300px" class="btn btn-primary button button4">SUBMIT</button>
+
+                                        <button type="submit" id="BtnUpdate" style="width:300px; display:none" class="btn btn-primary button button4">UPDATE</button>
+                                    </div>
+                               
                             </div>
+                        </form>
+                        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                            <table id="tabId" class="table table-bordered" border="0">
+                                <thead style="background-color:steelblue;">
+                                    <tr>
+                                        <th style="width:6%; text-align:center">Actions</th>
+                                        <th style="width:0.25%; text-align:center">S/N</th>
+                                        <th style="width:30%; text-align:center">MenuName</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @for (int i = 0; i < Model.Menus.Count; i++)
+                                    {
+                                        var items = Model.Menus[i];
+                                      
+                                    <tr>
+                                        <td style="width:6%;">
+                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <a id="myEdit"  AddreEdit="@i" asp-route-id="@items.Id">Select</a>
+                                        </td>
+                                        <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                        <td class="titleclass @i" style="width:30%; text-align:left">@items.Name</td>
+
+
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+
                         </div>
-                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                            <button type="submit" id="BtnSaveMenu" class="btn btn-primary button button4">Save Menu</button>
-                            <button type="submit" style="display:none;" id="BtnDeleteMenu" class="btn btn-primary button button4">Delete Menu</button>
-                            <button type="submit" style="display:none;" id="BtnEditMenu" class="btn btn-primary button button4">Update Menu</button>
-                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
-                                Hide
-                            </button>
-                        </div>
+                   
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div style="display:table; margin:0 auto; width:100%; font-size:medium">
-                    <table id="tabId" class="table table-bordered" border="0">
-                        <thead style="background-color:steelblue;">
-                            <tr>
-                                <th style="width:0.25%; text-align:center">S/N</th>
-                                <th style="width:20%; text-align:center">Menu Name</th>
-                                <th style="width:20%; text-align:center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.Menus.Count; i++)
-                            {
-                                var items = Model.Menus[i];
-                                //var news = await db.Customers
-
-                                <tr>
-                                    <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                    <td class="nameclass @i" style="width:20%; text-align:left">@items.Name</td>
-
-                                    <td style="width:20%;">
-                                        <input type="hidden" class="readid @i" value="@items.Id">
-                                        <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a> |
-                                        <a id="myDelete" AddreDelete="@i" asp-route-id="@items.Id">Delete</a>
-                                    </td>
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
         </div>
-    </div>
+    </section>
 </div>
-@*//}*@
-<style>
-    .button {
-        background-color: #4CAF50; /* Green */
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
 
-    .button1 {
-        border-radius: 2px;
-    }
 
-    .button2 {
-        border-radius: 4px;
-    }
 
-    .button3 {
-        border-radius: 8px;
-    }
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
 
-    .button4 {
-        border-radius: 12px;
-    }
-
-    .button5 {
-        border-radius: 50%;
-    }
-</style>
-
-<!-- page script -->
 <script type="text/javascript">
+
     $(document).ready(function () {
-        $("#btnShowModal").click(function () {
-            $('#monthname').html("SETUP NEW MENU");
-            $('#myMenu').val("");
-            $("#loginModal").modal('show');
-            document.getElementById('BtnEditMenu').style.display = "none";
-            document.getElementById('BtnDeleteMenu').style.display = "none";
-            document.getElementById('BtnSaveMenu').style.display = "inline-block";
-        });
-        $("#btnHideModal").click(function () {
-            $("#loginModal").modal('hide');
-        });
+        function formClear() {           
+            $("#MENUNAME").val("");  
+        }
+        var serialNo;
         $("#tabId").on('click', '#myEdit', function () {
-            $('#monthname').html("EDIT/UPDATE MENU");
-            var currentRow=$(this).closest("tr");
-            var selectedIndex=currentRow.find("td:eq(0)").html(); // get current row 1st TD value
-
-            $("#loginModal").modal('show');
+            $("#BtnMenu").hide()
+            $("#BtnUpdate").show()
+            var currentRow = $(this).closest("tr");
+            var selectedIndex = currentRow.find("td:eq(0)").html(); 
             var editindex = $(this).attr('AddreEdit');
-            var menuName = $('.nameclass.' + editindex).text();
-            var myid = $('.readid.' + editindex).val();
-             //alert(editindex);
-            document.getElementById('BtnEditMenu').style.display = "inline-block";
-            document.getElementById('BtnDeleteMenu').style.display = "none";
-            document.getElementById('BtnSaveMenu').style.display = "none";
-
-            $('#myMenu').val(menuName);
-            $('#myMenuhdd').val(menuName);
-            $('#myidd').val(myid);
+            var menuname = $('.titleclass.' + editindex).text();
+            var myid = $('.readid.' + editindex).val();       
+            $('#MENUNAME').val(menuname);       
+            $('#myidd').val(myid);       
             $('#rowIndex').val(selectedIndex);
-            alert(selectedIndex);
 
+             serialNo = $(this).closest('tr').find('.se_no').text();
+
+            //alert($('#rowIndex').val());
             return false;
 
         });
-        $('#BtnSaveMenu').on('click', function () {
-            var myMenu = $('#myMenu').val();
-            if (myMenu == "") {
-                alert("PLEASE ENTER A MENU NAME");
-                return false;
-            }
-             var d = {
-                "MenuName": myMenu
+        $('#BtnMenu').on('click', function (e) {
+            e.preventDefault();
+            
+            var menuname = document.getElementById('MENUNAME').value;
+           
+            var d = {
+                "Name": menuname,         
             };
-            var confirmation = confirm("ARE YOU SURE YOU WANT TO ADD '" + myMenu.toUpperCase() + "' THIS MENU ?");
-            if (confirmation === false) {
-                return false;
-            }
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "POST",
-                url:  baseUrl + '/Api/Menus',
+                url: baseUrl + '/Api/Menus',
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true
                 },
+                
                 contentType: "application/json; charset=utf-8",
                 error: function (data) {
                     alert(data.responseText);
-                    //console.log(data);
+
                 },
                 failure: function (data) {
                     alert(data.responseText);
                 },
                 success: function (data) {
-
-                    alert("" + myMenu.toUpperCase() + " WAS SUCCESSFULLY ADDED TO MENU");
-
-                    $("#loginModal").modal('hide');
-
-                    console.log(data);
+               
+                    alert("Succesfully");   
                     var myid = data['id'];
-                    var menuName = data['name']
-                    var html = "";
-                    var rowCount = $('#tabId tr').length;
-
-
-                        html = `<tr>
-                                <td class="se_no" style="width:0.25%; text-align:left">${rowCount}</td>
-                                <td class="nameclass" style="width:20%; text-align:left">${menuName}</td>
-                                <td style="width:20%;" class="action">
-                                <a href="/Setup/Menu/Edit?id=${myid}">Edit</a> |
-                                <a href="/Setup/Menu/Delete?id=${myid}">Delete</a></td>
-                                </tr>`
+                    var nam = data['name'];
+                   
+                    
+                    var rowNumber = $('#tabId tr').length;
+                    var html = `<tr>
+                        <td style="width:6%;" class="action">
+                        <a id=${myid}">Select</a>  
+                        </td>
+                        <td class="se_no" style="width:3%; text-align:left">${rowNumber}</td>
+                        <td style="width:30%; text-align:left">${menuname}</td>
+                        
+                    </tr>`
 
                     $('#tabId').append(html);
+                    formClear();
+
                 },
             });
         });
-        //End of AJAX error function
-        $('#BtnEditMenu').on('click', function () {
-            var myMenu = document.getElementById('myMenu').value;
-            var myMenuhdd = document.getElementById('myMenuhdd').value;
+        $('#BtnUpdate').on('click', function (e) {
+            e.preventDefault();
+
+            //var myName = document.getElementById('MENUNAME').value;
+            var menuName = document.getElementById('MENUNAME').value;
             var editindex = document.getElementById('myidd').value;
-           alert(editindex); alert(myMenu);
+            //var rowIndex = $('#rowIndex').val();  
+           // alert(editindex); alert(menuName);
 
+            var t = serialNo - 1;
             var d = {
-                "MenuName": myMenu,
-
-            };
-            var confirmation = confirm("ARE YOU SURE YOU WANT TO EDIT '" + myMenuhdd.toUpperCase() + "' TO '" + myMenu.toUpperCase() + "' ?");
-            if (confirmation === false) {
-                return false;
-            }
+                "Id":   Number(editindex),
+                "Name": menuName,
+               
+            };          
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "PUT",
                 url: baseUrl + '/Api/Menus/ ' + editindex,
                 data: JSON.stringify(d),
+               
                 xhrFields: {
                     withCredentials: true
                 },
-                contentType: "application/json; charset=utf-8",
-                error: function (data) {
-                    alert(data.responseText);
-
-                },
-                failure: function (data) {
-                    alert(data.responseText);
-                },
-                success: function (data) {
-                    var actu = data['name'];
-                    alert("MENU WAS SUCCESSFULLY UPDATED");
-                    $("#loginModal").modal('hide');
-
-                    //get row index
-                    var rowIndex = $('#rowIndex').val();
-                    var t = rowIndex - 1;
-                    var cntrl  = $('.nameclass.' + t);
-                    cntrl.html(actu);
-                },
-            });
-        });
-
-        $("#tabId").on('click', '#myDelete', function () {
-            $('#monthname').html("REMOVE/DELETE MENU");
-            var currentRow = $(this).closest("tr");
-            var selectedIndex = currentRow.find("td:eq(0)").html(); // get current row 1st TD value
-
-            $("#loginModal").modal('show');
-            var editindex = $(this).attr('AddreDelete');
-            var menuName = $('.nameclass.' + editindex).text();
-            var myid = $('.readid.' + editindex).val();
-
-            document.getElementById('BtnEditMenu').style.display = "none";
-            document.getElementById('BtnDeleteMenu').style.display = "inline-block";
-            document.getElementById('BtnSaveMenu').style.display = "none";
-
-            $('#myMenu').val(menuName);
-            $('#myMenuhdd').val(menuName);
-            $('#myidd').val(myid);
-            $('#rowIndex').val(selectedIndex);
-            $('#myMenu').prop("readonly", true);
-
-            alert($('#myMenu').val());
-            alert($('#myMenuhdd').val());
-            alert($('#myidd').val());
-            alert($('#rowIndex').val());
-
-            return false;
-        });
-
-        $('#BtnDeleteMenu').on('click', function () {
-
-            //var editindex = $(this).attr('AddreDelete');
-            var editindex = document.getElementById('myidd').value;
-            var myMenu = document.getElementById('myMenu').value;
-            //alert(editindex);
-            var d = {
-                "MenuName": myMenu,
-            };
-            var confirmation = confirm("ARE YOU SURE YOU WANT TO DELETE '" + myMenu.toUpperCase() + " MENU ?");
-            if (confirmation === false) {
-                return false;
-            }
-            var baseUrl = window.location.origin;
-            $.ajax({
-                type: "Delete",
-                url: baseUrl + '/Api/Menus/ ' + editindex,
-                data: JSON.stringify(d),
-                xhrFields: {
-                    withCredentials: true
-                },
+                
                 contentType: "application/json; charset=utf-8",
                 error: function (data) {
                     alert(data.responseText);
                 },
+                
                 failure: function (data) {
                     alert(data.responseText);
                 },
+                
                 success: function (data) {
+                    alert("Update Successful");
+                    console.log(data);
                     var myid = data['id'];
-                    console.log(data);
-                    alert("" + myMenu.toUpperCase() + " MENU WAS SUCCESSFULLY DELETED");
-                    $("#loginModal").modal('hide');
-                    var rowIndex = $('#rowIndex').val();
-                    //var t = rowIndex - 1;
-                    var siblings = rowIndex.siblings();
-                    rowIndex.remove();
-                    siblings.each(function (index) {
-                        $(this).children().first().text(index);
-                    });
-                    //location.reload();
+                    
+                    var sub = data['name'];       
+                    var w = $('.titleclass.' + t);
+                    var p = data['name'];
+                   
+                    
+                    w.text(p);
+                    formClear();
+
                 },
             });
-
         });
-
-        $("#tabIdssssssssssss").on('click', '#myDelete', function () {
-            $('#monthname').html("REMOVE/DELETE MENU");
-            var currentRow = $(this).closest("tr");
-            var selectedIndex = currentRow.find("td:eq(0)").html(); // get current row 1st TD value
-            var siblingsss = currentRow.siblings();
-            alert(siblingsss);
-            //$("#loginModal").modal('show');
-            var editindex = $(this).attr('AddreDelete');
-            var menuName = $('.nameclass.' + editindex).text();
-            var myid = $('.readid.' + editindex).val();
-
-            var d = {
-                "Name": menuName,
-                "Id": myid,
-            };
-            var confirmation = confirm("ARE YOU SURE YOU WANT TO DELETE '" + menuName.toUpperCase() + " MENU ?");
-            if (confirmation === false) {
-                return false;
-            }
-            var baseUrl = window.location.origin;
-            $.ajax({
-                type: "Delete",
-                url: baseUrl + '/Api/Menus/ ' + myid,
-                data: JSON.stringify(d),
-                xhrFields: {
-                    withCredentials: true
-                },
-                contentType: "application/json; charset=utf-8",
-                error: function (data) {
-                    alert("gdgdcgcgcg");
-                    console.log(data);
-                    alert(data.responseText);
-                },
-                failure: function (data) {
-
-                       alert("bfdrsrdsdsrdstdrsrdtdstre");
-                    alert(data.responseText);
-                },
-                success: function (data) {
-                    console.log(data);
-                    alert(menuName.toUpperCase() + " MENU WAS SUCCESSFULLY DELETED");
-                    var siblings = currentRow.siblings();
-                    currentRow.remove();
-                    siblings.each(function (index) {
-                        $(this).children().first().text(index);
-                    });
-                },
-            });
-
-        });
-
-    })
+     
+    });
+        
 </script>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 
