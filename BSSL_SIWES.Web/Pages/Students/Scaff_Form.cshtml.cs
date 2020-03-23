@@ -40,22 +40,28 @@ namespace BSSL_SIWES.Web
             {
                 return RedirectToPage("./AcBiodata");
             }
-            EmployerSuperSetup = await _context.EmployerSuperSetups.ToListAsync();
+            //EmployerSuperSetup = await _context.EmployerSuperSetups.ToListAsync();
 
-            EmployerSupervisor = await _context.EmployerSupervisors.Include(e =>e.EmployerSuperSetup)
-                .Where(employerName => employerName.EmployerSuperSetup.Id == employerName.Id).ToListAsync();
+            //EmployerSupervisor = await _context.EmployerSupervisors.Include(e =>e.EmployerSuperSetup)
+            //    .Where(employerName => employerName.EmployerSuperSetup.Id == employerName.Id).ToListAsync();
 
-            StudentSetUp = await _context.StudentSetUps.Include( x => x.Courses).Include(x =>x.Institution)
-                .Where(x => x.Id == id && x.Courses.Id == x.CoursesId && x.Institution.Id == x.InstitutionId).FirstOrDefaultAsync();
+            //StudentSetUp = await _context.StudentSetUps.Include( x => x.Courses).Include(x =>x.Institution)
+            //    .Where(x => x.Id == id && x.Courses.Id == x.CoursesId && x.Institution.Id == x.InstitutionId).FirstOrDefaultAsync();
 
-            StudentName = StudentSetUp.Surname + ' ' + StudentSetUp.OtherNames;
-            if (StudentSetUp == null)
-            {
-                return NotFound();
-            }
+            //StudentName = StudentSetUp.Surname + ' ' + StudentSetUp.OtherNames;
+            //if (StudentSetUp == null)
+            //{
+            //    return NotFound();
+            //}
 
             return Page();
 
         }
+       
+        //public ActionResult OnPostDownloadFile()
+        //{
+        //    return File("/downloads/Scaf.pdf", "application/octet-stream",
+        //                "NewName34.pdf");
+        //}
     }
 }
