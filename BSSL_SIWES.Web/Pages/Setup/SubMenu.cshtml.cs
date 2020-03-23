@@ -6,15 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data.Menu;
+using SiwesData;
+using SiwesData.Menu;
 
 namespace BSSL_SIWES.Web
 {
     public class SubmenuModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
 
-        public SubmenuModel(SiwesData.Data.ApplicationDbContext context)
+        public SubmenuModel(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }

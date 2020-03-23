@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 //using SiwesData.Data;
-using SiwesData.Data.Menu;
+using SiwesData.Menu;
 
 namespace BSSL_SIWES.Web.API
 {
@@ -18,8 +18,8 @@ namespace BSSL_SIWES.Web.API
         {
             public string MenuName { get; set; }
         }
-        private readonly SiwesData.Data.ApplicationDbContext _context;
-        public MenusController(SiwesData.Data.ApplicationDbContext context)
+        private readonly SiwesData.ApplicationDbContext _context;
+        public MenusController(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -28,16 +28,19 @@ namespace BSSL_SIWES.Web.API
         [HttpGet]
         public List<Menu> GetMenu()
         {
-            var MenuList = _context.Menu.Where(x => x.Name.Contains('e')).ToList();
+            var MenuList = _context.Menu.ToList();
 
             return MenuList;
         }
 
         // GET: api/Menus/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Menu>> GetMenu(int id)
+        public async Task<ActionResult<Menu>> GetMenu(int? id)
         {
-
+            if (id == null)
+            {
+                return BadRequest("MenuId is Empty");
+            }
             try
             {
                 var menu = await _context.Menu.FindAsync(id);

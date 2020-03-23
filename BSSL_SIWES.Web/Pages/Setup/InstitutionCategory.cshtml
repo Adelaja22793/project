@@ -18,21 +18,16 @@
                 <div class="card-body">
                     <div id="divinput">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Institution Category Code</label>
                                     <input type="text" class="form-control" id="txtcode">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-7">
                                 <div class="form-group">
                                     <label>Institution Category Name</label>
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                        </div>
                                         <input type="text" class="form-control" id="txtname">
                                     </div>
                                 </div>
@@ -40,8 +35,9 @@
                         </div>
                     </div>
                     <!-- /.card-body -->
-                    <div id="divadd" class="justify-content-center" style="margin-left:2%; margin-bottom:1%;">
+                    <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
                         <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                        <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
                     </div>
                     <div class="row" id="divgrid">
                         <div style="display:table; margin:0 auto; width:100%; font-size:medium">
@@ -98,14 +94,7 @@
 <script src="~/css/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("divinput").hide();
-        $("divgrid").show();
-        $("#divadd").click(function () {
-            $("divinput").show();
-            $("divgrid").hide();
-            // document.getElementById('divinput').style.display = "none";
-            //document.getElementById('divgrid').style.display = "inline-block";
-        });
+
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");

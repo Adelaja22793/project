@@ -1,0 +1,181 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Setup.InstitutionStudyLevelModel
+@{
+    ViewData["Title"] = "InstitutionStudyLevel";
+}
+
+<div class="content-wrapper" style="background-color:#fff">
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Institution Level of Study Setup</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="card-body">
+                    <div id="divinput">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Institution </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.Institution" style="width: 100%; text-transform:uppercase" id="nationChange">
+                                        <option selected="selected" value="-1">-- Select Institution --</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Level Code</label>
+                                    <input type="text" class="form-control" id="txtcode">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label>Level Name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtname">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Level Duration</label>
+                                    <input type="text" class="form-control" id="txtshrtcode">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                        <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                    </div>
+                    <div class="row" id="divgrid">
+                        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                            <table id="tabId" class="table table-bordered" border="0">
+                                <thead style="background-color:steelblue;">
+                                    <tr>
+                                        <th style="width:0.25%; text-align:center">S/N</th>
+                                        <th style="width:20%; text-align:center">Level Code</th>
+                                        <th style="width:40%; text-align:center">Level Name</th>
+                                        <th style="width:20%; text-align:center">Duration</th>
+                                        <th style="width:10%; text-align:center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.InstLevelStudyList.Count; i++)
+                                    {
+                                        var items = Model.InstLevelStudyList[i];
+                                        //var news = await db.Customers
+
+                                    <tr>
+                                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                        <td class="nameclass @i" style="width:20%; text-align:left">@items.Code</td>
+                                        <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
+                                        <td class="nameclass @i" style="width:60%; text-align:left">@items.Duration</td>
+
+                                        <td style="width:5%;">
+                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
+                                        </td>
+
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="../../~/template/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+@*<script src="~/template/"></script>*@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("divinput").hide();
+        $("divgrid").show();
+        $("#divadd").click(function () {
+            $("divinput").show();
+            $("divgrid").hide();
+            // document.getElementById('divinput').style.display = "none";
+            //document.getElementById('divgrid').style.display = "inline-block";
+        });
+        function formClear() {
+            $("#txtcode").val("");
+            $("#txtname").val("");
+        }
+        $('#Btnsave').on('click', function (e) {
+            e.preventDefault();
+            var txtcode = document.getElementById('txtcode').value;
+            var txtname = document.getElementById('txtname').value;
+            var d = {
+                "Code": txtcode,
+                "Name": txtname,
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/Api/InstCatSetups',
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    var myid = data['id'];
+                    var rowNumber = $('#tabId tr').length;
+                    var html = `<tr>
+                            </td>
+                                <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
+                                <td style="width:20%; text-align:left">${txtcode}</td>
+                                <td style="width:60%; text-align:left">${txtname}</td>
+
+                                <td style="width:5%;" class="action">
+                                <input type="hidden" value=${myid}>
+                                <a href="/Setupmenu/Edit?id=${myid}">Edit</a>
+
+                            </td>
+                            </tr>`
+                    $('#tabId').append(html);
+                    formClear();
+
+                },
+            });
+        });
+    })
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

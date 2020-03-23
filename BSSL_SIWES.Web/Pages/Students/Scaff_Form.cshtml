@@ -1,25 +1,23 @@
 ﻿@page
-@inject SiwesData.Data.ApplicationDbContext db
+@inject SiwesData.ApplicationDbContext db
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity;
 @model BSSL_SIWES.Web.Scaff_FormModel
 @{
     ViewData["Title"] = "Scaff_Form";
 }
-<div class="content-wrapper" style="margin-top:0.5%">
-    <div class="row">
-        <div class="col-md-12">
+<div class="col-md-12">
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Student Commencement of Attachment Form (SCAF)</h3>
+                    <h3 class="card-title">Student Commencement dfsdfsdsfd of Attachment Form (SCAF)</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form role="form">
                     <div class="card-body">
                         <div class="justify-content-center" style="float:right;">
-                            <button type="submit" class="btn btn-warning">Download SCAF</button>
+                            <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
                         </div>
                         <p style="clear:both"></p>
                         <div class="row" style="display:none">
@@ -223,12 +221,7 @@
                 </form>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- jQuery -->
-
-
+ 
 <script type="text/javascript">
      var orgName = [];
     var orgRepName = [];
@@ -293,6 +286,24 @@
         const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
         var noDays = diffDays + ' ' + "Days";
         $('#duration').val(noDays);
+        $(function () {
+        $("#scafForm").click(function () {
+            $.ajax(
+            {
+                url: '@Url.Action("download", "PostDetail")',
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
+                data: {
+                    studentId: 123
+                },
+                type: "GET",
+                success: function () {
+                    window.location = '@Url.Action("DownloadAttachment", "PostDetail", new { studentId = 123 })';
+                }
+            });
+
+        });
+    });
     }
     function MyFunctionOrganName() {
         var orgNameId = document.getElementById('orgNameId').value;

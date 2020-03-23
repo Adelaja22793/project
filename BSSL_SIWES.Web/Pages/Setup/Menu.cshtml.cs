@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using SiwesData.Menu;
 
 
 namespace BSSL_SIWES.Web
@@ -17,7 +18,7 @@ namespace BSSL_SIWES.Web
         {
             _context = context;
         }
-        public List<SiwesData.Data.Menu.Menu> Menus { get; set; }
+        public List<Menu> Menus { get; set; }
         [BindProperty]
         public SiwesData.Data.Menu.Menu Menu { get; set; }
 
