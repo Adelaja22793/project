@@ -5,22 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data;
 using SiwesData.Data.Menu;
 
-namespace BSSL_SIWES.Web.API
+
+namespace SIWES_BSSL.API
 {
     [Route("api/[controller]")]
     [ApiController]
     public class SubMenusController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SiwesData.Data.ApplicationDbContext _context;
 
-        public SubMenusController(ApplicationDbContext context)
+        public SubMenusController(SiwesData.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
+        public SubMenu SubMenu { get; set; }
         // GET: api/SubMenus
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SubMenu>>> GetSubMenu()
@@ -50,14 +52,12 @@ namespace BSSL_SIWES.Web.API
             {
                 return BadRequest();
             }
-            var updateSubMenu = await _context.Menu.FirstOrDefaultAsync(m => m.Id == id);
+
             _context.Entry(subMenu).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
-                return Ok(updateSubMenu);
-                //await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,7 +71,7 @@ namespace BSSL_SIWES.Web.API
                 }
             }
 
-           // return NoContent();
+            return Ok(subMenu);
         }
 
         // POST: api/SubMenus
@@ -106,3 +106,4 @@ namespace BSSL_SIWES.Web.API
         }
     }
 }
+
