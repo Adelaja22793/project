@@ -499,7 +499,7 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShortCode")
                         .HasColumnType("nvarchar(max)");
@@ -507,6 +507,10 @@ namespace BSSL_SIWES.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseGrpSetupId");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Courses");
                 });
@@ -804,15 +808,31 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ApprovedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateIn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("InstitiutionOfficerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InstitiutionOfficerId");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("NewCourseRequests");
                 });
