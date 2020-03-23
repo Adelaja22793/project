@@ -46,6 +46,8 @@ namespace SiwesData
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Menu.Menu>().HasIndex(b => b.Name).IsUnique();
+            builder.Entity<Setup.Courses>().HasIndex(b => b.Name).IsUnique();
+            builder.Entity<Setup.NewCourseRequest>().HasIndex(b => b.Name).IsUnique();
             base.OnModelCreating(builder);
             
         }
