@@ -5,6 +5,17 @@
     <UserSecretsId>aspnet-BSSL_SIWES.Web-2A172FAD-27BD-483E-997C-A91153BA0A4C</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200312163042_updateinsti.cs" />
+    <Compile Remove="Migrations\20200312163042_updateinsti.Designer.cs" />
+    <Compile Remove="Migrations\20200313115623_updateinsti.cs" />
+    <Compile Remove="Migrations\20200313115623_updateinsti.Designer.cs" />
+    <Compile Remove="Migrations\20200313120136_updateinsti.cs" />
+    <Compile Remove="Migrations\20200313120136_updateinsti.Designer.cs" />
+    <Compile Remove="Migrations\20200313120418_updateinsti.cs" />
+    <Compile Remove="Migrations\20200313120418_updateinsti.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
@@ -50,10 +61,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="Pages\Shared\_LoginPartial.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Pages\Shared\_RegLayout.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

@@ -466,10 +466,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InstTypeId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("InstTypeSetupId")
+                    b.Property<int>("InstTypeSetupId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -957,8 +954,10 @@ namespace BSSL_SIWES.Web.Migrations
             modelBuilder.Entity("SiwesData.Data.Setup.CourseGrpSetup", b =>
                 {
                     b.HasOne("SiwesData.Data.Setup.InstTypeSetup", "InstTypeSetup")
-                        .WithMany()
-                        .HasForeignKey("InstTypeSetupId");
+                        .WithMany("CourseGrpSetups")
+                        .HasForeignKey("InstTypeSetupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiwesData.Data.Setup.Courses", b =>
