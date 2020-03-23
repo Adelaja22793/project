@@ -1,16 +1,15 @@
 ﻿@page
-@model BSSL_SIWES.Web.InstitutionCategoryModel
-@using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Identity;
+@model BSSL_SIWES.Web.Pages.Setup.InstitutionStudyLevelModel
 @{
-    ViewData["Title"] = "InstitutionCategory";
+    ViewData["Title"] = "InstitutionStudyLevel";
 }
+
 <div class="content-wrapper" style="background-color:#fff">
     <div class="col-md-12">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Institution Category Setup</h3>
+                <h3 class="card-title">Institution Level of Study Setup</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -18,18 +17,39 @@
                 <div class="card-body">
                     <div id="divinput">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Institution Category Code</label>
+                                    <label for="exampleInputFile">Institution </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.Institution" style="width: 100%; text-transform:uppercase" id="nationChange">
+                                        <option selected="selected" value="-1">-- Select Institution --</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Level Code</label>
                                     <input type="text" class="form-control" id="txtcode">
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
                                 <div class="form-group">
-                                    <label>Institution Category Name</label>
+                                    <label>Level Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="txtname">
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Level Duration</label>
+                                    <input type="text" class="form-control" id="txtshrtcode">
                                 </div>
                             </div>
                         </div>
@@ -45,28 +65,30 @@
                                 <thead style="background-color:steelblue;">
                                     <tr>
                                         <th style="width:0.25%; text-align:center">S/N</th>
-                                        <th style="width:20%; text-align:center">Category Code</th>
-                                        <th style="width:40%; text-align:center">Category Name</th>
+                                        <th style="width:20%; text-align:center">Level Code</th>
+                                        <th style="width:40%; text-align:center">Level Name</th>
+                                        <th style="width:20%; text-align:center">Duration</th>
                                         <th style="width:10%; text-align:center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for (int i = 0; i < Model.InstCatSetups.Count; i++)
+                                    @for (int i = 0; i < Model.InstLevelStudyList.Count; i++)
                                     {
-                                        var items = Model.InstCatSetups[i];
+                                        var items = Model.InstLevelStudyList[i];
                                         //var news = await db.Customers
 
-                                        <tr>
-                                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="nameclass @i" style="width:20%; text-align:left">@items.Code</td>
-                                            <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
+                                    <tr>
+                                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                        <td class="nameclass @i" style="width:20%; text-align:left">@items.Code</td>
+                                        <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
+                                        <td class="nameclass @i" style="width:60%; text-align:left">@items.Duration</td>
 
-                                            <td style="width:5%;">
-                                                <input type="hidden" class="readid @i" value="@items.Id">
-                                                <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
-                                            </td>
+                                        <td style="width:5%;">
+                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
+                                        </td>
 
-                                        </tr>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -90,11 +112,17 @@
 <script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 @*<script src="~/template/"></script>*@
 
-<link href="~/css/dataTables/jquery.dataTables.css" rel="stylesheet" />
-<script src="~/css/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
+        $("divinput").hide();
+        $("divgrid").show();
+        $("#divadd").click(function () {
+            $("divinput").show();
+            $("divgrid").hide();
+            // document.getElementById('divinput').style.display = "none";
+            //document.getElementById('divgrid').style.display = "inline-block";
+        });
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");

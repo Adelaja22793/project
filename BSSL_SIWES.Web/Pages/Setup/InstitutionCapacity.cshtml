@@ -1,16 +1,16 @@
 ﻿@page
-@model BSSL_SIWES.Web.InstitutionCategoryModel
+@model BSSL_SIWES.Web.Pages.Setup.InstitutionCapacityModel
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity;
 @{
-    ViewData["Title"] = "InstitutionCategory";
+    ViewData["Title"] = "InstitutionCapacity";
 }
 <div class="content-wrapper" style="background-color:#fff">
     <div class="col-md-12">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Institution Category Setup</h3>
+                <h3 class="card-title">Institution Carrying Capacity Setup</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -18,18 +18,51 @@
                 <div class="card-body">
                     <div id="divinput">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Institution Category Code</label>
-                                    <input type="text" class="form-control" id="txtcode">
+                                    <label for="exampleInputFile">Institution Name </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                        <option selected="selected" value="-1">-- Select Course Group--</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Institution Category Name</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="txtname">
-                                    </div>
+                                    <label for="exampleInputFile">Base Carrying Capacity on</label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        <option selected="selected">--Select--</option>
+                                        <option>Institution</option>
+                                        <option>Course</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Course Group </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                        <option selected="selected" value="-1">-- Select Course Group--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Course Name </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseList" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                        <option selected="selected" value="-1">-- Select Course--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Specify Carrying Capacity</label>
+                                    <input type="text" class="form-control" id="txtcarrycap">
                                 </div>
                             </div>
                         </div>
@@ -41,33 +74,37 @@
                     </div>
                     <div class="row" id="divgrid">
                         <div style="display:table; margin:0 auto; width:100%; font-size:medium">
-                            <table id="tabId" class="table table-bordered" border="0">
+                            <table id="tabId" class="display table table-bordered" border="0">
                                 <thead style="background-color:steelblue;">
                                     <tr>
                                         <th style="width:0.25%; text-align:center">S/N</th>
-                                        <th style="width:20%; text-align:center">Category Code</th>
-                                        <th style="width:40%; text-align:center">Category Name</th>
-                                        <th style="width:10%; text-align:center">Actions</th>
+                                        <th style="width:20%; text-align:center">Category</th>
+                                        <th style="width:20%; text-align:center">Type</th>
+                                        <th style="width:20%; text-align:center">Name</th>
+                                        <th style="width:20%; text-align:center">Group</th>
+                                        <th style="width:20%; text-align:center">Course</th>
+                                        <th style="width:10%; text-align:center">Capacity</th>
+                                        <th style="width:5%; text-align:center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for (int i = 0; i < Model.InstCatSetups.Count; i++)
+                                    @*@for (int i = 0; i < Model.CoursesList.Count; i++)
                                     {
-                                        var items = Model.InstCatSetups[i];
+                                        var items = Model.CoursesList[i];
                                         //var news = await db.Customers
 
                                         <tr>
                                             <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="nameclass @i" style="width:20%; text-align:left">@items.Code</td>
+                                            <td class="nameclass @i" style="width:15%; text-align:left">@items.Code</td>
                                             <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
-
+                                            <td class="nameclass @i" style="width:15%; text-align:left">@items.ShortCode</td>
                                             <td style="width:5%;">
                                                 <input type="hidden" class="readid @i" value="@items.Id">
                                                 <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
                                             </td>
 
                                         </tr>
-                                    }
+                                    }*@
                                 </tbody>
                             </table>
 
@@ -88,29 +125,35 @@
 <script src="../../~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- bs-custom-file-input -->
 <script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 @*<script src="~/template/"></script>*@
 
-<link href="~/css/dataTables/jquery.dataTables.css" rel="stylesheet" />
-<script src="~/css/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $("#tabId").DataTable();
+        alert("yes");
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");
+            $("#txtshrtcode").val("");
+            $("#drpgroup").val("");
         }
         $('#Btnsave').on('click', function (e) {
             e.preventDefault();
             var txtcode = document.getElementById('txtcode').value;
             var txtname = document.getElementById('txtname').value;
+            var txtshrtcode = document.getElementById('txtshrtcode').value;
+            var drpgroup = document.getElementById('drpgroup').value;
             var d = {
                 "Code": txtcode,
                 "Name": txtname,
+                "ShortCode": txtshrtcode,
+                "CourseGrpSetupId": drpgroup,
             };
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "POST",
-                url: baseUrl + '/Api/InstCatSetups',
+                url: baseUrl + '/Api/Courses',
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true
@@ -130,8 +173,9 @@
                     var html = `<tr>
                             </td>
                                 <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
-                                <td style="width:20%; text-align:left">${txtcode}</td>
+                                <td style="width:15%; text-align:left">${txtcode}</td>
                                 <td style="width:60%; text-align:left">${txtname}</td>
+                                <td style="width:15%; text-align:left">${txtshrtcode}</td>
 
                                 <td style="width:5%;" class="action">
                                 <input type="hidden" value=${myid}>

@@ -1,16 +1,17 @@
 ﻿@page
-@model BSSL_SIWES.Web.InstitutionCategoryModel
+@model BSSL_SIWES.Web.Pages.Setup.InstitutionTypeSetupModel
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity;
+
 @{
-    ViewData["Title"] = "InstitutionCategory";
+    ViewData["Title"] = "InstitutionTypeSetup";
 }
 <div class="content-wrapper" style="background-color:#fff">
     <div class="col-md-12">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Institution Category Setup</h3>
+                <h3 class="card-title">Institution Type Setup</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -18,21 +19,40 @@
                 <div class="card-body">
                     <div id="divinput">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Institution Category Code</label>
-                                    <input type="text" class="form-control" id="txtcode">
+                                    <label for="exampleInputFile">Institution Category </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.Categories" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                        <option selected="selected" value="-1">-- Select Category--</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Institution Category Name</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="txtname">
-                                    </div>
+                                    <label for="exampleInputFile">Supervisory Agency Id </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.SuperAgencies" style="width: 100%; text-transform:uppercase" id="drpAgency">
+                                        <option selected="selected" value="-1">-- Select Agency Id--</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Institution Type Code</label>
+                                    <input type="text" class="form-control" id="txtcode">
+                                </div>
+                            </div> 
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label>Institution Type Name</label>
+                                    <input type="text" class="form-control" id="txtname">
+                                </div>
+                            </div>
+                        </div>
+                       
                     </div>
                     <!-- /.card-body -->
                     <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
@@ -45,28 +65,29 @@
                                 <thead style="background-color:steelblue;">
                                     <tr>
                                         <th style="width:0.25%; text-align:center">S/N</th>
-                                        <th style="width:20%; text-align:center">Category Code</th>
-                                        <th style="width:40%; text-align:center">Category Name</th>
+                                        <th style="width:15%; text-align:center">Category Code</th>
+                                        <th style="width:15%; text-align:center">Type Code</th>
+                                        <th style="width:60%; text-align:center">Type Name</th>
                                         <th style="width:10%; text-align:center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for (int i = 0; i < Model.InstCatSetups.Count; i++)
+                                    @for (int i = 0; i < Model.InstTypeSetupList.Count; i++)
                                     {
-                                        var items = Model.InstCatSetups[i];
+                                        var items = Model.InstTypeSetupList[i];
                                         //var news = await db.Customers
 
-                                        <tr>
-                                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="nameclass @i" style="width:20%; text-align:left">@items.Code</td>
-                                            <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
+                                    <tr>
+                                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                        <td class="nameclass @i" style="width:15%; text-align:left">@items.InstCatSetup.Name</td>
+                                        <td class="nameclass @i" style="width:15%; text-align:left">@items.Code</td>
+                                        <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
+                                        <td style="width:5%;">
+                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
+                                        </td>
 
-                                            <td style="width:5%;">
-                                                <input type="hidden" class="readid @i" value="@items.Id">
-                                                <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
-                                            </td>
-
-                                        </tr>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -90,27 +111,31 @@
 <script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 @*<script src="~/template/"></script>*@
 
-<link href="~/css/dataTables/jquery.dataTables.css" rel="stylesheet" />
-<script src="~/css/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");
+            $("#drpgroup").val("");
+            $("#drpAgency").val("");
         }
         $('#Btnsave').on('click', function (e) {
             e.preventDefault();
             var txtcode = document.getElementById('txtcode').value;
             var txtname = document.getElementById('txtname').value;
+            var drpgroup = document.getElementById('drpgroup').value;
+            var drpAgency = document.getElementById('drpAgency').value;
             var d = {
                 "Code": txtcode,
                 "Name": txtname,
+                "InstCatSetupId": drpgroup,
+                "AgencySuperSetupId": drpAgency,
             };
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "POST",
-                url: baseUrl + '/Api/InstCatSetups',
+                url: baseUrl + '/Api/InstTypeSetups',
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true
@@ -130,7 +155,8 @@
                     var html = `<tr>
                             </td>
                                 <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
-                                <td style="width:20%; text-align:left">${txtcode}</td>
+                                <td style="width:15%; text-align:left">${drpgroup}</td>
+                                <td style="width:15%; text-align:left">${txtcode}</td>
                                 <td style="width:60%; text-align:left">${txtname}</td>
 
                                 <td style="width:5%;" class="action">
