@@ -14,5 +14,6 @@ namespace SiwesData.Data.Setup
         public InstCatSetup InstCatSetup { get; set; }
         public int AgencySuperSetupId { get; set; }
         public AgencySuperSetup AgencySuperSetup { get; set; }
+        public ICollection<CourseGrpSetup> CourseGrpSetups { get; set; }
     }
 }

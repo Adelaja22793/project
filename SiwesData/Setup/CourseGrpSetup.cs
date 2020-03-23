@@ -11,7 +11,7 @@ namespace SiwesData.Data.Setup
         public string Code { get; set; }
         public string ShortCode { get; set; }
         public string Name { get; set; }
-        public string InstTypeId { get; set; }
+        public int InstTypeSetupId { get; set; }
         public InstTypeSetup InstTypeSetup { get; set; }
     }
 }
