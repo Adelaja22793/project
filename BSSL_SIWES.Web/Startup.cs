@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SiwesData.Data;
 using Microsoft.OpenApi.Models;
+using SiwesData;
 
 namespace BSSL_SIWES.Web
 {
@@ -33,14 +34,32 @@ namespace BSSL_SIWES.Web
                     Configuration.GetConnectionString("SiwesConn"),
                     b => b.MigrationsAssembly("BSSL_SIWES.Web")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser,  IdentityRole>(options => {
+
+                options.SignIn.RequireConfirmedAccount = true;
+              
+                //options.User.RequireUniqueEmail = false;
+            }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+               
+
             services.AddRazorPages();
             services.AddControllers();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
+
+
             });
         }
 
