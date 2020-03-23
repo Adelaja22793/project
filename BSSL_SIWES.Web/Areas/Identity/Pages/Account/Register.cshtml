@@ -6,29 +6,48 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<div class="content-wrapper" style="margin:0 auto; background-color:#fff; display:table">
-    <div class="row">
-        <div class="col-md-12">
+@*<div class="content-wrapper" style="margin:0 auto; background-color:#fff; display:table">
+    <div class="row">*@
+        <div class="col-md-8" style="margin:0 auto; display:table">
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Student Registration as a User</h3>
+                    <h3 class="card-title">Create Student Account</h3>
+                </div>
+                <div>
+                    @if (!string.IsNullOrWhiteSpace(Model.successm))
+                    {
+                        <div class="alert alert-dismissible alert-success">
+                            @Model.successm
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.errorm))
+                    {
+                        <div class="alert alert-dismissible alert-danger">
+                            @Model.errorm
+                        </div>
+                    }
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form method="post" >
+                <form method="post">
                     <div class="card-body">
+                        @*<div class="spinner-border text-primary loading-img loade" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>*@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label asp-for="Input.MatricNo">Matric Number</label>
-                                 
+                                    <label asp-for="Input.Email">Email</label>
+                                    <div class="danger">
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-evenlope"></i></span>
                                         </div>
-                                        <input type="text" asp-for="Input.MatricNo" class="form-control" placeholder="Matric Number">
-                                        <span asp-validation-for="Input.MatricNo" class="text-danger"></span>
+                                        <input asp-for="Input.Email" id="txtemail" class="form-control" placeholder="Email">
                                     </div>
                                 </div>
                             </div>
@@ -41,29 +60,22 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input asp-for="Input.Name" class="form-control" placeholder="Name">
+                                        <input asp-for="Input.Name" id="txtname" readonly="readonly" class="form-control" placeholder="Name">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
 
-                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-evenlope"></i></span>
-                                        </div>
-                                        <input asp-for="Input.Email" class="form-control" placeholder="Email">
-                                    </div>
-                                </div>
-                            </div>
 
 
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+
                                     <label asp-for="Input.Password">Password</label>
+                                    <div class="danger">
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
                                     <div class="input-group">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -78,6 +90,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                    <div class="danger">
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </div>
                                     <div class="input-group">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -92,19 +107,95 @@
                             <!-- /.card-body -->
 
                             <div class="justify-content-center" style="margin-left:35%;  margin-bottom:3%;">
-                                <input type="submit" value="Submit" class="btn btn-primary"/>  
+                                <input type="submit" id="btncreate" value="Create Account" class="btn btn-primary" />
                             </div>
                         </div>
 
                     </div>
                 </form>
-            
+
             </div>
         </div>
-    </div>
-</div>
+    @*</div>
+</div>*@
+
+<!-- page script -->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#txtemail').on('change', function () {
+
+            var email = $("#txtemail").val();
+            d = {
+                "email": email,
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/API/Reg/  ' + email;
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    //console.log(data);
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(data);
+                    if (data == "notexist") {
+
+                        alert("Wrong email or your record has not been registered by your school cordinator please check ")
+                    }
+                    else if (data == "exist") {
+
+                        alert("Account already exist ");
+                        $("#txtemail").val("");
+                    }
+                    else if (data == "syserr") {
+
+                        alert("System error: Please try again or contact adminitrator  ")
+                    }
+                    else {
+                        $("#txtname").val(data);
+                    }
+                    //alert("" + myMenu.toUpperCase() + " WAS SUCCESSFULLY ADDED TO MENU");
+
+                    //$("#loginModal").modal('hide');
+
+                    //console.log(data);
+                    //var myid = data['id'];
+                    //var menuName = data['name']
+                    //var html = "";
+                    //var rowCount = $('#tabId tr').length;
 
 
+                    //    html = `<tr>
+                    //            <td class="se_no" style="width:0.25%; text-align:left">${rowCount}</td>
+                    //            <td class="nameclass" style="width:20%; text-align:left">${menuName}</td>
+                    //            <td style="width:20%;" class="action">
+                    //            <a href="/Setup/Menu/Edit?id=${myid}">Edit</a> |
+                    //            <a href="/Setup/Menu/Delete?id=${myid}">Delete</a></td>
+                    //            </tr>`
+
+                    //$('#tabId').append(html);
+                },
+            });
+        });
+
+        $('#btncreate').click(function () {
+ 
+            $('.loader').show(300);
+        });
+    })
+</script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

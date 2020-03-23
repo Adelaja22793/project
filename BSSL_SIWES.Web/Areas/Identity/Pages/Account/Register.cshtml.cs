@@ -17,20 +17,25 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     { 
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly RoleManager<IdentityRole>_roleManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
+        public string successm { get; set; }
+        public string errorm { get; set; }
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            RoleManager<IdentityRole> roleManager,
+            ILogger<RegisterModel> logger)
+        //   IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
-            _emailSender = emailSender;
+          // _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -53,16 +58,17 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 
             public string ConfirmPassword { get; set; }
              
-            [Required]
-            [StringLength(100, ErrorMessage = "Matric No is required")]
-            [DataType(DataType.Text)]
-            [Display(Name = "Matric Number")]
+            //[Required]
+            //[StringLength(100, ErrorMessage = "Matric No is required")]
+            //[DataType(DataType.Text)]
+            //[Display(Name = "Matric Number")]
           
 
             public string MatricNo { get; set; }
@@ -84,13 +90,25 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+        
+            returnUrl = returnUrl ?? Url.Content("/Areas/Identity/Pages/Account/Login");
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+            
                 if (result.Succeeded)
                 {
+                    // creating Creating Manager role     
+                  
+                  bool  x = await _roleManager.RoleExistsAsync("Student");
+                    if (!x)
+                    {
+                        var role = new IdentityRole();
+                        role.Name = "Student";
+                        await _roleManager.CreateAsync(role);
+                    }
+                    await _userManager.AddToRoleAsync(user, "Student");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -100,20 +118,28 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    successm = "ACCOUNT SUCCESSFULY CREATED";
+                   // Response.Redirect(returnUrl);
+                  //  return LocalRedirect(returnUrl);
+
+                    return RedirectToPage("Login");
+                 // return Redirect("/Login?Message=" + successm);
+             
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
+                    errorm = error.Description;
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            // return Page();
+            return LocalRedirect(returnUrl);
         }
     }
 }
