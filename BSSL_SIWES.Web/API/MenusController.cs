@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 //using SiwesData.Data;
-using SiwesData.Data.Menu;
+using SiwesData.Menu;
 
 namespace BSSL_SIWES.Web.API
 {
@@ -14,8 +14,12 @@ namespace BSSL_SIWES.Web.API
     [ApiController]
     public class MenusController : ControllerBase
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
-        public MenusController(SiwesData.Data.ApplicationDbContext context)
+        public class MenuViewModel
+        {
+            public string MenuName { get; set; }
+        }
+        private readonly SiwesData.ApplicationDbContext _context;
+        public MenusController(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -24,83 +28,111 @@ namespace BSSL_SIWES.Web.API
         [HttpGet]
         public List<Menu> GetMenu()
         {
-            var MenuList =  _context.Menu.Where(x =>x.Name.Contains('e')).ToList();
+            var MenuList = _context.Menu.ToList();
 
             return MenuList;
         }
 
         // GET: api/Menus/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Menu>> GetMenu(int id)
+        public async Task<ActionResult<Menu>> GetMenu(int? id)
         {
-            var menu = await _context.Menu.FindAsync(id);
-
-            if (menu == null)
+            if (id == null)
             {
-                return NotFound();
+                return BadRequest("MenuId is Empty");
             }
+            try
+            {
+                var menu = await _context.Menu.FindAsync(id);
 
-            return menu;
+                if (menu == null)
+                {
+                    return NotFound($"Menu Not Found For The Selected Id {id}");
+                }
+                return Ok(menu);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
         // PUT: api/Menus/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMenu(int id, Menu menu)
+        public async Task<IActionResult> PutMenu(int? id, MenuViewModel menuVM)
         {
-            if (id != menu.Id)
+            if (id == null)
             {
-                return BadRequest();
+                return BadRequest("MenuId is Empty");
             }
 
-            var updatedAddress = await _context.Menu.FirstOrDefaultAsync(m => m.Id == id);
+            try
+            {
+                var updateMenu = await _context.Menu.FirstOrDefaultAsync(m => m.Id == id);
 
-            updatedAddress.Name = menu.Name;
-            var nameExit = await _context.Menu.FirstOrDefaultAsync(m => m.Name == menu.Name);
-         
-                try
+                if (updateMenu == null)
                 {
-                    // _context.Update(address);
-                    await _context.SaveChangesAsync();
-                    return Ok(updatedAddress);
+                    return NotFound($"Menu Not Found For The Selected Id {id}");
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MenuExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            return NoContent();
+                updateMenu.Name = menuVM.MenuName;
+                await _context.SaveChangesAsync();
+                return Ok(updateMenu);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST: api/Menus
         //[Route("Menus")]
         [HttpPost]
-        public async Task<ActionResult<Menu>> PostMenu(Menu menu)
+        public async Task<ActionResult<Menu>> PostMenu(MenuViewModel menuVm)
         {
-            _context.Menu.Add(menu);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var newMenu = new Menu { Name = menuVm.MenuName };
+                _context.Menu.Add(newMenu);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMenu", new { id = menu.Id }, menu);
+                return CreatedAtAction("PostMenu", new { id = newMenu.Id }, newMenu);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(500, "Menu Name Already Exist");
+            }
+
+           
         }
 
         // DELETE: api/Menus/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Menu>> DeleteMenu(int id)
+        public async Task<ActionResult<Menu>> DeleteMenu(int? id, MenuViewModel menuVM)
         {
-            var menu = await _context.Menu.FindAsync(id);
-            if (menu == null)
+            
+            if (id == null)
             {
-                return NotFound();
+                return BadRequest("MenuId is Empty");
             }
 
-            _context.Menu.Remove(menu);
-            await _context.SaveChangesAsync();
-            //return DeleteMenu(id, menu.Name);
-            return menu;
+            try
+            {
+                var menu = await _context.Menu.FindAsync(id);
+                if (menu == null)
+                {
+                    return NotFound($"Menu Not Found For The Selected Id {id}");
+                }
+                _context.Menu.Remove(menu);
+                await _context.SaveChangesAsync();
+                menu.Name = menuVM.MenuName;
+                //return DeleteMenu(id, menu.Name);
+                return Ok(menu);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+           
         }
 
         private bool MenuExists(int id)

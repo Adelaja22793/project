@@ -17,36 +17,82 @@
                 <form role="form">
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Institution Category </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpcate">
+                                        <option selected="selected" value="-1">-- Select--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Institution Type</label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drptype">
+                                        <option selected="selected" value="-1">-- Select--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Enter Registration/Matric. Number</label>
+                                    <label>Institution Code</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user-check"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Registration/Matric No.">
+                                        <input type="text" id="txtinsticode" class="form-control" placeholder="Institution Code">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Surname</label>
+                                    <label>Short Code</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Surname">
+                                        <input type="text" id="txtshortcode" class="form-control" placeholder="Short Code">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Other Name(s)</label>
+                                    <label>Institution Name</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Other Name(s)">
+                                        <input type="text" id="txtinstiname" class="form-control" placeholder="Institution Name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Address 1</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Address 2</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txtaddr2" class="form-control" placeholder="Address 2">
                                     </div>
                                 </div>
                             </div>
@@ -54,64 +100,19 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Select Reg. Year/Year of Matric</label>
-                                    <div class="select2-purple">
-                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                            <option selected="selected">Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Course of Study</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" id="courseStudy">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Year of Study</label>
-                                    <div class="select2-purple">
-                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                            <option selected="selected">Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Select Nationality</label>
+                                    <label>Country</label>
                                     <div class="select2-purple">
                                         <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
                                                 asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
                                                 onchange="MyFunctionNationality()" id="nationChange">
-                                            <option selected="selected" value="-1">-- Select Nationality--</option>
+                                            <option selected="selected" value="-1">-- Select Country--</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Select State of Origin</label>
+                                    <label>State</label>
                                     <div class="select2-purple">
                                         <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
                                                 id="myState" style="width: 100%;" onchange="MyFunctionState()">
@@ -122,18 +123,30 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Select LGA of Origin</label>
+                                    <label>City</label>
                                     <div class="select2-purple">
                                         <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
                                                 id="myLGA" style="width: 100%;">
-                                            <option selected="selected" value="-1">--Select LGA--</option>
+                                            <option selected="selected" value="-1">--Select City--</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Zip Cope</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                        <input type="hidden" id="orgNameId" />
+                                        <input type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Phone Number</label>
                                     <div class="input-group">
@@ -141,27 +154,119 @@
                                             <span class="input-group-text"><i class="fas fa-swimming-pool"></i></span>
                                         </div>
                                         <input type="hidden" id="orgNameId" />
-                                        <input type="text" id="orgName" class="form-control" placeholder="Enter Phone No.">
+                                        <input type="text" id="txtphone" class="form-control" placeholder="Enter Phone No.">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Email Address</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                         </div>
-                                        <input type="text" id="orgAddress" class="form-control" readonly="readonly">
+                                        <input type="text" id="txtagenemail" class="form-control">
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Website</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txtwebsite" class="form-control" placeholder="Website">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Is this student a diasporal student?</label>
+                                    <label>Name of Contact Person</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txtcontact1" class="form-control" placeholder="Name of Contact Person">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txphone1" class="form-control" placeholder="Phone Number of Contact Person">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="txtemail1" class="form-control" placeholder="E-mail">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Supervisory Agency</label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpagency">
+                                        <option selected="selected" value="-1">-- Select--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">ITF Area Office Attached to</label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpareaoffice">
+                                        <option selected="selected" value="-1">-- Select--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Specify Affiliate Institution</label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpaffiliate">
+                                        <option selected="selected" value="-1">-- Select--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Specify Carrying Capacity</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-swimming-pool"></i></span>
+                                        </div>
+                                        <input type="text" id="txtcapacity" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Deactivate Agency?</label>
                                     <div class="select2-purple">
                                         <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                             <option selected="selected" value="1">NO</option>
@@ -172,164 +277,21 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Specify SIWES Year</label>
-                                    <div class="select2-purple">
-                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                            <option selected="selected">Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Batch No</label>
-                                    <div class="select2-purple">
-                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                            <option selected="selected">Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="display:none">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Commencement Date</label>
+                                    <label for="exampleInputFile">Date Deactivated</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="date" id="commence_Date" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
+                                        <input type="date" id="txtdeactDate" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Completion Date</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                        </div>
-                                        <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()" class="form-control" placeholder="Enter Date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Duration</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                        </div>
-                                        <input type="text" id="duration" readonly="readonly" class="form-control">
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="display:none">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Enter Name of Organisation</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                        </div>
-                                        <input type="hidden" id="orgNameId" />
-                                        <input type="text" id="orgName" onchange="MyFunctionOrganName()" class="form-control" placeholder="Enter Name of Organisation">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Organisation Location Address</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-address-card"></i></span>
-                                        </div>
-                                        <input type="text" id="orgAddress" class="form-control" readonly="readonly">
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="display:none">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Phone No. of Organisation</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                        </div>
-                                        <input type="text" id="orgPhone" class="form-control" readonly="readonly">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Email of Organisation</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                        </div>
-                                        <input type="email" id="orgEmail" class="form-control" readonly="readonly">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="display:none">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>ITF Area Office</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-search-location"></i></span>
-                                        </div>
-                                        <input type="text" id="orgAreaITF" class="form-control" readonly="readonly">
-                                        <input type="hidden" id="orgAreaITFId" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Name of Organisation Representative</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                        </div>
-                                        <input type="text" id="orgRep" class="form-control">
-                                        <input type="hidden" id="orgRepId" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="display:none">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Remarks</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter Remarks"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
-
-                    <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        @*<button type="button" class="btn btn-warning"> Print and Preview SCAF</button>*@
-                        <button type="button" class="btn btn-info">Upload Pre-Filled Form</button>
+                    <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                        <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
                     </div>
                 </form>
             </div>

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SiwesData.Data;
+using SiwesData;
 
 [assembly: HostingStartup(typeof(BSSL_SIWES.Web.Areas.Identity.IdentityHostingStartup))]
 namespace BSSL_SIWES.Web.Areas.Identity

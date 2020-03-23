@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SiwesData.Data
+namespace SiwesData
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -33,9 +33,23 @@ namespace SiwesData.Data
         public DbSet<Employer.EmployerSuperSetup> EmployerSuperSetups { get; set; }
         public DbSet<Employer.EmployerSupervisor> EmployerSupervisors { get; set; }
 
+        public DbSet<Setup.NewCourseRequest> NewCourseRequests { get; set; }
+
+        public DbSet<Setup.InstitutionOfficer> InstitutionOfficers { get; set; }
+        public DbSet<Setup.SupervisoryAgency> SupervisoryAgencies { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Menu.Menu>().HasIndex(b => b.Name).IsUnique();
+            builder.Entity<Setup.Courses>().HasIndex(b => b.Name).IsUnique();
+            builder.Entity<Setup.NewCourseRequest>().HasIndex(b => b.Name).IsUnique();
+            base.OnModelCreating(builder);
+            
         }
     }
 }

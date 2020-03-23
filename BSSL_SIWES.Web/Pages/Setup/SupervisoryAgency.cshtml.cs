@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data;
+using SiwesData;
 
 namespace BSSL_SIWES.Web
 {
     public class SupervisoryAgencyModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        public SupervisoryAgencyModel(SiwesData.Data.ApplicationDbContext context,
+        public SupervisoryAgencyModel(SiwesData.ApplicationDbContext context,
             UserManager<IdentityUser> userManager)
         {
             _context = context;

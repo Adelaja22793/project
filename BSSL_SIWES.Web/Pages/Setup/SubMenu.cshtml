@@ -22,7 +22,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
+                            <div class="row" id="addMenu">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Menu Name</label>
@@ -30,12 +30,12 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-search"></i></span>
                                             </div>
-                                            <input id="mainMenu" placeholder="Search Menu Name With Keyword" style="height:30px;" class="form-control" type="text">
-                                            <input id="mainMenuId" type="hidden"/>
+                                            <input id="mainMenu" placeholder="Search Menu Name With Keyword" onchange="MyFunctionSubMenu()" class="form-control" type="text">
+                                            <input id="mainMenuId" type="hidden" />
                                             @*<select asp-for="SubMenu.Menu.Id" class="form-control"
-                                                    asp-items="ViewBag.MenuId" id="combobox">
-                                                <option selected="selected" value="-1">--Select Main Menu--</option>
-                                            </select>*@
+                                            asp-items="ViewBag.MenuId" id="combobox">
+                                        <option selected="selected" value="-1">--Select Main Menu--</option>
+                                    </select>*@
                                         </div>
                                     </div>
                                 </div>
@@ -66,18 +66,31 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                            <button type="submit" id="BtnSubMenu" class="btn btn-primary button button4">Save Sub-Menu</button>
-                            <button type="submit" style="display:none;" id="BtnEditSubMenu" class="btn btn-primary button button4">Update Sub-sMenu</button>
-                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
-                                Hide
-                            </button>
+                            <div class="row" id="sendRequest" style="display:none">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Menu Name</label>
+                                        <div class="input-group ui-widget">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input id="mainMenuAddReq" style="height:30px;" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="justify-content-center" style="margin-left:25%; margin-bottom:3%;">
+                                <button type="submit" id="BtnSubMenu" class="btn btn-primary button button4">Save Sub-Menu</button>
+                                <button type="submit" style="display:none;" id="BtnEditSubMenu" class="btn btn-primary button button4">Update Sub-Menu</button>
+                                <button type="submit" style="display:none;" id="SendReqMenu" class="btn btn-primary button button4">Send Request For New Menu</button>
+                                <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                                    Hide
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div style="display:table; margin:0 auto; width:100%; font-size:medium">
                     <table id="tabId" class="table table-bordered" border="0">
@@ -116,9 +129,9 @@
 
                 </div>
             </div>
-        </div>
     </div>
 </div>
+ </div>
 <style>
     .button {
         background-color: #4CAF50; /* Green */
@@ -177,7 +190,7 @@
                 return false;
             }
         });
-
+        
         $("#btnShowModal").click(function () {
             $('#monthname').html("SETUP NEW SUB-MENU");
             $('#mainMenu').val("");
@@ -186,10 +199,15 @@
             $('#rowIndex').val("");
             $('#myidd').val("");
             $('#pageURL').val("");
+            $('#mainMenuAddReq').val("");
 
             $("#loginModal").modal('show');
             document.getElementById('BtnEditSubMenu').style.display = "none";
+            document.getElementById('SendReqMenu').style.display = "none";
             document.getElementById('BtnSubMenu').style.display = "inline-block";
+
+            $('#subMenu').prop("readonly", true);
+            $('#pageURL').prop("readonly", true);
         });
         $("#btnHideModal").click(function () {
             $("#loginModal").modal('hide');
@@ -393,6 +411,53 @@
         });
 
     })
+    function MyFunctionSubMenu() {
+        var menuId = document.getElementById('mainMenuId').value;
+        var newMenuReq = document.getElementById('mainMenu').value;
+        if (menuId == "") {
+            var confirmation = confirm("MENU DO NOT EXIST. DO YOU WANT THIS MENU TO BE SET UP?");
+            if (confirmation === false) {
+                return false;
+            }
+            else {
+                $('#sendRequest').css('display', 'block');
+                $('#addMenu').css('display', 'none');
+                $('#mainMenuAddReq').val(newMenuReq);
+                document.getElementById('SendReqMenu').style.display = "inline-block";
+                document.getElementById('BtnEditSubMenu').style.display = "none";
+                document.getElementById('BtnSubMenu').style.display = "none";
+                return false;
+            }
+        }
+        else {
+            alert(menuId);
+            var d = {
+                "Id": menuId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/Menus/' + menuId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+
+                    $('#subMenu').prop("readonly", false);
+                    $('#pageURL').prop("readonly", false);
+
+                },
+            });
+        }
+    }
 </script>
 
 @section Scripts {

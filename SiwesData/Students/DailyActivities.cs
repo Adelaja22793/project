@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SiwesData.Data.Students
+namespace SiwesData.Students
 {
     public class DailyActivities
     {

@@ -6,65 +6,118 @@
 }
 
 
-        <div class="content-wrapper col-lg-12" style=" margin-left: 10%">
-
-            <div class="row">
-                <div class="col-md-4">
-                    <form method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="PolicyTb.InstypeId" class="control-label"></label>
-                            <input asp-for="PolicyTb.InstypeId" class="form-control" />
-                            <span asp-validation-for="PolicyTb.InstypeId" class="text-danger"></span>
+<div class="content-wrapper" style="background-color:#fff">
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Courses Group Setup</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="card-body">
+                    <div id="divinput">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Institution Type </label>
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.InstituTypes" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                        <option selected="selected" value="-1">-- Select Institution Type --</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="PolicyTb.MustNotExcCap" /> @Html.DisplayNameFor(model => model.PolicyTb.MustNotExcCap))
-                            </label>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="PolicyTb.MustNotExcCap" /> Institutions must not exceed carrying capacity.
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="PolicyTb.MaxSiwesCap" class="control-label"></label>
-                            <input asp-for="PolicyTb.MaxSiwesCap" class="form-control" />
-                            <span asp-validation-for="PolicyTb.MaxSiwesCap" class="text-danger"></span>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Allow maximum of </label>
+                                    <input type="text" class="form-control" id="txtshrtcode">
+                                    <label for="exampleInputFile">times for SIWES IT attachment for Institutions.</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="PolicyTb.AllowDisporal" /> @Html.DisplayNameFor(model => model.PolicyTb.AllowDisporal))
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="PolicyTb.SuperAmt" class="control-label"></label>
-                            <input asp-for="PolicyTb.SuperAmt" class="form-control" />
-                            <span asp-validation-for="PolicyTb.SuperAmt" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="PolicyTb.StudentAmt" class="control-label"></label>
-                            <input asp-for="PolicyTb.StudentAmt" class="form-control" />
-                            <span asp-validation-for="PolicyTb.StudentAmt" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="PolicyTb.MinVisit4Super" class="control-label"></label>
-                            <input asp-for="PolicyTb.MinVisit4Super" class="form-control" />
-                            <span asp-validation-for="PolicyTb.MinVisit4Super" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="PolicyTb.MasterListDate" class="control-label"></label>
-                            <input asp-for="PolicyTb.MasterListDate" class="form-control" />
-                            <span asp-validation-for="PolicyTb.MasterListDate" class="text-danger"></span>
-                        </div>
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="PolicyTb.DelistInst" /> @Html.DisplayNameFor(model => model.PolicyTb.DelistInst))
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
-                        </div>
-                    </form>
+                    </div>
+                    <!-- /.card-body -->
+                    <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                        <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                    </div>
                 </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+@*<div class="content-wrapper col-lg-12" style=" margin-left: 10%">
+
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="PolicyTb.InstypeId" class="control-label"></label>
+                        <input asp-for="PolicyTb.InstypeId" class="form-control" />
+                        <span asp-validation-for="PolicyTb.InstypeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PolicyTb.MustNotExcCap" /> @Html.DisplayNameFor(model => model.PolicyTb.MustNotExcCap))
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PolicyTb.MaxSiwesCap" class="control-label"></label>
+                        <input asp-for="PolicyTb.MaxSiwesCap" class="form-control" />
+                        <span asp-validation-for="PolicyTb.MaxSiwesCap" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PolicyTb.AllowDisporal" /> @Html.DisplayNameFor(model => model.PolicyTb.AllowDisporal))
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PolicyTb.SuperAmt" class="control-label"></label>
+                        <input asp-for="PolicyTb.SuperAmt" class="form-control" />
+                        <span asp-validation-for="PolicyTb.SuperAmt" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PolicyTb.StudentAmt" class="control-label"></label>
+                        <input asp-for="PolicyTb.StudentAmt" class="form-control" />
+                        <span asp-validation-for="PolicyTb.StudentAmt" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PolicyTb.MinVisit4Super" class="control-label"></label>
+                        <input asp-for="PolicyTb.MinVisit4Super" class="form-control" />
+                        <span asp-validation-for="PolicyTb.MinVisit4Super" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PolicyTb.MasterListDate" class="control-label"></label>
+                        <input asp-for="PolicyTb.MasterListDate" class="form-control" />
+                        <span asp-validation-for="PolicyTb.MasterListDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="PolicyTb.DelistInst" /> @Html.DisplayNameFor(model => model.PolicyTb.DelistInst))
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
         </div>
+    </div>*@
 
-        @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

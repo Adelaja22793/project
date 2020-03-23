@@ -4,12 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SiwesData.Data.Menu
+namespace SiwesData.Menu
 {
     public class Menu
     {
         public int Id { get; set; }
-        public int Namecode { get; set; }
         public string Name { get; set; }
         public ICollection<SubMenu> SubMenus { get; set; }
     }

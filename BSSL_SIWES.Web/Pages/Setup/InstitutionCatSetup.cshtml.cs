@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data.Setup;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web.Pages.Setup
 {
     public class InstitutionCatSetupModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
         
         [BindProperty]
         public InstCatSetup InstCatSetup { get; set; }
         public IList<InstCatSetup> InstCatSetups { get; set; }
 
-        public InstitutionCatSetupModel(SiwesData.Data.ApplicationDbContext context)
+        public InstitutionCatSetupModel(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }

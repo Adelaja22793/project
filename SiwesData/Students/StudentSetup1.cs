@@ -1,4 +1,4 @@
-﻿namespace SiwesData.Data.Students
+﻿namespace SiwesData.Students
 {
     public class StudentSetup
     {

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data;
-using SiwesData.Data.Menu;
+using SiwesData;
+using SiwesData.Menu;
 
 namespace BSSL_SIWES.Web.API
 {
@@ -71,7 +71,7 @@ namespace BSSL_SIWES.Web.API
                 }
             }
 
-            return NoContent();
+           // return NoContent();
         }
 
         // POST: api/SubMenus

@@ -1,16 +1,13 @@
 ﻿@page
-@inject SiwesData.Data.ApplicationDbContext db
+@inject SiwesData.ApplicationDbContext db
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity;
 @model BSSL_SIWES.Web.MenuModel
 @{
     ViewData["Title"] = "Menu";
 }
-
-<div class="content-wrapper" id="newtab">
-    <div class="container-fluid" style="min-height:50px">
-        <div class="col-md-12">
-            <button id="btnShowModal" type="button" style="margin-left:350px"
+        <div class="col-md-8" style="margin-left:18%">
+            <button id="btnShowModal" type="button" style="margin-left:40%"
                     class="btn btn-sm btn-default pull-left col-lg-3 button button4">
                 Add More Menu
             </button>
@@ -89,8 +86,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    
 @*//}*@
 <style>
     .button {
@@ -165,13 +161,13 @@
 
         });
         $('#BtnSaveMenu').on('click', function () {
-            var myMenu = document.getElementById('myMenu').value;
+            var myMenu = $('#myMenu').val();
             if (myMenu == "") {
                 alert("PLEASE ENTER A MENU NAME");
                 return false;
             }
              var d = {
-                "Name": myMenu
+                "MenuName": myMenu
             };
             var confirmation = confirm("ARE YOU SURE YOU WANT TO ADD '" + myMenu.toUpperCase() + "' THIS MENU ?");
             if (confirmation === false) {
@@ -188,7 +184,7 @@
                 contentType: "application/json; charset=utf-8",
                 error: function (data) {
                     alert(data.responseText);
-
+                    //console.log(data);
                 },
                 failure: function (data) {
                     alert(data.responseText);
@@ -205,10 +201,6 @@
                     var html = "";
                     var rowCount = $('#tabId tr').length;
 
-
-                        //var serialNoCols = document.getElementsByClassName("se_no");
-                        //var col = serialNoCols[serialNoCols.length - 1];
-                        //var serno = Number(col.textContent) + 1;
 
                         html = `<tr>
                                 <td class="se_no" style="width:0.25%; text-align:left">${rowCount}</td>
@@ -227,11 +219,10 @@
             var myMenu = document.getElementById('myMenu').value;
             var myMenuhdd = document.getElementById('myMenuhdd').value;
             var editindex = document.getElementById('myidd').value;
-           // alert(editindex); alert(myMenu);
+           alert(editindex); alert(myMenu);
 
             var d = {
-                "Name": myMenu,
-                "Id": editindex,
+                "MenuName": myMenu,
 
             };
             var confirmation = confirm("ARE YOU SURE YOU WANT TO EDIT '" + myMenuhdd.toUpperCase() + "' TO '" + myMenu.toUpperCase() + "' ?");
@@ -268,7 +259,7 @@
             });
         });
 
-        $("#tabIdsssss").on('click', '#myDelete', function () {
+        $("#tabId").on('click', '#myDelete', function () {
             $('#monthname').html("REMOVE/DELETE MENU");
             var currentRow = $(this).closest("tr");
             var selectedIndex = currentRow.find("td:eq(0)").html(); // get current row 1st TD value
@@ -288,6 +279,11 @@
             $('#rowIndex').val(selectedIndex);
             $('#myMenu').prop("readonly", true);
 
+            alert($('#myMenu').val());
+            alert($('#myMenuhdd').val());
+            alert($('#myidd').val());
+            alert($('#rowIndex').val());
+
             return false;
         });
 
@@ -298,8 +294,7 @@
             var myMenu = document.getElementById('myMenu').value;
             //alert(editindex);
             var d = {
-                "Name": myMenu,
-                "Id": editindex,
+                "MenuName": myMenu,
             };
             var confirmation = confirm("ARE YOU SURE YOU WANT TO DELETE '" + myMenu.toUpperCase() + " MENU ?");
             if (confirmation === false) {
@@ -322,17 +317,23 @@
                 },
                 success: function (data) {
                     var myid = data['id'];
-
+                    console.log(data);
                     alert("" + myMenu.toUpperCase() + " MENU WAS SUCCESSFULLY DELETED");
                     $("#loginModal").modal('hide');
-
-                    location.reload();
+                    var rowIndex = $('#rowIndex').val();
+                    //var t = rowIndex - 1;
+                    var siblings = rowIndex.siblings();
+                    rowIndex.remove();
+                    siblings.each(function (index) {
+                        $(this).children().first().text(index);
+                    });
+                    //location.reload();
                 },
             });
 
         });
 
-        $("#tabId").on('click', '#myDelete', function () {
+        $("#tabIdssssssssssss").on('click', '#myDelete', function () {
             $('#monthname').html("REMOVE/DELETE MENU");
             var currentRow = $(this).closest("tr");
             var selectedIndex = currentRow.find("td:eq(0)").html(); // get current row 1st TD value
