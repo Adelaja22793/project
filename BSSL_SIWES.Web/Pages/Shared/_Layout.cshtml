@@ -83,13 +83,13 @@
                 <li class="nav-item d-none d-sm-inline-block">
 
                     @*<a href="~/Areas/Identity/Pages/Account/Login" class="nav-link">Register</a>
-                    <a asp-page="Areas/Identity/Pages/Account/Login" class="nav-link">
+                        <a asp-page="Areas/Identity/Pages/Account/Login" class="nav-link">
 
-                        <p>
-                            Log ins
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>*@
+                            <p>
+                                Log ins
+                                <span class="right badge badge-danger">New</span>
+                            </p>
+                        </a>*@
                 <li class="nav-item">
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
                         <button type="submit" class="nav-link btn btn-link">Log in</button>
@@ -101,7 +101,7 @@
 
             </ul>
 
-             Search Form 
+            Search Form
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
                     <input id="tags" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -114,7 +114,21 @@
             </form>
 
             <!-- Right navbar links -->
+            @{
+                //var InstOff = userManager.GetUserId(User);
+                var InstOff = 1;
+                var newCourse = db.NewCourseRequests.Where(s => s.InstitiutionOfficerId == InstOff && s.Approved == false).ToList();
+                var Counting = 0;
+                if (newCourse.Count > 0)
+                {
+                    Counting = newCourse.Count();
+                }
+                else
+                {
+                    Counting = 0;
+                }
 
+            }
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
                 <!-- Notifications Dropdown Menu -->
@@ -152,9 +166,9 @@
             <!-- <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 
 
-        <partial name="_LoginPartial" />
+                <partial name="_LoginPartial" />
 
-    </div> -->
+            </div> -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -170,7 +184,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -296,6 +310,12 @@
                                         <p>Setup EmployerSetup</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/CourseSetup" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Course Setup</p><span class="badge-pill badge-danger">@Counting</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
@@ -306,24 +326,24 @@
             <!-- /.sidebar -->
         </aside>
     </div>
-    <div class="container">
+    <div class="content-wrapper">
         @*<partial name="_CookieConsentPartial" />*@
         <main role="main" class="pb-3">
             @*@{
 
-                foreach (var dd in menulist)
-                {
-                        <div style="margin-left:500px">
-                         
-                            <li>
-                                <span> @dd.Menuid</span>
-                                <span> @dd.MenuName</span>
-                           
+                    foreach (var dd in menulist)
+                    {
+                            <div style="margin-left:500px">
 
-                            </li> <br />
-                        </div>
-                }
-            }*@
+                                <li>
+                                    <span> @dd.Menuid</span>
+                                    <span> @dd.MenuName</span>
+
+
+                                </li> <br />
+                            </div>
+                    }
+                }*@
 
             @RenderBody()
         </main>
@@ -345,6 +365,10 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+
+    <script src="~/template/plugins/jquery/jquery.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/template/dist/js/adminlte.js"></script>
     <!-- Bootstrap 4 -->
     <script src="~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- ChartJS -->
@@ -359,14 +383,23 @@
     <!-- daterangepicker -->
     <script src="~/template/plugins/moment/moment.min.js"></script>
     <script src="~/template/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <!-- Select2 -->
+    <script src="~/plugins/select2/js/select2.full.min.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="~/template/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Summernote -->
-    <script src="~/template/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/plugins/summernote/summernote-bs4.min.js"></script>
+
+    @*<script src="../../~/template/plugins/summernote/summernote-bs4.min.js"></script>*@
     <!-- overlayScrollbars -->
     <script src="~/template/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/template/dist/js/adminlte.js"></script>
+
+
+    <!-- DataTables -->
+    <script src="~/template/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="~/template/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/template/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
