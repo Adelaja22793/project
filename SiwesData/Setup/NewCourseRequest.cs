@@ -8,7 +8,11 @@ namespace SiwesData.Setup
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public DateTime DateIn { get; set; }
         public int InstitiutionOfficerId { get; set; }
+        public bool Approved { get; set; }
+        public string ApprovedBy { get; set; }
+        public DateTime ApprovedDate { get; set; }
 
         public Setup.InstitutionOfficer InstitiutionOfficer { get; set; }
     }
