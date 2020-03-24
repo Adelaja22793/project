@@ -56,6 +56,10 @@ namespace BSSL_SIWES.Web
                 options.Password.RequireUppercase = true;
                 options.SignIn.RequireConfirmedEmail = true;
                 options.User.RequireUniqueEmail = true;
+                   
+
+
+
 
 
             });
