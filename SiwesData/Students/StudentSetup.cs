@@ -13,7 +13,7 @@ namespace SiwesData.Students
         public string Surname { get; set; }
         public string OtherNames { get; set; }
         public int CoursesId { get; set; }
-        public int InstitutionId { get; set; }
+        public int? InstitutionId { get; set; }
         public string YearOfStudy { get; set; }
         public int NationalityId { get; set; }
         public string PhoneNo { get; set; }
