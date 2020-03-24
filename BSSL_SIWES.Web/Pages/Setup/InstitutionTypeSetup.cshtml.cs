@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data.Setup;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web.Pages.Setup
 {
     public class InstitutionTypeSetupModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
         [BindProperty]
         public InstTypeSetup InstTypeSetup { get; set; }
         public IList<InstTypeSetup> InstTypeSetupList { get; set; }
-        public InstitutionTypeSetupModel(SiwesData.Data.ApplicationDbContext context)
+        public InstitutionTypeSetupModel(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data;
-using SiwesData.Data.Setup;
+using SiwesData;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web.API
 {

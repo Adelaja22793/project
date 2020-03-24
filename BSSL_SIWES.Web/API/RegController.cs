@@ -15,10 +15,10 @@ namespace BSSL_SIWES.Web.API
     [ApiController]
     public class RegController : Controller
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public RegController(SiwesData.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RegController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;

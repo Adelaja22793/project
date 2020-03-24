@@ -14,9 +14,9 @@ namespace BSSL_SIWES.Web.API
     [ApiController]
     public class SubMenusController : ControllerBase
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
 
-        public SubMenusController(SiwesData.Data.ApplicationDbContext context)
+        public SubMenusController(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }

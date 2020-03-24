@@ -12,15 +12,15 @@ namespace BSSL_SIWES.Web
 {
     public class MenuModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
 
-        public MenuModel(SiwesData.Data.ApplicationDbContext context)
+        public MenuModel(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }
         public List<Menu> Menus { get; set; }
         [BindProperty]
-        public SiwesData.Data.Menu.Menu Menu { get; set; }
+        public SiwesData.Menu.Menu Menu { get; set; }
 
         public async Task OnGetAsync()
         {

@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SiwesData.Data.Setup;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web.Pages.Setup
 {
     public class InstitutionStudyLevelModel : PageModel
     {
-        private readonly SiwesData.Data.ApplicationDbContext _context;
+        private readonly SiwesData.ApplicationDbContext _context;
 
         [BindProperty]
         public InstLevelStudy InstLevelStudy { get; set; }
         public IList<InstLevelStudy> InstLevelStudyList { get; set; }
 
-        public InstitutionStudyLevelModel(SiwesData.Data.ApplicationDbContext context)
+        public InstitutionStudyLevelModel(SiwesData.ApplicationDbContext context)
         {
             _context = context;
         }
