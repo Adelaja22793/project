@@ -58,6 +58,10 @@ namespace BSSL_SIWES.Web.API
             {
                 await _context.SaveChangesAsync();
             }
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, ex.Message);
+            //}
             catch (DbUpdateConcurrencyException)
             {
                 if (!InstCatSetupExists(id))
@@ -70,7 +74,7 @@ namespace BSSL_SIWES.Web.API
                 }
             }
 
-            return NoContent();
+            return Ok(instCatSetup);
         }
 
         // POST: api/InstCatSetups
