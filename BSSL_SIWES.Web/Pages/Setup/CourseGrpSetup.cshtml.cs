@@ -15,6 +15,7 @@ namespace BSSL_SIWES.Web.Pages.Setup
         private readonly SiwesData.ApplicationDbContext _context;
 
         [BindProperty]
+        public InstTypeSetup InstituType { get; set; }
         public CourseGrpSetup CourseGrpSetup { get; set; }
         public IList<CourseGrpSetup> CourseGrpSetupList { get; set; }
 

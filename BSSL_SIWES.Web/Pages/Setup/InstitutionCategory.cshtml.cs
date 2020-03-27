@@ -27,18 +27,5 @@ namespace BSSL_SIWES.Web
             InstCatSetups = await _context.InstCatSetup.ToListAsync();
            // return Page();
         }
-
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Page();
-        //    }
-
-        //    _context.InstCatSetup.Add(InstCatSetup);
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToPage("./Index");
-        //}
     }
 }

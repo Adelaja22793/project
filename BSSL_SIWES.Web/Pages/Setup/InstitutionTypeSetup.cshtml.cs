@@ -15,6 +15,8 @@ namespace BSSL_SIWES.Web.Pages.Setup
         private readonly SiwesData.ApplicationDbContext _context;
         [BindProperty]
         public InstTypeSetup InstTypeSetup { get; set; }
+        public InstCatSetup InstCatSetup { get; set; }
+        public AgencySuperSetup AgencySuperSetup { get; set; }
         public IList<InstTypeSetup> InstTypeSetupList { get; set; }
         public InstitutionTypeSetupModel(SiwesData.ApplicationDbContext context)
         {
