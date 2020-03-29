@@ -30,7 +30,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Base Carrying Capacity on</label>
-                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            style="width: 100%;" id="drpbased">
                                         <option selected="selected">--Select--</option>
                                         <option>Institution</option>
                                         <option>Course</option>
@@ -43,7 +44,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Course Group </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpcoursegroup">
                                         <option selected="selected" value="-1">-- Select Course Group--</option>
                                     </select>
                                 </div>
@@ -52,7 +53,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Course Name </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.CourseList" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                            asp-items="ViewBag.CourseList" style="width: 100%; text-transform:uppercase" id="drpcourselist">
                                         <option selected="selected" value="-1">-- Select Course--</option>
                                     </select>
                                 </div>
@@ -70,7 +71,7 @@
                     <!-- /.card-body -->
                     <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
                         <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
-                        <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                        <button type="submit"  id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
                     </div>
                     <div class="row" id="divgrid">
                         <div style="display:table; margin:0 auto; width:100%; font-size:medium">
@@ -78,11 +79,12 @@
                                 <thead style="background-color:steelblue;">
                                     <tr>
                                         <th style="width:0.25%; text-align:center">S/N</th>
-                                        <th style="width:20%; text-align:center">Category</th>
-                                        <th style="width:20%; text-align:center">Type</th>
-                                        <th style="width:20%; text-align:center">Name</th>
-                                        <th style="width:20%; text-align:center">Group</th>
-                                        <th style="width:20%; text-align:center">Course</th>
+                                        @*<th style="width:20%; text-align:center">Category</th>*@
+                                        @*<th style="width:20%; text-align:center">Institution Type</th>*@
+                                        <th style="width:40%; text-align:center">Institution Name</th>
+                                        <th style="width:15%; text-align:center">Carry Based</th>
+                                        @*<th style="width:20%; text-align:center">Course Group</th>*@
+                                        <th style="width:40%; text-align:center">Course Name</th>
                                         <th style="width:10%; text-align:center">Capacity</th>
                                         <th style="width:5%; text-align:center">Actions</th>
                                     </tr>
@@ -133,27 +135,34 @@
         $("#tabId").DataTable();
         alert("yes");
         function formClear() {
-            $("#txtcode").val("");
-            $("#txtname").val("");
-            $("#txtshrtcode").val("");
-            $("#drpgroup").val("");
+            $("#drpinsti").val("-1");
+            $("#drpbased").val("-1");
+            $("#drpcoursegroup").val("-1");
+            $("#drpcourselist").val("-1");
+            $("#txtcarrycap").val("");
         }
         $('#Btnsave').on('click', function (e) {
             e.preventDefault();
-            var txtcode = document.getElementById('txtcode').value;
-            var txtname = document.getElementById('txtname').value;
-            var txtshrtcode = document.getElementById('txtshrtcode').value;
-            var drpgroup = document.getElementById('drpgroup').value;
+            var instiId = document.getElementById('drpinsti').value;
+            var instiname = $("#drpinsti option:selected").html();
+            var basedId = document.getElementById('drpbased').value;
+            var basedname = $("#drpbased option:selected").html();
+            var coursegroupId = document.getElementById('drpcoursegroup').value;
+            var coursegroupname = $("#drpcoursegroup option:selected").html();
+            var courselistId = document.getElementById('drpcourselist').value;
+            var courselistname = $("#drpcourselist option:selected").html();
+            var carrycap = document.getElementById('txtcarrycap').value;
             var d = {
-                "Code": txtcode,
-                "Name": txtname,
-                "ShortCode": txtshrtcode,
-                "CourseGrpSetupId": drpgroup,
+                "basecarry": basedId,
+                "CarryCap": carrycap,
+                "CourseGrpSetupId": coursegroupId,
+                "CoursesId": courselistId,
+                "InstitutionId": instiId
             };
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "POST",
-                url: baseUrl + '/Api/Courses',
+                url: baseUrl + '/Api/InstCarryCaps',
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true

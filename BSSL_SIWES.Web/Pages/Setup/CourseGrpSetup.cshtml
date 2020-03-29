@@ -169,6 +169,72 @@
                 },
             });
         });
+        $("#tabId").on('click', '#myEdit', function () {
+            $("#Btnsave").hide();
+            $("#Btnupdate").show();
+           // $("#BtnEditSubMenu").show()
+            var currentRow = $(this).closest("tr");
+            var selectedIndex = currentRow.find("td:eq(0)").html();
+
+            var editindex = $(this).attr('AddreEdit');
+            var tabcode = $('.tabcode.' + editindex).text();
+            var tabname = $('.tabname.' + editindex).text();
+            var tabshortcode = $('.tabshortcode.'  + editindex).text();
+            var drpdown = $('.drpdown.' + editindex).val();
+            var tabid = $('.readid.' + editindex).val();
+            $("#drpgroup").val(drpdown);
+            $("#txtcode").val(tabcode);
+            $("#txtname").val(tabname);
+            $("#txtshrtcode").val(tabshortcode);
+            $('#hddid').val(tabid);
+            $('#rowIndex').val(selectedIndex);
+
+            serialNo = $(this).closest('tr').find('.se_no').text();
+            return false;
+
+        });
+        $('#Btnupdate').on('click', function (e) {
+            e.preventDefault();
+            var editindex = document.getElementById('hddid').value;
+            var txtcode = document.getElementById('txtcode').value;
+            var txtname = document.getElementById('txtname').value;
+            var txtshrtcode = document.getElementById('txtshrtcode').value;
+            var drpgroup = document.getElementById('drpgroup').value;
+            var d = {
+                "Code": txtcode,
+                "Name": txtname,
+                "Id": Number(editindex),
+                "ShortCode":txtshrtcode,
+                "InstTypeSetupId": Number(drpgroup)
+            };
+            var t = serialNo - 1;
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/CourseGrpSetups/ ' + txtcode,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    $('.readid.' + t).text(data["id"]);
+                    $('.tabcode.' + t).text(data["code"]);
+                    $('.tabname.' + t).text(data["name"]);
+                    $('.tabshortcode.' + t).text(data["shortCode"]);
+                    $('.drpdown.' + t).text(data["instTypeSetupId"]);
+                    formClear();
+                    
+                },
+            });
+        });
     })
 </script>
 
