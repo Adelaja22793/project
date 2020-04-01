@@ -32,7 +32,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Supervisory Agency Id </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.SuperAgencies" style="width: 100%; text-transform:uppercase" id="drpAgency">
+                                            asp-items="ViewBag.AgenciesSetup" style="width: 100%; text-transform:uppercase" id="drpAgency">
                                         <option selected="selected" value="-1">-- Select Agency Id--</option>
                                     </select>
                                     <input asp-for="AgencySuperSetup.Id" id="hddidagency" type="hidden" class="form-control" />
@@ -165,7 +165,7 @@
                                 <td style="width:5%;" class="action">
                                 
                                 <input type="hidden" value=${myid}>
-                                <a href="/Setupmenu/Edit?id=${myid}">Edit</a>
+                                <a href="/Setup/InstTypeSetup/${myid}">Edit</a>
 
                             </td>
                             </tr>`

@@ -92,6 +92,7 @@
             $("#rowIndex").val("");
             $("#Btnsave").show();
             $("#Btnupdate").hide();
+           
         }
         $('#Btnsave').on('click', function (e) {
             $("#Btnsave").show();
@@ -138,9 +139,10 @@
                             </tr>`
                     $('#tabId').append(html);
                     formClear();
-
+                    location.reload();
                 },
             });
+            
         });
         $("#tabId").on('click', '#myEdit', function () {
             $("#Btnsave").hide();
@@ -209,6 +211,47 @@
                    
                 },
             });
+        });
+        $('#txtcode').on('change', function (e) {
+            
+            e.preventDefault();
+            var txtcode = document.getElementById('txtcode').value;
+            var txtname = document.getElementById('txtname').value;
+            alert(txtcode); return false;
+            var d = {
+                "Code": txtcode
+            };
+            var baseUrl = window.location.origin;
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/InstCatSetups/' + txtcode,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    $('#myEdit')
+                    var myid = data['id'];
+                    var rowNumber = $('#tabId tr').length;
+                    $('.readid.' + t).text(data["id"]);
+                    $('#tabcode.' + t).text(data["code"]);
+                    $('#tabname.' + t).text(data["name"]);
+                    formClear();
+                    formClear();
+                    location.reload();
+                },
+            });
+            
         });
     })
 </script>

@@ -26,7 +26,7 @@ namespace BSSL_SIWES.Web.Pages.Setup
         {
             InstTypeSetupList = await _context.InstTypeSetup.ToListAsync();
             ViewData["Categories"] = new SelectList(_context.InstCatSetup, "Id", "Name");
-            ViewData["SuperAgencies"] = new SelectList(_context.AgencySuperSetup, "Id", "Name");
+            ViewData["AgenciesSetup"] = new SelectList(_context.AgencySuperSetup, "Id", "Name");
         }
     }
 }
