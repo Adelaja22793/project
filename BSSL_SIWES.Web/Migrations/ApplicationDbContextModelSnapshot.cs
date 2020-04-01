@@ -162,12 +162,10 @@ namespace BSSL_SIWES.Web.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -204,12 +202,10 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -361,6 +357,9 @@ namespace BSSL_SIWES.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FormId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MenuId")
                         .HasColumnType("int");
@@ -947,6 +946,202 @@ namespace BSSL_SIWES.Web.Migrations
                     b.ToTable("SupervisoryAgencies");
                 });
 
+            modelBuilder.Entity("SiwesData.Students.DailyActivities", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("CerifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployerSupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentSetUpId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SupervisorRemarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeekNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployerSupervisorId");
+
+                    b.HasIndex("StudentSetUpId");
+
+                    b.ToTable("DailyActivities");
+                });
+
+            modelBuilder.Entity("SiwesData.Students.DailyActivitiesList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DailyActivitiesId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Day1")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Day1Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Day2")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Day2Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Day3")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Day3Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Day4")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Day4Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Day5")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Day5Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DailyActivitiesId");
+
+                    b.ToTable("DailyActivitiesLists");
+                });
+
+            modelBuilder.Entity("SiwesData.Students.Form8", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CompanyAssessment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateIn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployerSupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FutureEmploy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GradingPerformance")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GradingPerformanceComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("InstSupApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("InstitutionOfficerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Performance")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReasonNot")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentAccept")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentExperience")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentInvolvement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentInvolvementComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentSetUpId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SupApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("WorkExperience")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployerSupervisorId");
+
+                    b.HasIndex("InstitutionOfficerId");
+
+                    b.HasIndex("StudentSetUpId");
+
+                    b.ToTable("Form8");
+                });
+
+            modelBuilder.Entity("SiwesData.Students.MonthlyAssessment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("AssessmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AssessmentMonth")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAssessed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployerSupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MonthlyRemarksByStudent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentSetUpId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SupervisorRemarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployerSupervisorId");
+
+                    b.HasIndex("StudentSetUpId");
+
+                    b.ToTable("MonthlyAssessments");
+                });
+
             modelBuilder.Entity("SiwesData.Students.Scaf", b =>
                 {
                     b.Property<int>("Id")
@@ -960,14 +1155,14 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<DateTime>("Complete_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployerSuperSetupId")
-                        .HasColumnType("int");
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EmployerSupervisorId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReasonSuspended")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
@@ -975,9 +1170,12 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<int>("StudentSetUpId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Suspended")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployerSuperSetupId");
+                    b.HasIndex("EmployerSupervisorId");
 
                     b.HasIndex("StudentSetUpId");
 
@@ -991,13 +1189,19 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Attached")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("BatchNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CoursesId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InstitutionId")
+                    b.Property<int?>("InstitutionOfficerId")
                         .HasColumnType("int");
 
                     b.Property<string>("MatricNumber")
@@ -1006,8 +1210,8 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("MatricYear")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nationality")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("NationalityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("OtherNames")
                         .HasColumnType("nvarchar(max)");
@@ -1015,8 +1219,23 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("PhoneNo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ReasonSuspended")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SiwesYear")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Suspended")
+                        .HasColumnType("bit");
 
                     b.Property<string>("YearOfStudy")
                         .HasColumnType("nvarchar(max)");
@@ -1025,9 +1244,39 @@ namespace BSSL_SIWES.Web.Migrations
 
                     b.HasIndex("CoursesId");
 
-                    b.HasIndex("InstitutionId");
+                    b.HasIndex("InstitutionOfficerId");
+
+                    b.HasIndex("NationalityId");
+
+                    b.HasIndex("StateId");
 
                     b.ToTable("StudentSetUps");
+                });
+
+            modelBuilder.Entity("SiwesData.Students.SupervisorVisit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AreaToImprove")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateVisited")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StudentInvolvement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentSetUpId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentSetUpId");
+
+                    b.ToTable("SupervisorVisits");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1120,8 +1369,10 @@ namespace BSSL_SIWES.Web.Migrations
             modelBuilder.Entity("SiwesData.Setup.CourseGrpSetup", b =>
                 {
                     b.HasOne("SiwesData.Setup.InstTypeSetup", "InstTypeSetup")
-                        .WithMany()
-                        .HasForeignKey("InstTypeSetupId");
+                        .WithMany("CourseGrpSetups")
+                        .HasForeignKey("InstTypeSetupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiwesData.Setup.Courses", b =>
@@ -1186,7 +1437,7 @@ namespace BSSL_SIWES.Web.Migrations
             modelBuilder.Entity("SiwesData.Setup.LGA", b =>
                 {
                     b.HasOne("SiwesData.Setup.State", "State")
-                        .WithMany()
+                        .WithMany("LGAs")
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1227,11 +1478,63 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasForeignKey("StatesId");
                 });
 
+            modelBuilder.Entity("SiwesData.Students.DailyActivities", b =>
+                {
+                    b.HasOne("SiwesData.Employer.EmployerSupervisor", "EmployerSupervisor")
+                        .WithMany()
+                        .HasForeignKey("EmployerSupervisorId");
+
+                    b.HasOne("SiwesData.Students.StudentSetUp", "StudentSetUp")
+                        .WithMany()
+                        .HasForeignKey("StudentSetUpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SiwesData.Students.DailyActivitiesList", b =>
+                {
+                    b.HasOne("SiwesData.Students.DailyActivities", "DailyActivities")
+                        .WithMany("DailyActivitiesLists")
+                        .HasForeignKey("DailyActivitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SiwesData.Students.Form8", b =>
+                {
+                    b.HasOne("SiwesData.Employer.EmployerSupervisor", "EmployerSupervisor")
+                        .WithMany()
+                        .HasForeignKey("EmployerSupervisorId");
+
+                    b.HasOne("SiwesData.Setup.InstitutionOfficer", "InstitutionOfficer")
+                        .WithMany()
+                        .HasForeignKey("InstitutionOfficerId");
+
+                    b.HasOne("SiwesData.Students.StudentSetUp", "StudentSetUp")
+                        .WithMany()
+                        .HasForeignKey("StudentSetUpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SiwesData.Students.MonthlyAssessment", b =>
+                {
+                    b.HasOne("SiwesData.Employer.EmployerSupervisor", "EmployerSupervisor")
+                        .WithMany()
+                        .HasForeignKey("EmployerSupervisorId");
+
+                    b.HasOne("SiwesData.Students.StudentSetUp", "StudentSetUp")
+                        .WithMany()
+                        .HasForeignKey("StudentSetUpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SiwesData.Students.Scaf", b =>
                 {
-                    b.HasOne("SiwesData.Employer.EmployerSuperSetup", "EmployerSuperSetup")
+                    b.HasOne("SiwesData.Employer.EmployerSupervisor", "EmployerSupervisor")
                         .WithMany()
-                        .HasForeignKey("EmployerSuperSetupId")
+                        .HasForeignKey("EmployerSupervisorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1250,9 +1553,24 @@ namespace BSSL_SIWES.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiwesData.Setup.Institution", "Institution")
+                    b.HasOne("SiwesData.Setup.InstitutionOfficer", "InstitutionOfficer")
                         .WithMany()
-                        .HasForeignKey("InstitutionId")
+                        .HasForeignKey("InstitutionOfficerId");
+
+                    b.HasOne("SiwesData.Setup.Nationality", "Nationalities")
+                        .WithMany()
+                        .HasForeignKey("NationalityId");
+
+                    b.HasOne("SiwesData.Setup.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+                });
+
+            modelBuilder.Entity("SiwesData.Students.SupervisorVisit", b =>
+                {
+                    b.HasOne("SiwesData.Students.StudentSetUp", "StudentSetUp")
+                        .WithMany()
+                        .HasForeignKey("StudentSetUpId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

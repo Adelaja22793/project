@@ -12,7 +12,7 @@ namespace SiwesData.Students
         public string AssessmentMonth { get; set; }
         public DateTime AssessmentDate { get; set; }
         public string MonthlyRemarksByStudent { get; set; }
-        public int EmployerSupervisorId { get; set; }
+        public int? EmployerSupervisorId { get; set; }
         public DateTime DateAssessed { get; set; }
         public string SupervisorRemarks { get; set; }
         public bool Approved { get; set; }

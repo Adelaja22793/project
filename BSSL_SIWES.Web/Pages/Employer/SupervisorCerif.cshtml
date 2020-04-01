@@ -1,0 +1,393 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Employer.SupervisorCerifModel
+@{
+    ViewData["Title"] = "SupervisorCerif";
+}
+<div class="col-md-12">
+                    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="form-group clearfix">
+            <div class="icheck-info d-inline">
+                <input type="radio" name="r2" checked id="radioDanger1">
+                <label for="radioDanger1">
+                    Daily/Weekly Activities Approval
+                </label>
+            </div>
+            <div class="icheck-info d-inline">
+                <input type="radio" name="r2" id="radioDanger2">
+                <label for="radioDanger2">
+                    Monthly Assessment Approval
+                </label>
+            </div>
+        </div>
+        <div class="card-header" id="myDay">
+            <h3 class="card-title">Industry-Based Supervisor Certification</h3>
+        </div>
+        <div class="card-header" style="display:none" id="myMonth">
+            <h3 class="card-title">Monthly Assessment By Industry-Based Supervisor Certification</h3>
+        </div>
+        <div class="card-body" id="Assessment">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Select Student to Certify</label>
+                            <select class="form-control select2 select2-danger" id="studentSelected" data-dropdown-css-class="select2-danger"
+                                    asp-items="Model.StudentName" style="width: 100%;" onchange="MyFunctionStudentSelected()">
+                                <option selected="selected" value="-1">--Select Student to Certify--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-top:33px;">
+                            <button id="btnShowModal1" type="button" class="btn btn-outline-info">View Selected Student Daily/Weekly Records</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="card-body" style="display:none" id="myForm">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group studentSelected">
+                            <label>Enter Student Name</label>
+                            <select class="form-control"
+                                    style="width: 100%;"  id="studentSelected" onchange="MyFunctionMonthlyStudentSelected()">
+                                <option selected="selected" value="-1">--Select Student to Assess--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 monthSelected">
+                        <div class="form-group">
+                            <label>Select Month to Assess</label>
+                            <select class="form-control" id="monthSelected" onchange="MyFunctionMonthSelected()"
+                                    style="width: 100%;">
+                                <option selected="selected" value="-1">--Select Month to Assess--</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
+                        <button id="btnShowModal" type="button" class="btn btn-outline-info">View Student Monthly Assessment</button>
+                    </div>
+                </div>
+            </div>
+        <div class="modal fade" tabindex="-1" id="loginModal"
+             data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg col-md-12" style="margin-left:25%;">
+                <div class="modal-content">
+                    <div class="modal-header btn-primary">
+                        <h4 class="modal-title" id="monthname" style="margin-left:10%">ASSESSMENT FOR THE MONTH OF</h4>
+                        <button type="button" class="close" id="myClose" data-dismiss="modal">
+                            ×
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Trainee Students' Remark</label>
+                                    <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                    font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                                <input type="hidden" id="monthAssessed" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date Certified</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        </div>
+                                        <input type="date" id="certdate" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Industry-Based Supervisor Remarks</label>
+                                    <textarea class="textarea super" id="superRemarks" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
+                                <button type="button" id="BtnSubmitDailyActivities" class="btn btn-primary">Certify Students' Monthly Assessment</button>
+
+                                <button type="button" id="btnHideModal" class="btn btn-danger button button4">
+                                    Hide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<style type="text/css">
+    /*.ui-autocomplete {
+        position:relative;
+        z-index:1000;
+    }*/
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.textarea').summernote();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = dd + '/' + mm + '/' + yyyy;
+        $('#certdate').val(today);
+        $("#btnShowModal1").click(function () {
+            var StudentName = $("#studentSelected option:selected").val();
+            var studentDesc = $("#studentSelected option:selected").text();
+            if (StudentName == "-1") {
+                alert("PLEASE SELECT STUDENT TO VIEW DETAILS OF DAILY/WEEKLY RECORDS");
+                return false;
+            }
+            $("#loginModal").modal('show');
+            //$("#divreject2").modal('show');
+            $('#monthname').html("DAILY/WEEKLY RECORDS OF " + studentDesc.toUpperCase() + "")
+        });
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide'); 
+            $("#monthAssessed").val('');
+            $("#certdate").val('');
+            $('.super').summernote('code', '');
+            //$(".super").val("");
+        });
+        $("#myClose").click(function () {
+            $("#loginModal").modal('hide'); 
+            $("#monthAssessed").val('');
+            $("#certdate").val('');
+            $('.super').summernote('code', '');
+        });
+        $('#radioDanger2').on('click', function () {
+            var office = 1;
+            var officerId = parseInt(office)
+
+            var d = {
+                "Id": officerId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/Scafs/' + officerId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    $('div.studentSelected select').empty();
+                    $("div.studentSelected select").append('<option value=-1>--Select Student--</option>');
+                    $('div.monthSelected select').empty();
+                    $('div.monthSelected select').append('<option value=-1>--Select Month--</option>');
+                    var option = '';
+                    for (var i = 0; i < data.length; i++) {
+                        option += '<option value="' + data[i]['studentSetUpId'] + '">' + data[i]['studentSetUp']['surname'] + ' ' + data[i]['studentSetUp']['otherNames'] + '</option>';
+                        
+                    }
+                    //alert(option);
+                    if (option == "") {
+                        $('div.monthSelected select').empty();
+                        $('div.monthSelected select').append('<option value=-1>--Select Month--</option>');
+                        $('div.studentSelected select').empty();
+                        $("div.studentSelected select").append('<option value=-1>--Select Student--</option>');
+                    }
+                    $("div.studentSelected select").append(option);
+                    document.getElementById('myDay').style.display = "none";
+                    document.getElementById('myMonth').style.display = "block";
+                    document.getElementById('myForm').style.display = "block";
+                    document.getElementById('Assessment').style.display = "none";
+                },
+            });
+            
+        });
+        $('#radioDanger1').on('click', function () {
+            document.getElementById('myDay').style.display = "block";
+            document.getElementById('myMonth').style.display = "none";
+            document.getElementById('myForm').style.display = "none";
+            document.getElementById('Assessment').style.display = "block";
+        });
+        $('#btnShowModal').on('click', function () {
+            var studentSelected = $("div.studentSelected select").val();
+            var monthSelected = $("div.monthSelected select").val();
+            var studentSelectedName = $("div.studentSelected option:selected").html();
+            var monthSelectedName = $("div.monthSelected option:selected").html();
+            if (studentSelected == "-1") {
+                alert("PLEASE SELECT A STUDENT TO ASSESS");
+                return false;
+            }
+            if (monthSelected == "-1") {
+                alert("PLEASE SELECT A MONTH TO ASSESS THE SELECTED STUDENT");
+                return false;
+            }
+            var d = {
+                "Id": monthSelected
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/MonthlyAssessment/' + monthSelected,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#loginModal").modal('show');
+                    $('#monthname').html(" " + studentSelectedName.toUpperCase() + " ASSESSMENT FOR THE MONTH OF " + monthSelectedName.toUpperCase() + "")
+                    var remarks = data['monthlyRemarksByStudent'];
+                    $(".student").summernote('code', remarks);
+                    $('.student').summernote('disable');
+                    //alert(monthSelected);
+                    $('#monthAssessed').val(monthSelected);
+                },
+            });
+        });
+        $('#BtnSubmitDailyActivities').on('click', function () {
+            var SupervisorRemarks = $('.super').val();
+            var DateAssessed = $('#certdate').val();
+            var monthSelected = $("#monthAssessed").val();
+            var Certify = $("#monthname").html();
+            var Approved = true;
+            var office = 1;
+            var EmployerSupervisorId = parseInt(office)
+            var monthSelectedId = parseInt(monthSelected)
+          
+            if (DateAssessed == "") {
+                alert("PLEASE ENTER ASSESSMENT DATE");
+                return false;
+            }
+            if (SupervisorRemarks == "") {
+                alert("PLEASE ENTER REMARK FOR THE STUDENT");
+                return false;
+            }
+            var d = {
+                "Id": monthSelectedId,
+                "SupervisorRemarks": SupervisorRemarks,
+                "DateAssessed": DateAssessed,
+                "Approved": Approved,
+                "EmployerSupervisorId": EmployerSupervisorId,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO CERTIFY " + Certify.toUpperCase() + " ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/MonthlyAssessments/ ' + monthSelectedId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    
+                    alert("RECORD SUCCESSFULLY APPROVED");
+                    location.reload();
+                },
+            });
+        })
+    });
+    function MyFunctionStudentSelected() {
+        var StudentName = $("#studentSelected option:selected").val();
+        var studentDesc = $("#studentSelected option:selected").text();
+        if (StudentName == "-1") {
+            $('#btnShowModal').html("View Selected Student Daily/Weekly Records");
+        }
+        else {
+            $('#btnShowModal').html("View " + studentDesc + " Daily/Weekly Records");
+        }
+    }
+    function MyFunctionMonthSelected() {
+        var studentSelected = $("div.studentSelected select").val();
+        var monthSelected = $("div.monthSelected select").val();
+        var studentSelectedName = $("div.studentSelected option:selected").html();
+        var monthSelectedName = $("div.monthSelected option:selected").html();
+        if (studentSelected == "-1") {
+            alert("PLEASE SELECT A STUDENT TO ASSESS");
+            $('#btnShowModal').html("View Student Monthly Assessment");
+            return false;
+        }
+        $('#btnShowModal').html("View " + studentSelectedName + ' ' + monthSelectedName + " Monthly Assessment ");
+       
+    }
+    function MyFunctionMonthlyStudentSelected() {
+        $('#btnShowModal').html("View Student Monthly Assessment");
+        var studentSelectedId = $("div.studentSelected select").val();
+        var studentSelectedName = $("div.studentSelected option:selected").html();
+   
+        var d = {
+            "Id": studentSelectedId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/MonthlyAssessments/' + studentSelectedId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                $('div.monthSelected select').empty();
+                $('div.monthSelected select').append('<option value=-1>--Select Month--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['assessmentMonth'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    alert("THE SELECTED STUDENT HAVE NO MONTHLY ASSESSEMENT OR ASSESSMENT HAVE BEEN APPROVED")
+                    $('div.monthSelected select').empty();
+                    $('div.monthSelected select').append('<option value=-1>--Select Month--</option>');
+                }
+                $('div.monthSelected select').append(option);
+                
+            },
+        });
+
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

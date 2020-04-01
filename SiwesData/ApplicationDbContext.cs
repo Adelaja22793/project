@@ -30,6 +30,11 @@ namespace SiwesData
 
         public DbSet<Students.Scaf> Scafs { get; set; }
         public DbSet<Students.StudentSetUp> StudentSetUps { get; set; }
+        public DbSet<Students.DailyActivities> DailyActivities { get; set; }
+        public DbSet<Students.DailyActivitiesList> DailyActivitiesLists { get; set; }
+        public DbSet<Students.MonthlyAssessment> MonthlyAssessments { get; set; }
+        public DbSet<Students.Form8> Form8 { get; set; }
+        public DbSet<Students.SupervisorVisit> SupervisorVisits { get; set; }
 
         public DbSet<Employer.EmployerSuperSetup> EmployerSuperSetups { get; set; }
         public DbSet<Employer.EmployerSupervisor> EmployerSupervisors { get; set; }

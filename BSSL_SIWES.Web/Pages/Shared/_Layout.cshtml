@@ -184,7 +184,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -210,6 +210,18 @@
                                     </a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a asp-page="/Institution/Student_Visit_Form" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Supervisor Student Visit</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Institution/InstitusionSupervisor" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ITF FORM 8</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item has-treeview">
@@ -222,57 +234,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Students/Scaff_Form" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Student Commencement of Attachment Form (SCAF)</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="/Students/Form8" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>ITF FORM 8 - SIWES End of Year Program Report Sheet</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/Students/EmployerForm8" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ITF FORM 8</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Students/InstitusionSupervisor" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ITF FORM 8</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/Student_Visit_Form" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Supervisor Student Visit Form</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a asp-page="/Students/DailyActivities" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Daily/weekly Records</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/SupervisorCerif" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Approvals</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/MonthlyAssessment" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Monthly Assessment</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/Indus_MonthlyAssessment" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Industry-Based Monthly Assessment</p>
+                                        <p>Daily/Monthly Assessment</p>
                                     </a>
                                 </li>
                             </ul>
@@ -354,7 +324,37 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Employer
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/Employer/Scaff_Form" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Commencement Form</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Employer/SupervisorCerif" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Approvals</p>
+                                    </a>
+                                </li>
 
+                                <li class="nav-item">
+                                    <a href="/Employer/EmployerForm8" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ITF FORM 8</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -396,13 +396,15 @@
             </div>
         </footer>*@
     <!-- jQuery UI 1.11.4 -->
-    <script src="~/template/plugins/jquery-ui/jquery-ui.min.js"></script>
+    @*<script src="~/plugins/jquery-ui/jquery-ui.min.js></script>*@
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
 
-    <script src="~/template/plugins/jquery/jquery.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="~/template/dist/js/adminlte.js"></script>
     <!-- Bootstrap 4 -->
