@@ -8,13 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using SiwesData;
 using SiwesData.Setup;
 
+
 namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
     public class RoleTbsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly  ApplicationDbContext _context;
 
         public RoleTbsController(ApplicationDbContext context)
         {
@@ -48,48 +49,22 @@ namespace BSSL_SIWES.Web.API
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoleTb(string id, RoleTb roleTb)
         {
-            //var studentToUpdate = await _context.Students.FindAsync(id);
-            //if (studentToUpdate == null)
-            //{
-            //    return NotFound();
-            //}
-            //if (await TryUpdateModelAsync<Student>(
-            //studentToUpdate,
-            //"student",
-            //s => s.FirstMidName, s => s.LastName, s => s.EnrollmentDate))
-            //{
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToPage("./Index");
-            //}
-
-            if (!ModelState.IsValid)
+            if (!_context.RoleTb.Any(e => e.Id == roleTb.Id))
             {
-                return BadRequest(ModelState);
-            }
-
-            _context.Entry(roleTb).State = EntityState.Modified;
-
-            try
-            {
+                //_context.RoleTb.Add(roleTb);
                 await _context.SaveChangesAsync();
-
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!_context.RoleTb.Any(e => e.RoleId == roleTb.RoleId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-                return Ok(roleTb);
-        }
+                var pos = await _context.RoleTb.FirstOrDefaultAsync(x => x.Id == roleTb.Id);
+                pos.Id = roleTb.Id;
+                pos.Name = roleTb.Name;
 
-            //return Ok(roleTb);
-        
+                await _context.SaveChangesAsync();
+            }
+            return Ok(roleTb);
+        }
+       
 
         // POST: api/RoleTbs
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -97,6 +72,7 @@ namespace BSSL_SIWES.Web.API
         [HttpPost]
         public async Task<ActionResult<RoleTb>> PostRoleTb(RoleTb roleTb)
         {
+
             var nameCheck = _context.RoleTb
                         .Where(b => b.RoleId == roleTb.RoleId)
                         .FirstOrDefault();
@@ -108,7 +84,7 @@ namespace BSSL_SIWES.Web.API
             }
             else
             {
-                return Conflict("The item already exists");
+                return Conflict("RoleId Already Exists");
             }
 
             return CreatedAtAction("GetRoleTb", new { id = roleTb.RoleId }, roleTb);

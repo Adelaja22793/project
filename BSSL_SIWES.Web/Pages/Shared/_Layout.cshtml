@@ -1,39 +1,88 @@
 ﻿@inject SiwesData.ApplicationDbContext db
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+
+@using System.Collections.Generic
+
+@using Microsoft.AspNetCore.Http
+
+@using SiwesData.Setup
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<RoleTb> roleManager
+
 
 @{
     //var ListCategories = db.mainCategories.Include(m => m.SubCategories);
 
     // var menulist = db.SubMenu.Include(m => m.MenuAccesses);
+    //private readonly UserManager<IdentityUser> _userManager;
+    //private readonly AspNetRoleManager<RoleTb> _roleManager;
 
-    var menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
-     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
-     .Where(k => k.macc2.RoleId == "01")
-     .Select(m => new
-     {
-         MenuName = m.Macc.m.Name,
-         Menuid = m.Macc.m.Id,
-         SubMenuid = m.Macc.sub.Id,
-         Pageurl = m.Macc.sub.PageUrl,
-         SubMenuName = m.Macc.sub.Name
+    //public LayoutModel( UserManager<IdentityUser> userManager, AspNetRoleManager<RoleTb> roleManager)
+    //{
+    //    _userManager = userManager;
+    //    _roleManager = roleManager;
+    //}
+    var getuserrole = "";
+    if (SignInManager.IsSignedIn(User))
+    {
+        var CurUser = await UserManager.GetUserAsync(User);
+        var currole = await UserManager.GetRolesAsync(CurUser);
+        var rolem = await roleManager.FindByNameAsync(currole[0]);
+        if (currole != null)
+        {
+            getuserrole = rolem.RoleId.ToString();
+        }
+      //  var roleuser = db.RoleTb.Join(db.RoleTb, m => m.Id, sub => sub. )
+        var menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+        .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+        .Where(k => k.macc2.RoleId == getuserrole)
+        .Select(m => new
+        {
+            MenuName = m.Macc.m.Name,
+            Menuid = m.Macc.m.Id,
+            SubMenuid = m.Macc.sub.Id,
+            Pageurl = m.Macc.sub.PageUrl,
+            SubMenuName = m.Macc.sub.Name
 
 
-     }).ToList();
+        }).ToList();
 
 
-    var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
-     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
-     .Where(k => k.macc2.RoleId == "01")
-     //  .GroupBy( k = k )
-     .Select(m => new
-     {
-         MenuName = m.Macc.m.Name,
-         Menuid = m.Macc.m.Id
+        var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+         .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+         .Where(k => k.macc2.RoleId == getuserrole)
+         //  .GroupBy( k = k )
+         .Select(m => new
+         {
+             MenuName = m.Macc.m.Name,
+             Menuid = m.Macc.m.Id
+         }).ToList();
+
+        var menulist = menulist4.GroupBy(c => c.Menuid, (key, c) => c.FirstOrDefault());
+    }
+
+    //var user = await UserManager.FindByIdAsync(UserId);
+    //var roles = await _userManager.GetRolesAsync(user);
 
 
-     }).ToList();
+    //var user = await this.db.Users.Where (x => x.Id == CurUser.Id ).Include (x => x.Id).FirstOrDefaultAsync ();
 
-    var menulist = menulist4.GroupBy(c => c.Menuid,  (key, c) => c.FirstOrDefault());
+
+
+    ////  var user = await UserManager.FindByEmailAsync(model.Email);
+    //  // Get the roles for the user
+    //  var roles = await UserManager.GetRolesAsync(user1);
+
+
+
+
+    //#region get user role
+    //   var  userrole  =
+    //#endregion
+
+
 
 
 }

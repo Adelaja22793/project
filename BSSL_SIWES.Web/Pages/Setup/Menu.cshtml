@@ -119,7 +119,7 @@
             e.preventDefault();
             
             var menuname = document.getElementById('MENUNAME').value;
-           
+            alert(menuname);
             var d = {
                 "Name": menuname,         
             };
@@ -142,7 +142,7 @@
                 },
                 success: function (data) {
                
-                    alert("Succesfully");   
+                    alert("Menu Saved Succesfully");   
                     var myid = data['id'];
                     var nam = data['name'];
                    

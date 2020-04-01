@@ -28,6 +28,10 @@ namespace BSSL_SIWES.Web.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -44,6 +48,8 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -162,12 +168,10 @@ namespace BSSL_SIWES.Web.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -204,12 +208,10 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -361,6 +363,9 @@ namespace BSSL_SIWES.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FormId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MenuId")
                         .HasColumnType("int");
@@ -997,7 +1002,7 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InstitutionId")
+                    b.Property<int?>("InstitutionId")
                         .HasColumnType("int");
 
                     b.Property<string>("MatricNumber")
@@ -1006,8 +1011,8 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("MatricYear")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nationality")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NationalityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("OtherNames")
                         .HasColumnType("nvarchar(max)");
@@ -1027,7 +1032,19 @@ namespace BSSL_SIWES.Web.Migrations
 
                     b.HasIndex("InstitutionId");
 
+                    b.HasIndex("NationalityId");
+
                     b.ToTable("StudentSetUps");
+                });
+
+            modelBuilder.Entity("SiwesData.Setup.RoleTb", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("RoleTb");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1120,8 +1137,10 @@ namespace BSSL_SIWES.Web.Migrations
             modelBuilder.Entity("SiwesData.Setup.CourseGrpSetup", b =>
                 {
                     b.HasOne("SiwesData.Setup.InstTypeSetup", "InstTypeSetup")
-                        .WithMany()
-                        .HasForeignKey("InstTypeSetupId");
+                        .WithMany("CourseGrpSetups")
+                        .HasForeignKey("InstTypeSetupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SiwesData.Setup.Courses", b =>
@@ -1252,7 +1271,11 @@ namespace BSSL_SIWES.Web.Migrations
 
                     b.HasOne("SiwesData.Setup.Institution", "Institution")
                         .WithMany()
-                        .HasForeignKey("InstitutionId")
+                        .HasForeignKey("InstitutionId");
+
+                    b.HasOne("SiwesData.Setup.Nationality", "Nationalities")
+                        .WithMany()
+                        .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
