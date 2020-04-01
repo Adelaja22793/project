@@ -19,16 +19,15 @@ namespace SiwesData.Setup
         public string ZipCode { get; set; }
         public string PhoneNo1 { get; set; }
         public string PhoneNo2 { get; set; }
+        public string Email { get; set; }
+        public string Website { get; set; }
+        public string Superagency { get; set; }
         public string AreaOffice { get; set; }
-
         public string AffiliateInst { get; set; }
         public int CapacityNo { get; set; }
-        public Boolean Deactivate { get; set; }
-        public DateTime Datedectivated { get; set; }
-        //public int InstCatSetupId { get; set; }
+        public string Deactivate { get; set; }
+        public DateTime? Datedectivated { get; set; }
         public int InstTypeSetupId { get; set; }
-
-        //public InstCatSetup InstCatSetup { get; set; }
         public InstTypeSetup InstTypeSetup { get; set; }
     }
 }
