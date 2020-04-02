@@ -4,267 +4,421 @@
     ViewData["Title"] = "Form8";
 }
 <div class="col-md-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">ITF FORM 8 - SIWES End of Year Program Report Sheet</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form role="form">
-                            <div class="card-body">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">ITF FORM 8 - SIWES End of Year Program Report Sheet</h3>
+        </div>
+        <div class="card-body">
 
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Matric. Number</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-asterisk"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Student Name</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Year of Study</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Name of Institution</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Course of Study</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Commencement Date</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="date" id="commence_Date" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Completion Date</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()" class="form-control" placeholder="Enter Date">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Duration</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                                </div>
-                                                <input type="text" id="duration" readonly="readonly" class="form-control">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Enter Name of Organisation</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Enter Name of Organisation">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Organisation Location Address</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Enter Organisation Location Address">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Department/Section</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>ITF Area Office</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-search-location"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Brief Outline of Experience of Training Provided</label>
-                                            <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px;
-                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Previously Attached?</label>
-                                            <select class="form-control select2 select2-danger" onchange="myFucntionAttached()"
-                                                    id="attachedBefore" data-dropdown-css-class="select2-danger">
-                                                <option selected="selected" value="0">NO</option>
-                                                <option value="1">YES</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Number of Weeks Engaged in I.T</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                                </div>
-                                                <input type="text" id="noWeeks" readonly="readonly" class="form-control">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                                </div>
-                                                <input type="text" id="certdate" class="form-control" readonly="readonly">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 ifYes" style="display:none">
-                                        <div class="form-group">
-                                            <label>Select Name of Company/Establishment </label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="refno">
-
-                                                <div class="input-group-append">
-                                                    <input class="btn btn-primary" type="button" value="Search" id="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 ifYes" style="display:none">
-                                        <div class="form-group">
-                                            <label>Address of Company/Establishment</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-address-book"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="justify-content-center" style="margin-left:10%; margin-bottom:3%;">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="button" class="btn btn-warning"> Print/Preview Report Sheet</button>
-                                    <button type="button" class="btn btn-info">Upload End of Year Programme Report Sheet</button>
-                                </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Matric. Number</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-asterisk"></i></span>
                             </div>
-
-                        </form>
-                        
+                            <input type="text" asp-for="Scaf.StudentSetUp.MatricNumber" class="form-control" readonly="readonly">
+                            <input type="hidden" asp-for="Scaf.StudentSetUpId" id="studentId" />
+                        </div>
                     </div>
                 </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" asp-for="StudentName" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Course of Study</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                            </div>
+                            <input type="text" asp-for="Scaf.StudentSetUp.Courses.Name" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="display:none">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Name of Institution</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
+                            </div>
+                            <input type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Course of Study</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                            </div>
+                            <input type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Commencement Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                            <input type="date" id="commence_Date" asp-for="Scaf.Commence_Date" readonly="readonly" class="form-control" placeholder="Enter Date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Completion Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                            <input type="date" id="complete_Date" asp-for="Scaf.Complete_Date" readonly="readonly" class="form-control" placeholder="Enter Date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>No. of Weeks</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-clock"></i></span>
+                            </div>
+                            <input type="text" id="duration" asp-for="Scaf.Duration" readonly="readonly" class="form-control">
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Name of Organisation</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" asp-for="Scaf.EmployerSupervisor.EmployerSuperSetup.Name" class="form-control" placeholder="Name of Organisation" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Employer Supervisor Name</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                            </div>
+                            <input type="text" class="form-control" asp-for="Scaf.EmployerSupervisor.Name" readonly="readonly">
+                        </div>
 
-<script src="../../~/template/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="../../~/template/plugins/datatables/jquery.dataTables.js"></script>
-<script src="../../~/template/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
-<!-- AdminLTE App -->
-<script src="../../~/template/dist/js/adminlte.min.js"></script>
-<script src="../../~/template/plugins/summernote/summernote-bs4.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../~/template/dist/js/demo.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
-<!-- page script -->
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Supervisor Phone Number</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            </div>
+                            <input type="text" asp-for="Scaf.EmployerSupervisor.Phone1" class="form-control" readonly="readonly">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="display:none">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Department/Section</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>ITF Area Office</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search-location"></i></span>
+                            </div>
+                            <input type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (Model.Form8 == null)
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Brief Outline of Experience of Training Provided</label>
+                            <textarea class="textarea experience" style="width: 100%; height: 200px;
+                                        font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="Scaf.StudentSetUpId" id="studentId1" />
+                </div>
+            }
+            else
+            {
+                if (Model.Form8.SupApproved == false)
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Brief Outline of Experience of Training Provided</label>
+                                <textarea class="textarea experience1" asp-for="Form8.WorkExperience" style="width: 100%; height: 200px;
+                                    font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="Scaf.StudentSetUpId" id="studentId1" />
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Brief Outline of Experience of Training Provided</label>
+                                <textarea class="textarea experience2" asp-for="Form8.WorkExperience" style="width: 100%; height: 200px;
+                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            @*@if (Model.Form8.SupApproved == false)
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Brief Outline of Experience of Training Provided</label>
+                            <textarea class="textarea experience" asp-for="Form8.WorkExperience" style="width: 100%; height: 200px;
+                                font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                        <input type="hidden" asp-for="Scaf.StudentSetUpId" id="studentId1" />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Brief Outline of Experience of Training Provided</label>
+                            <textarea class="textarea experience1" asp-for="Form8.WorkExperience" style="width: 100%; height: 200px;
+                        font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            }*@
+
+            <div class="row" style="display:none">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Previously Attached?</label>
+                        <select class="form-control select2 select2-danger" onchange="myFucntionAttached()"
+                                id="attachedBefore" data-dropdown-css-class="select2-danger">
+                            <option selected="selected" value="0">NO</option>
+                            <option value="1">YES</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Number of Weeks Engaged in I.T</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-clock"></i></span>
+                            </div>
+                            <input type="text" id="noWeeks" readonly="readonly" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                            <input type="text" id="certdate" class="form-control" readonly="readonly">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 ifYes" style="display:none">
+                    <div class="form-group">
+                        <label>Select Name of Company/Establishment </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="refno">
+
+                            <div class="input-group-append">
+                                <input class="btn btn-primary" type="button" value="Search" id="" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 ifYes" style="display:none">
+                    <div class="form-group">
+                        <label>Address of Company/Establishment</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-address-book"></i></span>
+                            </div>
+                            <input type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="justify-content-center" id="muButton" style="margin-left:40%; margin-bottom:3%;">
+                <button type="button" id="BtnSaveForm8" class="btn btn-primary">Submit End of SIWES Form</button>
+                <button type="button" id="myUpdate" style="display:none" class="btn btn-primary"> Update Experience Record</button>
+            </div>
+        </div>
+                        
+    </div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('.textarea').summernote();
+        $('.experience2').summernote('disable');
+        var experience = $('.experience').val();
+        var studentId1 = $('#studentId1').val();
+        //alert(experience);
+        if (!$('#studentId1').val()) {
+            alert("YOUR END OF SIWES EXPERIENCE HAVE BEEN APPROVED BY YOUR EMPLOYER SUPERVISOR");
+            document.getElementById('muButton').style.display = "none";
+            document.getElementById('myUpdate').style.display = "none";
+        }
+        else {
+            if (experience != "") {
+                document.getElementById('muButton').style.display = "inline-block";
+                document.getElementById('BtnSaveForm8').style.display = "none";
+                document.getElementById('myUpdate').style.display = "block";
+            }
+            else {
+                document.getElementById('muButton').style.display = "inline-block";
+                document.getElementById('BtnSaveForm8').style.display = "block";
+                document.getElementById('myUpdate').style.display = "none";
+            }
+        }
+
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         today = dd + '/' + mm + '/' + yyyy;
         $('#certdate').val(today);
+        $('#BtnSaveForm8').on('click', function () {
+            var experience = $('.experience').val();
+            var studtId = $('#studentId').val();
+            var studentId = parseInt(studtId);
+            if (experience == "") {
+                alert("PLEASE ENTER A BRIEF OUTLINE OF EXPERIENCE OF THE TRAINING PROVIDED");
+                setTimeout(function () {
+                    $('.experience').focus();
+                }, 1);
+                return false;
+            }
+            var d = {
+                "StudentSetUpId": studentId,
+                "WorkExperience": experience,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO YOUR END OF SIWES EXPERIENCE TO TOUR SUPERVISOR ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/Form8';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("END OF SIWES EXPERIENCE WAS SUCCESSFULLY SUBMITTED");
+                    location.reload();
+                },
+            });
+        });
+        $('#myUpdate').on('click', function () {
+            var experience = $('.experience1').val();
+            var studtId = $('#studentId').val();
+            var studentId = parseInt(studtId);
+            alert(studentId); alert(experience);
+            if (experience == "") {
+                alert("PLEASE ENTER A BRIEF OUTLINE OF EXPERIENCE OF THE TRAINING PROVIDED");
+                setTimeout(function () {
+                    $('.experience1').focus();
+                }, 1);
+                return false;
+            }
+            var d = {
+                "StudentSetUpId": studentId,
+                "WorkExperience": experience,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO YOUR END OF SIWES EXPERIENCE TO TOUR SUPERVISOR ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/Form8/' + studentId;
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("END OF SIWES EXPERIENCE WAS SUCCESSFULLY UPDATED");
+                    location.reload();
+                },
+            });
+        });
     });
     function MyFunctionCommDate() {
         $('#complete_Date').val("");

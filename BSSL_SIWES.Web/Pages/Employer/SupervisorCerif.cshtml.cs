@@ -9,26 +9,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Students;
 
-namespace BSSL_SIWES.Web
+namespace BSSL_SIWES.Web.Pages.Employer
 {
-    public class DailyActivitiesModel : PageModel
+    public class SupervisorCerifModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public DailyActivitiesModel(SiwesData.ApplicationDbContext context,
+        public SupervisorCerifModel(SiwesData.ApplicationDbContext context,
             UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
+        public List<SelectListItem> StudentName { get; set; }
+        public IList<Scaf> Scafs { get; set; }
         public List<SelectListItem> SelectMonth { get; set; }
-        public DailyActivities DailyActivities { get; set; }
-        public DailyActivitiesList DailyActivitiesList { get; set; }
-        public Scaf Scaf { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync(int? id)
         {
-            int id = 19;
+            id = 1;
+            
+            StudentName = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Mr.", Text = "Ceaser Azpilicueta" },
+                new SelectListItem { Value = "Mrs.", Text = "Christain Pulisic" },
+                new SelectListItem { Value = "Doctor", Text = "Hakim Zyech" },
+                new SelectListItem { Value = "Prof.", Text = "Mason Mount" },
+                new SelectListItem { Value = "Engr.", Text = "Rose Barkley" },
+                new SelectListItem { Value = "Master", Text = "Ngolo Kante" },
+                new SelectListItem { Value = "Miss", Text = "Marcos Alonso" },
+            };
             SelectMonth = new List<SelectListItem>
             {
                 new SelectListItem { Value = "January", Text = "January" },
@@ -45,19 +55,11 @@ namespace BSSL_SIWES.Web
                 new SelectListItem { Value = "December", Text = "December" },
             };
 
-            Scaf = await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
-                .Where(x => x.StudentSetUpId == x.StudentSetUp.Id && x.EmployerSupervisorId == x.EmployerSupervisor.Id
-                && x.StudentSetUpId == id).SingleOrDefaultAsync();
-            //DailyActivitiesList = await _context.DailyActivitiesLists.Include(v => v.DailyActivities)
-            //        .SingleOrDefaultAsync(x => x.DailyActivitiesId == x.DailyActivities.Id && x.DailyActivities.StudentSetUpId == id);
-            //var DayValue = DailyActivitiesList.DayValue;
-            //StudentName = StudentSetUp.Surname + ' ' + StudentSetUp.OtherNames;
-            if (Scaf == null)
-            {
-                return NotFound();
-            }
+            //ViewData["NationalityId"] = new SelectList( await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
+            //    .Where(x => x.EmployerSupervisorId == id && x.StudentSetUp.Suspended == false), "Id", "Name");
 
-            return Page();
+            Scafs = await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
+                .Where(x => x.EmployerSupervisorId == id && x.StudentSetUp.Suspended == false).ToListAsync();
         }
     }
 }

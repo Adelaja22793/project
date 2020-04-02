@@ -1,0 +1,475 @@
+﻿@page
+@model BSSL_SIWES.Web.InstitusionSupervisorModel
+@{
+    ViewData["Title"] = "InstitusionSupervisor";
+}
+<div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">ITF FORM 8 - SIWES End of Year Program Report Sheet</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group studentSelected">
+                                    <label for="exampleInputFile">Enter/Search Matric. Number</label>
+                                    <select class="form-control"
+                                            style="width: 100%;" onchange="MyfunctionMatricNo()">
+                                        <option selected="selected" value="-1">--Select Student Matric No.--</option>
+                                        @foreach (var items in Model.StudentSetUp)
+                                        {
+                                            <option value="@items.Id">@Html.DisplayFor(modelitem => items.MatricNumber)</option>
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Student Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="studentName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Course of Study</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-book-medical"></i></span>
+                                        </div>
+                                        <input type="text" id="courseName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Employer's Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="employerName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Employer's Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                        </div>
+                                        <input type="text" id="employerAddress" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Employer's Supervisor Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="hidden" id="employerId" />
+                                        <input type="text" id="employerSupervisorName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Supervisor's Phone No.</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" id="employerSupervisorPhoneNo" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Date Certified</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="date" id="certdate" class="form-control">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Give your assessment of the facility provided by the company during visit(s) by ticking</label>
+
+                                    <!-- radio -->
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary1" value="STANDARD" name="r1">
+                                            <label for="radioPrimary1">STANDARD</label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary2" value="ADEQUATE" name="r1">
+                                            <label for="radioPrimary2">ADEQUATE</label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary3" value="RELEVANT" name="r1">
+                                            <label for="radioPrimary3">RELEVANT</label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary4" value="NOT RELEVANT" name="r1">
+                                            <label for="radioPrimary4">NOT RELEVANT</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label>Give your impression of the student’s involvement in training:</label>
+                                    <select class="form-control select2 select2-danger"
+                                            id="StudentInvolvement" data-dropdown-css-class="select2-danger">
+                                        <option selected="selected" value="FULLY">FULLY</option>
+                                        <option value="PARTIALLY">PARTIALLY</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Number of Visit</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user-clock"></i></span>
+                                        </div>
+                                        <input type="text" id="numberVisit" class="form-control" readonly="readonly">
+                                        <input type="hidden" id="InstitutionOfficerId" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>General Comment</label>
+                                    <textarea class="textarea generalComment" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>Assessment of student’s performance:</label>
+                                    <select class="form-control select2 select2-danger"
+                                            id="GradingPerformance" data-dropdown-css-class="select2-danger">
+                                        <option selected="selected" value="0">--Select Grading--</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>General Performance Comment</label>
+                                    <textarea class="textarea GradingPerformanceComment" onkeypress="myFunctionClick()" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                            <button type="button" id="BtnSumit" class="btn btn-primary">Approve Student End of Year Experience</button>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="modal fade" tabindex="-1" id="loginModal"
+                     data-keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog modal-lg" style="width:100%; margin-left:27%;">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:seagreen">
+                                <h4 class="modal-title" id="monthname" style="margin-left:100px">Assessment For the Month of </h4>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    ×
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Comment By Student</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex" style="">
+                                <button type="button" id="btnHideModal" class="btn btn-primary button button4">
+                                    Hide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+         $("#btnShowModal").click(function () {
+           
+            $("#loginModal").modal('show');
+        });
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        });
+
+        $('.genper').summernote({
+          callbacks: {
+                onKeyup: function (e) {
+                  
+                  myAttached = $('#grade').val();
+                  //alert(myAttached);
+                    if (myAttached == "0") {
+                        alert("PLEASE SELECT GRADE");
+                        $('.genper').summernote("reset");
+                    }
+                }
+          }
+        });
+        $('#BtnSumit').on('click', function () {
+            var studtId = $('div.studentSelected select').val();
+            var studentName = $('#studentName').val();
+
+            var DateIn = $('#certdate').val();
+            var CompanyAssessment = $("input[name='r1']:checked").val();
+            var StudentInvolvement = $('#StudentInvolvement').val();
+            var StudentInvolvementComment = $('.generalComment').val();
+            var GradingPerformance = $('#GradingPerformance').val();
+            var GradingPerformanceComment = $('.GradingPerformanceComment').val();
+            var studentId = parseInt(studtId);
+            var InstitutionOffid = $('#InstitutionOfficerId').val();
+            var InstitutionOfficerId = parseInt(InstitutionOffid);
+
+            //alert(InstitutionOfficerId);
+            //alert(studentId);
+            //alert(CompanyAssessment); alert(StudentInvolvement);
+            //alert(StudentInvolvementComment);
+            //alert(GradingPerformance); alert(GradingPerformanceComment);
+            //alert(DateIn); alert(studentName);
+
+            
+            //alert(accept); alert(Attachment);
+            if (studentId == "-1") {
+                alert("PLEASE SELECT A STUDENT TO EVALUATE");
+                return false;
+            }
+            if (CompanyAssessment == "") {
+                alert("PLEASE ASSESS COMPANY FACILITIES PROVIDED DURING YOUR VISIT");
+                return false;
+            }
+            if (StudentInvolvementComment == "") {
+                alert("ENTER GENERAL COMMENT ON STUDENT INVOLVEMENT IN TRAINING");
+                return false;
+            }
+            if (DateIn == "") {
+                alert("ENTER DATE OF CERTIFICATION TRAINING EXPERIENCE");
+                return false;
+            }
+            if (GradingPerformance == "0" ) {
+                alert("PLEASE SELECT A GRADE TO ASSESS STUDENT PERFORMANCE");
+                return false;
+            }
+            if (GradingPerformanceComment == "") {
+                alert("ENTER GENERAL PERFORMANCE COMMENT");
+                return false;
+            }
+            var d = {
+                "StudentSetUpId": studentId,
+                "InstitutionOfficerId": InstitutionOfficerId,
+                "CompanyAssessment": CompanyAssessment,
+                "StudentInvolvement": StudentInvolvement,
+                "StudentInvolvementComment": StudentInvolvementComment,
+                "InDate": DateIn,
+                "GradingPerformance": GradingPerformance,
+                "GradingPerformanceComment": GradingPerformanceComment,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO YOUR END OF SIWES EXPERIENCE TO TOUR SUPERVISOR ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/Form8Officer/' + studentId;
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("END OF SIWES EXPERIENCE WAS SUCCESSFULLY UPDATED");
+                    location.reload();
+                },
+            });
+        });
+        $('.textarea').summernote();
+    });
+    function MyfunctionMatricNo() {
+        var stId = $('div.studentSelected select').val();
+        var studentId = parseInt(stId)
+        //alert(studentId);
+        if (studentId == "") {
+            alert("STUDENT DOES NOT EXISTS OR STUDENT HAVE NOT BEEN SET UP.");
+            setTimeout(function () {
+                $('#matricNo').val("");
+                $('#studentId').val("");
+                $('#matricNo').focus();
+            }, 1);
+            return false;
+        }
+        var d2 = {
+            "Id": studentId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/StudentSetUps/' + studentId,
+            data: JSON.stringify(d2),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                $('#studentName').val(data['surname'] + ' ' + data['otherNames']);
+                $('#studentId').val(data['id']);
+                $('#courseName').val(data['courses']['name']);
+                $('#matricNo').val(data['matricNumber']);
+
+                $('#InstitutionOfficerId').val(data['institutionOfficerId']);
+                $('#employerName').val("");
+                $('#employerAddress').val("");
+                $('#employerSupervisorName').val("");
+                $('#employerId').val("");
+                $('#employerSupervisorPhoneNo').val("");
+
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/ScafSupervisor/' + studentId,
+                    data: JSON.stringify(d2),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        //console.log(data);
+                        if (!data) {
+                            $('#employerName').val("");
+                            $('#employerAddress').val("");
+                            $('#employerSupervisorName').val("");
+                            $('#employerId').val("");
+                            $('#employerSupervisorPhoneNo').val("");
+                        }
+                        else {
+                            $('#employerName').val(data['employerSupervisor']['employerSuperSetup']['name']);
+                            $('#employerAddress').val(data['employerSupervisor']['employerSuperSetup']['address1']);
+                            $('#employerId').val(data['employerSupervisor']['id']);
+                            $('#employerSupervisorName').val(data['employerSupervisor']['name']);
+                            $('#employerSupervisorPhoneNo').val(data['employerSupervisor']['phone1']);
+
+                            $.ajax({
+                                type: "GET",
+                                url: baseUrl + '/Api/SupervisorVisits/' + studentId,
+                                data: JSON.stringify(d2),
+                                xhrFields: {
+                                    withCredentials: true
+                                },
+                                contentType: 'json',
+                                error: function (data) {
+                                    alert(data.responseText);
+                                },
+                                failure: function (data) {
+                                    alert(data.responseText);
+                                },
+                                success: function (data) {
+                                    //console.log(data);
+                                    var numberVisit = data.length;
+                                    //alert(numberVisit);
+                                    if (!data) {
+                                        //$('#numberVisit').val();
+                                    }
+                                    else {
+                                        $('#numberVisit').val(numberVisit + ' ' + "Time(s)");
+                                    }
+                                },
+                            });
+                        }
+                    },
+                });
+            },
+        });
+    }
+    function myFucntionAttached() {
+        myAttached = $('#attachedBefore').val();
+        if (myAttached == "1" && !$(".ifYes").is(':visible')) {
+            $(".ifYes").css('display', 'block');
+        }
+        else {
+            $(".ifYes").css('display', 'block');
+        }
+    }
+    function myFucntionAttachedAccept() {
+        myAttached = $('#accept').val();
+        if (myAttached == "1" && !$(".ifNo").is(':visible')) {
+            $(".ifNo").css('display', 'block');
+        }
+        else {
+            $(".ifNo").css('display', 'block');
+        }
+    }
+    
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

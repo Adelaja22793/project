@@ -1,0 +1,331 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Institution.Student_Visit_FormModel
+@{
+    ViewData["Title"] = "Student_Visit_Form";
+}
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Supervisor Student Visit Form</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <!-- text input -->
+                    <input type="hidden"  id="InstitutionOfficerId"  />
+                    <div class="form-group">
+                        <label for="matric">Enter Matric. No. of Student</label>
+                        <div class="input-group">
+
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
+                            </div>
+                            <input type="text" class="form-control" onchange="MyfunctionMatricNo()" id="matricNo">
+                            <input type="hidden" class="form-control" id="studentId">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="studentName" readonly="readonly">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Course of Study</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                            </div>
+                            <input type="text" id="courseName" class="form-control" readonly="readonly">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Employer's Name</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" id="employerName" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Employer's Address</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                            </div>
+                            <input type="text" id="employerAddress" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Employer's Supervisor Name</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="hidden" id="employerId"/>
+                            <input type="text" id="employerSupervisorName" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleInputFile">Supervisor's Phone No.</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            </div>
+                            <input type="text" id="employerSupervisorPhoneNo" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Date Visted</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                            <input type="date" id="mydate" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Supervisor Proposed Area of Improvement</label>
+                    <textarea class="textarea areaToImprove" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Supervisor Impression of Student’s Involvement in Training</label>
+                    <textarea class="textarea studentInvolvement" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                </div>
+            </div>
+            <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                <button type="button" InstitutionOfficerId="@Model.InstitutionOfficer.Id"  class="btn btn-primary SubmitVisitationReport">Submit Visitation Report</button>
+                <button type="button" onclick="pageRedirect()" class="btn btn-warning">View SIWES Student List</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var orgName = [];
+    function AddOrgName(lbl, val) {
+        orgName.push({ label: lbl, value: val });
+    }
+    $(document).ready(function () {
+        $('.textarea').summernote();
+        @foreach (var item in Model.StudentSetUp)
+        {
+            @:AddOrgName('@item.MatricNumber', '@item.Id');
+        }
+        $( "#matricNo" ).autocomplete({
+            source: orgName,
+            select: function (event, ui) {
+                $('#studentId').val(ui.item.value);
+                $('#matricNo').val(ui.item.label);
+                return false;
+            }
+        });
+        $('.SubmitVisitationReport').on('click', function () {
+            var StudentSetUpId = document.getElementById('studentId').value;
+            var DateVisited = document.getElementById('mydate').value;
+            var areaToImprove = $('.areaToImprove').val();
+            var employerId = $('#employerId').val();
+            var studentInvolvement = $('.studentInvolvement').val();
+            var editindex = $(this).attr('InstitutionOfficer');
+            var studentName = $('#studentName').val();
+            var newStudentId = parseInt(StudentSetUpId);
+            //alert(employerId);
+            if (newStudentId == "") {
+                alert("STUDENT DOES NOT EXISTS OR STUDENT HAVE NOT BEEN SET UP.");
+                setTimeout(function () {
+                    $('#matricNo').val("");
+                    $('#studentId').val("");
+                    $('#matricNo').focus();
+                }, 1);
+                return false;
+            }
+            if (newStudentId != "" && employerId == "") {
+                alert("THE SELECTED STUDENT HAVE NOT BEEN ATTACHED/ACCEPTED BY EMPLOYER");
+            
+                return false;
+            }
+            if (areaToImprove == "") {
+                alert("PLEASE ENTER PROPOSED AREA OF IMPROVEMENT");
+                return false;
+            }
+            if (studentInvolvement == "") {
+                alert("PLEASE ENTER YOUR IMPRESSION OF STUDENT'S INVOLVEMENT IN TRAINING");
+                return false;
+            }
+            if (DateVisited == "") {
+                alert("PLEASE ENTER DATE OF VISITATION");
+                return false;
+            }
+            var d = {
+                "StudentSetUpId": newStudentId,
+                "DateVisited": DateVisited,
+                "AreaToImprove": areaToImprove,
+                "StudentInvolvement": studentInvolvement
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO SAVE " + studentName.toUpperCase() + " VISITATION REPORTS ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/Api/SupervisorVisits',
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(studentName.toUpperCase() + " VISITATION REPORTS WAS SUCCESSFULLY SAVED");
+                    $('#studentName').val("");
+                    $('#studentId').val("");
+                    $('#courseName').val("");
+                    $('#rowIndex').val("");
+                    $('#matricNo').val("");
+                    $('#employerName').val("");
+                    $('#employerAddress').val("");
+                    $('#mydate').val('');
+                    $('#employerSupervisorName').val("");
+                    $('#employerId').val("");
+                    $('#employerSupervisorPhoneNo').val("");
+                    $(".areaToImprove").summernote('code', '');
+                    $(".studentInvolvement").summernote('code', '');
+                }
+            });
+            
+        });
+    });
+    function pageRedirect() {
+        var baseUrl = window.location.origin;
+        window.location.href = baseUrl + '/Institution/SupervisorList';
+    }
+    function MyfunctionMatricNo() {
+        var studentIdNew = document.getElementById('studentId').value;
+        var matricNo = document.getElementById('matricNo').value;
+        var studentId = "";
+        $('#studentName').val("");
+        $('#studentId').val("");
+        $('#studentId').val("");
+        $('#courseName').val("");
+        $('#matricNo').val("");
+        //alert(matricNo);
+        studentId = studentIdNew;
+        //alert(studentId); alert(studentIdNew);
+        if (studentId == "") {
+            alert("STUDENT DOES NOT EXISTS OR STUDENT HAVE NOT BEEN SET UP.");
+            setTimeout(function () {
+                $('#matricNo').val("");
+                $('#studentId').val("");
+                $('#matricNo').focus();
+            }, 1);
+            return false;
+        }
+        var d2 = {
+            "Id": studentId
+        };
+        var baseUrl = window.location.origin;
+         $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/StudentSetUps/' + studentId,
+            data: JSON.stringify(d2),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                $('#studentName').val(data['surname'] + ' ' + data['otherNames']);
+                $('#studentId').val(data['id']);
+                $('#courseName').val(data['courses']['name']);
+                $('#matricNo').val(data['matricNumber']);
+                $('#employerName').val("");
+                $('#employerAddress').val("");
+                $('#employerSupervisorName').val("");
+                $('#employerId').val("");
+                $('#employerSupervisorPhoneNo').val("");
+
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/ScafSupervisor/' + studentId,
+                    data: JSON.stringify(d2),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (!data) {
+                            $('#employerName').val("");
+                            $('#employerAddress').val("");
+                            $('#employerSupervisorName').val("");
+                            $('#employerId').val("");
+                            $('#employerSupervisorPhoneNo').val("");
+                        }
+                        else {
+                            $('#employerName').val(data['employerSupervisor']['employerSuperSetup']['name']);
+                            $('#employerAddress').val(data['employerSupervisor']['employerSuperSetup']['address1']);
+                            $('#employerId').val(data['employerSupervisor']['id']);
+                            $('#employerSupervisorName').val(data['employerSupervisor']['name']);
+                            $('#employerSupervisorPhoneNo').val(data['employerSupervisor']['phone1']);
+                        }
+                    },
+                });
+            },
+        });
+    }
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

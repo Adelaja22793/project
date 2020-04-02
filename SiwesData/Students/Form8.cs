@@ -9,33 +9,30 @@ namespace SiwesData.Students
     {
         public int Id { get; set; }
         public int StudentSetUpId { get; set; }
-        public DateTime  Date_Filled { get; set; }
-        public DateTime Commence_Date { get; set; }
-        public DateTime Complete_Date { get; set; }
-        public int Duration { get; set; }
-        public string TotalWeeks { get; set; }
         public string WorkExperience { get; set; }
-        public int EmployerSupervisorId { get; set; }
+
+        public int? EmployerSupervisorId { get; set; }
         public DateTime DateIn { get; set; }
-        public int Performance { get; set; }
-        public int StudentExperience { get; set; }
-        public string StudentExperienceNo { get; set; }
-        public int StudentAccept { get; set; }
-        public string StudentAcceptNo { get; set; }
+        public string Performance { get; set; }
+        public string Reason { get; set; }
+        public string StudentExperience { get; set; }
+        public string StudentAccept { get; set; }
+        public string ReasonNot { get; set; }
         public string FutureEmploy { get; set; }
         public bool SupApproved { get; set; }
-        public int InstSupervisorId { get; set; }
+
+        public int? InstitutionOfficerId { get; set; }
         public DateTime InDate { get; set; }
-        public int Assessment { get; set; }
-        public int StudentInvolvement { get; set; }
+        public string CompanyAssessment { get; set; }
+        public string StudentInvolvement { get; set; }
         public string StudentInvolvementComment { get; set; }
-        public int GradingPerformance { get; set; }
+        public string GradingPerformance { get; set; }
         public string GradingPerformanceComment { get; set; }
         public bool InstSupApproved { get; set; }
 
         //navigation properties
         public StudentSetUp StudentSetUp { get; set; }
         public Employer.EmployerSupervisor EmployerSupervisor { get; set; }
-        //public InstSupervisor Supervisor { get; set; }
+        public Setup.InstitutionOfficer InstitutionOfficer { get; set; }
     }
 }
