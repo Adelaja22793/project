@@ -6,8 +6,7 @@
 @{
     ViewData["Title"] = "InstitutionTypeSetup";
 }
-<div class="content-wrapper" style="background-color:#fff">
-    <div class="col-md-12">
+ <div class="col-md-12">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
@@ -23,18 +22,20 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Institution Category </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.Categories" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                            asp-items="ViewBag.Categories" style="width: 100%; text-transform:uppercase" id="drpListCat">
                                         <option selected="selected" value="-1">-- Select Category--</option>
                                     </select>
+                                    <input asp-for="InstCatSetup.Id" id="hddidcat" type="hidden" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Supervisory Agency Id </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.SuperAgencies" style="width: 100%; text-transform:uppercase" id="drpAgency">
+                                            asp-items="ViewBag.AgenciesSetup" style="width: 100%; text-transform:uppercase" id="drpAgency">
                                         <option selected="selected" value="-1">-- Select Agency Id--</option>
                                     </select>
+                                    <input asp-for="AgencySuperSetup.Id" id="hddidagency" type="hidden" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -43,6 +44,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Institution Type Code</label>
                                     <input type="text" class="form-control" id="txtcode">
+                                    <input  id="hddtypeid" type="hidden" class="form-control" />
                                 </div>
                             </div> 
                             <div class="col-md-7">
@@ -79,11 +81,13 @@
 
                                     <tr>
                                         <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                        <td class="nameclass @i" style="width:15%; text-align:left">@items.InstCatSetup.Name</td>
-                                        <td class="nameclass @i" style="width:15%; text-align:left">@items.Code</td>
-                                        <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
+                                        <td class="tabCatname @i" style="width:15%; text-align:left">@items.InstCatSetup.Name</td>
+                                        <td class="tabcode @i" style="width:15%; text-align:left">@items.Code</td>
+                                        <td class="tabname @i" style="width:60%; text-align:left">@items.Name</td>
                                         <td style="width:5%;">
-                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <input type="hidden" class="tabdrpListCat @i" value="@items.InstCatSetup.Id">
+                                            <input type="hidden" class="tabdrpAgency @i" value="@items.AgencySuperSetup.Id">
+                                            <input type="hidden" class="typeid @i" value="@items.Id">
                                             <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
                                         </td>
 
@@ -99,38 +103,37 @@
 
         </div>
     </div>
-</div>
+
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
-<script src="../../~/template/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-@*<script src="~/template/"></script>*@
-
 <script type="text/javascript">
     $(document).ready(function () {
-
+        formClear();
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");
-            $("#drpgroup").val("");
-            $("#drpAgency").val("");
+            $("#hddidcat").val("");
+            $("#hddidagency").val("");
+            $("#drpListCat").val("-1");
+            $("#drpAgency").val("-1");
+            $("#Btnsave").show();
+            $("#Btnupdate").hide();
         }
         $('#Btnsave').on('click', function (e) {
             e.preventDefault();
             var txtcode = document.getElementById('txtcode').value;
             var txtname = document.getElementById('txtname').value;
-            var drpgroup = document.getElementById('drpgroup').value;
+            var drpListCat = document.getElementById('drpListCat').value;
+            var hddidcatname = $("#drpListCat option:selected").html();
             var drpAgency = document.getElementById('drpAgency').value;
+            
             var d = {
                 "Code": txtcode,
                 "Name": txtname,
-                "InstCatSetupId": drpgroup,
-                "AgencySuperSetupId": drpAgency,
+                "InstCatSetupId": Number(drpListCat),
+                "AgencySuperSetupId": Number(drpAgency)
             };
             var baseUrl = window.location.origin;
             $.ajax({
@@ -155,23 +158,99 @@
                     var html = `<tr>
                             </td>
                                 <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
-                                <td style="width:15%; text-align:left">${drpgroup}</td>
-                                <td style="width:15%; text-align:left">${txtcode}</td>
-                                <td style="width:60%; text-align:left">${txtname}</td>
+                                <td class="tabCatname" style="width:15%; text-align:left">${hddidcatname}</td>
+                                <td class="tabcode" style="width:15%; text-align:left">${txtcode}</td>
+                                <td class="tabname" style="width:60%; text-align:left">${txtname}</td>
 
                                 <td style="width:5%;" class="action">
+                                
                                 <input type="hidden" value=${myid}>
-                                <a href="/Setupmenu/Edit?id=${myid}">Edit</a>
+                                <a href="/Setup/InstTypeSetup/${myid}">Edit</a>
 
                             </td>
                             </tr>`
                     $('#tabId').append(html);
                     formClear();
+                    location.reload();
+                },
+            });
+        });
+        $("#tabId").on('click', '#myEdit', function () {
+            $("#Btnsave").hide();
+            $("#Btnupdate").show();
+           // $("#BtnEditSubMenu").show()
+            var currentRow = $(this).closest("tr");
+            var selectedIndex = currentRow.find("td:eq(0)").html();
 
+            var editindex = $(this).attr('AddreEdit');
+            var tabcode = $('.tabcode.' + editindex).text();
+            var tabname = $('.tabname.' + editindex).text();
+            var tabdrpListCat = $('.tabdrpListCat.'  + editindex).val();
+            var tabdrpAgency = $('.tabdrpAgency.' + editindex).val();
+            var typeid = $('.typeid.' + editindex).val();
+            $("#drpListCat").val(tabdrpListCat);
+            $("#drpAgency").val(tabdrpAgency);
+            $("#txtcode").val(tabcode);
+            $("#txtname").val(tabname);
+            $("#hddidcat").val(tabdrpListCat);
+            $('#hddidagency').val(tabdrpAgency);
+            $('#hddtypeid').val(typeid);
+            $('#rowIndex').val(selectedIndex);
+
+            serialNo = $(this).closest('tr').find('.se_no').text();
+            return false;
+
+        });
+        $('#Btnupdate').on('click', function (e) {
+            e.preventDefault();
+            var editindex = document.getElementById('hddidcat').value;
+            var hddtypeid = document.getElementById('hddtypeid').value;
+            var txtcode = document.getElementById('txtcode').value;
+            var txtname = document.getElementById('txtname').value;
+            var drpListCat = document.getElementById('hddidcat').value;
+            var drpAgency = document.getElementById('hddidagency').value;
+            var hddidcatname = $("#drpListCat option:selected").html();
+            //alert(editindex); alert(txtname); alert(txtcode); alert(drpListCat); alert(drpAgency);
+            //return false;
+            var d = {
+                "Id": Number(hddtypeid),
+                "Code": txtcode,
+                "Name": txtname,
+                "InstCatSetupId": Number(drpListCat),
+                "AgencySuperSetupId": Number(drpAgency)
+            };
+            var t = serialNo - 1;
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/InstTypeSetups/ ' + hddtypeid,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    $('.typeid.' + t).text(data["id"]);
+                    $('.tabCatname.' + t).text(hddidcatname);
+                    $('.tabcode.' + t).text(data["code"]);
+                    $('.tabname.' + t).text(data["name"]);
+                    $('.tabdrpListCat.' + t).text(data["instCatSetupId"]);
+                    $('.tabdrpAgency.' + t).text(data["agencySuperSetupId"]);
+                    formClear();
                 },
             });
         });
     })
+    //$(function () {
+    //    $("#tabId").DataTable();
+    //});
 </script>
 
 @section Scripts {

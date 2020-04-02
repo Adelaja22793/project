@@ -1,12 +1,9 @@
 ﻿@page
 @model BSSL_SIWES.Web.InstitutionCategoryModel
-@using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Identity;
 @{
     ViewData["Title"] = "InstitutionCategory";
 }
-<div class="content-wrapper" style="background-color:#fff">
-    <div class="col-md-12">
+ <div class="col-md-12">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
@@ -22,6 +19,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Institution Category Code</label>
                                     <input type="text" class="form-control" id="txtcode">
+                                    <input asp-for="InstCatSetup.Id" id="hddid" type="hidden" class="form-control" />
+                                    <input type="hidden" id="rowIndex" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-md-7">
@@ -58,8 +57,8 @@
 
                                         <tr>
                                             <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="nameclass @i" style="width:20%; text-align:left">@items.Code</td>
-                                            <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
+                                            <td class="tabcode @i" style="width:20%; text-align:left">@items.Code</td>
+                                            <td class="tabname @i" style="width:60%; text-align:left">@items.Name</td>
 
                                             <td style="width:5%;">
                                                 <input type="hidden" class="readid @i" value="@items.Id">
@@ -78,28 +77,26 @@
 
         </div>
     </div>
-</div>
+
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
-<script src="../../~/template/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-@*<script src="~/template/"></script>*@
-
-<link href="~/css/dataTables/jquery.dataTables.css" rel="stylesheet" />
-<script src="~/css/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
+        formClear();
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");
+            $("#hddid").val("");
+            $("#rowIndex").val("");
+            $("#Btnsave").show();
+            $("#Btnupdate").hide();
+           
         }
         $('#Btnsave').on('click', function (e) {
+            $("#Btnsave").show();
+            $("#Btnupdate").hide();
             e.preventDefault();
             var txtcode = document.getElementById('txtcode').value;
             var txtname = document.getElementById('txtname').value;
@@ -108,6 +105,7 @@
                 "Name": txtname,
             };
             var baseUrl = window.location.origin;
+
             $.ajax({
                 type: "POST",
                 url: baseUrl + '/Api/InstCatSetups',
@@ -135,15 +133,125 @@
 
                                 <td style="width:5%;" class="action">
                                 <input type="hidden" value=${myid}>
-                                <a href="/Setupmenu/Edit?id=${myid}">Edit</a>
+                                <a href="/Setup/InstitutionCategory?id=${myid}">Edit</a>
 
                             </td>
                             </tr>`
                     $('#tabId').append(html);
                     formClear();
-
+                    location.reload();
                 },
             });
+            
+        });
+        $("#tabId").on('click', '#myEdit', function () {
+            $("#Btnsave").hide();
+            $("#Btnupdate").show();
+           // $("#BtnEditSubMenu").show()
+            var currentRow = $(this).closest("tr");
+            var selectedIndex = currentRow.find("td:eq(0)").html();
+
+            var editindex = $(this).attr('AddreEdit');
+            var tabcode = $('.tabcode.' + editindex).text();
+            var tabname = $('.tabname.'  + editindex).text();
+            var tabid = $('.readid.' + editindex).val();
+            $("#txtcode").val(tabcode);
+            $("#txtname").val(tabname);
+            $('#hddid').val(tabid);
+            $('#rowIndex').val(selectedIndex);
+
+            serialNo = $(this).closest('tr').find('.se_no').text();
+            return false;
+
+        });
+        $('#Btnupdate').on('click', function (e) {
+            e.preventDefault();
+            var editindex = document.getElementById('hddid').value;
+            var txtcode = document.getElementById('txtcode').value;
+            var txtname = document.getElementById('txtname').value;
+            var d = {
+                "Code": txtcode,
+                "Name": txtname,
+                "Id": Number(editindex),
+            };
+           var t = serialNo - 1;
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/InstCatSetups/ ' + editindex,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    $('.readid.' + t).text(data["id"]);
+                    $('.tabcode.' + t).text(data["code"]);
+                    $('.tabname.' + t).text(data["name"]);
+                    formClear();
+
+                    //var w = $('.tabcode.' + t);
+                    //var p = data['code'];
+                    //var a = $('.tabname.' + t);
+                    //var h = data['name'];
+                  
+                    //var v = $('.readid.' + t);
+                    //var y = data["id"];  
+                    
+                    //v.text(y);
+                    //w.text(p);
+                    //a.text(h);
+                   
+                },
+            });
+        });
+        $('#txtcode').on('change', function (e) {
+            
+            e.preventDefault();
+            var txtcode = document.getElementById('txtcode').value;
+            var txtname = document.getElementById('txtname').value;
+            alert(txtcode); return false;
+            var d = {
+                "Code": txtcode
+            };
+            var baseUrl = window.location.origin;
+
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/InstCatSetups/' + txtcode,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    $('#myEdit')
+                    var myid = data['id'];
+                    var rowNumber = $('#tabId tr').length;
+                    $('.readid.' + t).text(data["id"]);
+                    $('#tabcode.' + t).text(data["code"]);
+                    $('#tabname.' + t).text(data["name"]);
+                    formClear();
+                    formClear();
+                    location.reload();
+                },
+            });
+            
         });
     })
 </script>

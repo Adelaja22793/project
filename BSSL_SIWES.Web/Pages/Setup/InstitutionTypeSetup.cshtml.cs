@@ -15,6 +15,8 @@ namespace BSSL_SIWES.Web.Pages.Setup
         private readonly SiwesData.ApplicationDbContext _context;
         [BindProperty]
         public InstTypeSetup InstTypeSetup { get; set; }
+        public InstCatSetup InstCatSetup { get; set; }
+        public AgencySuperSetup AgencySuperSetup { get; set; }
         public IList<InstTypeSetup> InstTypeSetupList { get; set; }
         public InstitutionTypeSetupModel(SiwesData.ApplicationDbContext context)
         {
@@ -24,7 +26,7 @@ namespace BSSL_SIWES.Web.Pages.Setup
         {
             InstTypeSetupList = await _context.InstTypeSetup.ToListAsync();
             ViewData["Categories"] = new SelectList(_context.InstCatSetup, "Id", "Name");
-            ViewData["SuperAgencies"] = new SelectList(_context.AgencySuperSetup, "Id", "Name");
+            ViewData["AgenciesSetup"] = new SelectList(_context.AgencySuperSetup, "Id", "Name");
         }
     }
 }

@@ -21,8 +21,9 @@ namespace SiwesData.Setup
         public string Email { get; set; }
         public string WebAddress { get; set; }
         public string NameOfCPerson { get; set; }
+        public string CPersonPhone { get; set; }
         public string CPersonEmail { get; set; }
-        public Boolean Deactivate { get; set; }
-        public DateTime DeactDate { get; set; }
+        public string Deactivate { get; set; }
+        public DateTime? DeactDate { get; set; }
     }
 }
