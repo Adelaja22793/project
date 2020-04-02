@@ -40,8 +40,27 @@ namespace BSSL_SIWES.Web.API.Courses_API
 
         // GET: api/NewCourseRequests/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<NewCourseRequest>> GetNewCourseRequest(int id)
+        public async Task<ActionResult<NewCourseRequest>> GetNewCourseRequest(int? id)
         {
+            if (id == null)
+            {
+                return BadRequest("Daily/Weekly Activities is Empty");
+            }
+            try
+            {
+                var dailyActivitiesList = await _context.DailyActivitiesLists.Include(x => x.DailyActivities)
+                    .SingleOrDefaultAsync(x => x.DailyActivitiesId == x.DailyActivities.Id && x.Id == id);
+
+                if (dailyActivitiesList == null)
+                {
+                    return NotFound($"Menu Not Found For The Selected Id {id}");
+                }
+                return Ok(dailyActivitiesList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
             var newCourseRequest = await _context.NewCourseRequests.FindAsync(id);
 
             if (newCourseRequest == null)

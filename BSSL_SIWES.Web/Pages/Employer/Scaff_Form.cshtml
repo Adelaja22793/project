@@ -1,0 +1,506 @@
+﻿@page
+@inject SiwesData.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+@model BSSL_SIWES.Web.Pages.Employer.Scaff_FormModel
+@{
+    ViewData["Title"] = "Scaff_Form";
+}
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Student Commencement Attachment Form (SCAF)</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form role="form" method="post">
+            <div class="card-body">
+                <div class="justify-content-center" style="float:right;">
+                    <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
+                </div>
+                <div class="justify-content-center" style="float:left;">
+                    <button type="button" onclick="pageRedirect()" class="btn btn-info">View SIWES Student</button>
+                </div>
+                <p style="clear:both"></p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Enter Name of Organisation</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="hidden" id="orgNameId" />
+                                <input type="text" id="orgName" class="form-control"
+                                       asp-for="EmployerSupervisorName.EmployerSuperSetup.Name" readonly="readonly" placeholder="Enter Name of Organisation">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Organisation Location Address</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                </div>
+                                <input type="text" asp-for="EmployerSupervisorName.EmployerSuperSetup.Address1" id="orgAddress" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Email of Organisation</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                </div>
+                                <input type="email" asp-for="EmployerSupervisorName.EmployerSuperSetup.Email" id="orgEmail" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Matric. Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-asterisk"></i></span>
+                                </div>
+                                <input type="text" id="matricNumber" onchange="MyFunctionMatricNo()" class="form-control">
+                                <input type="hidden" asp-for="ScafViewModels.StudentId" id="studentID">
+                                @*<input type="text" asp-for="StudentSetUp.MatricNumber" class="form-control" readonly="readonly">*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Student Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" id="studentName" class="form-control" readonly="readonly">
+                                @*<input type="text" asp-for="StudentName" class="form-control" readonly="readonly">*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Name of Institution</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
+                                </div>
+                                <input type="text" id="studentSchool" class="form-control" readonly="readonly">
+                                @*<input type="text" asp-for="StudentSetUp.Institution.Name" class="form-control" readonly="readonly">*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Course of Study</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                </div>
+                                @*<input type="text" asp-for="StudentSetUp.Courses.Name" class="form-control" readonly="readonly">*@
+                                <input type="hidden" id="curseId" class="form-control">
+                                <input type="text" id="courseName" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Level of Study</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                </div>
+                                @*<input type="text" asp-for="StudentSetUp.YearOfStudy" class="form-control" readonly="readonly">*@
+                                <input type="text" id="levelStudy" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Phone Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                </div>
+                                @*<input type="text" asp-for="StudentSetUp.PhoneNo" class="form-control" readonly="readonly">*@
+                                <input type="text" id="phoneNo" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Name of Organisation Representative</label>
+                            <div class="input-group ui-widget">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" onchange="MyFunctionRepName()" id="orgRep" class="form-control">
+                                <input type="hidden" asp-for="ScafViewModels.EmployerSupervisorId" id="orgRepId" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Rep. Phone No.</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                </div>
+                                <input type="text" asp-for="EmployerSupervisorName.Phone1" id="orgPhone" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>ITF Area Office</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-search-location"></i></span>
+                                </div>
+                                <input type="text" asp-for="EmployerSupervisorName.EmployerSuperSetup.AreaOffice.Description" id="orgAreaITF" class="form-control" readonly="readonly">
+                                <input type="hidden" asp-for="EmployerSupervisorName.EmployerSuperSetup.AreaOffice.Description" id="orgAreaITFId" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Commencement Date</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="date" id="commence_Date" onchange="MyFunctionCommDate()"
+                                       asp-for="ScafViewModels.CommenceDate" class="form-control" placeholder="Enter Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Completion Date</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()"
+                                       asp-for="ScafViewModels.CompletionDate" class="form-control" placeholder="Enter Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                </div>
+                                <input type="text" id="duration" asp-for="ScafViewModels.Duration" readonly="readonly" class="form-control">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control newRemarks" asp-for="ScafViewModels.Remarks" rows="3" placeholder="Enter Remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="justify-content-center" style="margin-left:23%; margin-bottom:3%;">
+                <button type="submit" id="mySubmit" class="btn btn-primary">Submit</button>
+                <button type="button" id="myUpdate" style="display:none" class="btn btn-primary"> Update Student Record</button>
+                <button type="button" class="btn btn-info">Upload Pre-Filled Form</button>
+            </div>
+        </form>
+    </div>
+</div>
+ <style>
+     .ui.autocomplete{
+         z-index:20000;
+         position:relative;
+     }
+ </style>
+<script type="text/javascript">
+     var orgName = [];
+    var orgRepName = [];
+    function AddOrgName(lbl, val) {
+        orgName.push({ label: lbl, value: val});
+    }
+    function AddOrgRepName(lbl, val) {
+        orgRepName.push({ label: lbl, value: val});
+    }
+    $(document).ready(function () {
+        $('.newRemarks').summernote();
+        @foreach (var item in Model.StudentSetUp)
+        {
+            @:AddOrgName('@item.MatricNumber', '@item.Id');
+        }
+        $( "#matricNumber" ).autocomplete({
+            source: orgName,
+            select: function (event, ui) {
+                $('#studentID').val(ui.item.value);
+                $('#matricNumber').val(ui.item.label);
+                return false;
+            }
+        });
+       @foreach (var item in Model.EmployerSupervisor)
+        {
+            //int orgId = $('#orgNameId').val();
+            var orgRep = await db.EmployerSupervisors.Include(n => n.EmployerSuperSetup).
+                Where(employerName => employerName.EmployerSuperSetup.Id == employerName.Id).ToListAsync();
+
+            @:AddOrgRepName('@item.Name', '@item.Id');
+        }
+        $( "#orgRep" ).autocomplete({
+            source: orgRepName,
+            select: function (event, ui) {
+                $('#orgRepId').val(ui.item.value);
+                $('#orgRep').val(ui.item.label);
+                return false;
+            }
+        });
+
+    });
+    function pageRedirect() {
+        var baseUrl = window.location.origin;
+        window.location.href = baseUrl + '/Employer/EmployerStudentList';
+    }
+    function MyFunctionCommDate() {
+        $('#complete_Date').val("");
+        $('#duration').val("");
+    }
+    function MyFunctionCompleteDate() {
+        first = $('#commence_Date').val();
+        second = $('#complete_Date').val();
+        duration = "";
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        const firstDate = new Date(first);
+        const secondDate = new Date(second);
+        if (secondDate < firstDate) {
+            alert("Completion Date Cannot be Less than Commencement Date");
+            $('#complete_Date').val("");
+            $('#duration').val("");
+            $('#complete_Date').focus();
+            return false;
+        }
+        const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+        var noDays = diffDays + ' ' + "Days";
+        $('#duration').val(noDays);
+        $(function () {
+        $("#scafForm").click(function () {
+            $.ajax(
+            {
+                url: '@Url.Action("download", "PostDetail")',
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
+                data: {
+                    studentId: 123
+                },
+                type: "GET",
+                success: function () {
+                    window.location = '@Url.Action("DownloadAttachment", "PostDetail", new { studentId = 123 })';
+                }
+            });
+
+        });
+    });
+    }
+    function MyFunctionRepName() {
+        var orgRpId = $('#orgRepId').val();
+        var orgRepId = parseInt(orgRepId);
+        if (orgRpId == "") {
+            alert("SUPERVISOR NOT FOUND, PLEASE CHECK");
+            setTimeout(function () {
+                $('#orgRep').val("");
+                $('#orgRep').focus();
+            }, 1);
+            return false;
+        }
+        
+    }
+    function MyFunctionOrganName() {
+        var orgNameId = document.getElementById('orgNameId').value;
+        var d = {
+                "Id": orgNameId
+            };
+        var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/EmployerSuperSetups/' + orgNameId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    var orgAddress = data['address1']
+                    var orgPhone = data['phoneNo'];
+                    var orgEmail = data['email'];
+                    var areaOffice = data['areaOffice']['description'];
+                    var areaOfficeId = data['areaOfficeId'];
+
+                    $('#orgAddress').val(orgAddress);
+                    $('#orgPhone').val(orgPhone);
+                    $('#orgEmail').val(orgEmail);
+                    $('#orgAreaITF').val(areaOffice);
+                    $('#orgAreaITFId').val(areaOfficeId);
+                    onSelectedOrg();
+                },
+            });
+
+    }
+    function MyFunctionMatricNo() {
+        
+        var studentID = document.getElementById('studentID').value;
+
+        //$('#studentID').val("");
+        //$('#studentName').val("");
+        //$('#studentSchool').val("");
+        //$('#courseName').val("");
+        //$('#curseId').val("");
+        //$('#levelStudy').val("");
+        //$('#phoneNo').val("");
+        //$('#commence_Date').val("");
+        //$('#complete_Date').val("");
+        //$('#duration').val("");
+        //$('#orgRep').val("");
+        //$('#orgRepId').val("");
+        //$(".newRemarks").summernote('code', '');
+        //var studentID = document.getElementById('studentID').value;
+        if (studentID == "") {
+            alert("STUDENT NOT FOUND, PLEASE CHECK");
+            setTimeout(function () {
+                $('#matricNumber').val("");
+                $('#matricNumber').focus();
+            }, 1);
+            return false;
+        }
+        alert(studentID);
+        var d = {
+            "Id": studentID
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/ScafReturn/' + studentID,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                console.log(data);
+               
+                if (!data) {
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + '/Api/StudentSetUps/' + studentID,
+                        data: JSON.stringify(d),
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        contentType: "application/json; charset=utf-8",
+                        error: function (data) {
+                            alert(data.responseText);
+                        },
+                        failure: function (data) {
+                            alert(data.responseText);
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            var studentName = data['surname'] + ' ' + data['otherNames'];
+                            var studentSchool = data['institutionOfficer']['institution']['name'];
+                            var courseId = data['coursesId'];
+                            var courseName = data['courses']['name'];
+                            var levelStudy = data['yearOfStudy'] + ' ' + "Level";
+                            var phoneNo = data['phoneNo'];
+
+                            $('#studentName').val(studentName);
+                            $('#studentSchool').val(studentSchool);
+                            $('#courseName').val(courseName);
+                            $('#curseId').val(courseId);
+                            $('#levelStudy').val(levelStudy);
+                            $('#phoneNo').val(phoneNo);
+                            document.getElementById('myUpdate').style.display = "none";
+                            document.getElementById('mySubmit').style.display = "inline-block";
+                        },
+                    });
+                }
+                else {
+
+                    var studentName = data['studentSetUp']['surname'] + ' ' + data['studentSetUp']['otherNames'];
+                    //var otherNames = data['otherNames'];
+                    //var studentSchool = data['studentSetUp']['institution']['name'];
+                    var courseId = data['studentSetUp']['coursesId'];
+                    var courseName = data['studentSetUp']['courses']['name'];
+                    var levelStudy = data['studentSetUp']['yearOfStudy'] + ' ' + "Level";
+                    var phoneNo = data['studentSetUp']['phoneNo'];
+                    var commence_Date = data['commence_Date'];
+                    var complete_Date = data['complete_Date'];
+                    var Duration = data['duartion'];
+                    var EmpyName = data['employerSupervisor']['name'];
+                    var EmployerSupervisorId = data['employerSupervisorId'];
+                    var Remarks = data['remarks'];
+                    var Duration = data['duration'];
+                    $('#studentName').val(studentName);
+                    //$('#studentSchool').val(studentSchool);
+                    $('#courseName').val(courseName);
+                    $('#curseId').val(courseId);
+                    $('#levelStudy').val(levelStudy);
+                    $('#phoneNo').val(phoneNo);
+                    var dateStart = commence_Date.substring(0, 10);
+                    var dateEnd = complete_Date.substring(0, 10);
+                    $('#commence_Date').val(dateStart);
+                    $('#complete_Date').val(dateEnd);
+                    $('#duration').val(Duration);
+                    $('#orgRep').val(EmpyName);
+                    $('#orgRepId').val(EmployerSupervisorId);
+                    $(".newRemarks").summernote('code', Remarks);
+
+                    document.getElementById('myUpdate').style.display = "inline-block";
+                    document.getElementById('mySubmit').style.display = "none";
+                }
+            },
+        });
+    };
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

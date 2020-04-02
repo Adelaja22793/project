@@ -1,0 +1,195 @@
+﻿@page
+@inject SiwesData.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@model BSSL_SIWES.Web.Pages.Employer.EmployerStudentListModel
+@{
+    ViewData["Title"] = "EmployerStudentList";
+}
+    <div class="col-md-12">
+        <div class="modal fade" tabindex="-1" id="loginModal"
+             data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg" style="margin-left:25%;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:steelblue">
+                        <h4 class="modal-title" id="monthname" style="margin-left:30%; text-transform:uppercase">Reason For Suspension</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            ×
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Matric Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="matricNo" class="form-control" readonly="readonly" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Student Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input id="studentName" class="form-control" type="text" readonly="readonly">
+                                        <input id="studentId" class="form-control" type="hidden">
+                                        <input type="hidden" id="rowIndex" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Reason For Suspension</label>
+                                    <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                    font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                            <button type="submit" id="BtnSuspend" class="btn btn-danger button button4">Suspend Student</button>
+                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                                Hide
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- general form elements -->
+        <form role="form" method="post">
+            <div class="justify-content-center" style="margin-left:40%; margin-top:0.1%;margin-bottom:1%">
+                <button type="submit" asp-page-handler="CreateNewStudent" class="btn btn-warning">Attach New Student</button>
+            </div>
+        </form>
+        <div class="card card-primary">
+
+            <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                <table id="StudentTab" class="table table-bordered" border="0">
+                    <thead style="background-color:steelblue;">
+                        <tr>
+                            <th style="width:0.25%; text-align:center">S/N</th>
+                            <th style="width:15%; text-align:center">Matric Number</th>
+                            <th style="width:18%; text-align:center">Student Name</th>
+                            <th style="width:18%; text-align:center">Course of Study</th>
+                            <th style="width:18%; text-align:center">Institution Name</th>
+                            <th style="width:10%; text-align:center">Level</th>
+                            <th style="width:20%; text-align:center">Supervisor</th>
+                            <th style="width:15%; text-align:center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size:small">
+                        @for (int i = 0; i < Model.EmpoyerStudentList.Count; i++)
+                        {
+                            var items = Model.EmpoyerStudentList[i];
+                            var Name = items.StudentSetUp.Surname + ' ' + items.StudentSetUp.OtherNames;
+                            var Level = items.StudentSetUp.YearOfStudy + ' ' + "Level";
+                            int StudentId = items.StudentSetUp.Id;
+                            var courseName = await db.StudentSetUps.Include(c => c.Courses).Include(c => c.InstitutionOfficer).ThenInclude(x => x.Institution)
+                                .Where(c => c.Id == StudentId && c.CoursesId == c.Courses.Id && c.InstitutionOfficerId == c.InstitutionOfficer.Id).FirstOrDefaultAsync();
+
+                            <tr>
+                                <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                <td class="matricNo @i" style="width:15%; text-align:left">@items.StudentSetUp.MatricNumber</td>
+                                <td class="name @i" style="width:18%; text-align:left">@Name</td>
+                                <td class="courseName @i" style="width:18%; text-align:left">@courseName.Courses.Name</td>
+                                <td class="schoolName @i" style="width:18%; text-align:left">@courseName.InstitutionOfficer.Institution.Name</td>
+                                <td class="level @i" style="width:10%; text-align:left">@Level</td>
+                                <td class="supervisedBy @i" style="width:20%; text-align:left">@items.EmployerSupervisor.Name</td>
+
+                                <td style="width:10%;">
+                                    <input type="hidden" class="studentId @i" value="@items.Id" />
+                                    <a id="mySuspend" AddreSuspend="@i" asp-route-id="@items.Id">Suspend</a>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
+                <button type="button" class="btn btn-success"> Print and Preview SCAF</button>
+            </div>
+        </div>
+        </div>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#StudentTab").on('click', '#mySuspend', function () {
+            var currentRow = $(this).closest("tr");
+            var rowIndex = currentRow.find("td:eq(0)").html();
+            var studentName = currentRow.find("td:eq(2)").html();
+
+            var editindex = $(this).attr('AddreSuspend');
+            var SttId = $('.studentId.' + editindex).val();
+            var matricNo = $('.matricNo.' + editindex).text();
+            //var name = $('.name.' + editindex).text();
+            //alert(name);
+            $("#loginModal").modal('show');
+            $('#studentName').val(studentName);
+            $('#studentId').val(SttId);
+            $('#rowIndex').val(rowIndex);
+            $('#matricNo').val(matricNo);
+            return false;
+        });
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+            $('.student').summernote('code', '');
+            //$(".super").val("");
+        });
+        $("#myClose").click(function () {
+            $("#loginModal").modal('hide');
+            $('.student').summernote('code', '');
+        });
+        $('#BtnSuspend').on('click', function () {
+            var studentName = $('#studentName').val();
+            var SttId = $('#studentId').val();
+            var rowIndex = $('#rowIndex').val();
+            var ReasonSuspended = $('.student').val();
+            var Suspended = true;
+            var StudentId = parseInt(SttId);
+            if (ReasonSuspended == "") {
+                alert("PLEASE ENTER REASON FOR SUSPENDING " + studentName.toUpperCase() + "");
+                return false;
+            }
+            var d = {
+                "Id": StudentId,
+                "Suspended": Suspended,
+                "ReasonSuspended": ReasonSuspended
+            };
+            var confirmation = confirm("ARE SURE YOU WANT SUSPEND " + studentName.toUpperCase() + "?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/Scafs/ ' + StudentId;
+            //alert(url);
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //alert(studentName.toUpperCase() + " WAS SUCCESSFULLY SUSPENDED ");
+                    location.reload();
+                },
+            });
+        });
+    });
+    </script>
+

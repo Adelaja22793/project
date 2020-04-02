@@ -13,13 +13,14 @@ namespace SiwesData.Students
         public int StudentSetUpId { get; set; }
         public DateTime Commence_Date { get; set; }
         public DateTime Complete_Date { get; set; }
-        public int Duration { get; set; }
-        public int EmployerSuperSetupId { get; set; }
+        public string Duration { get; set; }
         public int EmployerSupervisorId { get; set; }
         public string Remarks { get; set; }
+        public bool Suspended { get; set; }
+        public string ReasonSuspended { get; set; }
 
-        public Students.StudentSetUp StudentSetUp { get; set; }
-        public Employer.EmployerSuperSetup EmployerSuperSetup { get; set; }
+        public StudentSetUp StudentSetUp { get; set; }
+        public Employer.EmployerSupervisor EmployerSupervisor { get; set; }
         //public Employer.EmployerSupervisor EmployerSupervisor { get; set; }
     }
 }
