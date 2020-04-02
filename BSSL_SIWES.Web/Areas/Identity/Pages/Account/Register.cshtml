@@ -149,10 +149,11 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    alert(data);
+                 
                     if (data == "notexist") {
 
                         alert("Wrong email or your record has not been registered by your school cordinator please check ")
+                          $("#txtemail").val("");
                     }
                     else if (data == "exist") {
 
@@ -166,26 +167,7 @@
                     else {
                         $("#txtname").val(data);
                     }
-                    //alert("" + myMenu.toUpperCase() + " WAS SUCCESSFULLY ADDED TO MENU");
-
-                    //$("#loginModal").modal('hide');
-
-                    //console.log(data);
-                    //var myid = data['id'];
-                    //var menuName = data['name']
-                    //var html = "";
-                    //var rowCount = $('#tabId tr').length;
-
-
-                    //    html = `<tr>
-                    //            <td class="se_no" style="width:0.25%; text-align:left">${rowCount}</td>
-                    //            <td class="nameclass" style="width:20%; text-align:left">${menuName}</td>
-                    //            <td style="width:20%;" class="action">
-                    //            <a href="/Setup/Menu/Edit?id=${myid}">Edit</a> |
-                    //            <a href="/Setup/Menu/Delete?id=${myid}">Delete</a></td>
-                    //            </tr>`
-
-                    //$('#tabId').append(html);
+                  
                 },
             });
         });

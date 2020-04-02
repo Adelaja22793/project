@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 {
@@ -17,7 +18,7 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     { 
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly RoleManager<IdentityRole>_roleManager;
+        private readonly RoleManager<RoleTb>_roleManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         public string successm { get; set; }
@@ -27,15 +28,15 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<RoleTb> roleManager,
             ILogger<RegisterModel> logger)
-        //   IEmailSender emailSender)
+     //   IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _logger = logger;
-          // _emailSender = emailSender;
+          //_emailSender = emailSender;
         }
 
         [BindProperty]
@@ -104,19 +105,20 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                   bool  x = await _roleManager.RoleExistsAsync("Student");
                     if (!x)
                     {
-                        var role = new IdentityRole();
+                        var role = new RoleTb();
                         role.Name = "Student";
+                        role.RoleId = "STD01";
                         await _roleManager.CreateAsync(role);
                     }
                     await _userManager.AddToRoleAsync(user, "Student");
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { userId = user.Id, code = code },
-                        protocol: Request.Scheme);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { userId = user.Id, code = code },
+                    //    protocol: Request.Scheme);
 
                     //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

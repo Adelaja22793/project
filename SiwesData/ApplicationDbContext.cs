@@ -43,6 +43,7 @@ namespace SiwesData
 
         public DbSet<Setup.InstitutionOfficer> InstitutionOfficers { get; set; }
         public DbSet<Setup.SupervisoryAgency> SupervisoryAgencies { get; set; }
+        public DbSet<Setup.RoleTb> RoleTb { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

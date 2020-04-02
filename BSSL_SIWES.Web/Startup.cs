@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SiwesData;
+using SiwesData.Setup;
+using Microsoft.AspNetCore.Http;
 
 namespace BSSL_SIWES.Web
 {
@@ -33,13 +35,12 @@ namespace BSSL_SIWES.Web
                     Configuration.GetConnectionString("SiwesConn"),
                     b => b.MigrationsAssembly("BSSL_SIWES.Web")));
 
-            services.AddIdentity<IdentityUser,  IdentityRole>(options => {
-
-                options.SignIn.RequireConfirmedAccount = true;
-              
-                //options.User.RequireUniqueEmail = false;
-            }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
+            //services.AddIdentity<IdentityUser,RoleTb>()
+            // .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            services.AddDefaultIdentity<IdentityUser>()
+            .AddRoles<RoleTb>()
+            
+            .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllers();
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -56,13 +57,13 @@ namespace BSSL_SIWES.Web
                 options.Password.RequireUppercase = true;
                 options.SignIn.RequireConfirmedEmail = true;
                 options.User.RequireUniqueEmail = true;
-                   
-
-
-
-
 
             });
+         
+ 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,6 +102,17 @@ namespace BSSL_SIWES.Web
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
+
+
+
+      
+
+       
+
+     
+         
+
+       
         }
     }
 }
