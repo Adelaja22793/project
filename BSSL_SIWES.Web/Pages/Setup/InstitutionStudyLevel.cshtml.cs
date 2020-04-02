@@ -16,6 +16,7 @@ namespace BSSL_SIWES.Web.Pages.Setup
 
         [BindProperty]
         public InstLevelStudy InstLevelStudy { get; set; }
+        public SiwesData.Setup.Institution Institution { get; set; }
         public IList<InstLevelStudy> InstLevelStudyList { get; set; }
 
         public InstitutionStudyLevelModel(SiwesData.ApplicationDbContext context)
