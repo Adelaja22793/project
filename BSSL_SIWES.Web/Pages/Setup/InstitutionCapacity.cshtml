@@ -5,8 +5,7 @@
 @{
     ViewData["Title"] = "InstitutionCapacity";
 }
-<div class="content-wrapper" style="background-color:#fff">
-    <div class="col-md-12">
+ <div class="col-md-12">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
@@ -22,8 +21,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Institution Name </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpgroup">
-                                        <option selected="selected" value="-1">-- Select Course Group--</option>
+                                            asp-items="ViewBag.InstitutionList" style="width: 100%; text-transform:uppercase" id="drpinsti">
+                                        <option selected="selected" value="-1">-- Select--</option>
                                     </select>
                                 </div>
                             </div>
@@ -115,23 +114,13 @@
 
         </div>
     </div>
-</div>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
-<script src="../../~/template/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../~/template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="../../~/template/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-@*<script src="~/template/"></script>*@
-
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#tabId").DataTable();
-        alert("yes");
+       // $("#tabId").DataTable();
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");

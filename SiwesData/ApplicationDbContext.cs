@@ -26,7 +26,7 @@ namespace SiwesData
         public DbSet<Menu.MenuAccess> MenuAccess { get; set; }
         public DbSet<Menu.SubMenu> SubMenu { get; set; }
         public DbSet<Setup.AreaOffice> AreaOffices { get; set; }
-      
+
 
         public DbSet<Students.Scaf> Scafs { get; set; }
         public DbSet<Students.StudentSetUp> StudentSetUps { get; set; }
@@ -56,7 +56,7 @@ namespace SiwesData
             builder.Entity<Setup.Courses>().HasIndex(b => b.Name).IsUnique();
             builder.Entity<Setup.NewCourseRequest>().HasIndex(b => b.Name).IsUnique();
             base.OnModelCreating(builder);
-            
+
         }
     }
 }

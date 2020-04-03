@@ -16,7 +16,7 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
 
-    public class RegisterModel : PageModel
+    public class RegisterempModel : PageModel
     { 
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<RoleTb>_roleManager;
@@ -26,12 +26,12 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
         public string errorm { get; set; }
         private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
+        public RegisterempModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             RoleManager<RoleTb> roleManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+      IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -51,12 +51,13 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             [StringLength(100, ErrorMessage = "Please  email address is compulsory")]
             [EmailAddress]
             [Display(Name = "Email")]
+
+
          
             public string Email { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
-            
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -67,14 +68,18 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 
             public string ConfirmPassword { get; set; }
-             
+
             //[Required]
             //[StringLength(100, ErrorMessage = "Matric No is required")]
             //[DataType(DataType.Text)]
             //[Display(Name = "Matric Number")]
-          
+        
+            [Required]
+            [StringLength(100, ErrorMessage = "Please enter Rc number")]
+            public string RcNo { get; set; }
 
-            public string MatricNo { get; set; }
+
+
 
             [DataType(DataType.Text)]
             [Display(Name = "Name")]
@@ -94,31 +99,39 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
         
-            returnUrl = returnUrl ?? Url.Content("/");
+            returnUrl = returnUrl ?? Url.Content("/Areas/Identity/Pages/Account/Login");
             if (ModelState.IsValid)
             {
-              
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityUser { UserName = Input.RcNo, Email = Input.Email };
+           
                 if (Input.Password.Any(Char.IsUpper) == false)
                 {
                     errorm = "Your password must contain at least 1 upper case";
                     return Page();
                 }
+                var useremail = await _userManager.FindByEmailAsync(Input.Email);
+
+                if (useremail != null)
+                {
+                    errorm = "Email alrealdy exist please check s";
+                    return Page();
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
             
                 if (result.Succeeded)
                 {
                     // creating Creating Manager role     
                   
-                  bool  x = await _roleManager.RoleExistsAsync("Student");
+                  bool  x = await _roleManager.RoleExistsAsync("Employer");
                     if (!x)
                     {
                         var role = new RoleTb();
-                        role.Name = "Student";
-                        role.RoleId = "STD01";
+                        role.Name = "Employer";
+                        role.RoleId = "EMP01";
                         await _roleManager.CreateAsync(role);
                     }
-                    await _userManager.AddToRoleAsync(user, "Student");
+                    await _userManager.AddToRoleAsync(user, "Employer");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
