@@ -54,7 +54,7 @@ namespace BSSL_SIWES.Web
                 options.Password.RequiredLength = 8;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
+                options.Password.RequireUppercase = true ;
                 options.SignIn.RequireConfirmedEmail = true;
                 options.User.RequireUniqueEmail = true;
 

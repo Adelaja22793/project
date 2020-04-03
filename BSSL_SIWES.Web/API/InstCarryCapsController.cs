@@ -12,48 +12,48 @@ namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InstTypeSetupsController : ControllerBase
+    public class InstCarryCapsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public InstTypeSetupsController(ApplicationDbContext context)
+        public InstCarryCapsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/InstTypeSetups
+        // GET: api/InstCarryCaps
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<InstTypeSetup>>> GetInstTypeSetup()
+        public async Task<ActionResult<IEnumerable<InstCarryCap>>> GetInstCarryCap()
         {
-            return await _context.InstTypeSetup.ToListAsync();
+            return await _context.InstCarryCap.ToListAsync();
         }
 
-        // GET: api/InstTypeSetups/5
+        // GET: api/InstCarryCaps/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<InstTypeSetup>> GetInstTypeSetup(int id)
+        public async Task<ActionResult<InstCarryCap>> GetInstCarryCap(int id)
         {
-            var instTypeSetup = await _context.InstTypeSetup.FindAsync(id);
+            var instCarryCap = await _context.InstCarryCap.FindAsync(id);
 
-            if (instTypeSetup == null)
+            if (instCarryCap == null)
             {
                 return NotFound();
             }
 
-            return instTypeSetup;
+            return instCarryCap;
         }
 
-        // PUT: api/InstTypeSetups/5
+        // PUT: api/InstCarryCaps/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInstTypeSetup(int id, InstTypeSetup instTypeSetup)
+        public async Task<IActionResult> PutInstCarryCap(int id, InstCarryCap instCarryCap)
         {
-            if (id != instTypeSetup.Id)
+            if (id != instCarryCap.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(instTypeSetup).State = EntityState.Modified;
+            _context.Entry(instCarryCap).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace BSSL_SIWES.Web.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!InstTypeSetupExists(id))
+                if (!InstCarryCapExists(id))
                 {
                     return NotFound();
                 }
@@ -71,40 +71,40 @@ namespace BSSL_SIWES.Web.API
                 }
             }
 
-            return Ok(instTypeSetup);
+            return NoContent();
         }
 
-        // POST: api/InstTypeSetups
+        // POST: api/InstCarryCaps
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<InstTypeSetup>> PostInstTypeSetup(InstTypeSetup instTypeSetup)
+        public async Task<ActionResult<InstCarryCap>> PostInstCarryCap(InstCarryCap instCarryCap)
         {
-            _context.InstTypeSetup.Add(instTypeSetup);
+            _context.InstCarryCap.Add(instCarryCap);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInstTypeSetup", new { id = instTypeSetup.Id }, instTypeSetup);
+            return CreatedAtAction("GetInstCarryCap", new { id = instCarryCap.Id }, instCarryCap);
         }
 
-        // DELETE: api/InstTypeSetups/5
+        // DELETE: api/InstCarryCaps/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<InstTypeSetup>> DeleteInstTypeSetup(int id)
+        public async Task<ActionResult<InstCarryCap>> DeleteInstCarryCap(int id)
         {
-            var instTypeSetup = await _context.InstTypeSetup.FindAsync(id);
-            if (instTypeSetup == null)
+            var instCarryCap = await _context.InstCarryCap.FindAsync(id);
+            if (instCarryCap == null)
             {
                 return NotFound();
             }
 
-            _context.InstTypeSetup.Remove(instTypeSetup);
+            _context.InstCarryCap.Remove(instCarryCap);
             await _context.SaveChangesAsync();
 
-            return instTypeSetup;
+            return instCarryCap;
         }
 
-        private bool InstTypeSetupExists(int id)
+        private bool InstCarryCapExists(int id)
         {
-            return _context.InstTypeSetup.Any(e => e.Id == id);
+            return _context.InstCarryCap.Any(e => e.Id == id);
         }
     }
 }

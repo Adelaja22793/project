@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SiwesData;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web
 {
@@ -20,9 +22,13 @@ namespace BSSL_SIWES.Web
             _context = context;
             _userManager = userManager;
         }
-        public void OnGet()
+        [BindProperty]
+        public AgencySuperSetup AgencySuperSetup { get; set; }
+        public List<AgencySuperSetup> AgencySuperSetupList { get; set; }
+        public async void OnGetAsync()
         {
-
+            AgencySuperSetupList = await _context.AgencySuperSetup.ToListAsync();
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
         }
     }
 }

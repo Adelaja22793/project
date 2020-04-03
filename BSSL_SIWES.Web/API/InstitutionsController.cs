@@ -12,48 +12,48 @@ namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InstTypeSetupsController : ControllerBase
+    public class InstitutionsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public InstTypeSetupsController(ApplicationDbContext context)
+        public InstitutionsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/InstTypeSetups
+        // GET: api/Institutions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<InstTypeSetup>>> GetInstTypeSetup()
+        public async Task<ActionResult<IEnumerable<Institution>>> GetInstitution()
         {
-            return await _context.InstTypeSetup.ToListAsync();
+            return await _context.Institution.ToListAsync();
         }
 
-        // GET: api/InstTypeSetups/5
+        // GET: api/Institutions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<InstTypeSetup>> GetInstTypeSetup(int id)
+        public async Task<ActionResult<Institution>> GetInstitution(int id)
         {
-            var instTypeSetup = await _context.InstTypeSetup.FindAsync(id);
+            var institution = await _context.Institution.FindAsync(id);
 
-            if (instTypeSetup == null)
+            if (institution == null)
             {
                 return NotFound();
             }
 
-            return instTypeSetup;
+            return institution;
         }
 
-        // PUT: api/InstTypeSetups/5
+        // PUT: api/Institutions/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInstTypeSetup(int id, InstTypeSetup instTypeSetup)
+        public async Task<IActionResult> PutInstitution(int id, Institution institution)
         {
-            if (id != instTypeSetup.Id)
+            if (id != institution.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(instTypeSetup).State = EntityState.Modified;
+            _context.Entry(institution).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace BSSL_SIWES.Web.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!InstTypeSetupExists(id))
+                if (!InstitutionExists(id))
                 {
                     return NotFound();
                 }
@@ -71,40 +71,40 @@ namespace BSSL_SIWES.Web.API
                 }
             }
 
-            return Ok(instTypeSetup);
+            return NoContent();
         }
 
-        // POST: api/InstTypeSetups
+        // POST: api/Institutions
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<InstTypeSetup>> PostInstTypeSetup(InstTypeSetup instTypeSetup)
+        public async Task<ActionResult<Institution>> PostInstitution(Institution institution)
         {
-            _context.InstTypeSetup.Add(instTypeSetup);
+            _context.Institution.Add(institution);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInstTypeSetup", new { id = instTypeSetup.Id }, instTypeSetup);
+            return CreatedAtAction("GetInstitution", new { id = institution.Id }, institution);
         }
 
-        // DELETE: api/InstTypeSetups/5
+        // DELETE: api/Institutions/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<InstTypeSetup>> DeleteInstTypeSetup(int id)
+        public async Task<ActionResult<Institution>> DeleteInstitution(int id)
         {
-            var instTypeSetup = await _context.InstTypeSetup.FindAsync(id);
-            if (instTypeSetup == null)
+            var institution = await _context.Institution.FindAsync(id);
+            if (institution == null)
             {
                 return NotFound();
             }
 
-            _context.InstTypeSetup.Remove(instTypeSetup);
+            _context.Institution.Remove(institution);
             await _context.SaveChangesAsync();
 
-            return instTypeSetup;
+            return institution;
         }
 
-        private bool InstTypeSetupExists(int id)
+        private bool InstitutionExists(int id)
         {
-            return _context.InstTypeSetup.Any(e => e.Id == id);
+            return _context.Institution.Any(e => e.Id == id);
         }
     }
 }
