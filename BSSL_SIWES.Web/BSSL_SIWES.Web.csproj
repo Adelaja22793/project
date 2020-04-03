@@ -10,32 +10,6 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Migrations\**" />
-    <Content Remove="Migrations\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="API\RoleTbsController.cs" />
-    <Compile Remove="Areas\20200311144509_initial.cs" />
-    <Compile Remove="Areas\20200311144509_initial.Designer.cs" />
-    <Compile Remove="Areas\20200311170525_EditedMenu.cs" />
-    <Compile Remove="Areas\20200311170525_EditedMenu.Designer.cs" />
-    <Compile Remove="Areas\20200312074221_EditedSubMenu.cs" />
-    <Compile Remove="Areas\20200312074221_EditedSubMenu.Designer.cs" />
-    <Compile Remove="Areas\20200312101332_Authenticating_Menu_Table_Columns.cs" />
-    <Compile Remove="Areas\20200312101332_Authenticating_Menu_Table_Columns.Designer.cs" />
-    <Compile Remove="Areas\20200313160752_Added_IntitutionTb.cs" />
-    <Compile Remove="Areas\20200313160752_Added_IntitutionTb.Designer.cs" />
-    <Compile Remove="Pages\Setup\ProfileRole.cshtml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\Setup\ProfileRole.cshtml" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
@@ -683,17 +657,6 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Areas\Identity\Pages\_ViewImports.cshtml" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Compile Include="Migrations\20200330213041_initialrun.cs" />
-    <Compile Include="Migrations\20200330213041_initialrun.designer.cs" />
-    <Compile Include="Migrations\20200331153248_Updatedinitial.cs" />
-    <Compile Include="Migrations\20200331153248_Updatedinitial.designer.cs" />
-    <Compile Include="Migrations\20200401062912_Updatedinitial24.cs" />
-    <Compile Include="Migrations\20200401062912_Updatedinitial24.designer.cs" />
-    <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
   </ItemGroup>
 
 </Project>
