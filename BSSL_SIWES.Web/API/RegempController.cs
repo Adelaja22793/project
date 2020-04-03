@@ -14,12 +14,12 @@ namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegController : Controller
+    public class RegempController : Controller
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public RegController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RegempController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -32,10 +32,15 @@ namespace BSSL_SIWES.Web.API
         }
 
         // GET api/<controller>/5
-        [HttpGet("{email}")]
-        public async Task<ActionResult<string>> GetCheckMatric(string email)
+  
+
+        // GET api/<controller>/5
+        [HttpGet("{rcno}")]
+        public async Task<ActionResult<List<string>>> GetRcNo(string rcno)
         {
-            var result = "";
+         //   var result = "";
+
+            List<string> result = new List<string>();
             try
             {
                 // get email 
@@ -43,41 +48,43 @@ namespace BSSL_SIWES.Web.API
                 // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
 
 
-                var identityUser = await _userManager.FindByEmailAsync(email.Trim());
+                var identityUser = await _userManager.FindByNameAsync(rcno.Trim());
+
+           
 
                 if (identityUser != null)
                 {
-                    result ="exist";
+                    result.Insert(0, "exist");
                 }
                 else
                 {
-                 //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
+                    //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
 
-                    var user =  _context.StudentSetUps.FirstOrDefault(m => m.Email == email.Trim());
+                    var user = _context.EmployerSuperSetups.FirstOrDefault(m => m.Code == rcno.Trim());
                     // check if email has beeen registered
 
                     if (user != null)
                     {
-                        result = user.Surname + " " + user.OtherNames;
+                        result.Insert(0, user.Name.Trim());
+                        result.Insert(1, user.Email.Trim());
+                     
                     }
                     else
                     {
-                        result = "notexist";
+                        result.Insert(0, "notexist");
                     }
                 }
-              
+
 
 
             }
             catch
             {
-                result = "syserr";
+                result.Insert(0, "syserr");
             }
             return result;
 
         }
-
-        // GET a
 
         // POST api/<controller>
         [HttpPost]
