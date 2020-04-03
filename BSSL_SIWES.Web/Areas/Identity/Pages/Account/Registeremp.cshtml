@@ -1,5 +1,5 @@
 ﻿@page
-@model BSSL_SIWES.Web.Areas.Identity.Pages.Account.RegisterModel
+@model BSSL_SIWES.Web.Areas.Identity.Pages.Account.RegisterempModel
 @{
     //ViewData["Title"] = "Register";
     Layout = "_RegLayout";
@@ -12,7 +12,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create Student Account</h3>
+                    <h3 class="card-title">Create Employer account</h3>
                 </div>
                 <div>
                     @if (!string.IsNullOrWhiteSpace(Model.successm))
@@ -34,20 +34,20 @@
                 <form method="post">
                     <div class="card-body">
                         @*<div class="spinner-border text-primary loading-img loade" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>*@
+            <span class="sr-only">Loading...</span>
+        </div>*@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label asp-for="Input.Email">Email</label>
+                                    <label asp-for="Input.RcNo">RC Number</label>
                                     <div class="danger">
-                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                        <span asp-validation-for="Input.RcNo" class="text-danger"></span>
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-evenlope"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input asp-for="Input.Email" id="txtemail" class="form-control" placeholder="Email">
+                                        <input asp-for="Input.RcNo" id="txtrcno" class="form-control" placeholder="Rc Numbers">
                                     </div>
                                 </div>
                             </div>
@@ -64,10 +64,24 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Input.Email">Email</label>
+                                    <div class="danger">
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-evenlope"></i></span>
+                                        </div>
+                                        <input asp-for="Input.Email" id="txtemail" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -123,14 +137,14 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#txtemail').on('change', function () {
+        $('#txtrcno').on('change', function () {
 
-            var email = $("#txtemail").val();
+            var rcno = $("#txtrcno").val();
             d = {
-                "email": email,
+                "rcno": rcno
             }
             var baseUrl = window.location.origin;
-            var url = baseUrl + '/API/Reg/  ' + email;
+            var url = baseUrl + '/API/Regemp/  ' + rcno;
             $.ajax({
                 type: "GET",
                 url: url,
@@ -149,23 +163,29 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                 
+                    alert(data);
                     if (data == "notexist") {
 
-                        alert("Wrong email or your record has not been registered by your school cordinator please check ")
-                          $("#txtemail").val("");
+                        alert("Wrong Rc number or company has not been registered by ITF")
+                        $("#txtemail").val("");
+                           
+                        $("#txtrcno").val("");
+                        $("#txtname").val("");
                     }
                     else if (data == "exist") {
 
                         alert("Account already exist ");
                         $("#txtemail").val("");
+                        $("#txtrcno").val("");
+                        $("#txtname").val("");
                     }
                     else if (data == "syserr") {
 
                         alert("System error: Please try again or contact adminitrator  ")
                     }
                     else {
-                        $("#txtname").val(data);
+                        $("#txtname").val(data[0]);
+                           $("#txtemail").val(data[1]);
                     }
                   
                 },

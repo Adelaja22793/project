@@ -42,6 +42,19 @@
                     <div class="media" style="border:hidden">
                         <img src="~/images/complogo.jpg" height="150px" width="300" />
                     </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.successm))
+                    {
+                        <div class="alert alert-dismissible alert-success">
+                            @Model.successm
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.errorm))
+                    {
+                        <div class="alert alert-dismissible alert-danger">
+                            @Model.errorm
+                        </div>
+                    }
                     <div class="input-group mb-3">
                         <input asp-for="Input.Email" class="form-control" placeholder="Username, Email" />
                         <div class="input-group-append">
@@ -62,13 +75,13 @@
                     <div><span asp-validation-for="Input.Password" class="text-danger"></span></div>
                     <div class="row">
                         @*<div class="col-8">
-                    <div class="icheck-primary">
-                        <input type="checkbox" asp-for="Input.RememberMe" id="remember" />
-                        <label for="remember">
-                            Remember Me
-                        </label>
-                    </div>
-                </div>*@
+                <div class="icheck-primary">
+                    <input type="checkbox" asp-for="Input.RememberMe" id="remember" />
+                    <label for="remember">
+                        Remember Me
+                    </label>
+                </div>
+            </div>*@
                         <!-- /.col -->
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
@@ -98,7 +111,7 @@
                 </p>
                 <p class="mb-0">
 
-                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create Employer Account</a>
+                    <a asp-page="./Registeremp" asp-route-returnUrl="@Model.ReturnUrl">Create Employer Account</a>
                 </p>
             </div>
             <!-- /.login-card-body -->
