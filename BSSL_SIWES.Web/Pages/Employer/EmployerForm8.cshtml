@@ -1,0 +1,455 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Employer.EmployerForm8Model
+@{
+    ViewData["Title"] = "EmployerForm8";
+}
+ <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">ITF FORM 8 - SIWES End of Year Program Report Sheet</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group studentSelected">
+                                    <label for="exampleInputFile">Enter/Search Matric. Number</label>
+                                    <select class="form-control"
+                                            style="width: 100%;" id="studentSelected" onchange="MyFunctionStudentSelected()">
+                                        <option selected="selected" value="-1">--Select Student Matric No.--</option>
+                                        @foreach (var items in Model.Scafs)
+                                        {
+                                            <option value="@items.StudentSetUpId">@Html.DisplayFor(modelitem => items.StudentSetUp.MatricNumber)</option>
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Student Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="studentName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Course of Study</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                        </div>
+                                        <input type="text" id="courseStudy" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="form-group experienceComfim">
+                                    <label>Do you agree with the student comments in brief outline of experience of as provided by the student?</label>
+                                    <select class="form-control select2 select2-danger" onchange="myFucntionAttached()"
+                                            id="experienceCom" data-dropdown-css-class="select2-danger">
+                                        <option selected="selected" value="YES">YES</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Date Certified</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        </div>
+                                        <input type="date" id="certdate" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ifYes" style="display:none">
+                                <div class="form-group">
+                                    <label>If No, please comment</label>
+                                    <textarea class="textarea reasonNo" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>Please assess student’s overall performance by clicking the appropriate box</label>
+                                    
+                                    <!-- radio -->
+                                    <div class="form-group clearfix checkedSelected">
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary1" value="Very Good" name="r1">
+                                            <label for="radioPrimary1">
+                                                Very Good
+                                            </label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary2" value="Good" name="r1">
+                                            <label for="radioPrimary2">
+                                                Good
+                                            </label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary3" value="Satisfactory" name="r1">
+                                            <label for="radioPrimary3">
+                                                Satisfactory
+                                            </label>
+                                        </div>
+                                        <div class="icheck-primary d-inline">
+                                            <input type="radio" id="radioPrimary4" value="Poor" name="r1">
+                                            <label for="radioPrimary4">
+                                                Poor
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group Attachment">
+                                    <label>Will You Accept Student in Any Future Attachment?</label>
+                                    <select class="form-control select2 select2-danger" onchange="myFucntionAttachedAccept()"
+                                            id="accept" data-dropdown-css-class="select2-danger">
+                                        <option selected="selected" value="YES">YES</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ifNo" style="display:none">
+                                <div class="form-group">
+                                    <label>If No, Please Enter Reason</label>
+                                    <textarea class="textarea Attachment" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Is your company or establishment in a position to offer this student a job in the future?</label>
+                                    <textarea class="textarea company" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                            <input type="hidden" id="employerSupervisorId" />
+                            <button type="button" id="BtnSumit" class="btn btn-primary">Certify Student End of SIWES Experience</button>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="modal fade" tabindex="-1" id="loginModal"
+                     data-keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog modal-lg" style="width:100%; margin-left:27%;">
+                        <div class="modal-content">
+                            <div class="modal-header btn-primary">
+                                <h4 class="modal-title" id="monthname" style="margin-left:100px">Assessment For the Month of </h4>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    ×
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label> Students' Experience</label>
+                                            <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                    font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex" style="">
+                                <button type="button" id="btnHideModal" class="btn btn-danger button button4">
+                                    Hide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        }); 
+        $('.textarea').summernote();
+ 
+        $('#BtnSumit').on('click', function () {
+            var experience = $('.student').val();
+            var studtId = $('div.studentSelected select').val();
+            var studentName = $('#studentName').val();
+            var StudentExperience = $('#experienceCom').val();
+            var Reason = $('.reasonNo').val();
+            var DateIn = $('#certdate').val();
+            var StudentAccept = $('#accept').val();
+            var ReasonNot = $('.Attachment').val();
+            var FutureEmploy = $('.company').val();
+            var Performance = $("input[name='r1']:checked").val();
+            var employerId = $('#employerSupervisorId').val();
+            var studentId = parseInt(studtId);
+            var employerSupervisorId = parseInt(employerId);
+            alert(employerSupervisorId);
+            //alert(accept); alert(Attachment);
+            if (studentId == "-1") {
+                alert("PLEASE SELECT A STUDENT TO EVALUATE");
+                return false;
+            }
+            if (experience == "") {
+                alert("" + studentName.toUpperCase() + " HAVE NOT COMPLETED FORM8");
+                return false;
+            }
+            if (StudentExperience == "NO" && Reason == "") {
+                alert("ENTER REASON FOR DISAGREEING WITH " + studentName.toUpperCase() + " TRAINING EXPERIENCE");
+                return false;
+            }
+            if (DateIn == "") {
+                alert("ENTER DATE OF CERTIFICATION TRAINING EXPERIENCE");
+                return false;
+            }
+            if (StudentAccept == "NO" && ReasonNot == "") {
+                alert("ENTER REASON WHY YOU WILL NOT ACCEPT " + studentName.toUpperCase() + " IN ANY FUTURE ATTACHMENT");
+                return false;
+            }
+            if (FutureEmploy == "") {
+                alert("ENTER YES OR NO IF YOU COMPANY WILL OFFER " + studentName.toUpperCase() + " JOB IN THE FUTURE");
+                return false;
+            }
+            var d = {
+                "StudentSetUpId": studentId,
+                "EmployerSupervisorId": employerSupervisorId,
+                "StudentExperience": StudentExperience,
+                "Reason": Reason,
+                "DateIn": DateIn,
+                "Performance": Performance,
+                "StudentAccept": StudentAccept,
+                "ReasonNot": ReasonNot,
+                "FutureEmploy": FutureEmploy,
+
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO YOUR END OF SIWES EXPERIENCE TO TOUR SUPERVISOR ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/Form8Employer/' + studentId;
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("END OF SIWES EXPERIENCE WAS SUCCESSFULLY UPDATED");
+                    location.reload();
+                },
+            });
+        });
+    });
+    function myFucntionAttached() {
+        myAttached = $('#experienceCom').val();
+        if (myAttached == "NO" && !$(".ifYes").is(':visible')) {
+            $(".ifYes").css('display', 'block');
+        }
+        else {
+            $(".ifYes").css('display', 'none');
+        }
+    }
+    function myFucntionAttachedAccept() {
+        myAttached = $('#accept').val();
+        if (myAttached == "NO" && !$(".ifNo").is(':visible')) {
+            $(".ifNo").css('display', 'block');
+        }
+        else {
+            $(".ifNo").css('display', 'none');
+        }
+    }
+    function MyFunctionStudentSelected() {
+        var stId = $('div.studentSelected select').val();
+        var studentId = parseInt(stId)
+        //alert(studentId)
+        var d = {
+            "Id": studentId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/ScafReturn/' + studentId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                var studentName = data['studentSetUp']['surname'] + ' ' + data['studentSetUp']['otherNames'];
+                var courseStudy = data['studentSetUp']['courses']['name'];
+                $('#employerSupervisorId').val(data['employerSupervisorId']);
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/Form8/' + studentId,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        //console.log(data);
+                        if (!data) {
+                            alert(" " + studentName.toUpperCase() + " HAVE NOT COMPLETED FORM8");
+                            $(".student").summernote('code', '');
+                            $('.student').summernote('disable');
+                            //var studentName = data['studentSetUp']['surname'] + ' ' + data['studentSetUp']['otherNames'];
+                            $('#studentName').val(studentName);
+                            $('#courseStudy').val(courseStudy);
+                            return false;
+                        }
+                        else {
+                            var supApproved = data['supApproved'];
+                            if (supApproved == true) {
+                                alert("THE SELECT END OF SIWES EXPERIENCE HAVE BEEN CERTIFIED");
+                                $('#studentName').val(studentName);
+                                $('#courseStudy').val(courseStudy);
+                            }
+                            else {
+                                $("#loginModal").modal('show');
+                                $('#monthname').html(" " + studentName.toUpperCase() + " TRAINING EXPERIENCE")
+                                var remarks = data['workExperience'];
+                                $(".student").summernote('code', remarks);
+                                $('.student').summernote('disable');
+                                $('#studentName').val(studentName);
+                                $('#courseStudy').val(courseStudy);
+                            }
+                           
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+    function MyFunctionStudentSelectedEnd() {
+        var stId = $('div.studentSelected select').val();
+        var studentId = parseInt(stId)
+        //alert(studentId)
+        var d = {
+            "Id": studentId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/ScafReturn/' + studentId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                console.log(data);
+                var studentName = data['studentSetUp']['surname'] + ' ' + data['studentSetUp']['otherNames'];
+                var courseStudy = data['studentSetUp']['courses']['name'];
+                //alert(courseStudy);
+                $('#employerSupervisorId').val(data['employerSupervisorId']);
+                //$('#studentName').val(studentName);
+                //$('#courseStudy').val(courseStudy);
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/Form8Employer/' + studentId,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        var supApproved = data['supApproved'];
+                        if (!data) {
+                            alert(" " + studentName.toUpperCase() + " HAVE NOT COMPLETED FORM8");
+                            $(".student").summernote('code', '');
+                            $('.student').summernote('disable');
+                            //var studentName = data['studentSetUp']['surname'] + ' ' + data['studentSetUp']['otherNames'];
+                            $('#studentName').val(studentName);
+                            $('#courseStudy').val(courseStudy);
+                            return false;
+                        }
+                        else {
+
+                            if (supApproved == "false") {
+                                //alert(data['supApproved']);
+                                $("#loginModal").modal('show');
+                                $('#monthname').html(" " + studentName.toUpperCase() + " TRAINING EXPERIENCE")
+                                var remarks = data['workExperience'];
+                                $(".student").summernote('code', remarks);
+                                $('.student').summernote('disable');
+                            }
+                            else {
+
+                                //alert(data['supApproved']);
+                                alert("THE SELECT END OF SIWES EXPERIENCE HAVE BEEN CERTIFIED")
+
+                            }
+                        }
+                    },
+                });
+            },
+
+
+        });
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

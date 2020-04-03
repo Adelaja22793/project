@@ -1,39 +1,93 @@
 ﻿@inject SiwesData.ApplicationDbContext db
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+
+@using System.Collections.Generic
+
+@using Microsoft.AspNetCore.Http
+
+@using SiwesData.Setup
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<RoleTb> roleManager
+
 
 @{
     //var ListCategories = db.mainCategories.Include(m => m.SubCategories);
 
     // var menulist = db.SubMenu.Include(m => m.MenuAccesses);
+    //private readonly UserManager<IdentityUser> _userManager;
+    //private readonly AspNetRoleManager<RoleTb> _roleManager;
 
-    var menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
-     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
-     .Where(k => k.macc2.RoleId == "01")
-     .Select(m => new
-     {
-         MenuName = m.Macc.m.Name,
-         Menuid = m.Macc.m.Id,
-         SubMenuid = m.Macc.sub.Id,
-         Pageurl = m.Macc.sub.PageUrl,
-         SubMenuName = m.Macc.sub.Name
+    //public LayoutModel( UserManager<IdentityUser> userManager, AspNetRoleManager<RoleTb> roleManager)
+    //{
+    //    _userManager = userManager;
+    //    _roleManager = roleManager;
+    //}
+    //var getuserrole = "";    var menulist ;  var menulist3 = new List<string>();
+    //if (SignInManager.IsSignedIn(User))
+    //{
+    var getuserrole = "";   var menulist3 = (dynamic)null;    var menulist = (dynamic)null;
+    if (SignInManager.IsSignedIn(User))
+    {
+        var CurUser = await UserManager.GetUserAsync(User);
+        var currole = await UserManager.GetRolesAsync(CurUser);
+        var rolem = await roleManager.FindByNameAsync(currole[0]);
+
+        if (currole != null)
+        {
+            getuserrole = rolem.RoleId.ToString();
+        }
+        //  var roleuser = db.RoleTb.Join(db.RoleTb, m => m.Id, sub => sub. )
+        menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+         .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+         .Where(k => k.macc2.RoleId == getuserrole)
+         .Select(m => new
+         {
+             MenuName = m.Macc.m.Name,
+             Menuid = m.Macc.m.Id,
+             SubMenuid = m.Macc.sub.Id,
+             Pageurl = m.Macc.sub.PageUrl,
+             SubMenuName = m.Macc.sub.Name
 
 
-     }).ToList();
+         }).ToList();
 
 
-    var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
-     .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
-     .Where(k => k.macc2.RoleId == "01")
-     //  .GroupBy( k = k )
-     .Select(m => new
-     {
-         MenuName = m.Macc.m.Name,
-         Menuid = m.Macc.m.Id
+        var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+         .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+         .Where(k => k.macc2.RoleId == getuserrole)
+         //  .GroupBy( k = k )
+         .Select(m => new
+         {
+             MenuName = m.Macc.m.Name,
+             Menuid = m.Macc.m.Id
+         }).ToList();
+
+        menulist = menulist4.GroupBy(c => c.Menuid, (key, c) => c.FirstOrDefault());
+    }
+    //  }
+
+    //var user = await UserManager.FindByIdAsync(UserId);
+    //var roles = await _userManager.GetRolesAsync(user);
 
 
-     }).ToList();
+    //var user = await this.db.Users.Where (x => x.Id == CurUser.Id ).Include (x => x.Id).FirstOrDefaultAsync ();
 
-    var menulist = menulist4.GroupBy(c => c.Menuid,  (key, c) => c.FirstOrDefault());
+
+
+    ////  var user = await UserManager.FindByEmailAsync(model.Email);
+    //  // Get the roles for the user
+    //  var roles = await UserManager.GetRolesAsync(user1);
+
+
+
+
+    //#region get user role
+    //   var  userrole  =
+    //#endregion
+
+
 
 
 }
@@ -95,13 +149,13 @@
                         <button type="submit" class="nav-link btn btn-link">Log in</button>
                     </form>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
+                @*<li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
-                </li>
+                </li>*@
 
             </ul>
 
-            Search Form
+            @*Search Form
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
                     <input id="tags" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -111,7 +165,7 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            </form>*@
 
             <!-- Right navbar links -->
             @{
@@ -129,29 +183,34 @@
                 }
 
             }
-            <ul class="navbar-nav ml-auto">
-                <!-- Messages Dropdown Menu -->
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <ul class="navbar-nav ml-auto">
+            <!-- Messages Dropdown Menu -->
+            <!-- Notifications Dropdown Menu
+    <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-power-off"></i>Logout
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-power-off"></i>Logout
+            </a>
+        </div>
+    </li>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+                    <i class="fas fa-th-large"></i>
+                </a>
+            </li>-->
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                    <button type="submit" class="nav-link btn btn-link">Log Out</button>
+                </form>
+            </li>
+        </ul>
+</nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -172,11 +231,11 @@
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
+                 @*   <div class="image">
                         <img src="~/template/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
+                    </div>*@
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">@User.Identity.Name.ToString().Trim()</a>
                     </div>
                 </div>
 
@@ -210,6 +269,18 @@
                                     </a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a asp-page="/Institution/Student_Visit_Form" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Supervisor Student Visit</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Institution/InstitusionSupervisor" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ITF FORM 8</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item has-treeview">
@@ -222,61 +293,51 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Students/Scaff_Form" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Student Commencement of Attachment Form (SCAF)</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="/Students/Form8" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>ITF FORM 8 - SIWES End of Year Program Report Sheet</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/Students/EmployerForm8" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ITF FORM 8</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Students/InstitusionSupervisor" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ITF FORM 8</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/Student_Visit_Form" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Supervisor Student Visit Form</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a asp-page="/Students/DailyActivities" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Daily/weekly Records</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/SupervisorCerif" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Approvals</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/MonthlyAssessment" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Monthly Assessment</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-page="/Students/Indus_MonthlyAssessment" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Industry-Based Monthly Assessment</p>
+                                        <p>Daily/Monthly Assessment</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                       @foreach (var row in menulist)
+                        {
+                            <li class="nav-item has-treeview">
+
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-edit"></i>
+
+                                    <p>
+                                        @row.MenuName.ToString().Trim()
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+
+                                </a>
+                                @foreach (var rsub in menulist3)
+                                {
+                                    if (row.Menuid.ToString() == rsub.Menuid.ToString()
+                                        && string.IsNullOrEmpty(rsub.Pageurl.ToString().Trim()) == false)
+                                    {
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a asp-page=@rsub.Pageurl.ToString().Trim() class="nav-link">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>@rsub.SubMenuName.ToString()</p>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    }
+                                }
+
+                            </li>
+                        }
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
@@ -354,7 +415,37 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Employer
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-page="/Employer/Scaff_Form" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Commencement Form</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Employer/SupervisorCerif" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Approvals</p>
+                                    </a>
+                                </li>
 
+                                <li class="nav-item">
+                                    <a href="/Employer/EmployerForm8" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ITF FORM 8</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -396,13 +487,15 @@
             </div>
         </footer>*@
     <!-- jQuery UI 1.11.4 -->
-    <script src="~/template/plugins/jquery-ui/jquery-ui.min.js"></script>
+    @*<script src="~/plugins/jquery-ui/jquery-ui.min.js></script>*@
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
 
-    <script src="~/template/plugins/jquery/jquery.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="~/template/dist/js/adminlte.js"></script>
     <!-- Bootstrap 4 -->

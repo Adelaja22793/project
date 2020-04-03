@@ -1,0 +1,307 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Institution.SupervisorListModel
+@{
+    ViewData["Title"] = "SupervisorList";
+}
+<div class="col-md-12">
+    <div class="modal fade" tabindex="-1" id="loginModal"
+         data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg" style="margin-left:25%;width:120%">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:steelblue">
+                    <h4 class="modal-title" id="monthname" style="margin-left:30%; text-transform:uppercase">Supervisor Student Visit</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label for="matric">Matric. No. of Student</label>
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="matricNo" readonly="readonly">
+                                    <input type="hidden" class="form-control" id="studentId">
+                                    <input type="hidden" id="rowIndex" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Student Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="studentName" readonly="readonly">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Course of Study</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-book-open"></i></span>
+                                    </div>
+                                    <input type="text" id="courseName" class="form-control" readonly="readonly">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Employer's Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" id="employerName" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Employer's Address</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-address"></i></span>
+                                    </div>
+                                    <input type="text" id="employerAddress" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Employer's Supervisor Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" id="employerSupervisorName" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Supervisor's Phone No.</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" id="employerSupervisorPhoneNo" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Date Visted</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                                    <input type="date" id="mydate" class="form-control">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Supervisor Proposed Area of Improvement</label>
+                            <textarea class="textarea areaToImprove" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Supervisor Impression of Student’s Involvement in Training</label>
+                            <textarea class="textarea studentInvolvement" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                        <button type="submit" id="SubmitVisitationReport" class="btn btn-primary button button4">Submit Visitation Report</button>
+                        <button type="button" id="btnHideModal" class="btn btn-danger button button4">
+                            Hide
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+        <div class="justify-content-center" style="margin-left:40%;">
+            <button type="button" onclick="pageRedirect()" class="btn btn-outline-info">Back to Page</button>
+        </div>
+   
+    <div class="card card-primary">
+
+        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+            <table id="StudentTab" class="table table-bordered" border="0">
+                <thead style="background-color:steelblue;">
+                    <tr>
+                        <th style="width:0.25%; text-align:center">S/N</th>
+                        <th style="width:15%; text-align:center">Matric Number</th>
+                        <th style="width:25%; text-align:center">Student Name</th>
+                        <th style="width:30%; text-align:center">Course of Study</th>
+                        <th style="width:10%; text-align:center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ListOfStudent.Count; i++)
+                    {
+                        var items = Model.ListOfStudent[i];
+                        var Name = items.Surname + ' ' + items.OtherNames;
+                        var Level = items.YearOfStudy + ' ' + "Level";
+
+                        <tr>
+                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                            <td class="matricNo @i" style="width:15%; text-align:left">@items.MatricNumber</td>
+                            <td class="name @i" style="width:25%; text-align:left">@Name</td>
+                            <td class="courseName @i" style="width:30%; text-align:left">@items.Courses.Name</td>
+
+                            <td style="width:10%;">
+                                <input type="hidden" class="studentId @i" value="@items.Id" />
+                                @*<input type="hidden" class="studentId @i" value="@items." />
+                                <input type="hidden" class="studentId @i" value="@items.Id" />*@
+                                <a id="studentVisit" AddreSuspend="@i" asp-route-id="@items.Id">Visit Student</a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#StudentTab").on('click', '#studentVisit', function () {
+            var currentRow = $(this).closest("tr");
+            var rowIndex = currentRow.find("td:eq(0)").html();
+            var studentName = currentRow.find("td:eq(2)").html();
+
+            var editindex = $(this).attr('AddreSuspend');
+            var SttId = $('.studentId.' + editindex).val();
+            var matricNo = $('.matricNo.' + editindex).text();
+            var courseName = $('.courseName.' + editindex).text();
+            var studentId = parseInt(SttId);
+            var d = {
+                "Id": studentId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/ScafSupervisor/' + studentId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    //alert(name); ScafSupervisor
+                    $("#loginModal").modal('show');
+                    $('#studentName').val(studentName);
+                    $('#studentId').val(SttId);
+                    $('#courseName').val(courseName);
+                    $('#rowIndex').val(rowIndex);
+                    $('#matricNo').val(matricNo);
+                    $('#employerName').val(data['employerSupervisor']['employerSuperSetup']['name']);
+                    $('#employerAddress').val(data['employerSupervisor']['employerSuperSetup']['address1']);
+                    $('#employerSupervisorName').val(data['employerSupervisor']['name']);
+                    $('#employerSupervisorPhoneNo').val(data['employerSupervisor']['phone1']);
+
+                },
+            });
+
+           
+            return false;
+        });
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+            $('.studentInvolvement').summernote('code', '');
+            $(".areaToImprove").summernote('code', '');
+            $('#mydate').val('');
+        });
+        $("#myClose").click(function () {
+            $("#loginModal").modal('hide');
+            //$('.student').summernote('code', '');
+        });
+        $('#SubmitVisitationReport').on('click', function () {
+            var StudentSetUpId = document.getElementById('studentId').value;
+            var DateVisited = document.getElementById('mydate').value;
+            var areaToImprove = $('.areaToImprove').val();
+            var studentInvolvement = $('.studentInvolvement').val();
+            var editindex = $(this).attr('InstitutionOfficer');
+            var studentName = $('#studentName').val();
+            var newStudentId = parseInt(StudentSetUpId);
+            var d = {
+                "StudentSetUpId": newStudentId,
+                "DateVisited": DateVisited,
+                "AreaToImprove": areaToImprove,
+                "StudentInvolvement": studentInvolvement
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO SAVEED " + studentName.toUpperCase() + " VISITATION REPORTS ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/Api/SupervisorVisits',
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(studentName.toUpperCase() + " VISITATION REPORTS WAS SUCCESSFULLY SAVED");
+                    $('#studentName').val("");
+                    $('#studentId').val("");
+                    $('#courseName').val("");
+                    $('#rowIndex').val("");
+                    $('#matricNo').val("");
+                    $('#employerName').val("");
+                    $('#employerAddress').val("");
+                    $('#employerSupervisorName').val("");
+                    $('#employerSupervisorPhoneNo').val("");
+                    $(".areaToImprove").summernote('code', '');
+                    $(".studentInvolvement").summernote('code', '');
+                    $('#mydate').val('');
+                    $("#loginModal").modal('hide');
+                }
+            });
+
+        });
+    });
+    function pageRedirect() {
+        var baseUrl = window.location.origin;
+        window.location.href = baseUrl + '/Institution/Student_Visit_Form';
+    }
+</script>

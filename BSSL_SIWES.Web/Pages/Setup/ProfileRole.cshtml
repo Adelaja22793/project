@@ -17,7 +17,7 @@
                         <div class="card-header">
                             <h3 class="card-title">User Definition</h3>
                         </div>
-                        <form method="post">
+                        <form>
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="card-body">
                                 <div class="row">
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" style="margin: 0 auto; text-align: center">
                                     <button type="submit" id="BtnMenu" style="width:300px" class="btn btn-primary button button4">SUBMIT</button>
 
                                     <button type="submit" id="BtnUpdate" style="width:300px; display:none" class="btn btn-primary button button4">UPDATE</button>
@@ -63,7 +63,7 @@
                                     <tr>
                                         <th style="width:6%; text-align:center">Actions</th>
                                         <th style="width:0.25%; text-align:center">S/N</th>
-                                        <th style="width:30%; text-align:center">UserRole ID/Group ID</th>
+                                        <th style="width:20%; text-align:center">UserRole ID/Group ID</th>
                                         <th style="width:30%; text-align:center">UserRole Name</th>
 
                                     </tr>
@@ -80,7 +80,7 @@
                                                 <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Select</a>
                                             </td>
                                             <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="roleclass @i" style="width:30%; text-align:left">@items.RoleId</td>
+                                            <td class="roleclass @i" style="width:20%; text-align:left">@items.RoleId</td>
                                             <td class="titleclass @i" style="width:30%; text-align:left">@items.Name</td>
 
 
@@ -113,6 +113,10 @@
         $("#tabId").on('click', '#myEdit', function () {
             $("#BtnMenu").hide()
             $("#BtnUpdate").show()
+             document.getElementById('roleId').readOnly 
+                = true;
+            document.getElementById('roleName').focus 
+                        = true; 
             var currentRow = $(this).closest("tr");
             var selectedIndex = currentRow.find("td:eq(0)").html();
             var editindex = $(this).attr('AddreEdit');
@@ -137,7 +141,7 @@
             var Role = document.getElementById('roleName').value;
 
             var d = {
-                "RoleId": Number(Roleid),
+                "RoleId": Roleid,
                 "Name": Role,
             };
             var baseUrl = window.location.origin;
@@ -172,7 +176,7 @@
                         <a id=${myid}">Select</a>
                         </td>
                         <td class="se_no" style="width:3%; text-align:left">${rowNumber}</td>
-                        <td style="width:30%; text-align:left">${rol}</td>
+                        <td style="width:20%; text-align:left">${rol}</td>
                         <td style="width:30%; text-align:left">${nam}</td>
 
                     </tr>`
@@ -185,13 +189,10 @@
         });
         $('#BtnUpdate').on('click', function (e) {
             e.preventDefault();
-
-            //var myName = document.getElementById('MENUNAME').value;
+           
             var Roleid = document.getElementById('roleId').value;
             var Role = document.getElementById('roleName').value;
             var editindex = document.getElementById('myidd').value;
-            //var rowIndex = $('#rowIndex').val();
-            // alert(editindex); alert(menuName);
 
             var t = serialNo - 1;
             var d = {
@@ -203,7 +204,7 @@
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "PUT",
-                url: baseUrl + '/Api/RoleTbs/ ' + editindex,
+                url: baseUrl + '/Api/RoleTbs/' + editindex,
                 data: JSON.stringify(d),
 
                 xhrFields: {
@@ -233,8 +234,11 @@
 
                     s.text(v);
                     w.text(p);
-                    //formClear();
-
+                    formClear();
+                    document.getElementById('roleId').readOnly
+                        = false;
+                    $("#BtnMenu").show()
+                    $("#BtnUpdate").hide()
                 },
             });
         });
@@ -243,21 +247,21 @@
 
 </script>
 @*public async Task<ActionResult<RoleTb>> PostRoleTb(RoleTb roleTb)
-        {
-                var nameCheck = _context.RoleTb
-                            .Where(b => b.RoleId == roleTb.RoleId)
-                            .FirstOrDefault();
-                if (nameCheck == null)
-                {
-                    // save the item here
-                    _context.RoleTb.Add(roleTb);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    return Conflict("The item already exists");
-                }
+    {
+            var nameCheck = _context.RoleTb
+                        .Where(b => b.RoleId == roleTb.RoleId)
+                        .FirstOrDefault();
+            if (nameCheck == null)
+            {
+                // save the item here
+                _context.RoleTb.Add(roleTb);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                return Conflict("The item already exists");
+            }
 
-                return CreatedAtAction("GetRoleTb", new { id = roleTb.RoleId }, roleTb);
-        }*@
+            return CreatedAtAction("GetRoleTb", new { id = roleTb.RoleId }, roleTb);
+    }*@
 

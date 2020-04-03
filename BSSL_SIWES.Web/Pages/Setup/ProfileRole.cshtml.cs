@@ -27,15 +27,16 @@ namespace BSSL_SIWES.Web
 
         public async Task OnGetAsync()
         {
-            RoleTbs = await _context.RoleTb.ToListAsync();
-            if (RoleTbs != null)
-            {
+            //RoleTbs = await _context.RoleTb.ToListAsync();
+            //if (RoleTbs != null)
+            //{
 
-            }
+            //}
         }
 
         //public async Task<IActionResult> OnPostAsync()
         //{
+          
         //    if (!_context.RoleTb.Any(e => e.Id == RoleTb.Id))
         //    {
         //        _context.RoleTb.Add(RoleTb);
@@ -46,30 +47,32 @@ namespace BSSL_SIWES.Web
         //        var pos = await _context.RoleTb.FirstOrDefaultAsync(x => x.Id == RoleTb.Id);
         //        pos.Id = RoleTb.Id;
         //        pos.Name = RoleTb.Name;
-               
+
         //        await _context.SaveChangesAsync();
         //    }
-
-
-        //    ModelState.Clear();
         //    return Page();
-        //    //    var emptyStudent = new RoleTb();
-
-        //    //    if (await TryUpdateModelAsync<RoleTb>(
-        //    //        emptyStudent,
-        //    //        "student",   // Prefix for form value.
-        //    //        s => s.Name))
-        //    //    {
-        //    //        _context.R.Add(emptyStudent);
-        //    //        await _context.SaveChangesAsync();
-        //    //        return RedirectToPage("./Index");
-        //    //    }
-
-        //    //    return Page();
-        //    //}
         //}
     }
-}
+
+            //    ModelState.Clear();
+            //    return Page();
+            //    //    var emptyStudent = new RoleTb();
+
+            //    //    if (await TryUpdateModelAsync<RoleTb>(
+            //    //        emptyStudent,
+            //    //        "student",   // Prefix for form value.
+            //    //        s => s.Name))
+            //    //    {
+            //    //        _context.R.Add(emptyStudent);
+            //    //        await _context.SaveChangesAsync();
+            //    //        return RedirectToPage("./Index");
+            //    //    }
+
+            //    //    return Page();
+            //    //}
+            //}
+        }
+//}
 //public async Task<ActionResult<RoleTb>> PostRoleTb(RoleTb roleTb)
 //{
 //    var nameCheck = _context.RoleTbs
@@ -85,22 +88,22 @@ namespace BSSL_SIWES.Web
 //    {
 //        return Conflict("The item already exists");
 //    }
-    //_context.RoleTbs.Add(roleTb);
-    //try
-    //{
-    //    await _context.SaveChangesAsync();
-    //}
-    //catch (DbUpdateException)
-    //{
-    //    if (RoleTbExists(roleTb.Name))
-    //    {
-    //        return Conflict("Item Already Exist");
-    //    }
-    //    else
-    //    {
-    //        throw;
-    //    }
-    //}
+//_context.RoleTbs.Add(roleTb);
+//try
+//{
+//    await _context.SaveChangesAsync();
+//}
+//catch (DbUpdateException)
+//{
+//    if (RoleTbExists(roleTb.Name))
+//    {
+//        return Conflict("Item Already Exist");
+//    }
+//    else
+//    {
+//        throw;
+//    }
+//}
 
-    //return CreatedAtAction("GetRoleTb", new { id = roleTb.Id }, roleTb);
+//return CreatedAtAction("GetRoleTb", new { id = roleTb.Id }, roleTb);
 //}
