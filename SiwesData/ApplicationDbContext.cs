@@ -26,10 +26,15 @@ namespace SiwesData
         public DbSet<Menu.MenuAccess> MenuAccess { get; set; }
         public DbSet<Menu.SubMenu> SubMenu { get; set; }
         public DbSet<Setup.AreaOffice> AreaOffices { get; set; }
-      
+
 
         public DbSet<Students.Scaf> Scafs { get; set; }
         public DbSet<Students.StudentSetUp> StudentSetUps { get; set; }
+        public DbSet<Students.DailyActivities> DailyActivities { get; set; }
+        public DbSet<Students.DailyActivitiesList> DailyActivitiesLists { get; set; }
+        public DbSet<Students.MonthlyAssessment> MonthlyAssessments { get; set; }
+        public DbSet<Students.Form8> Form8 { get; set; }
+        public DbSet<Students.SupervisorVisit> SupervisorVisits { get; set; }
 
         public DbSet<Employer.EmployerSuperSetup> EmployerSuperSetups { get; set; }
         public DbSet<Employer.EmployerSupervisor> EmployerSupervisors { get; set; }
@@ -38,6 +43,7 @@ namespace SiwesData
 
         public DbSet<Setup.InstitutionOfficer> InstitutionOfficers { get; set; }
         public DbSet<Setup.SupervisoryAgency> SupervisoryAgencies { get; set; }
+        public DbSet<Setup.RoleTb> RoleTb { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -50,7 +56,7 @@ namespace SiwesData
             builder.Entity<Setup.Courses>().HasIndex(b => b.Name).IsUnique();
             builder.Entity<Setup.NewCourseRequest>().HasIndex(b => b.Name).IsUnique();
             base.OnModelCreating(builder);
-            
+
         }
     }
 }
