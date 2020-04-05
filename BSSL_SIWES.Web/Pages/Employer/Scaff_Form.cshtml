@@ -27,37 +27,22 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Enter Name of Organisation</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
                                 <input type="hidden" id="orgNameId" />
                                 <input type="text" id="orgName" class="form-control"
                                        asp-for="EmployerSupervisorName.EmployerSuperSetup.Name" readonly="readonly" placeholder="Enter Name of Organisation">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Organisation Location Address</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
-                                </div>
                                 <input type="text" asp-for="EmployerSupervisorName.EmployerSuperSetup.Address1" id="orgAddress" class="form-control" readonly="readonly">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Email of Organisation</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                </div>
                                 <input type="email" asp-for="EmployerSupervisorName.EmployerSuperSetup.Email" id="orgEmail" class="form-control" readonly="readonly">
                             </div>
-                        </div>
                     </div>
                 </div>
 
@@ -65,154 +50,93 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Matric. Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-asterisk"></i></span>
-                                </div>
-                                <input type="text" id="matricNumber" onchange="MyFunctionMatricNo()" class="form-control">
-                                <input type="hidden" asp-for="ScafViewModels.StudentId" id="studentID">
+                                <input type="text" id="matricNumber" onchange="MyFunctionMatricNo()" class="form-control" placeholder="Enter/Search Registration/Matric No.">
+                                <input type="hidden" asp-for="ScafViewModels.StudentId" id="studentID" >
                                 @*<input type="text" asp-for="StudentSetUp.MatricNumber" class="form-control" readonly="readonly">*@
-                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Student Name</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
                                 <input type="text" id="studentName" class="form-control" readonly="readonly">
                                 @*<input type="text" asp-for="StudentName" class="form-control" readonly="readonly">*@
-                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Name of Institution</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
-                                </div>
                                 <input type="text" id="studentSchool" class="form-control" readonly="readonly">
                                 @*<input type="text" asp-for="StudentSetUp.Institution.Name" class="form-control" readonly="readonly">*@
                             </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">Course of Study</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                                </div>
+                            <label>Course of Study</label>
                                 @*<input type="text" asp-for="StudentSetUp.Courses.Name" class="form-control" readonly="readonly">*@
                                 <input type="hidden" id="curseId" class="form-control">
                                 <input type="text" id="courseName" class="form-control" readonly="readonly">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="exampleInputFile">Level of Study</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                                </div>
                                 @*<input type="text" asp-for="StudentSetUp.YearOfStudy" class="form-control" readonly="readonly">*@
                                 <input type="text" id="levelStudy" class="form-control" readonly="readonly">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">Phone Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                </div>
+                            <label>Phone Number</label>
                                 @*<input type="text" asp-for="StudentSetUp.PhoneNo" class="form-control" readonly="readonly">*@
                                 <input type="text" id="phoneNo" class="form-control" readonly="readonly">
                             </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Name of Organisation Representative</label>
-                            <div class="input-group ui-widget">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
                                 <input type="text" onchange="MyFunctionRepName()" id="orgRep" class="form-control">
                                 <input type="hidden" asp-for="ScafViewModels.EmployerSupervisorId" id="orgRepId" class="form-control">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Rep. Phone No.</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                </div>
                                 <input type="text" asp-for="EmployerSupervisorName.Phone1" id="orgPhone" class="form-control" readonly="readonly">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>ITF Area Office</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-search-location"></i></span>
-                                </div>
                                 <input type="text" asp-for="EmployerSupervisorName.EmployerSuperSetup.AreaOffice.Description" id="orgAreaITF" class="form-control" readonly="readonly">
                                 <input type="hidden" asp-for="EmployerSupervisorName.EmployerSuperSetup.AreaOffice.Description" id="orgAreaITFId" class="form-control">
                             </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">Commencement Date</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                </div>
+                            <label>Commencement Date</label>
                                 <input type="date" id="commence_Date" onchange="MyFunctionCommDate()"
                                        asp-for="ScafViewModels.CommenceDate" class="form-control" placeholder="Enter Date">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Completion Date</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                </div>
                                 <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()"
                                        asp-for="ScafViewModels.CompletionDate" class="form-control" placeholder="Enter Date">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Duration</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                </div>
                                 <input type="text" id="duration" asp-for="ScafViewModels.Duration" readonly="readonly" class="form-control">
                             </div>
-
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -226,8 +150,8 @@
             </div>
             <!-- /.card-body -->
 
-            <div class="justify-content-center" style="margin-left:23%; margin-bottom:3%;">
-                <button type="submit" id="mySubmit" class="btn btn-primary">Submit</button>
+            <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
+                <button type="submit" id="mySubmit" class="btn btn-primary">Submit Attachment</button>
                 <button type="button" id="myUpdate" style="display:none" class="btn btn-primary"> Update Student Record</button>
                 <button type="button" class="btn btn-info">Upload Pre-Filled Form</button>
             </div>
@@ -403,7 +327,7 @@
             }, 1);
             return false;
         }
-        alert(studentID);
+        //alert(studentID);
         var d = {
             "Id": studentID
         };
