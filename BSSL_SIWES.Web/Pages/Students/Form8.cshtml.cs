@@ -26,7 +26,7 @@ namespace BSSL_SIWES.Web
         public string StudentName { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            id = 19;
+            id = 75;
             if (id < 0)
             {
                 return RedirectToPage("./Scaff_Form");
