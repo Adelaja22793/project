@@ -50,32 +50,46 @@ namespace BSSL_SIWES.Web.API.Student
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudentSetUp(int id, StudentSetUp studentSetUp)
+        public async Task<IActionResult> PutStudentSetUp(int? id, StudentSetUp studentSetUp)
         {
-            if (id != studentSetUp.Id)
+            if (id == null)
             {
-                return BadRequest();
+                return BadRequest("No Student Found Selected");
             }
-
-            _context.Entry(studentSetUp).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentSetUpExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var updateStudentRecords = await _context.StudentSetUps.FirstOrDefaultAsync(m => m.Id == id);
 
-            return NoContent();
+                if (updateStudentRecords == null)
+                {
+                    return NotFound($"Student Not Found For The Selected Id {id}");
+                }
+                updateStudentRecords.Surname = studentSetUp.Surname;
+                updateStudentRecords.OtherNames = studentSetUp.OtherNames;
+                updateStudentRecords.MatricNumber = studentSetUp.MatricNumber;
+                updateStudentRecords.MatricYear = studentSetUp.MatricYear;
+
+                updateStudentRecords.CoursesId = studentSetUp.CoursesId;
+                updateStudentRecords.YearOfStudy = studentSetUp.YearOfStudy;
+                updateStudentRecords.PhoneNo = studentSetUp.PhoneNo;
+                updateStudentRecords.Email = studentSetUp.Email;
+
+                updateStudentRecords.BatchNo = studentSetUp.BatchNo;
+                updateStudentRecords.StudentType = studentSetUp.StudentType;
+                updateStudentRecords.SiwesYear = studentSetUp.SiwesYear;
+                updateStudentRecords.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
+
+                updateStudentRecords.NationalityId = studentSetUp.NationalityId;
+                //updateStudentRecords.S = studentSetUp.SiwesYear;
+                //updateStudentRecords.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
+                await _context.SaveChangesAsync();
+                return Ok(updateStudentRecords);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST: api/StudentSepUpMatric

@@ -22,7 +22,7 @@ namespace BSSL_SIWES.Web.API.Student
             public DateTime CerifiedDate { get; set; }
             public int EmployerSupervisorId { get; set; }
         }
-        
+
         private readonly ApplicationDbContext _context;
 
         public DailyActivitiesController(ApplicationDbContext context)
@@ -43,13 +43,13 @@ namespace BSSL_SIWES.Web.API.Student
         {
             if (id == null)
             {
-                return BadRequest("Daily Activities is Empty");
+                return BadRequest("No Daily Activities For This Student");
             }
             try
             {
-                var dailyActivities = await _context.DailyActivitiesLists.Include(v => v.DailyActivities)
-                    .SingleOrDefaultAsync(x => x.DailyActivitiesId == x.DailyActivities.Id);
-                    //.FindAsync(id);
+                var dailyActivities = await _context.DailyActivities
+                    .Where(x => x.StudentSetUpId == id).ToListAsync();
+                //.FindAsync(id);
 
                 if (dailyActivities == null)
                 {
@@ -61,39 +61,39 @@ namespace BSSL_SIWES.Web.API.Student
             {
                 return StatusCode(500, ex.Message);
             }
-                
+
         }
 
         // PUT: api/DailyActivities/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDailyActivities(int id, DailyActivities dailyActivities)
+        public async Task<IActionResult> PutDailyActivities(int? id, DailyActivities dailyActivities)
         {
-            if (id != dailyActivities.Id)
+            if (id == null)
             {
-                return BadRequest();
+                return BadRequest("No Activity Found");
             }
-
-            _context.Entry(dailyActivities).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DailyActivitiesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var updateDailyActivities = await _context.DailyActivities.FirstOrDefaultAsync(m => m.Id == id);
 
-            return NoContent();
+                if (updateDailyActivities == null)
+                {
+                    return NotFound($"Daily/Weekly Activities Not Found For The Selected Id {id}");
+                }
+                updateDailyActivities.EmployerSupervisorId = dailyActivities.EmployerSupervisorId;
+                updateDailyActivities.SupervisorRemarks = dailyActivities.SupervisorRemarks;
+                updateDailyActivities.Approved = dailyActivities.Approved = true;
+                updateDailyActivities.CerifiedDate = dailyActivities.CerifiedDate = DateTime.Now;
+                await _context.SaveChangesAsync();
+                return Ok(updateDailyActivities);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST: api/DailyActivities
@@ -104,10 +104,10 @@ namespace BSSL_SIWES.Web.API.Student
         {
             try
             {
-                var dailyActivities = new DailyActivities {
+                var dailyActivities = new DailyActivities
+                {
                     StudentSetUpId = dailyActivitiesList.StudentSetUpId,
                     WeekNumber = dailyActivitiesList.WeekNumber,
-                    Approved = dailyActivitiesList.Approved = false,
                 };
                 _context.DailyActivities.Add(dailyActivities);
                 await _context.SaveChangesAsync();

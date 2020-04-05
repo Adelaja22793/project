@@ -39,7 +39,7 @@ namespace BSSL_SIWES.Web.API
             try
             {
                 var institutionOfficer = await _context.InstitutionOfficers.Include(x => x.Institution)
-                    .Where(x => x.Institution.Id == x.InstitutionId && x.Id == id && x.OfficerType == "Supervisor" && x.Deactivate == false).SingleOrDefaultAsync();
+                    .Where(x => x.Institution.Id == x.InstitutionId && x.Id == id  && x.Deactivate == false).SingleOrDefaultAsync();
 
                 if (institutionOfficer == null)
                 {
