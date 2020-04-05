@@ -9,7 +9,7 @@
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Institution Category Setup</h3>
+                <h3 class="card-title">Institution Courses Setup</h3>
             </div>
             <div class="modal fade" tabindex="-1" id="loginModal"
                  data-keyboard="false" data-backdrop="static">
@@ -27,8 +27,9 @@
                                     <thead style="background-color:steelblue;">
                                         <tr>
                                             <th style="width:0.25%; text-align:center">S/N</th>
-                                            <th style="width:25%; text-align:center">Courses Name</th>
                                             <th style="width:10%; text-align:center">Action</th>
+                                            <th style="width:25%; text-align:center">Courses Name</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -38,13 +39,11 @@
 
                                             <tr>
                                                 <td class="serialNo @c" style="width:0.25%; text-align:left">@(c + 1)</td>
-                                                <td class="courseName @c" style="width:25%; text-align:left">@items.Name</td>
-
                                                 <td style="width:5%;">
                                                     <input type="hidden" class="idselect @c" value="@items.Id">
                                                     <a id="whatSelect" CourseSelected="@c" asp-route-id="@items.Id">Select</a>
                                                 </td>
-
+                                                <td class="courseName @c" style="width:25%; text-align:left">@items.Name</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -90,6 +89,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label>Courses Code</label>
+                                        <input type="text" class="form-control" id="courseCode">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label>Courses Name</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -103,13 +108,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Courses Code</label>
-                                        <input type="text" class="form-control" id="courseCode">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Short Code</label>
                                         <input type="text" class="form-control" id="shortCode">
@@ -128,11 +130,12 @@
                                     <thead style="background-color:steelblue;">
                                         <tr>
                                             <th style="width:0.25%; text-align:center">S/N</th>
+                                            <th style="width:10%; text-align:center">Actions</th>
                                             <th style="width:23%; text-align:center">Courses Group</th>
                                             <th style="width:15%; text-align:center">Courses Code</th>
                                             <th style="width:23%; text-align:center">Courses Name</th>
                                             <th style="width:15%; text-align:center">Short Code</th>
-                                            <th style="width:15%; text-align:center">Actions</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -142,16 +145,17 @@
 
                                         <tr>
                                             <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="courseGrp @i" style="width:23%; text-align:left">@items.CourseGrpSetup.Name</td>
-                                            <td class="courseCode @i" style="width:15%; text-align:left">@items.Code</td>
-                                            <td class="courseName @i" style="width:23%; text-align:left">@items.Name</td>
-                                            <td class="courseShortCode @i" style="width:15%; text-align:left">@items.ShortCode</td>
-
                                             <td style="width:15%;">
                                                 <input type="hidden" class="readid @i" value="@items.Id">
                                                 <input type="hidden" class="courseGrpId @i" value="@items.CourseGrpSetupId">
                                                 <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit Course</a>
                                             </td>
+                                            <td class="courseGrp @i" style="width:23%; text-align:left">@items.CourseGrpSetup.Name</td>
+                                            <td class="courseCode @i" style="width:15%; text-align:left">@items.Code</td>
+                                            <td class="courseName @i" style="width:23%; text-align:left">@items.Name</td>
+                                            <td class="courseShortCode @i" style="width:15%; text-align:left">@items.ShortCode</td>
+
+
 
                                         </tr>
                                         }
@@ -169,7 +173,7 @@
                     <div class="card-body">
                         <div id="divinput">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Course Group</label>
                                         <div class="select2-purple">
@@ -183,31 +187,32 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Courses Code</label>
                                         <input type="text" class="form-control" id="courseCode">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Short Code</label>
-                                        <input type="text" class="form-control" id="shortCode">
-                                    </div>
-                                </div>
+                               
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Courses Name</label>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            </div>
+                                            
                                             <input type="hidden" class="form-control" id="frmRecom">
                                             <input type="hidden" class="form-control" id="rowIndex">
                                             <input type="hidden" class="form-control" id="courseGrpId">
                                             <input type="hidden" class="form-control" id="courseId">
                                             <input type="text" class="form-control" id="courseName">
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Short Code</label>
+                                        <input type="text" class="form-control" id="shortCode">
                                     </div>
                                 </div>
                             </div>
@@ -222,11 +227,12 @@
                                     <thead style="background-color:steelblue;">
                                         <tr>
                                             <th style="width:0.25%; text-align:center">S/N</th>
-                                            <th style="width:23%; text-align:center">Courses Group</th>
+                                            <th style="width:10%; text-align:center">Actions</th>
+                                            <th style="width:20%; text-align:center">Courses Group</th>
                                             <th style="width:15%; text-align:center">Courses Code</th>
                                             <th style="width:15%; text-align:center">Short Code</th>
-                                            <th style="width:23%; text-align:center">Courses Name</th>
-                                            <th style="width:15%; text-align:center">Actions</th>
+                                            <th style="width:35%; text-align:center">Courses Name</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -236,16 +242,17 @@
 
                                         <tr>
                                             <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="courseGrp @i" style="width:23%; text-align:left">@items.CourseGrpSetup.Name</td>
-                                            <td class="courseCode @i" style="width:15%; text-align:left">@items.Code</td>
-                                            <td class="courseShortCode @i" style="width:15%; text-align:left">@items.ShortCode</td>
-                                            <td class="courseName @i" style="width:23%; text-align:left">@items.Name</td>
-
                                             <td style="width:15%;">
                                                 <input type="hidden" class="courseId @i" value="@items.Id">
                                                 <input type="hidden" class="courseGrpId @i" value="@items.CourseGrpSetupId">
                                                 <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit Course</a>
                                             </td>
+                                            <td class="courseGrp @i" style="width:23%; text-align:left">@items.CourseGrpSetup.Name</td>
+                                            <td class="courseCode @i" style="width:15%; text-align:left">@items.Code</td>
+                                            <td class="courseShortCode @i" style="width:15%; text-align:left">@items.ShortCode</td>
+                                            <td class="courseName @i" style="width:23%; text-align:left">@items.Name</td>
+
+                                            
 
                                         </tr>
                                         }
@@ -345,16 +352,17 @@
                     var html = `<tr>
                             </td>
                                 <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
+                                 <td style="width:15%;" class="action">
+                                    <input type="hidden" class="readid " value=${myid}>
+                                    <a href="/Setup/CourseSetup/Edit?id=${myid}">Edit Course</a>
+
+                                </td>
                                 <td class="courseGrp" style="width:23%; text-align:left">${courseGrp}</td>
                                 <td class="courseCode" style="width:15%; text-align:left">${newCourseCode}</td>
                                 <td class="courseShortCode" style="width:15%; text-align:left">${newCourseShortCode}</td>
                                 <td class="courseName" style="width:23%; text-align:left">${newCourseName}</td>
 
-                                <td style="width:15%;" class="action">
-                                <input type="hidden" class="readid " value=${myid}>
-                                <a href="/Setup/CourseSetup/Edit?id=${myid}">Edit Course</a>
-
-                            </td>
+                               
                             </tr>`
                     if (fromRecom == "") {
                         alert("" + courseName.toUpperCase() + " WAS SUCCESSFULLY ADDED TO COURSES");
@@ -503,7 +511,7 @@
     })
     
     $(function () {
-        $("#tabId").DataTable();
+       // $("#tabId").DataTable();
         $('tablewwwww.paginated').each(function () {
 				  var $table = $(this);
 				  var itemsPerPage = 10;
