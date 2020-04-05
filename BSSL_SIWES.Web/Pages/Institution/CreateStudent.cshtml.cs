@@ -31,14 +31,17 @@ namespace BSSL_SIWES.Web
         public IList<InstitutionOfficer> InstitutionOfficers { get; set; }
         public string NewCourseToApprove { get; set; }
         public IList<StudentSetUp> ListOfStudent { get; set; }
-        public async Task OnGetAsync(int? id)
+        public async Task OnGetAsync(int id)
         {
-            id = 2;
+            id = 10;
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
             ListOfCourses = await _context.Courses.ToListAsync();
 
+
+
             InstitutionOfficers = await _context.InstitutionOfficers.Include(x => x.Institution)
-                .Where(x => x.InstitutionId == x.Institution.Id && x.InstitutionId == id && x.OfficerType == "Supervisor" && x.Deactivate == false).ToListAsync();
+                .Where(x => x.InstitutionId == x.Institution.Id && x.InstitutionId == id
+                 && x.Deactivate == false).ToListAsync();
 
             //id = 2;
             ListOfStudent = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x => x.Institution)
