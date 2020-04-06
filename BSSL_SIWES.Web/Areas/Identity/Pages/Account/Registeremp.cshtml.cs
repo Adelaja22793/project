@@ -110,6 +110,7 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                     return Page();
                 }
                 var useremail = await _userManager.FindByEmailAsync(Input.Email);
+              //  var username = await _userManager.GetUserNameAsync(user);
 
                 if (useremail != null)
                 {
