@@ -35,12 +35,13 @@ namespace SiwesData
         public DbSet<Students.MonthlyAssessment> MonthlyAssessments { get; set; }
         public DbSet<Students.Form8> Form8 { get; set; }
         public DbSet<Students.SupervisorVisit> SupervisorVisits { get; set; }
+        //public DbSet<ITFStaff.ItfStaff> ItfStaff { get; set; }
 
         public DbSet<Employer.EmployerSuperSetup> EmployerSuperSetups { get; set; }
         public DbSet<Employer.EmployerSupervisor> EmployerSupervisors { get; set; }
 
         public DbSet<Setup.NewCourseRequest> NewCourseRequests { get; set; }
-
+        public DbSet<ITFStaff.ItfStaff> ItfStaff { get; set; }
         public DbSet<Setup.InstitutionOfficer> InstitutionOfficers { get; set; }
         public DbSet<Setup.SupervisoryAgency> SupervisoryAgencies { get; set; }
         public DbSet<Setup.RoleTb> RoleTb { get; set; }
