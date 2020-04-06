@@ -25,10 +25,18 @@ namespace BSSL_SIWES.Web
         [BindProperty]
         public AgencySuperSetup AgencySuperSetup { get; set; }
         public List<AgencySuperSetup> AgencySuperSetupList { get; set; }
-        public async void OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            AgencySuperSetupList = await _context.AgencySuperSetup.ToListAsync();
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
+            AgencySuperSetupList = await _context.AgencySuperSetup.ToListAsync();
+            if (AgencySuperSetupList == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }

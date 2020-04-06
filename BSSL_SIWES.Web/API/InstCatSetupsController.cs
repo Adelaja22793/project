@@ -29,18 +29,22 @@ namespace BSSL_SIWES.Web.API
         }
 
         // GET: api/InstCatSetups/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<InstCatSetup>> GetInstCatSetup(int id)
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<InstCatSetup>> GetInstCatSetup(int Id)
         {
-            var instCatSetup = await _context.InstCatSetup.FindAsync(id);
+            var instCatSetup = await _context.InstCatSetup.FindAsync(Id);
 
 
             if (instCatSetup == null)
             {
                 return NotFound();
             }
+            else
+            {
+                return instCatSetup;
+            }
 
-            return instCatSetup;
+           
         }
 
         // PUT: api/InstCatSetups/5

@@ -9,10 +9,14 @@ namespace SiwesData.Setup
     public class LGA
     {
         public int Id { get; set; }
-        [DisplayName("LGA")]
+        [DisplayName("City")]
         public string Name { get; set; }
         [DisplayName("State")]
+
+        public string Code { get; set; }
         public int StateId { get; set; }
+        public string StateCode { get; set; }
         public State State { get; set; }
+      
     }
 }

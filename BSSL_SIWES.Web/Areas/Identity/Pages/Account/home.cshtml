@@ -5,5 +5,763 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>home</h1>
+@*<h1>home</h1>*@
+<script>
 
+    $(document).ready(function () {
+
+        $("#showhidetrigger").click(function () {
+            $("#div1").toggle(400)
+            $("#div2").toggle(400)
+            $("#div3").toggle(400)
+            $("#div4").toggle(400)
+            $("#div5").toggle(400)
+            $("#div6").toggle(400)
+
+            $("#divstudent").toggle("hide")
+            $("#divemploy").toggle("hide")
+            $("#divinstitute").toggle("hide")
+            $("#divagent").toggle("hide")
+
+        });
+        $("#divstudent").click(function () {
+            $("#div8").toggle(400)
+            $("#div9").toggle(400)
+            $("#div10").toggle(400)
+            $("#div11").toggle(400)
+            $("#div12").toggle(400)
+            $("#div13").toggle(400)
+
+            $("#showhidetrigger").toggle("hide")
+            $("#divemploy").toggle("hide")
+            $("#divinstitute").toggle("hide")
+            $("#divagent").toggle("hide")
+        });
+
+        $("#divemploy").click(function () {
+            $("#div14").toggle(400)
+            $("#div15").toggle(400)
+            $("#div16").toggle(400)
+            $("#div17").toggle(400)
+
+            $("#showhidetrigger").toggle("hide")
+            $("#divstudent").toggle("hide")
+            $("#divinstitute").toggle("hide")
+            $("#divagent").toggle("hide")
+        });
+
+        $("#divinstitute").click(function () {
+            $("#div18").toggle(400)
+            $("#div19").toggle(400)
+            $("#div20").toggle(400)
+            $("#div21").toggle(400)
+            $("#div22").toggle(400)
+            $("#div23").toggle(400)
+
+            $("#showhidetrigger").toggle("hide")
+            $("#divstudent").toggle("hide")
+            $("#divemploy").toggle("hide")
+            $("#divagent").toggle("hide")
+        });
+
+        $("#divagent").click(function () {
+            $("#div24").toggle(400)
+            $("#div25").toggle(400)
+            $("#div26").toggle(400)
+            $("#div27").toggle(400)
+            $("#div28").toggle(400)
+            $("#div29").toggle(400)
+
+            $("#showhidetrigger").toggle("hide")
+            $("#divstudent").toggle("hide")
+            $("#divemploy").toggle("hide")
+            $("#divinstitute").toggle("hide")
+        });
+    });
+</script>
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $('#divstudent').show();
+        $('#div1').hide();
+        $('#div2').hide();
+        $('#div3').hide();
+        $('#div4').hide();
+        $('#div5').hide();
+        $('#div6').hide();
+
+        $('a#showhidetrigger').click(function () {
+
+            $('#div1').toggle(400);
+            $('#div2').toggle(400);
+            $('#div3').toggle(400);
+            $('#div4').toggle(400);
+            $('#div5').toggle(400);
+            $('#div6').toggle(400);
+
+
+
+        });
+    });
+</script>--%>*@
+
+<style>
+    .form-control {
+        /*display: inline;  */
+        width: 60%;
+        height: 34px;
+        /*padding: 6px 12px;*/
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        box-sizing: border-box;
+    }
+
+    .expe:hover {
+        background-color: lightgray;
+    }
+
+    .form-control:hover, .form-control:focus {
+        border-color: #38BE99;
+        border-width: 2px;
+    }
+
+    #div1 {
+        display: none;
+    }
+
+    #div2 {
+        display: none;
+    }
+
+    #div3 {
+        display: none;
+    }
+
+    #div4 {
+        display: none;
+    }
+
+    #div5 {
+        display: none;
+    }
+
+    #div6 {
+        display: none;
+    }
+
+    #div8 {
+        display: none;
+    }
+
+    #div9 {
+        display: none;
+    }
+
+    #div10 {
+        display: none;
+    }
+
+    #div11 {
+        display: none;
+    }
+
+    #div12 {
+        display: none;
+    }
+
+    #div13 {
+        display: none;
+    }
+
+    #div14 {
+        display: none;
+    }
+
+    #div15 {
+        display: none;
+    }
+
+    #div16 {
+        display: none;
+    }
+
+    #div17 {
+        display: none;
+    }
+
+    #div18 {
+        display: none;
+    }
+
+    #div19 {
+        display: none;
+    }
+
+    #div20 {
+        display: none;
+    }
+
+    #div21 {
+        display: none;
+    }
+
+    #div22 {
+        display: none;
+    }
+
+    #div23 {
+        display: none;
+    }
+
+    #div24 {
+        display: none;
+    }
+
+    #div25 {
+        display: none;
+    }
+
+    #div26 {
+        display: none;
+    }
+
+    #div27 {
+        display: none;
+    }
+
+    #div28 {
+        display: none;
+    }
+
+    #div29 {
+        display: none;
+    }
+</style>
+<style type="text/css">
+    .card-counter {
+        box-shadow: 2px 2px 10px #DADADA;
+        /*margin: 5px;*/
+        padding: 20px 10px;
+        background-color: #fff;
+        height: 100px;
+        border-radius: 5px;
+        transition: .3s linear all;
+    }
+
+        .card-counter:hover {
+            /*box-shadow: 4px 4px 20px #DADADA;*/
+            box-shadow: 4px 4px 10px #555;
+            transition: .3s linear all;
+        }
+
+        .card-counter.primary {
+            background-color: #007bff;
+            color: #FFF;
+        }
+
+        .card-counter.danger {
+            background-color: #ef5350;
+            color: #FFF;
+        }
+
+        .card-counter.success {
+            background-color: #66bb6a;
+            color: #FFF;
+        }
+
+    .card-counter-willing {
+        background-color: palevioletred;
+        color: #FFF;
+    }
+
+    .card-counter.info {
+        background-color: #26c6da;
+        color: #FFF;
+    }
+
+    .card-counter.secondary {
+        background-color: #C0C0C0;
+        color: #FFF;
+    }
+
+    .card-counter.warning {
+        background-color: orange;
+        color: #FFF;
+    }
+
+    .card-counter.tertiary {
+        background-color: mediumpurple;
+        color: #FFF;
+    }
+
+    .card-counter.expend {
+        background-color: lightsalmon;
+        color: #FFF;
+    }
+
+    .card-counter i {
+        font-size: 4em;
+        opacity: 0.3;
+    }
+
+    .card-counter .count-numbers {
+        position: absolute;
+        right: 35px;
+        top: 20px;
+        font-size: 32px;
+        display: block;
+    }
+
+    .card-counter .count-name {
+        position: inherit;
+        right: 25px;
+        top: 65px;
+        font-style: italic;
+        text-transform: capitalize;
+        opacity: 0.9;
+        display: block;
+        font-size: 15px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="container bg-white shadow my-4">
+        <div class="row">
+
+            <div id="showhidetrigger" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter danger" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Setup</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="div1" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter danger" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Agency</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div2" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter danger" style="height:150px">
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Institution Type</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div3" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter danger" style="height:150px">
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Institution Category</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div4" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+                    <div class="col-md-14">
+                        <div class="card-counter danger" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Institution</b></span>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div id="div5" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter danger" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Course Group</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div6" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter danger" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Report</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+
+
+
+
+            <div id="divstudent" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <div class="col-md-14">
+                    @*<%--<div id="div7">
+                        --%>*@
+                        <div class="card-counter success" style="height:150px">
+
+                            @*<%--<i class="far fa-money-bill-alt text-white mt-3"></i>--%>
+                            <%--<i class="far fa-money-bill-alt text-white mt-3"></i>--%>*@
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Students</b></span>
+                        </div>
+                    </div>
+                    @*<%--
+                </div>--%>*@
+            </div>
+            <div id="div8" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter success" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Orientation Attended</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div9" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter success" style="height:150px">
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Students Commencement of Attached Form (SCAF)</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div12" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter success" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Log Book</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div10" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter success" style="height:150px">
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>End of year Program Report (ITF8)A</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div11" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+                    <div class="col-md-14">
+                        <div class="card-counter success" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Student Bank Details</b></span>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div id="div13" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter success" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Report</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+
+            <div id="divemploy" class="col-xl-3 col-md-4 col-sm-6 my-3" onclick="myFunction2()">
+
+                <div class="col-md-14">
+                    <div class="card-counter primary" style="height:150px">
+
+                        @*<%--<span class="count-numbers"></span>--%>*@
+                        <span class="count-name"><b>Employers</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div14" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter primary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Employer Details</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div15" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter primary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Log Book Comfirmation</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div16" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter primary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>End of years Program Report (Part B)</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div17" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter primary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Report</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+
+            <div id="divinstitute" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter tertiary" style="height:150px">
+
+                        @*<%--<span class="count-numbers"></span>--%>*@
+                        <span class="count-name"><b>Institution</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div18" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter tertiary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Institution Details</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div19" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter tertiary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Siwes Student Register</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div20" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter tertiary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Placement Companies</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div21" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter tertiary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>End of the year Program Report (ITF8)C</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div22" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter tertiary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Masters List</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+            <div id="div23" class="col-xl-3 col-md-4 col-sm-6 my-3">
+                <a href="#">
+
+                    <div class="col-md-14">
+
+                        <div class="card-counter tertiary" style="height:150px">
+
+                            <span class="count-numbers"></span>
+                            <span class="count-name"><b>Placement List</b></span>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+
+
+            @*<%-- <div id="divagent" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter willing" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Agency</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div24" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter willing" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Agency Details</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div25" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter willing" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Institutions</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div26" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter willing" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Accreditation Register</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div27" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter willing" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Master List</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div28" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter willing" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Placement List</b></span>
+                    </div>
+                </div>
+            </div>
+            <div id="div29" class="col-xl-3 col-md-4 col-sm-6 my-3">
+
+                <div class="col-md-14">
+                    <div class="card-counter willing" style="height:150px">
+
+                        <span class="count-numbers"></span>
+                        <span class="count-name"><b>Reports</b></span>
+                    </div>
+                </div>
+            </div>--%>*@
+        </div>
+    </div>
+</div>

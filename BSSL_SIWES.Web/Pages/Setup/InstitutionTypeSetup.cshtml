@@ -12,10 +12,13 @@
             <div class="card-header">
                 <h3 class="card-title">Institution Type Setup</h3>
             </div>
+
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form">
+                @*<a href="" id="Createnew">Create New</a>*@
                 <div class="card-body">
+
                     <div id="divinput">
                         <div class="row">
                             <div class="col-md-6">
@@ -44,9 +47,9 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Institution Type Code</label>
                                     <input type="text" class="form-control" id="txtcode">
-                                    <input  id="hddtypeid" type="hidden" class="form-control" />
+                                    <input id="hddtypeid" type="hidden" class="form-control" />
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-7">
                                 <div class="form-group">
                                     <label>Institution Type Name</label>
@@ -54,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                     <!-- /.card-body -->
                     <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
@@ -67,10 +70,10 @@
                                 <thead style="background-color:steelblue;">
                                     <tr>
                                         <th style="width:0.25%; text-align:center">S/N</th>
+                                        <th style="width:10%; text-align:center">Actions</th>
                                         <th style="width:15%; text-align:center">Category Code</th>
                                         <th style="width:15%; text-align:center">Type Code</th>
                                         <th style="width:60%; text-align:center">Type Name</th>
-                                        <th style="width:10%; text-align:center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,19 +82,20 @@
                                         var items = Model.InstTypeSetupList[i];
                                         //var news = await db.Customers
 
-                                    <tr>
-                                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                        <td class="tabCatname @i" style="width:15%; text-align:left">@items.InstCatSetup.Name</td>
-                                        <td class="tabcode @i" style="width:15%; text-align:left">@items.Code</td>
-                                        <td class="tabname @i" style="width:60%; text-align:left">@items.Name</td>
-                                        <td style="width:5%;">
-                                            <input type="hidden" class="tabdrpListCat @i" value="@items.InstCatSetup.Id">
-                                            <input type="hidden" class="tabdrpAgency @i" value="@items.AgencySuperSetup.Id">
-                                            <input type="hidden" class="typeid @i" value="@items.Id">
-                                            <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
-                                        </td>
+                                        <tr>
+                                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                            <td style="width:5%;">
+                                                <input type="hidden" class="tabdrpListCat @i" value="@items.InstCatSetup.Id">
+                                                <input type="hidden" class="tabdrpAgency @i" value="@items.AgencySuperSetup.Id">
+                                                <input type="hidden" class="typeid @i" value="@items.Id">
+                                                <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
+                                            </td>
+                                            <td class="tabCatname @i" style="width:15%; text-align:left">@items.InstCatSetup.Name</td>
+                                            <td class="tabcode @i" style="width:15%; text-align:left">@items.Code</td>
+                                            <td class="tabname @i" style="width:60%; text-align:left">@items.Name</td>
 
-                                    </tr>
+
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -121,14 +125,34 @@
             $("#Btnsave").show();
             $("#Btnupdate").hide();
         }
+        $('#Createnew').on('click', function () {
+            alert("Please Seleyes");
+            formClear();
+        });
         $('#Btnsave').on('click', function (e) {
+            if ($('#drpListCat').val() == "-1") {
+                alert("Please Select Category");
+                return false;
+            }
+            if ($('#drpAgency').val() == "-1") {
+                alert("Please Select Agency Id");
+                return false;
+            }
+            if ($('#txtcode').val() == "") {
+                alert("Please Enter Type Code");
+                return false;
+            }
+            if ($('#txtname').val() == "") {
+                alert("Please Enter Type Name");
+                return false;
+            }
             e.preventDefault();
             var txtcode = document.getElementById('txtcode').value;
             var txtname = document.getElementById('txtname').value;
             var drpListCat = document.getElementById('drpListCat').value;
             var hddidcatname = $("#drpListCat option:selected").html();
             var drpAgency = document.getElementById('drpAgency').value;
-            
+           
             var d = {
                 "Code": txtcode,
                 "Name": txtname,
@@ -158,17 +182,14 @@
                     var html = `<tr>
                             </td>
                                 <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
+                                 <td style="width:5%;" class="action">
+                                    <input type="hidden" value=${myid}>
+                                    <a href="/Setup/InstTypeSetup/${myid}">Edit</a>
+                                </td>
                                 <td class="tabCatname" style="width:15%; text-align:left">${hddidcatname}</td>
                                 <td class="tabcode" style="width:15%; text-align:left">${txtcode}</td>
                                 <td class="tabname" style="width:60%; text-align:left">${txtname}</td>
-
-                                <td style="width:5%;" class="action">
-                                
-                                <input type="hidden" value=${myid}>
-                                <a href="/Setup/InstTypeSetup/${myid}">Edit</a>
-
-                            </td>
-                            </tr>`
+                             </tr>`
                     $('#tabId').append(html);
                     formClear();
                     location.reload();
