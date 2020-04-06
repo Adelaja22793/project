@@ -195,8 +195,8 @@
                         </select>
                     </div>
                 </div>
-            </div>*@
-                        @*<div class="col-sm-4">
+            </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="exampleInputFile">Date Deactivated</label>
                                 <div class="input-group">
@@ -310,7 +310,8 @@
                  },
              });
          });
-         $('#Btnupdate').on('click', function (e) {
+        $('#Btnupdate').on('click', function (e) {
+            alert("i click");
             e.preventDefault();
              var readid = document.getElementById('readid').value;
               var txtcode = document.getElementById('txtcode').value;
@@ -384,21 +385,10 @@
         var txtcode = document.getElementById('txtcode').value;
              if (readid == "")
              {
-                // alert("i cha55");
-                  $('#txtcode').prop("readonly", false);
+                 $('#txtcode').prop("readonly", false);
                  $('#txtcode').val(txtcode);
                  $("#Btnsave").show();
                  $("#Btnupdate").hide();
-            //var confirmation = confirm("Institution DO NOT EXIST. DO YOU WANT " + courseName.toUpperCase() + " TO BE SET UP AS A COURSE?");
-            //if (confirmation === false) {
-            //    return false;
-            //}
-            //else {
-            //    $("#loginModal").modal('show');
-
-            //    $('#courseAddReq').val(courseName);
-            //    return false;
-            //}
             }
              else {
                  var d = {
@@ -426,6 +416,7 @@
                         $('#txtcode').val(txtcode);
                         $('#txtcode').prop("readonly", true);
                         $('#txtshortcode').val(data["id"]);
+                        $('#nationChange').val(data["country"]);
                     },
                 });
             }
