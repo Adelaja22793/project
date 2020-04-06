@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SiwesData;
+using Microsoft.AspNetCore.Identity;
 using SiwesData.Setup;
 
 
@@ -16,10 +17,12 @@ namespace BSSL_SIWES.Web.API
     public class RoleTbsController : ControllerBase
     {
         private readonly  ApplicationDbContext _context;
+        private readonly RoleManager<RoleTb> _roleManager;
 
-        public RoleTbsController(ApplicationDbContext context)
+        public RoleTbsController(ApplicationDbContext context, RoleManager<RoleTb> roleManager)
         {
             _context = context;
+            _roleManager = roleManager;
         }
 
         // GET: api/RoleTbs
@@ -79,8 +82,17 @@ namespace BSSL_SIWES.Web.API
             if (nameCheck == null)
             {
                 // save the item here
-                _context.RoleTb.Add(roleTb);
-                await _context.SaveChangesAsync();
+                //_context.RoleTb.Add(roleTb);
+                //await _context.SaveChangesAsync();
+
+              //  bool x = await _roleManager.RoleExistsAsync("Employer");
+                //if (!x)
+                //{
+                    var role = new RoleTb();
+                    role.Name = roleTb.Name;
+                    role.RoleId =roleTb.RoleId;
+                    await _roleManager.CreateAsync(role);
+               // }
             }
             else
             {
