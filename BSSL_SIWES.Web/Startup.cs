@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -59,11 +60,22 @@ namespace BSSL_SIWES.Web
                 options.User.RequireUniqueEmail = true;
 
             });
-         
- 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-         
+            services.AddControllers();
+            //services.AddAuthentication().AddCookie("Vendors", o =>
+            //{// Cookie settings
+            //    o.Cookie.HttpOnly = true;
+            //    o.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+
+            //    o.LoginPath = "/VendorIdentity/Account/Login";
+            //    o.SlidingExpiration = true;
+            //    o.Cookie.IsEssential = true;
+            //    o.ForwardAuthenticate = "Identity.Application";
+            //});
+            services.AddAuthorization();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+          //  services.AddSingleton(new DynamicAuthorizationOptions { DefaultAdminUser = "admin@bssltech.com" });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
