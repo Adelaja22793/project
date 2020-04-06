@@ -12,47 +12,41 @@ namespace BSSL_SIWES.Web.API.Student
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DailyActivitiesListsController : ControllerBase
+    public class DailyActivitiesListsDateController : ControllerBase
     {
-        public class DayList
-        {
-            public int DailyActivitiesId { get; set; }
-            public DateTime Day { get; set; }
-            public string DayDescription { get; set; }
-            public int DayValue { get; set; }
-        }
         private readonly ApplicationDbContext _context;
 
-        public DailyActivitiesListsController(ApplicationDbContext context)
+        public DailyActivitiesListsDateController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/DailyActivitiesLists
+        // GET: api/DailyActivitiesListsDate
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DailyActivitiesList>>> GetDailyActivitiesLists()
         {
             return await _context.DailyActivitiesLists.ToListAsync();
         }
 
-        // GET: api/DailyActivitiesLists/5
+        // GET: api/DailyActivitiesListsDate/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DailyActivitiesList>> GetDailyActivitiesList(int? id)
         {
             if (id == null)
             {
-                return BadRequest("No Daily Activities For This Student");
+                return BadRequest("No Daily Activities Record For This Student");
             }
             try
             {
-              var  DailyActivitiesLists = await _context.DailyActivitiesLists.Include(b => b.DailyActivities)
-                           .Where(x =>x.DailyActivities.Id == id)
-                           .ToListAsync();
-                if (DailyActivitiesLists == null)
+                var dailyActivitiesList = await _context.DailyActivitiesLists
+                    .Where(x => x.DailyActivitiesId == id).ToListAsync();
+                //.FindAsync(id);
+
+                if (dailyActivitiesList == null)
                 {
                     return NotFound($"Daily/Weekly Activities Not Found For The Selected Id {id}");
                 }
-                return Ok(DailyActivitiesLists);
+                return Ok(dailyActivitiesList);
             }
             catch (Exception ex)
             {
@@ -60,7 +54,7 @@ namespace BSSL_SIWES.Web.API.Student
             }
         }
 
-        // PUT: api/DailyActivitiesLists/5
+        // PUT: api/DailyActivitiesListsDate/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
@@ -92,33 +86,19 @@ namespace BSSL_SIWES.Web.API.Student
             return NoContent();
         }
 
-        // POST: api/DailyActivitiesLists
+        // POST: api/DailyActivitiesListsDate
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<DailyActivitiesList>> PostDailyActivitiesList(DailyActivitiesList dailyActivitiesLists)
+        public async Task<ActionResult<DailyActivitiesList>> PostDailyActivitiesList(DailyActivitiesList dailyActivitiesList)
         {
-            try
-            {
-                var dailyActivitiesList = new DailyActivitiesList
-                {
-                    DailyActivitiesId = dailyActivitiesLists.DailyActivitiesId,
-                    DayDate = dailyActivitiesLists.DayDate,
-                    DayDescription = dailyActivitiesLists.DayDescription,
-                    WeekDayName = dailyActivitiesLists.WeekDayName,
-                };
-                _context.DailyActivitiesLists.Add(dailyActivitiesList);
-                await _context.SaveChangesAsync();
+            _context.DailyActivitiesLists.Add(dailyActivitiesList);
+            await _context.SaveChangesAsync();
 
-                return CreatedAtAction("PostDailyActivitiesList", new { id = dailyActivitiesList.Id }, dailyActivitiesList);
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(500, "Menu Name Already Exist");
-            }
+            return CreatedAtAction("GetDailyActivitiesList", new { id = dailyActivitiesList.Id }, dailyActivitiesList);
         }
 
-        // DELETE: api/DailyActivitiesLists/5
+        // DELETE: api/DailyActivitiesListsDate/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<DailyActivitiesList>> DeleteDailyActivitiesList(int id)
         {

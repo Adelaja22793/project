@@ -23,13 +23,13 @@ namespace BSSL_SIWES.Web.Pages.Institution
         public IList<StudentSetUp> ListOfStudent { get; set; }
         public async Task OnGetAsync(int id)
         {
-            id = 3;
+            id = 19;
             ListOfStudent = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x => x.Institution)
                 .Where(x => x.InstitutionOfficerId == id && x.CoursesId == x.Courses.Id && x.Suspended == false).ToListAsync();
         }
         public ActionResult OnPostCreateNewStudent()
         {
-            return RedirectToPage("./CreateStudent");
+            return RedirectToPage("./Student_Visit_Form");
         }
     }
 }

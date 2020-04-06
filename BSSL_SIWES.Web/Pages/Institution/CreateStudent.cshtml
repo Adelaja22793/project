@@ -53,41 +53,27 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Enter Registration/Matric. Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                </div>
+                            <label>Registration/Matric. Number</label>
                                 <input type="hidden" id="studentId">
-                                <input type="text" id="matricNumber"  onchange="MyFunctionMatricNumber()" asp-for="CreateStudentsViewModels.MatricNumber" class="form-control" placeholder="Enter Registration/Matric No.">
+                                <input type="text" id="matricNumber"  onchange="MyFunctionMatricNumber()" asp-for="CreateStudentsViewModels.MatricNumber"
+                                       class="form-control" placeholder="Enter Registration/Matric No.">
                                 <span asp-validation-for="CreateStudentsViewModels.MatricNumber" class="text-danger"></span>
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Surname</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" asp-for="CreateStudentsViewModels.Surname" id="surname" class="form-control" 
+                            <input type="text" asp-for="CreateStudentsViewModels.Surname" id="surname" class="form-control" 
                                       placeholder="Enter Surname">
                                 <span asp-validation-for="CreateStudentsViewModels.Surname" class="text-danger"></span>
-                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Other Name(s)</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
                                 <input type="text" asp-for="CreateStudentsViewModels.OtherNames" id="otherNames" class="form-control" placeholder="Enter Other Name(s)">
                                 <span asp-validation-for="CreateStudentsViewModels.OtherNames" class="text-danger"></span>
                             </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -103,18 +89,8 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Course of Study</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                                </div>
-                                <input type="text" class="form-control" id="courseStudy" onchange="MyFunctionCourses()">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-search"></i>
-                                        </span>
-                                </div>
+                                <input type="text" class="form-control" id="courseStudy" onchange="MyFunctionCourses()" placeholder="Enter Course of Study">
                                 <input type="hidden" asp-for="CreateStudentsViewModels.CourseId" class="form-control" id="courseStudyId">
-                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -172,28 +148,17 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                </div>
                                 <input type="text" id="phoneNo" asp-for="CreateStudentsViewModels.PhoneNumber" class="form-control"
                                        placeholder="Enter Phone No.">
                                 <span asp-validation-for="CreateStudentsViewModels.PhoneNumber" class="text-danger"></span>
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Email Address</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                </div>
                                 <input type="text" asp-for="CreateStudentsViewModels.Email" id="email" class="form-control">
                                 <span asp-validation-for="CreateStudentsViewModels.Email" class="text-danger"></span>
                             </div>
-
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -211,7 +176,7 @@
                         <div class="form-group">
                             <label>Specify SIWES Year</label>
                             <select class="form-control regYear" asp-for="CreateStudentsViewModels.SiwesYear" data-dropdown-css-class="select2-purple"
-                                    style="width: 100%;">
+                                    style="width: 100%;" id="yearOfStudy">
                                 <option selected="selected" value="-1">--Select SIWES Year--</option>
                             </select>
                             <span asp-validation-for="CreateStudentsViewModels.SiwesYear" class="text-danger"></span>
@@ -235,38 +200,21 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Enter Name of Supervisor</label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                </div>
                                 <input type="hidden" id="superId" asp-for="CreateStudentsViewModels.InstitutionOfficerId" />
                                 <input type="text" id="superName"  onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
                             </div>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Phone No.</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                </div>
                                 <input type="text" id="superPhone" class="form-control" readonly="readonly">
                             </div>
-
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Email</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                </div>
                                 <input type="text" id="superEmail" class="form-control" readonly="readonly">
                             </div>
-
-                        </div>
                     </div>
                 </div>
                 <fieldset class="fig" style="display:none;">
@@ -439,7 +387,7 @@
 
             <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
                 <button type="submit" class="btn btn-primary" id="mySubmitForm">Submit</button>
-                <button type="button"  id="myUpdateForm" style="display:none" class="btn btn-primary">UpDate Student Record</button>
+                <button type="button"  id="myUpdateForm" style="display:none" class="btn btn-primary">Update Student Record</button>
                 <button type="button" onclick="pageRedirect()"  class="btn btn-warning">View Student List</button>
             </div>
         </form>
@@ -554,7 +502,7 @@
         }
          @foreach (var item in Model.InstitutionOfficers)
         {
-            @:addsupervisors('@item.IntOfficerName', '@item.Id');
+            @:addsupervisors('@item.IntOfficerName.ToString().Trim()', '@item.Id');
         }
         @foreach (var item in Model.ListOfStudent)
         {
@@ -583,6 +531,134 @@
                 $('#studentId').val(ui.item.value);
                 return false;
             }
+        });
+        $('#myUpdateForm').on('click', function () {
+            var studtId =  $('#studentId').val();
+            var matricNumber = $('#matricNumber').val();
+            var surname = $('#surname').val();
+            var otherNames  = $('#otherNames').val();
+            var matricYear = $('#matricYear').val();
+            var courseStudy  = $('#courseStudy').val();
+            var courseStudyId =  $('#courseStudyId').val();
+            var yearOfStudy = $('#yearOfStudy').val();
+            var phoneNo = $('#phoneNo').val();
+            var email = $('#email').val();
+            var nationaId = $('#nationChange').val();
+            var myState = $('#myState').val();
+            var myLGA =  $('#myLGA').val();
+            var batchNo = $('#batchNo').val();
+            var regYear = $('.regYear').val();
+            var studentType = $('#studentType').val();
+            var superId = $('#superId').val();
+            var superName = $('#superName').val();
+            var studentId = parseInt(studtId);
+            var InstitutionOfficerId = parseInt(superId);
+            var courseId = parseInt(courseStudyId);
+            var nationalityId = parseInt(nationaId);
+            //alert(studentId);
+            if (studentId == "") {
+                alert("STUDENT DOES NOT HAVE RECORDS TO UPDATE");
+                return false;
+            }
+            if (surname == "") {
+                alert("PLEASE ENTER STUDENT SURNAME");
+                return false;
+            }
+            if (otherNames == "") {
+                alert("PLEASE ENTER STUDENT OTHER NAMES");
+                return false;
+            }
+            if (matricYear == "") {
+                alert("PLEASE SELECT STUDENT MATRIC. YEAR");
+                return false;
+            }
+            if (courseId == "") {
+                alert("PLEASE SELECT A COURSE OF STUDY");
+                return false;
+            }
+            if (yearOfStudy == "") {
+                alert("PLEASE YEAR OF STUDY");
+                return false;
+            }
+            if (phoneNo == "") {
+                alert("PLEASE ENTER STUDENT PHONE NUMBER");
+                return false;
+            }
+            if (email == "") {
+                alert("PLEASE ENTER STUDENT EMAIL ADDRESS");
+                return false;
+            }
+
+            if (batchNo == "") {
+                alert("PLEASE SELECT SIWES BATCH NUMBER");
+                return false;
+            }
+            if (regYear == "") {
+                alert("PLEASE SELECT STUDENT YEAR OF REGISTRATION");
+                return false;
+            }
+            if (studentType == "") {
+                alert("PLEASE SELECT STUDENT TYPE");
+                return false;
+            }
+            if (InstitutionOfficerId == "") {
+                alert("PLEASE SELECT INSTITUTION OFFICER");
+                return false;
+            }
+            if (nationalityId == "") {
+                alert("PLEASE STUDENT NATIONALITY");
+                return false;
+            }
+            if (matricNumber == "") {
+                alert("PLEASE ENTER STUDENT MATRIC. NUMBER");
+                return false;
+            }
+            //if (myLGA == "") {
+            //    alert("PLEASE SELECT STUDENT LOCAL GOVERNMENT OF ORIGIN");
+            //    return false;
+            //}
+            var d = {
+                "Id": studentId,
+                "Surname": surname,
+                "OtherNames": otherNames,
+                "MatricYear": matricYear,
+                "CoursesId": courseId,
+                "YearOfStudy": yearOfStudy,
+                "PhoneNo": phoneNo,
+                "Email": email,
+                "BatchNo": batchNo,
+                "StudentType": studentType,
+
+                "SiwesYear": regYear,
+                "InstitutionOfficerId": InstitutionOfficerId,
+                "NationalityId": nationalityId,
+                "MatricNumber": matricNumber,
+                //"StudentType": myLGA
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO THIS STUDENT RECORD?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/StudentSepUpMatric/' + studentId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("STUDENT RECORD SUCCESSFULLY UPDATED");
+                    location.reload();
+                }
+            });
         });
     });
     function pageRedirect() {
@@ -637,7 +713,7 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $('#studentId').val(data['id']);
                     $('#surname').val(data['surname']);
                     $('#otherNames').val(data['otherNames']);

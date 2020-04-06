@@ -27,23 +27,39 @@
             <h3 class="card-title">Monthly Assessment By Industry-Based Supervisor Certification</h3>
         </div>
         <div class="card-body" id="Assessment">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Select Student to Certify</label>
-                            <select class="form-control select2 select2-danger" id="studentSelected" data-dropdown-css-class="select2-danger"
-                                    asp-items="Model.StudentName" style="width: 100%;" onchange="MyFunctionStudentSelected()">
-                                <option selected="selected" value="-1">--Select Student to Certify--</option>
-                            </select>
-                        </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Select Student to Certify</label>
+                        <select class="form-control" id="studentSelected" onchange="MyFunctionDailyActivities()">
+                            <option selected="selected" value="0">--Select Class--</option>
+                            @foreach (var items in Model.Scafs)
+                            {
+                                var studentName = items.StudentSetUp.Surname + ' ' + items.StudentSetUp.OtherNames;
+                                <option value="@items.StudentSetUpId">@Html.DisplayFor(modelitem => studentName)</option>
+
+                            }
+                        </select>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group" style="margin-top:33px;">
-                            <button id="btnShowModal1" type="button" class="btn btn-outline-info">View Selected Student Daily/Weekly Records</button>
-                        </div>
+                </div>
+                <div class="col-sm-3 studentSelectedActivities">
+                    <div class="form-group">
+                        <label>Select Week End Date</label>
+                        <select class="form-control" id="weekEndDate"
+                                style="width: 100%;">
+                            <option selected="selected" value="-1">--Select Week End Date--</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group" style="margin-top:33px;">
+                        <button id="btnShowModal1" type="button" class="btn btn-outline-info">View Selected Student Daily/Weekly Records</button>
                     </div>
                 </div>
             </div>
+            
+        </div>
         <div class="card-body" style="display:none" id="myForm">
                 <div class="row">
                     <div class="col-sm-6">
@@ -75,52 +91,80 @@
             </div>
         <div class="modal fade" tabindex="-1" id="loginModal"
              data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog modal-lg col-md-12" style="margin-left:25%;">
+            <div class="modal-dialog modal-lg col-md-12" style="margin-left:25%; width:120%">
                 <div class="modal-content">
                     <div class="modal-header btn-primary">
-                        <h4 class="modal-title" id="monthname" style="margin-left:10%">ASSESSMENT FOR THE MONTH OF</h4>
+                        <h4 class="modal-title" id="monthname" style="margin-left:6%">ASSESSMENT FOR THE MONTH OF</h4>
                         <button type="button" class="close" id="myClose" data-dismiss="modal">
                             ×
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Trainee Students' Remark</label>
-                                    <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                        <div id="myTab2">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Trainee Students' Remark</label>
+                                        <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
                                     font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                    </div>
+                                    <input type="hidden" id="monthAssessed" class="form-control">
                                 </div>
-                                <input type="hidden" id="monthAssessed" class="form-control">
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Date Certified</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Date Certified</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="date" id="certdate" class="form-control">
                                         </div>
-                                        <input type="date" id="certdate" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Industry-Based Supervisor Remarks</label>
+                                        <textarea class="textarea super" id="superRemarks" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                        font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Industry-Based Supervisor Remarks</label>
-                                    <textarea class="textarea super" id="superRemarks" placeholder="Place some text here" style="width: 100%; height: 200px;
-                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        <div id="myTab" style="display:none; margin:0 auto; width:100%; font-size:medium">
+                            <table id="act" class="table table-bordered" border="0">
+                                <thead>
+                                    <tr>
+                                        <th style="width:0.25%; text-align:center">S/N</th>
+                                        <th style="width:15%; text-align:center">Week End Date</th>
+                                        <th style="width:15%; text-align:center">Week Day</th>
+                                        <th style="width:15%; text-align:center">Date</th>
+                                        <th style="width:25%; text-align:center">Summary of Activities</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Industry-Based Supervisor Remarks</label>
+                                        <textarea class="textarea super2" id="superRemarks" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                        font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
-                                <button type="button" id="BtnSubmitDailyActivities" class="btn btn-primary">Certify Students' Monthly Assessment</button>
-
-                                <button type="button" id="btnHideModal" class="btn btn-danger button button4">
-                                    Hide
-                                </button>
-                            </div>
+                        </div>
+                        <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
+                            <button type="button" id="BtnSubmitDailyActivities" class="btn btn-primary">Certify Students' Monthly Assessment</button>
+                            <button type="button" style="display:none" id="BtnSubmitDailyActivities2" class="btn btn-primary">Certify Students' Daily/Weekly Activities</button>
+                            <button type="button" id="btnHideModal" class="btn btn-danger button button4">
+                                Hide
+                            </button>
+                        </div>
                         </div>
                     </div>
             </div>
@@ -147,19 +191,79 @@
         $("#btnShowModal1").click(function () {
             var StudentName = $("#studentSelected option:selected").val();
             var studentDesc = $("#studentSelected option:selected").text();
+            var studentSelectedActivities = $("div.studentSelectedActivities select").val();
+            var SelectedActivities = $("#weekEndDate option:selected").text();
+            //alert(SelectedActivities);
             if (StudentName == "-1") {
                 alert("PLEASE SELECT STUDENT TO VIEW DETAILS OF DAILY/WEEKLY RECORDS");
                 return false;
             }
-            $("#loginModal").modal('show');
-            //$("#divreject2").modal('show');
-            $('#monthname').html("DAILY/WEEKLY RECORDS OF " + studentDesc.toUpperCase() + "")
+            if (studentSelectedActivities == "-1") {
+                alert("PLEASE SELECT WEEK END DATE FOR THE SELECTED STUDENT");
+                return false;
+            }
+            var d = {
+                "Id": studentSelectedActivities
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/DailyActivitiesListsDate/' + studentSelectedActivities,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+
+                    $("#act tbody").empty();
+                    var str = '';
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var DaylistDate = data[i]['dayDate'];
+                            var mydate = DaylistDate.substring(0, 10);
+                            var myCount = i + 1;
+                            str += '<tr>';
+                            str += '<td>' + myCount + '</td>';
+                            str += '<td>' + SelectedActivities + '</td>';
+                            str += '<td>' + data[i]['weekDayName'] + '</td>';
+                            str += '<td>' + mydate + '</td>';
+                            str += '<td>' + data[i]['dayDescription'] + '</td>';
+                            str += '</tr>';
+                        };
+                        $('#act').append(str);
+
+
+                        $("#loginModal").modal('show');
+                        document.getElementById('myTab2').style.display = "none";
+                        document.getElementById('myTab').style.display = "block";
+                        //$("#divreject2").modal('show');
+                        $('#monthname').html("DAILY/WEEKLY RECORDS OF " + studentDesc.toUpperCase() + "")
+                        document.getElementById('BtnSubmitDailyActivities').style.display = "none";
+                        document.getElementById('BtnSubmitDailyActivities2').style.display = "inline-block";
+                    }
+                    else {
+                        alert("THE SELECT STUDENT DOES NOT HAVE ANY RECORD FOR THE SELECTED WEEK END DATE.");
+                        return false;
+                    }
+                },
+            });
+
+
+            
         });
         $("#btnHideModal").click(function () {
             $("#loginModal").modal('hide'); 
             $("#monthAssessed").val('');
             $("#certdate").val('');
             $('.super').summernote('code', '');
+            $("#act tbody").empty();
             //$(".super").val("");
         });
         $("#myClose").click(function () {
@@ -167,9 +271,10 @@
             $("#monthAssessed").val('');
             $("#certdate").val('');
             $('.super').summernote('code', '');
+            $("#act tbody").empty();
         });
         $('#radioDanger2').on('click', function () {
-            var office = 1;
+            var office = 3;
             var officerId = parseInt(office)
 
             var d = {
@@ -257,6 +362,11 @@
                 success: function (data) {
                     console.log(data);
                     $("#loginModal").modal('show');
+                    document.getElementById('myTab2').style.display = "block";
+                    document.getElementById('myTab').style.display = "none";
+                    $("#act tbody").empty();
+                    document.getElementById('BtnSubmitDailyActivities').style.display = "inline-block";
+                    document.getElementById('BtnSubmitDailyActivities2').style.display = "none";
                     $('#monthname').html(" " + studentSelectedName.toUpperCase() + " ASSESSMENT FOR THE MONTH OF " + monthSelectedName.toUpperCase() + "")
                     var remarks = data['monthlyRemarksByStudent'];
                     $(".student").summernote('code', remarks);
@@ -318,7 +428,92 @@
                 },
             });
         })
+        $('#BtnSubmitDailyActivities2').on('click', function () {
+            var SupervisorRemarks = $('.super2').val();
+            var studentSelectedActivities = $("div.studentSelectedActivities select").val();
+            var Approved = true;
+            var office = 1;
+            var EmployerSupervisorId = parseInt(office);
+            var activitiesId = parseInt(studentSelectedActivities);
+
+            if (SupervisorRemarks == "") {
+                alert("PLEASE ENTER REMARK FOR THE STUDENT");
+                return false;
+            }
+            var d = {
+                "Id": activitiesId,
+                "SupervisorRemarks": SupervisorRemarks,
+                "EmployerSupervisorId": EmployerSupervisorId,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO CERTIFY THIS DAILY/WEEKLY ACTIVITIES ?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/DailyActivities/ ' + activitiesId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+
+                    alert("DAILY/WEEKLY ACTIVITIES SUCCESSFULLY APPROVED");
+                    location.reload();
+                },
+            });
+        })
     });
+    function MyFunctionDailyActivities() {
+        var studentSelectedId = $("#studentSelected option:selected").val();
+        var studentDesc = $("#studentSelected option:selected").text();
+       // alert(studentDesc); alert(StudentName)
+        var d = {
+            "Id": studentSelectedId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/DailyActivities/' + studentSelectedId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                $('div.studentSelectedActivities select').empty();
+                $('div.studentSelectedActivities select').append('<option value=-1>--Select Week End Date--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['weekNumber'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    alert("THE SELECTED STUDENT HAVE NO MONTHLY ASSESSEMENT OR ASSESSMENT HAVE BEEN APPROVED")
+                    $('div.studentSelectedActivities select').empty();
+                    $('div.studentSelectedActivities select').append('<option value=-1>--Select Week End Date--</option>');
+                }
+                $('div.studentSelectedActivities select').append(option);
+
+            },
+        });
+    };
     function MyFunctionStudentSelected() {
         var StudentName = $("#studentSelected option:selected").val();
         var studentDesc = $("#studentSelected option:selected").text();

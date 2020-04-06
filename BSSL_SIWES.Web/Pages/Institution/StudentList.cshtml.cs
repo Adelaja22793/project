@@ -23,7 +23,7 @@ namespace BSSL_SIWES.Web.Pages.Institution
         public IList<StudentSetUp> ListOfStudent { get; set; }
         public async Task OnGetAsync(int id)
         {
-            id = 2;
+            id = 10;
             ListOfStudent = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x =>x.Institution)
                 .Where(x => x.InstitutionOfficer.Institution.Id == id && x.CoursesId == x.Courses.Id && x.Suspended == false).ToListAsync();
         }
