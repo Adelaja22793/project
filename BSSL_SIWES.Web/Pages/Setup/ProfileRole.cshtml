@@ -69,22 +69,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @for (int i = 0; i < Model.RoleTbs.Count; i++)
+                                    @if (Model.RoleTbs != null)
                                     {
-                                        var items = Model.RoleTbs[i];
+                                        for (int i = 0; i < Model.RoleTbs.Count; i++)
+                                        {
+                                            var items = Model.RoleTbs[i];
 
-                                        <tr>
-                                            <td style="width:6%;">
-                                                <input type="hidden" class="readid @i" value="@items.Id">
-                                                <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Select</a>
-                                            </td>
-                                            <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="roleclass @i" style="width:20%; text-align:left">@items.RoleId</td>
-                                            <td class="titleclass @i" style="width:30%; text-align:left">@items.Name</td>
+                                    <tr>
+                                        <td style="width:6%;">
+                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Select</a>
+                                        </td>
+                                        <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                        <td class="roleclass @i" style="width:20%; text-align:left">@items.RoleId</td>
+                                        <td class="titleclass @i" style="width:30%; text-align:left">@items.Name</td>
 
 
-                                        </tr>
+                                    </tr>
+                                        }
                                     }
                                 </tbody>
                             </table>

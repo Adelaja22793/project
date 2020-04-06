@@ -14,12 +14,12 @@ namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegempController : Controller
+    public class RegstaffController : Controller
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public RegempController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RegstaffController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -35,56 +35,7 @@ namespace BSSL_SIWES.Web.API
   
 
         // GET api/<controller>/5
-        [HttpGet("{rcno}")]
-        public async Task<ActionResult<List<string>>> GetRcNo(string rcno)
-        {
-         //   var result = "";
 
-            List<string> result = new List<string>();
-            try
-            {
-                // get email 
-
-                // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
-
-
-                var identityUser = await _userManager.FindByNameAsync(rcno.Trim());
-
-           
-
-                if (identityUser != null)
-                {
-                    result.Insert(0, "exist");
-                }
-                else
-                {
-                    //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
-
-                    var user = _context.EmployerSuperSetups.FirstOrDefault(m => m.Code == rcno.Trim());
-                    // check if email has beeen registered
-
-                    if (user != null)
-                    {
-                        result.Insert(0, user.Name.Trim());
-                        result.Insert(1, user.Email.Trim());
-                     
-                    }
-                    else
-                    {
-                        result.Insert(0, "notexist");
-                    }
-                }
-
-
-
-            }
-            catch
-            {
-                result.Insert(0, "syserr");
-            }
-            return result;
-
-        }
 
         [HttpGet("{staffid}")]
         public async Task<ActionResult<List<string>>> Getstaffid(string staffid)

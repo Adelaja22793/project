@@ -14,9 +14,9 @@ namespace BSSL_SIWES.Web
     public class ProfileRoleModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<RoleTb> _roleManager;
         public ProfileRoleModel(SiwesData.ApplicationDbContext context,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<RoleTb> roleManager)
         {
             _context = context;
             _roleManager = roleManager;
@@ -25,14 +25,14 @@ namespace BSSL_SIWES.Web
         [BindProperty]
         public RoleTb RoleTb { get; set; }
 
-        public async Task OnGetAsync()
-        {
-            //RoleTbs = await _context.RoleTb.ToListAsync();
-            //if (RoleTbs != null)
-            //{
+        //public async Task OnGetAsync()
+        //{
+        //    //RoleTbs = await _context.RoleTb.ToListAsync();
+        //    //if (RoleTbs != null)
+        //    //{
 
-            //}
-        }
+        //    //}
+        //}
 
         //public async Task<IActionResult> OnPostAsync()
         //{
