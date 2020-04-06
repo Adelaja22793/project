@@ -14,146 +14,83 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleInputFile">Matric. Number</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-asterisk"></i></span>
-                            </div>
                             <input type="text" asp-for="Scaf.StudentSetUp.MatricNumber" class="form-control" readonly="readonly">
                             <input type="hidden" asp-for="Scaf.StudentSetUpId" id="studentId" />
                         </div>
-                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Student Name</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
                             <input type="text" asp-for="StudentName" class="form-control" readonly="readonly">
                         </div>
-                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleInputFile">Course of Study</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                            </div>
                             <input type="text" asp-for="Scaf.StudentSetUp.Courses.Name" class="form-control" readonly="readonly">
                         </div>
-                    </div>
                 </div>
             </div>
             <div class="row" style="display:none">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="exampleInputFile">Name of Institution</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
-                            </div>
                             <input type="text" class="form-control" readonly="readonly">
                         </div>
-                    </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Course of Study</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                            </div>
                             <input type="text" class="form-control" readonly="readonly">
                         </div>
-                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleInputFile">Commencement Date</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                            </div>
                             <input type="date" id="commence_Date" asp-for="Scaf.Commence_Date" readonly="readonly" class="form-control" placeholder="Enter Date">
                         </div>
-                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Completion Date</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                            </div>
                             <input type="date" id="complete_Date" asp-for="Scaf.Complete_Date" readonly="readonly" class="form-control" placeholder="Enter Date">
                         </div>
-                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>No. of Weeks</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="far fa-clock"></i></span>
-                            </div>
                             <input type="text" id="duration" asp-for="Scaf.Duration" readonly="readonly" class="form-control">
                         </div>
-
-                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleInputFile">Name of Organisation</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
                             <input type="text" asp-for="Scaf.EmployerSupervisor.EmployerSuperSetup.Name" class="form-control" placeholder="Name of Organisation" readonly="readonly">
                         </div>
-                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Employer Supervisor Name</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-address-card"></i></span>
-                            </div>
                             <input type="text" class="form-control" asp-for="Scaf.EmployerSupervisor.Name" readonly="readonly">
                         </div>
-
-                    </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Supervisor Phone Number</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            </div>
                             <input type="text" asp-for="Scaf.EmployerSupervisor.Phone1" class="form-control" readonly="readonly">
                         </div>
-
-                    </div>
                 </div>
             </div>
             <div class="row" style="display:none">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="exampleInputFile">Department/Section</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
                             <input type="text" class="form-control" readonly="readonly">
                         </div>
-                    </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">

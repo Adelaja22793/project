@@ -11,10 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200327154221_mynewdatesss.cs" />
-    <Compile Remove="Migrations\20200327154221_mynewdatesss.Designer.cs" />
-    <Compile Remove="Migrations\20200329235047_SuperVisit.cs" />
-    <Compile Remove="Migrations\20200329235047_SuperVisit.Designer.cs" />
+    <Compile Remove="Migrations\20200404213759_Initials2.cs" />
+    <Compile Remove="Migrations\20200404213759_Initials2.Designer.cs" />
   </ItemGroup>
 
 

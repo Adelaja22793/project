@@ -6,62 +6,6 @@
 <div class="col-md-12">
     <div class="card card-primary">
         <input type="hidden" asp-for="Scaf.StudentSetUpId" id="studentId" name="course" />
-        <div class="modal fade" tabindex="-1" id="loginModal"
-             data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog modal-lg col-md-12" style="margin-left:25%;">
-                <div class="modal-content">
-                    <div class="modal-header btn-primary">
-                        <h4 class="modal-title" id="monthname" style="margin-left:36%">DAILY SUMMARY REPORT</h4>
-                        <button type="button" class="close" data-dismiss="modal">
-                            ×
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row" id="activities" style="margin-left:20%; ">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Week Number</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                        </div>
-                                        <input type="text" id="weekNo" value="Week 1" class="form-control" readonly="readonly">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label id="toDisplay">Monday Date</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                        </div>
-                                        <input type="hidden" id="value" />
-                                        <input type="date" id="monday_Date" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Trainee Students' Remark</label>
-                                    <textarea class="textarea" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
-                        font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
-                            <button type="button" id="BtnSubmitDailyActivities" class="btn btn-primary">Send Activities For Supervisor Cerification</button>
-
-                            <button type="button" id="btnHideModal" class="btn btn-danger button button4">
-                                Hide
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="form-group clearfix">
             <div class="icheck-info d-inline">
                 <input type="radio" name="r2" checked id="radioDanger1">
@@ -95,10 +39,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-7 daySelected">
                         <div class="form-group">
                             <label>Description of Work for The Month of:</label>
-                            <select class="form-control" id="myMonth"  style="width: 100%;">
+                            <select class="form-control" id="myMonth" style="width: 100%;">
                             </select>
                         </div>
                     </div>
@@ -132,100 +76,55 @@
             </div>
 
         </form>
-        <div class="card-body" id="myList" style="display:none">
-            <ul class="list-group list-group-horizontal-sm">
-                <li class="list-group-item">
-                    <button class="nav-link btn btn-warning" id="mondayDate">Monday Activities</button>
-                </li>
-                <li class="list-group-item">
-                    <button class="nav-link btn btn-success" id="tuesdayDate">Tuesday Activities </button>
-                </li>
-                <li class="list-group-item">
-                    <button class="nav-link btn btn-primary" id="wednesdayDate">Wednesday Activities </button>
-                </li>
-                <li class="list-group-item">
-                    <button class="nav-link btn btn-danger" id="thursdayDate">Thursday Activities</button>
-                </li>
-                <li class="list-group-item">
-                    <button class="nav-link btn btn-info" id="fridayDate">Friday Activities</button>
-                </li>
-            </ul>
-
-        </div>
-        <div class="card-body" id="Assessment">
-            <div class="form-group row" style="float:right; margin-bottom:5px; margin-top:0.4px">
-                <label for="inputEmail3" class="col-sm-3 col-form-label">Week</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control btn-warning" id="weekend" readonly="readonly">
-                </div>
-            </div>
-            <p style="clear:both"></p>
-            <table id="example2" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th style="width:4%; text-align:center">Week Day</th>
-                        <th style="width:4%; text-align:center">Date</th>
-                        <th style="width:45%; text-align:center">Summary of Activities</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Monday</td>
-                        <td>
-                            <input type="date" class="form-control" id="mondayDate" />
-                        </td>
-                        <td><textarea class="form-control" rows="3" id="mondayRemark" placeholder="Enter Summary of Activities for Monday"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Tuesday</td>
-                        <td>
-                            <input type="date" class="form-control" id="tuesdayDate" />
-                        </td>
-                        <td><textarea class="form-control" rows="3" id="tuesdayRemark" placeholder="Enter Summary of Activities for Tuesday"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Wednesday</td>
-                        <td>
-                            <input type="date" class="form-control" id="wednesdayDate" />
-                        </td>
-                        <td><textarea class="form-control" rows="3" id="wednesdayRemark" placeholder="Enter Summary of Activities for Wednesday"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Thursday</td>
-                        <td>
-                            <input type="date" class="form-control" id="thursdayDate" />
-                        </td>
-                        <td><textarea class="form-control" rows="3" id="thursdayRemark" placeholder="Enter Summary of Activities for Thursday"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Friday</td>
-                        <td>
-                            <input type="date" class="form-control" id="fridayDate" />
-                        </td>
-                        <td><textarea class="form-control" rows="3" id="fridayRemark" placeholder="Enter Summary of Activities for Friday"></textarea></td>
-                    </tr>
-
-                </tbody>
-                <tfoot style="display:none">
-                    <tr>
-                        <th style="width:4%; text-align:center">Day/Date</th>
-                        <th style="width:45%; text-align:center">Summary of Activities</th>
-                    </tr>
-                </tfoot>
-            </table>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label>Trainee Students' Remark</label>
-                        <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px;
-                                            font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+        <div class="card-body" id="myList">
+            <div class="modal-body">
+                <div class="row" id="activities">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Week Ending Date</label>
+                                <input type="text" id="weekend" class="form-control" readonly="readonly">
+                            </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label >Week Days</label>
+                            <select class="form-control" id="weekDay" style="width: 100%;">
+                                <option selected="selected" value="-1">--Select Day of Week--</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label id="toDisplay">Date</label>
+                                <input type="hidden" id="dayName" />
+                                <input type="date" id="monday_Date" onchange="myFunctionDate()" class="form-control">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                <button type="button" id="BtnSubmitDailyActivitiesAll" class="btn btn-warning">Send For Supervisor Cerification</button>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Trainee Students' Remark</label>
+                            <textarea class="textarea remarks" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                        font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-center" style="margin-left:20%; margin-bottom:3%;">
+                    <button type="button" id="BtnSubmitDailyActivities" class="btn btn-primary">Send Activities For Supervisor Cerification</button>
+
+                    <button type="button" id="btnHideModal" class="btn btn-danger button button4">
+                        View Previous Activities
+                    </button>
+                </div>
             </div>
         </div>
+        
     </div>
 </div>
 <script type="text/javascript">
@@ -235,7 +134,8 @@
         var month = (new Date()).getMonth();
         for (; month < monthNames.length; month++) {
             //option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
-            $('select').append('<option value ="' + monthNames[month] + '">' + monthNames[month] + '</option>');
+            //$('select').append('<option value ="' + monthNames[month] + '">' + monthNames[month] + '</option>');
+            $('div.daySelected select').append('<option value ="' + monthNames[month] + '">' + monthNames[month] + '</option>');
         }
 
 
@@ -255,130 +155,53 @@
             document.getElementById('myDay').style.display = "none";
             document.getElementById('myMonth').style.display = "block";
             document.getElementById('myForm').style.display = "block";
-            document.getElementById('Assessment').style.display = "none";
         });
         $('#radioDanger1').on('click', function () {
-            document.getElementById('myList').style.display = "none";
+            document.getElementById('myList').style.display = "block";
             document.getElementById('myDay').style.display = "block";
             document.getElementById('myMonth').style.display = "none";
             document.getElementById('myForm').style.display = "none";
-            document.getElementById('Assessment').style.display = "block";
         });
-        $('#mondayDate').on('click', function () {
-            $('#toDisplay').html("Monday Date");
-            $('#BtnSubmitDailyActivities').html("Send Monday's Activities For Supervisor Cerification");
-            $("#loginModal").modal('show');
-            $('#value').val("1");
-            var DayValue = $('#value').val();
+        $('#BtnSubmitDailyActivities').on('click', function () {
             var stdId = $('#studentId').val();
-
-            //var d = {
-            //    "Id": DayValue
-            //};
-            //var baseUrl = window.location.origin;
-            //$.ajax({
-            //    type: "GET",
-            //    url: baseUrl + '/Api/DailyActivities/' + DayValue,
-            //    data: JSON.stringify(d),
-            //    xhrFields: {
-            //        withCredentials: true
-            //    },
-            //    contentType: 'json',
-            //    error: function (data) {
-            //        alert(data.responseText);
-            //    },
-            //    failure: function (data) {
-            //        alert(data.responseText);
-            //    },
-            //    success: function (data) {
-            //        //console.log(data);
-            //        //$('#subMenu').prop("readonly", false);
-            //        //$('#pageURL').prop("readonly", false);
-
-            //    },
-            //});
-            document.getElementById('act').style.display = "block";
-            document.getElementById('weekday').style.display = "block";
-           
-        });
-        $('#tuesdayDate').on('click', function () {
-            $('#toDisplay').html("Tuesday Date");
-            $('#BtnSubmitDailyActivities').html("Send Tuesday's Activities For Supervisor Cerification");
-            $("#loginModal").modal('show');
-            $('#value').val("2");
-            document.getElementById('act').style.display = "block";
-            document.getElementById('weekday').style.display = "block";
-           
-        });
-        $('#wednesdayDate').on('click', function () {
-            $('#toDisplay').html("Wednesday Date");
-            $('#BtnSubmitDailyActivities').html("Send Wednesday's Activities For Supervisor Cerification");
-            $("#loginModal").modal('show');
-            $('#value').val("3");
-            document.getElementById('act').style.display = "block";
-            document.getElementById('weekday').style.display = "block";
-        });
-        $('#thursdayDate').on('click', function () {
-            $('#toDisplay').html("Thursday Date");
-            $('#BtnSubmitDailyActivities').html("Send Thursday's Activities For Supervisor Cerification");
-            $("#loginModal").modal('show');
-            $('#value').val("4");
-            document.getElementById('act').style.display = "block";
-            document.getElementById('weekday').style.display = "block";
-        });
-        $('#fridayDate').on('click', function () {
-            $('#toDisplay').html("Friday Date");
-            $('#BtnSubmitDailyActivities').html("Send Friday's Activities For Supervisor Cerification");
-            $("#loginModal").modal('show');
-            $('#value').val("5");
-            document.getElementById('act').style.display = "block";
-            document.getElementById('weekday').style.display = "block";
-        });
-        $("#btnHideModal").click(function () {
-            $("#loginModal").modal('hide');
-            $('#BtnSubmitDailyActivities').html("Send Activities For Supervisor Cerification");
-            $('#value').val("");
-        });
-        $('#BtnSubmitDailyActivitiesAll').on('click', function () {
-            var stdId = $('#studentId').val();
-            var mondayDate = $('#mondayDate').val();
-            var tuesdayDate = $('#tuesdayDate').val();
-            var wednesdayDate = $('#wednesdayDate').val();
-            var thursdayDate = $('#thursdayDate').val();
-            var fridayDate = $('#fridayDate').val();
-            var mondayRemark = $('#mondayRemark').val();
-            var tuesdayRemark = $('#tuesdayRemark').val();
-            var wednesdayRemark = $('#wednesdayRemark').val();
-            var thursdayRemark = $('#thursdayRemark').val();
-            var fridayRemark = $('#fridayRemark').val();
-
-            //var DayV = $('#value').val();
-            //var DayValue = parseInt(DayV);
-            var Approved = false;
-            var WeekNumber = $('#weekend').val();
-            var studentId = parseInt(stdId)
-            //alert(stdId); alert(monday_Date); alert(remark); alert(value); alert(WeekNumber);
-            if (stdId == "") {
-                alert("STUDENT DO NOT EXIST PLEASE CHECK?");
+            var weekend = $('#weekend').val();
+            var weekDay = $('#weekDay').val();
+            var monday_Date = $('#monday_Date').val();
+            var remarks = $('.remarks').val();
+            var studentId = parseInt(stdId);
+            //alert(weekDay);
+            if (studentId == "") {
+                alert("STUDENT DOES NOT EXISTS, PLEASE CHECK!!");
                 return false;
             }
-            var d = {
-                "StudentSetUpId": studentId,
-                //"CerifiedDate": CerifiedDate,
-                "Approved": Approved,
-                "WeekNumber": WeekNumber
-                //"EmployerSupervisorId": EmployerSupervisorId
+            if (weekDay == "-1") {
+                alert("PLEASE DAY OF THE WEEK");
+                return false;
+            }
+            if (monday_Date == "") {
+                alert("PLEASE ENTER DATE");
+                return false;
+            }
+            if (remarks == "") {
+                alert("PLEASE ENTER THE DESCRIPTION OF " + monday_Date + " WORK");
+                return false;
+            }
+            var dateDay = {
+                "Id": studentId
             };
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO SEND YOUR WORK TO YOUR SUPERVISOR ?");
+            if (confirmation === false) {
+                return false;
+            }
             var baseUrl = window.location.origin;
-            var url = baseUrl + '/Api/DailyActivities';
             $.ajax({
-                type: "POST",
-                url: url,
-                data: JSON.stringify(d),
+                type: "GET",
+                url: baseUrl + '/Api/DailyActivities/' + studentId,
+                data: JSON.stringify(dateDay),
                 xhrFields: {
                     withCredentials: true
                 },
-                contentType: "application/json; charset=utf-8",
+                contentType: 'json',
                 error: function (data) {
                     alert(data.responseText);
                 },
@@ -386,50 +209,109 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    console.log(data);
-                    var activities = data['id'];
-                    alert(activities);
-                    //alert(mondayDate);
-                    var d = {
-                        "DailyActivitiesId": activities,
-                        "Day1": mondayDate,
-                        "Day1Description": mondayRemark,
-                        "Day2": tuesdayDate,
-                        "Day2Description": tuesdayRemark,
-                        "Day3": wednesdayDate,
-                        "Day3Description": wednesdayRemark,
-                        "Day4": thursdayDate,
-                        "Day4Description": thursdayRemark,
-                        "Day5": fridayDate,
-                        "Day5Description": fridayRemark,
-                    };
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var DailyActivitiesId = data[i].id;
+                            var listDate = data[i].weekNumber;
+                            if (listDate == weekend) {
+                                //alert(listDate); alert(weekend);
+                                var d1 = {
+                                    "DailyActivitiesId": DailyActivitiesId,
+                                    "DayDate": monday_Date,
+                                    "DayDescription": remarks,
+                                    "WeekDayName": weekDay,
+                                };
+                                //alert(DailyActivitiesId), alert(monday_Date), alert(remarks)
+                                var baseUrl1 = window.location.origin;
+                                $.ajax({
+                                    type: "POST",
+                                    url: baseUrl1 + '/Api/DailyActivitiesLists',
+                                    data: JSON.stringify(d1),
+                                    xhrFields: {
+                                        withCredentials: true
+                                    },
+                                    contentType: "application/json; charset=utf-8",
+                                    error: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    failure: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    success: function (data) {
 
-                    $.ajax({
-                        type: "POST",
-                        url: baseUrl + '/Api/DailyActivitiesLists',
-                        data: JSON.stringify(d),
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        contentType: "application/json; charset=utf-8",
-                        error: function (data) {
-                            alert(data.responseText);
-                        },
-                        failure: function (data) {
-                            alert(data.responseText);
-                        },
-                        success: function (data) {
-
-                            alert("DAILY ACTIVITIES FOR WAS SUCCESSFULLY SAVED");
-                            //$('#monday_Date').val("");
-                            //$('#remark').val("");
-                            //$('#value').val("");
-                            //$("#loginModal").modal('hide');
+                                        alert("DAILY ACTIVITIES WAS SUCCESSFULLY SENT");
+                                        location.reload();
+                                    }
+                                });
+                            }
+                            else {
+                                
+                            }
+                            //console.log(list[i]);
                         }
-                    });
-                },
+                    }
+                    else {
+                        var d2 = {
+                            "StudentSetUpId": studentId,
+                            "WeekNumber": weekend
+                        };
+
+                        var baseUrl = window.location.origin;
+                        var url = baseUrl + '/Api/DailyActivities';
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: JSON.stringify(d2),
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            error: function (data) {
+                                alert(data.responseText);
+                            },
+                            failure: function (data) {
+                                alert(data.responseText);
+                            },
+                            success: function (data) {
+                                //console.log(data);
+                                var activities = data['id'];
+                                //alert(activities);
+                                //alert(mondayDate);
+                                var d = {
+                                    "DailyActivitiesId": activities,
+                                    "DayDate": monday_Date,
+                                    "DayDescription": remarks,
+                                    "WeekDayName": weekDay,
+                                };
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: baseUrl + '/Api/DailyActivitiesLists',
+                                    data: JSON.stringify(d),
+                                    xhrFields: {
+                                        withCredentials: true
+                                    },
+                                    contentType: "application/json; charset=utf-8",
+                                    error: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    failure: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    success: function (data) {
+
+                                        alert("DAILY ACTIVITIES WAS SUCCESSFULLY SENT");
+                                        location.reload();
+                                    }
+                                });
+                            },
+                        });
+                    }
+                    
+                }
             });
-        });
+            
+        })
         $('#monthlyAssessment').on('click', function () {
             var stdId = $('#studentId').val();
             var myMonth = $('select').val();
@@ -484,139 +366,100 @@
             });
         });
     });
-    
-     function getLastWeek() {
-          var today = new Date();
-         var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-         //alert(lastWeek);
-          return lastWeek;
-    }
+
     function dates() {
-    var dayOfWeek = 5;//friday
-    var date = new Date();
+        var dayOfWeek = 5;//friday
+        var date = new Date();
         var diff = date.getDay() - dayOfWeek;
         //alert(diff);
-    if (diff > 0) {
-        date.setDate(date.getDate() + 6);
-    }
-    else if (diff < 0) {
-        date.setDate(date.getDate() + ((-1) * diff))
+        if (diff > 0) {
+            date.setDate(date.getDate() + 6);
+        }
+        else if (diff < 0) {
+            date.setDate(date.getDate() + ((-1) * diff))
         }
         return date;
 
     }
-    function mondaydates() {
-        var dayOfWeek = 0;//friday
-        var mondaydate = new Date();
-            var mondaydiff = mondaydate.getDay() - dayOfWeek;
-            //alert(mondaydiff); alert(mondaydate);
-        if (mondaydiff > 0) {
-            mondaydate.setDate(mondaydate.getDate() + 1);
+
+    function myFunctionDate() {
+        var weekend = $('#weekend').val();
+        var monday_Date = $('#monday_Date').val();
+        var stdId = $('#studentId').val();
+        var weekDay = $('#weekDay').val();
+        var studentId = parseInt(stdId);
+        //alert(monday_Date);
+        if (weekDay == "-1") {
+            alert("PLEASE DAY OF THE WEEK");
+            $('#monday_Date').val("");
+            return false;
         }
-        else if (mondaydiff < 0) {
-            mondaydate.setDate(mondaydate.getDate() + ((-1) * mondaydiff))
-        }
-            return mondaydate;
+        var dateDay = {
+            "Id": studentId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/DailyActivities/' + studentId,
+            data: JSON.stringify(dateDay),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                var list = data
 
-    }
-    function tuesdaydates() {
-        var dayOfWeek = 2;//friday
-        var tuesdaydate = new Date();
-        var tuesdaydiff = tuesdaydate.getDay() - dayOfWeek;
-       // alert(tuesdaydiff); alert(tuesdaydate);
-        if (tuesdaydiff > 0) {
-            tuesdaydate.setDate(tuesdaydate.getDate() - 1);
-        }
-        else if (tuesdaydiff < 0) {
-            tuesdaydate.setDate(tuesdaydate.getDate() + ((-1) * tuesdaydiff))
-        }
-        return tuesdaydate;
+                for (var i = 0; i < list.length; i++) {
+                    var DailyActivitiesId = list[i].id;
+                    var listDate = list[i].weekNumber;
+                    if (listDate == weekend) {
+                        var dateDayList = {
+                            "Id": DailyActivitiesId
+                        };
+                        $.ajax({
+                            type: "GET",
+                            url: baseUrl + '/Api/DailyActivitiesListsDate/' + DailyActivitiesId,
+                            data: JSON.stringify(dateDayList),
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            contentType: 'json',
+                            error: function (data) {
+                                alert(data.responseText);
+                            },
+                            failure: function (data) {
+                                alert(data.responseText);
+                            },
+                            success: function (data) {
+                                //console.log(data);
+                                var Daylist = data
 
-    }
-    function wednesdaydates() {
-        var dayOfWeek = 3;//friday
-        var wednesdaydate = new Date();
-        var wednesdaydiff = wednesdaydate.getDay() - dayOfWeek;
-        //alert(mondaydiff); alert(mondaydate);
-        if (wednesdaydiff > 0) {
-            wednesdaydate.setDate(wednesdaydate.getDate() + 6);
-        }
-        else if (wednesdaydiff < 0) {
-            wednesdaydate.setDate(wednesdaydate.getDate() + ((-1) * wednesdaydiff))
-        }
-        return wednesdaydate;
-
-    }
-    function thursdaydates() {
-        var dayOfWeek = 0;//friday
-        var thursdate = new Date();
-        var thursdaydiff = thursdate.getDay() - dayOfWeek;
-        //alert(diff);
-        if (thursdate > 0) {
-            thursdate.setDate(thursdate.getDate() + 1);
-        }
-        else if (mondaydiff < 0) {
-            thursdate.setDate(thursdate.getDate() + ((-1) * thursdaydiff))
-        }
-        return thursdate;
-
-    }
-    function Nothing() {
-        var lastWeek = getLastWeek();
-
-        var getTosday = dates();
-        var getMondaydayDay = mondaydates();
-        var getTuesdayDay = tuesdaydates();
-        var getWednesdayDay = wednesdaydates();
-        var getThursdayDay = thursdaydates();
-
-
-        //MONDAY
-        var MondaylastWeekMonth = getMondaydayDay.getMonth() + 1;
-        var MondaylastWeekDay = getMondaydayDay.getDate();
-        var MondaylastWeekYear = getMondaydayDay.getFullYear();
-        //TUESDAY
-        var TuesdaylastWeekMonth = getTuesdayDay.getMonth() + 1;
-        var TuesdaylastWeekDay = getTuesdayDay.getDate();
-        var TuesdaylastWeekYear = getTuesdayDay.getFullYear();
-        //WEDNESDAY
-        var WednesdaylastWeekMonth = getWednesdayDay.getMonth() + 1;
-        var WednesdaylastWeekDay = getWednesdayDay.getDate();
-        var WednesdaylastWeekYear = getWednesdayDay.getFullYear();
-        //THURSDAY
-        var ThursdaylastWeekMonth = getThursdayDay.getMonth() + 1;
-        var ThursdaylastWeekDay = getThursdayDay.getDate();
-        var ThursdaylastWeekYear = getThursdayDay.getFullYear();
-        //FRIDAY
-        var lastWeekMonth = getTosday.getMonth() + 1;
-        var lastWeekDay = getTosday.getDate();
-        var lastWeekYear = getTosday.getFullYear();
-
-        var lastWeekDisplay = lastWeekMonth + "/" + lastWeekDay + "/" + lastWeekYear;
-
-
-
-
-        //MONDAY
-        var lastWeekDisplayPaddedMonday = ("00" + MondaylastWeekDay.toString()).slice(-2) + "/" + ("00" + MondaylastWeekMonth.toString()).slice(-2)
-            + "/" + ("0000" + MondaylastWeekYear.toString()).slice(-4);
-        $('#mondayDate').val(lastWeekDisplayPaddedMonday);
-        //TUESSDAY
-        var lastWeekDisplayPaddedTuesday = ("00" + TuesdaylastWeekDay.toString()).slice(-2) + "/" + ("00" + TuesdaylastWeekMonth.toString()).slice(-2)
-            + "/" + ("0000" + TuesdaylastWeekYear.toString()).slice(-4);
-        $('#tuesdayDate').val(lastWeekDisplayPaddedTuesday);
-        //WEDNESDAY
-        var lastWeekDisplayPaddedWednesday = ("00" + WednesdaylastWeekDay.toString()).slice(-2) + "/" + ("00" + WednesdaylastWeekMonth.toString()).slice(-2)
-            + "/" + ("0000" + WednesdaylastWeekYear.toString()).slice(-4);
-        $('#wednesdayDate').val(lastWeekDisplayPaddedWednesday);
-        //THURSDAY
-        var lastWeekDisplayPaddedThursday = ("00" + ThursdaylastWeekDay.toString()).slice(-2) + "/" + ("00" + ThursdaylastWeekMonth.toString()).slice(-2)
-            + "/" + ("0000" + ThursdaylastWeekYear.toString()).slice(-4);
-        $('#thursdayDate').val(lastWeekDisplayPaddedThursday);
-        //FRIDAY
-        var lastWeekDisplayPadded = ("00" + lastWeekDay.toString()).slice(-2) + "/" + ("00" + lastWeekMonth.toString()).slice(-2)
-            + "/" + ("0000" + lastWeekYear.toString()).slice(-4);
-        $('#fridayDate').val(lastWeekDisplayPadded);
+                                for (var i = 0; i < Daylist.length; i++) {
+                                    var DaylistId = Daylist[i].id;
+                                    var DaylistDate = Daylist[i].dayDate;
+                                    var newDate = DaylistDate.substring(0, 10);
+                                    //alert(newDate);
+                                    if (newDate == monday_Date) {
+                                        alert("DAILY ACTIVITIES OF " + newDate + " OF WEEK ENDING " + weekend + " HAS ALREADY BEEN SENT FOR SUPERVISOR APPROVAL")
+                                        $('#monday_Date').val("");
+                                        return false;
+                                    }
+                                    //console.log(Daylist[i]);
+                                }
+                            }
+                        });
+                    }
+                    //console.log(list[i]);
+                }
+            }
+        });
     }
 </script>
 

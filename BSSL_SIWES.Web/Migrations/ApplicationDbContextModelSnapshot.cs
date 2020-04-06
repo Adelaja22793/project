@@ -403,6 +403,9 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("CPersonEmail")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CPersonPhone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -412,11 +415,11 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DeactDate")
+                    b.Property<DateTime?>("DeactDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Deactivate")
-                        .HasColumnType("bit");
+                    b.Property<string>("Deactivate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -528,34 +531,28 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("AllowDisporal")
-                        .HasColumnType("bit");
+                    b.Property<int>("CarryCap")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("DelistInst")
-                        .HasColumnType("bit");
+                    b.Property<int?>("CourseGrpSetupId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("InstypeId")
+                    b.Property<int?>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InstitutionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("baseCarry")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("MasterListDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MaxSiwesCap")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinVisit4Super")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("MustNotExcCap")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("StudentAmt")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("SuperAmt")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseGrpSetupId");
+
+                    b.HasIndex("CoursesId");
+
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("InstCarryCap");
                 });
@@ -568,12 +565,14 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Deactivate")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -591,10 +590,10 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InstTypeSetupId")
+                    b.Property<int?>("InstitutionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -602,7 +601,7 @@ namespace BSSL_SIWES.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstTypeSetupId");
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("InstLevelStudy");
                 });
@@ -666,11 +665,14 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Datedectivated")
+                    b.Property<DateTime?>("Datedectivated")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Deactivate")
-                        .HasColumnType("bit");
+                    b.Property<string>("Deactivate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InstTypeSetupId")
                         .HasColumnType("int");
@@ -688,6 +690,12 @@ namespace BSSL_SIWES.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Superagency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
@@ -1000,34 +1008,13 @@ namespace BSSL_SIWES.Web.Migrations
                     b.Property<int>("DailyActivitiesId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Day1")
+                    b.Property<DateTime>("DayDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Day1Description")
+                    b.Property<string>("DayDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Day2")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Day2Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Day3")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Day3Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Day4")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Day4Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Day5")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Day5Description")
+                    b.Property<string>("WeekDayName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1404,13 +1391,26 @@ namespace BSSL_SIWES.Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SiwesData.Setup.InstCarryCap", b =>
+                {
+                    b.HasOne("SiwesData.Setup.CourseGrpSetup", "CourseGrpSetup")
+                        .WithMany()
+                        .HasForeignKey("CourseGrpSetupId");
+
+                    b.HasOne("SiwesData.Setup.Courses", "Courses")
+                        .WithMany()
+                        .HasForeignKey("CoursesId");
+
+                    b.HasOne("SiwesData.Setup.Institution", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId");
+                });
+
             modelBuilder.Entity("SiwesData.Setup.InstLevelStudy", b =>
                 {
-                    b.HasOne("SiwesData.Setup.InstTypeSetup", "InstTypeSetup")
+                    b.HasOne("SiwesData.Setup.Institution", "Institution")
                         .WithMany()
-                        .HasForeignKey("InstTypeSetupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InstitutionId");
                 });
 
             modelBuilder.Entity("SiwesData.Setup.InstTypeSetup", b =>
@@ -1422,7 +1422,7 @@ namespace BSSL_SIWES.Web.Migrations
                         .IsRequired();
 
                     b.HasOne("SiwesData.Setup.InstCatSetup", "InstCatSetup")
-                        .WithMany("InstTypes")
+                        .WithMany()
                         .HasForeignKey("InstCatSetupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

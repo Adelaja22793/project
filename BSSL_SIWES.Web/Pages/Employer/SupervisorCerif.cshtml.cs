@@ -27,7 +27,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
         public List<SelectListItem> SelectMonth { get; set; }
         public async Task OnGetAsync(int? id)
         {
-            id = 1;
+            id = 3;
             
             StudentName = new List<SelectListItem>
             {

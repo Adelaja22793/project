@@ -32,9 +32,9 @@ namespace BSSL_SIWES.Web.Pages.Institution
             {
                 return RedirectToPage("./Student_Visit_Form");
             }
-            InstitutionOfficer = await _context.InstitutionOfficers.FindAsync(id = 3);
+            InstitutionOfficer = await _context.InstitutionOfficers.FindAsync(id = 19);
             StudentSetUp = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x => x.Institution)
-                .Where(x => x.Suspended == false && x.InstitutionOfficerId == 3)
+                .Where(x => x.Suspended == false && x.InstitutionOfficerId == 19)
                 .ToListAsync();
 
             if (StudentSetUp == null)
