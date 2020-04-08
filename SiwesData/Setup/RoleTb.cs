@@ -10,5 +10,6 @@ namespace SiwesData.Setup
     public class RoleTb: IdentityRole
     {
         public string RoleId { get; set; }
+       
     }
 }

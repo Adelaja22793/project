@@ -24,7 +24,9 @@ namespace BSSL_SIWES.Web.ViewModels
         //public int LGAId { get; set; }
         //public int StateId { get; set; }
         public string PhoneNumber { get; set; }
+        [Required]
         public string Email { get; set; }
+        [EmailAddress]
         public string StudentType { get; set; }
         public string SiwesYear { get; set; }
         public string BatchNo { get; set; }

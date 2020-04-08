@@ -1,0 +1,336 @@
+﻿@page
+@inject SiwesData.Data.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+@model BSSL_SIWES.Web.AssignMenuModel
+
+@{
+    ViewData["Title"] = "AssignMenu";
+}
+
+<div class="content-wrapper" style="margin-top:-50px">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">User Definition</h3>
+                        </div>
+                        <form>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <div class="form-group">
+                                            <label asp-for="MenuAccess.RoleId" class="control-label"></label>
+                                            @*<select asp-for="MenuAccess.RoleId" class="form-control menuID" name="myMenu" id="myMenu" asp-items="ViewBag.RoleId">
+                                <option value="0">--Select Menu--</option>
+                            </select>*@
+                                            <input type="hidden" id="orgNameId" />
+                                            <input type="text" id="orgName" asp-for="MenuAccess.RoleId" onchange="MyFunctionOrganName()" class="form-control">
+                                            <span asp-validation-for="MenuAccess.RoleId" class="text-danger"></span>
+                                        </div>
+                                        @*<div class="form-group">
+                            <label asp-for="MenuAccess.SubMenuId" class="control-label"></label>
+                            <select asp-for="MenuAccess.SubMenuId" class="form-control" asp-items="ViewBag.SubMenuId"></select>
+                        </div>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                            <table id="tabId" class="table table-bordered" border="0">
+                                <thead style="background-color:steelblue;">
+                                    <tr>
+                                        @*<th style="width:6%; text-align:center">Actions</th>*@
+                                        <th style="width:0.25%; text-align:center">S/N</th>
+
+                                        <th style="width:25%; text-align:center">SubMenu Name</th>
+                                        <th style="width:25%; text-align:center">MainMenu Name</th>
+                                        <th style="width:6%; text-align:center">Attach</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @for (int i = 0; i < Model.SubMenus.Count; i++)
+                                    {
+                                        var items = Model.SubMenus[i];
+
+                                        <tr>
+
+                                            <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
+
+                                            <td class="subname @i" id="subname" style="width:25%; text-align:left">@items.Name</td>
+                                            <td class="menname @i" id="menname" style="width:25%; text-align:left">@items.Menu.Name</td>
+                                            <td class="chactive @i" id="chactive" style="width:6%; text-align:left">
+                                                @*<input type="checkbox" hidden id="inputs" class="hddsubmenuid @i" value="@items.Id">*@
+                                                @*<input type="checkbox" hidden id="inputs" class="hddmenuid @i" value="@items.Menu.Id">*@
+                                                <input type="checkbox"  name="inputs"  class="hddsubmenuid @i" value="@items.Id"/>
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" id="btnSave" value="Create" class="btn btn-primary" />
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function GetSelected() {
+        //Reference the Table.
+        var grid = document.getElementById("tabId");
+
+        //Reference the CheckBoxes in Table.
+        var checkBoxes = grid.getElementsByTagName("INPUT");
+        var message = "Id Name                  Country\n";
+
+        //Loop through the CheckBoxes.
+        for (var i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].checked) {
+                var row = checkBoxes[i].parentNode.parentNode;
+
+                message += row.cells[1].innerHTML;
+                message += "   " + row.cells[2].innerHTML;
+                message += "   " + row.cells[3].innerHTML;
+                message += "   " + row.cells[4].innerHTML;
+                //message += "\n";
+                alert(message);
+                //for (var j = 0; j < input.length; j++) {
+                //    var currentRow = $(this).closest("tr");
+                //    var selectedIndex = currentRow.find("td:eq(0)").html();
+
+                //    var editindex = $(this).attr('AddreEdit');
+                //    var form = $('.hddsubmenuid.' + editindex).val();
+                //    var sub = $('.hddmenuid.' + editindex).val();
+                //}
+
+            }
+
+        }
+
+        //Display selected Row data in Alert Box.
+        //alert(form);
+        //alert(sub);
+
+
+        for (var j = 0; j < checkBoxes.length; j++) {
+            var row = checkBoxes[j].parentNode.parentNode;
+            var currentRow = $(this).closest("tr");
+            var selectedIndex = currentRow.find("td:eq(0)").html();
+            var editindex = $(this).attr('AddreEdit');
+            var form = $('.hddsubmenuid.' + editindex).val();
+            var sub = $('.hddmenuid.' + editindex).val();
+            alert(form);
+            alert(sub);
+        }
+    }
+    $(function () {
+    $("#btnGet").click(function () {
+            var message = "Id Name                  Country\n";
+ 
+            //Loop through all checked CheckBoxes in GridView.
+            $("#tabId input[type=checkbox]:checked").each(function () {
+                var row = $(this).closest("tr")[0];
+                message += row.cells[1].innerHTML;
+                message += "   " + row.cells[2].innerHTML;
+                message += "   " + row.cells[3].innerHTML;
+                
+                message += "\n";
+            });
+ 
+            //Display selected Row data in Alert Box.
+            alert(message);
+            return false;
+        });
+    });
+
+</script>
+<script type="text/javascript">
+     var orgName = [];
+
+    function AddOrgName(lbl, val) {
+        orgName.push({ label: lbl, value: val});
+    }
+    $(document).ready(function () {
+        @foreach (var item in Model.RoleTb)
+        {
+            @:AddOrgName('@item.Name', '@item.Id');
+        }
+            $("#orgName").autocomplete({
+                source: orgName,
+                select: function (event, ui) {
+                    $('#orgNameId').val(ui.item.value);
+                    $('#orgName').val(ui.item.label);
+                    return false;
+                }
+            });
+        });
+        function MyFunctionOrganName() {
+            var orgNameId = document.getElementById('orgNameId').value;
+            var d = {
+                "Id": orgNameId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/RoleTbs/' + orgNameId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                   
+                },
+            });
+
+        
+    }
+   
+    
+    //$("body").on("click", "#btnSave", function () {
+        $("#btnSave").on('click',  function () {
+        alert("jdhffjdgchdghc");
+       
+        var name = $("#orgName").val();
+        $("#tabId TBODY TR").each(function () {
+
+            var row = $(this);
+            var menuAccess = new Array();
+            var item = {};
+            item.se_no = row.find("TD").eq(0).html();
+            item.subname = row.find("TD").eq(1).html();
+            item.menname = row.find("TD").eq(2).html();
+            menuAccess.push(item);
+        
+                $("input[name='inputs']:checked").each(function () {
+                        listinput.push(this.value);
+                });
+            });
+        var send = JSON.stringify(item);
+        var save = JSON.stringify(listinput);
+        //$(function () {
+        // var checkedList = [],
+        //    uncheckedList = [];
+
+        //// push ckecked id into checkedList
+        //$('input:checked').each(function() {
+        //    checkedList.push($(this).attr('class'));
+        //});
+
+        //// push unckecked id into uncheckedList
+        //$('input').not(':checked').each(function() {
+        //    uncheckedList.push($(this).attr('class'));
+        //});
+           
+        //});
+            //Loop through the Table rows and build a JSON array.
+        //var menuAccess = new Array();
+        //$("#tabId TBODY TR").each(function () {
+        //        //var Roleid = document.getElementById('orgName').value;
+        //        var row = $(this);
+        //        var item = {};
+        //        item.orgName = document.getElementById('orgName').value;
+        //        item.se_no = row.find("TD").eq(0).html();
+        //        item.subname = row.find("TD").eq(1).html();
+        //        item.menname = row.find("TD").eq(2).html();
+        //        item.chactive = row.find("TD").eq(3).html();
+        //        //alert(item.orgName);
+        //        //alert(item.se_no);
+        //        //alert(item.subname);
+        //        //alert(item.menname);
+        //        //alert(item.chactive);
+        //        menuAccess.push(item);
+        //        //$('#orgName').val(Roleid);
+        //         var listInput = [];
+        //        if ($('input[type=checkbox]').is(':checked')) {
+        //        $('input[type=checkbox]').each(function () {
+        //            if ($(this).is(':checked')) {
+        //                listInput.push($(this).attr('value'));
+        //                //listInput.push($(this).val());
+        //            }
+        //        });
+        //        $('#result').html(listInput.join(", "));
+        //    }
+
+        //});
+       
+ 
+             //menuAccess = JSON.stringify({ 'model': menuAccess });
+             //console.log(this.value);
+            var baseUrl = window.location.origin;
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/Api/MenuAccesses',
+                data: JSON.stringify(menuAccess),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    alert(r + " record(s) inserted.");
+                }
+            });
+    });
+     //$("#btnSave").click(function(e) {
+     //     var menuAccess;
+     //     menuAccess = storeTblValues()
+     //     menuAccess = JSON.parse(menuAccess);
+     //       function storeTblValues()
+     //     {
+     //         var menuAccess = new Array();
+
+     //     $("#tabId tr").each(function(row, tr){
+     //       menuAccess[row]={
+     //           subname: $(tr).find("TD").eq(1).text(),
+     //           menname: $(tr).find("TD").eq(2).text(),
+     //           chactive : $(tr).find("TD").eq(3).find("input").val(),
+               
+     //       }
+     //     });
+     //     return menuAccess;
+     //     }
+     //     var menuAccess;
+     //     menuAccess = JSON.parse(storeTblValues());
+           
+     //     $.ajax({
+     //       type: "POST",
+     //       url: baseUrl + '/Api/MenuAccesses',
+     //       data: {pTableData: menuAccess},
+     //       success: function(data){
+     //           $("#success").html(data);
+     //       }
+     //     });
+     //       });
+   
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
