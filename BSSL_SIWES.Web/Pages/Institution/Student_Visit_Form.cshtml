@@ -97,9 +97,18 @@
     }
     $(document).ready(function () {
         $('.textarea').summernote();
-        @foreach (var item in Model.StudentSetUp)
+        @{
+        if (Model.StudentSetUp != null)
         {
-            @:AddOrgName('@item.MatricNumber', '@item.Id');
+            foreach (var item in Model.StudentSetUp)
+            {
+                @:AddOrgName('@item.MatricNumber', '@item.Id');
+            }
+        }
+        else
+        {
+
+        }
         }
         $( "#matricNo" ).autocomplete({
             source: orgName,
@@ -130,7 +139,7 @@
             }
             if (newStudentId != "" && employerId == "") {
                 alert("THE SELECTED STUDENT HAVE NOT BEEN ATTACHED/ACCEPTED BY EMPLOYER");
-            
+
                 return false;
             }
             if (areaToImprove == "") {
@@ -187,7 +196,7 @@
                     $(".studentInvolvement").summernote('code', '');
                 }
             });
-            
+
         });
     });
     function pageRedirect() {

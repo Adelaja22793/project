@@ -91,15 +91,15 @@
                             var Name = items.StudentSetUp.Surname + ' ' + items.StudentSetUp.OtherNames;
                             var Level = items.StudentSetUp.YearOfStudy + ' ' + "Level";
                             int StudentId = items.StudentSetUp.Id;
-                            var courseName = await db.StudentSetUps.Include(c => c.Courses).Include(c => c.InstitutionOfficer).ThenInclude(x => x.Institution)
-                                .Where(c => c.Id == StudentId && c.CoursesId == c.Courses.Id && c.InstitutionOfficerId == c.InstitutionOfficer.Id).FirstOrDefaultAsync();
+                            var courseName = await db.StudentSetUps.Include(c => c.Courses).Include(x => x.Institution)
+                                .Where(c => c.Id == StudentId && c.CoursesId == c.Courses.Id && c.InstitutionId == c.Institution.Id).FirstOrDefaultAsync();
 
                             <tr>
                                 <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
                                 <td class="matricNo @i" style="width:15%; text-align:left">@items.StudentSetUp.MatricNumber</td>
                                 <td class="name @i" style="width:18%; text-align:left">@Name</td>
                                 <td class="courseName @i" style="width:18%; text-align:left">@courseName.Courses.Name</td>
-                                <td class="schoolName @i" style="width:18%; text-align:left">@courseName.InstitutionOfficer.Institution.Name</td>
+                                <td class="schoolName @i" style="width:18%; text-align:left">@courseName.Institution.Name</td>
                                 <td class="level @i" style="width:10%; text-align:left">@Level</td>
                                 <td class="supervisedBy @i" style="width:20%; text-align:left">@items.EmployerSupervisor.Name</td>
 
