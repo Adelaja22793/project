@@ -1,0 +1,359 @@
+﻿@page
+@inject SiwesData.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+@model BSSL_SIWES.Web.Pages.Employer.EmployerSetupModel
+@{
+    ViewData["Title"] = "EmployerSetup";
+}
+
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Employer Bio Data</h3>
+        </div>
+        <form role="form" method="post">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>RC Number</label>
+                            <input type="hidden" id="employerID">
+                            <input type="text" id="employerNumber" asp-for="EmployerSuperSetup.Code" onchange="MyFunctionRcNumber()"
+                                   class="form-control" placeholder="Enter RC Number">
+                            <input type="hidden" id="employerNumberId" />
+                            <span asp-validation-for="EmployerSuperSetup.Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label>Employer Name</label>
+                            <input type="text" id="employerName" asp-for="EmployerSuperSetup.Name" class="form-control"
+                                   placeholder="Enter Employer Name">
+                            <span asp-validation-for="EmployerSuperSetup.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Official Address</label>
+                            <input type="text" id="offAddress" asp-for="EmployerSuperSetup.Address1" class="form-control" placeholder="Enter Official Address">
+                            <span asp-validation-for="EmployerSuperSetup.Address1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Alternate Address</label>
+                            <input type="text" id="altAddress" asp-for="EmployerSuperSetup.Address2" class="form-control" placeholder="Enter Alternate Address">
+                            <span asp-validation-for="EmployerSuperSetup.Address2" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Resident Country</label>
+                            <select class="form-control" asp-items="ViewBag.NationalityId"
+                                    style="width: 100%;"
+                                    onchange="MyFunctionNationality()" id="nationChange">
+                                <option selected="selected" value="-1">-- Select Resident Country--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Resident State</label>
+                            <select class="form-control" 
+                                    id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                <option selected="selected" value="-1">-- Select Resident State--</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Resident City</label>
+                            <select class="form-control myLGAS" asp-for="EmployerSuperSetup.LGAId"
+                                    id="myLGA" style="width: 100%;">
+                                <option selected="selected" value="-1">--Select Resident City--</option>
+                            </select>
+                            <span asp-validation-for="EmployerSuperSetup.LGAId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Official Phone No.</label>
+                            <input type="text" class="form-control" asp-for="EmployerSuperSetup.PhoneNo" id="phone1" placeholder="Enter Official Phone No.">
+                            <span asp-validation-for="EmployerSuperSetup.PhoneNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Alternate Phone No.</label>
+                            <input type="text" class="form-control" id="phone2" asp-for="EmployerSuperSetup.PhoneNo2" placeholder="Enter Alternate Phone No.">
+                            <span asp-validation-for="EmployerSuperSetup.PhoneNo2" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input type="text" class="form-control" asp-for="EmployerSuperSetup.Email" id="email" placeholder="Enter Official Email">
+                            <span asp-validation-for="EmployerSuperSetup.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Coporation Type</label>
+                            <select class="form-control" id="typeCoporation" asp-for="EmployerSuperSetup.CoporationType" style="width: 100%;">
+                                <option selected="selected" value="-1">--Select Type of Coporation--</option>
+                                <option value="Limited Liability Company">Limited Liability Company</option>
+                                <option value="Publicly Held Corporation">Publicly Held Corporation</option>
+                                <option value="Closely Held Corporation">Closely Held Corporation</option>
+                                <option value="Non Profit Corporation">Non Profit Corporation</option>
+                                <option value="Professional Corporation">Professional Corporation</option>
+                                <option value="S Corporation">S Corporation</option>
+                                <option value="C Corporation">C Corporation</option>
+                            </select>
+                            <span asp-validation-for="EmployerSuperSetup.CoporationType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Type Of Business</label>
+                            <input type="text" class="form-control" asp-for="EmployerSuperSetup.BusinessType" id="busType" placeholder="Enter Type Of Business" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Year of Incoporation</label>
+                            <input type="text" class="form-control" id="incopYear" asp-for="EmployerSuperSetup.YearOfIncop" placeholder="Enter Year of Incoporation" />
+                            <span asp-validation-for="EmployerSuperSetup.YearOfIncop" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Business Line</label>
+                            <select class="form-control BusinessLine1" id="BusinessLine" asp-for="EmployerSuperSetup.BusinessLineId" asp-items="ViewBag.BusinessLine" style="width: 100%;">
+                                <option selected="selected" value="-1">--Select Business Line--</option>
+                            </select>
+                            <span asp-validation-for="EmployerSuperSetup.BusinessLineId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label >ITF Area Office Attached To</label>
+                            <select class="form-control AreaOffice1" id="AreaOffice" asp-for="EmployerSuperSetup.AreaOfficeId" asp-items="ViewBag.AreaOffice" style="width: 100%;">
+                                <option selected="selected" value="-1">--Select Area Office--</option>
+                            </select>
+                            <span asp-validation-for="EmployerSuperSetup.AreaOfficeId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="text" asp-for="EmployerSuperSetup.WebAddress" required class="form-control" id="website" placeholder="Enter Company Official Website">
+                            <span asp-validation-for="EmployerSuperSetup.WebAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-center" style="margin-left:45%; margin-bottom:3%;">
+                    <button type="submit" id="mySubmit" class="btn btn-primary">Submit Employer Record</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    var orgRepName = [];
+    function AddOrgRepName(lbl, newLbl, val) {
+        orgRepName.push({ label: lbl, another: newLbl, value: val });
+    }
+    $(document).ready(function () {
+        $('#employerNumber').val("");
+        $('#employerName').val("");
+        $('#offAddress').val("");
+        $('#altAddress').val("");
+        $('#website').val("");
+
+        $('#nationChange').val("-1");
+        $('#myState').val("-1");
+        $('#myLGA').val("-1");
+
+        $('#phone1').val("");
+        $('#phone2').val("");
+        $('#email').val("");
+        $('#typeCoporation').val("-1");
+
+        $('#busType').val("");
+        $('#incopYear').val("");
+        $('.BusinessLine').val("-1");
+        $('.AreaOffice').val("-1");
+
+        @{
+        if (Model.EmployerSuperSetupList != null)
+        {
+            foreach (var item in Model.EmployerSuperSetupList)
+            {
+                @:AddOrgRepName('@item.Code', '@item.Name', '@item.Id');
+            }
+        }
+        else
+        {
+
+        }
+        }
+
+        $( "#employerNumber" ).autocomplete({
+            source: orgRepName,
+            select: function (event, ui) {
+                $('#employerNumberId').val(ui.item.value);
+                $('#employerNumber').val(ui.item.label);
+                $('#employerName').val(ui.item.another);
+                return false;
+            }
+        });
+
+    });
+    function MyFunctionRcNumber() {
+        var employerNumber = document.getElementById('employerNumberId').value;
+        var employerNumberId = parseInt(employerNumber);
+        //alert(employerNumberId);
+        var d = {
+            "Id": employerNumberId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/EmployerSuperSetups/' + employerNumberId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                console.log(data);
+                $('#employerNumber').val(data['code']);
+                $('#employerName').val(data['name']);
+                $('#offAddress').val(data['address1']);
+                $('#altAddress').val(data['address2']);
+                $('#website').val(data['webAddress']);
+
+                //$('#nationChange').val();
+                //$('#myState').val();
+                $('#myLGA').val(data['lga']['name']);
+
+                $('#phone1').val(data['phoneNo']);
+                $('#phone2').val(data['phoneNo2']);
+                $('#email').val(data['email']);
+                $('#typeCoporation').val(data['coporationType']);
+
+                $('#busType').val(data['businessType']);
+                $('#incopYear').val(data['yearOfIncop']);
+                $('#BusinessLine').val(data['businessLine']['description']);
+                $('#AreaOffice').val(data['areaOffice']['description']);
+
+            },
+        });
+    }
+    function MyFunctionNationality() {
+        var nationId = document.getElementById('nationChange').value;
+        var d = {
+            "Id": nationId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/States/' + nationId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myState').empty();
+                    $('#myState').append('<option value=-1>--Select State--</option>');
+                }
+                $('#myState').append(option);
+
+            },
+        });
+
+    }
+    function MyFunctionState() {
+        var stateId = document.getElementById('myState').value;
+        // alert(stateId);
+        var d = {
+            "Id": stateId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/LGAs/' + stateId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                // console.log(data);
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myLGA').empty();
+                    $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                }
+
+                //$('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                $('#myLGA').append(option);
+
+            },
+        });
+
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
