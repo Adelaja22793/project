@@ -26,7 +26,8 @@ namespace SiwesData
         public DbSet<Menu.MenuAccess> MenuAccess { get; set; }
         public DbSet<Menu.SubMenu> SubMenu { get; set; }
         public DbSet<Setup.AreaOffice> AreaOffices { get; set; }
-
+        public DbSet<Setup.BusinessLine> businessLine { get; set; }
+        public DbSet<Employer.EmployerSetupMain> EmployerSetupMain { get; set; }
 
         public DbSet<Students.Scaf> Scafs { get; set; }
         public DbSet<Students.StudentSetUp> StudentSetUps { get; set; }
