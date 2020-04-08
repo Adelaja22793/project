@@ -496,128 +496,142 @@
                 },
             });
         });
+      @if (Model.ListOfCourses != null)
+      {
         @foreach (var item in Model.ListOfCourses)
         {
             @:addAvailableTags('@item.Name', '@item.Id');
         }
-         @foreach (var item in Model.InstitutionOfficers)
-        {
+      }
+    @if (Model.InstitutionOfficers != null)
+    {
+            @foreach (var item in Model.InstitutionOfficers)
+            {
             @:addsupervisors('@item.IntOfficerName.ToString().Trim()', '@item.Id');
         }
+    }
+      @if (Model.ListOfStudent != null)
+      {
         @foreach (var item in Model.ListOfStudent)
         {
             @:addStudents('@item.MatricNumber', '@item.Id');
         }
+          }
+          else
+          {
+
+
+          }
         $("#courseStudy" ).autocomplete({
-            source: availableTags,
+              source: availableTags,
             select: function (event, ui) {
                 $('#courseStudy').val(ui.item.label);
                 $('#courseStudyId').val(ui.item.value);
-                return false;
-            }
-        });
+          return false;
+      }
+      });
         $("#superName").autocomplete({
-            source: supervisors,
+                  source: supervisors,
             select: function (event, ui) {
                 $('#superName').val(ui.item.label);
                 $('#superId').val(ui.item.value);
-                return false;
-            }
-        });
+                  return false;
+              }
+              });
         $("#matricNumber").autocomplete({
-            source: studentList,
+                  source: studentList,
             select: function (event, ui) {
                 $('#matricNumber').val(ui.item.label);
                 $('#studentId').val(ui.item.value);
-                return false;
-            }
-        });
+                  return false;
+              }
+              });
         $('#myUpdateForm').on('click', function () {
-            var studtId =  $('#studentId').val();
-            var matricNumber = $('#matricNumber').val();
-            var surname = $('#surname').val();
-            var otherNames  = $('#otherNames').val();
-            var matricYear = $('#matricYear').val();
-            var courseStudy  = $('#courseStudy').val();
-            var courseStudyId =  $('#courseStudyId').val();
-            var yearOfStudy = $('#yearOfStudy').val();
-            var phoneNo = $('#phoneNo').val();
-            var email = $('#email').val();
-            var nationaId = $('#nationChange').val();
-            var myState = $('#myState').val();
-            var myLGA =  $('#myLGA').val();
-            var batchNo = $('#batchNo').val();
-            var regYear = $('.regYear').val();
-            var studentType = $('#studentType').val();
-            var superId = $('#superId').val();
-            var superName = $('#superName').val();
-            var studentId = parseInt(studtId);
-            var InstitutionOfficerId = parseInt(superId);
-            var courseId = parseInt(courseStudyId);
-            var nationalityId = parseInt(nationaId);
-            //alert(studentId);
-            if (studentId == "") {
-                alert("STUDENT DOES NOT HAVE RECORDS TO UPDATE");
-                return false;
-            }
-            if (surname == "") {
-                alert("PLEASE ENTER STUDENT SURNAME");
-                return false;
-            }
-            if (otherNames == "") {
-                alert("PLEASE ENTER STUDENT OTHER NAMES");
-                return false;
-            }
-            if (matricYear == "") {
-                alert("PLEASE SELECT STUDENT MATRIC. YEAR");
-                return false;
-            }
-            if (courseId == "") {
-                alert("PLEASE SELECT A COURSE OF STUDY");
-                return false;
-            }
-            if (yearOfStudy == "") {
-                alert("PLEASE YEAR OF STUDY");
-                return false;
-            }
-            if (phoneNo == "") {
-                alert("PLEASE ENTER STUDENT PHONE NUMBER");
-                return false;
-            }
-            if (email == "") {
-                alert("PLEASE ENTER STUDENT EMAIL ADDRESS");
-                return false;
-            }
+                  var studtId =  $('#studentId').val();
+                  var matricNumber = $('#matricNumber').val();
+                  var surname = $('#surname').val();
+                  var otherNames  = $('#otherNames').val();
+                  var matricYear = $('#matricYear').val();
+                  var courseStudy  = $('#courseStudy').val();
+                  var courseStudyId =  $('#courseStudyId').val();
+                  var yearOfStudy = $('#yearOfStudy').val();
+                  var phoneNo = $('#phoneNo').val();
+                  var email = $('#email').val();
+                  var nationaId = $('#nationChange').val();
+                  var myState = $('#myState').val();
+                  var myLGA =  $('#myLGA').val();
+                  var batchNo = $('#batchNo').val();
+                  var regYear = $('.regYear').val();
+                  var studentType = $('#studentType').val();
+                  var superId = $('#superId').val();
+                  var superName = $('#superName').val();
+                  var studentId = parseInt(studtId);
+                  var InstitutionOfficerId = parseInt(superId);
+                  var courseId = parseInt(courseStudyId);
+                  var nationalityId = parseInt(nationaId);
+                  //alert(studentId);
+                  if (studentId == "") {
+                      alert("STUDENT DOES NOT HAVE RECORDS TO UPDATE");
+                      return false;
+                  }
+                  if (surname == "") {
+                      alert("PLEASE ENTER STUDENT SURNAME");
+                      return false;
+                  }
+                  if (otherNames == "") {
+                      alert("PLEASE ENTER STUDENT OTHER NAMES");
+                      return false;
+                  }
+                  if (matricYear == "") {
+                      alert("PLEASE SELECT STUDENT MATRIC. YEAR");
+                      return false;
+                  }
+                  if (courseId == "") {
+                      alert("PLEASE SELECT A COURSE OF STUDY");
+                      return false;
+                  }
+                  if (yearOfStudy == "") {
+                      alert("PLEASE YEAR OF STUDY");
+                      return false;
+                  }
+                  if (phoneNo == "") {
+                      alert("PLEASE ENTER STUDENT PHONE NUMBER");
+                      return false;
+                  }
+                  if (email == "") {
+                      alert("PLEASE ENTER STUDENT EMAIL ADDRESS");
+                      return false;
+                  }
 
-            if (batchNo == "") {
-                alert("PLEASE SELECT SIWES BATCH NUMBER");
-                return false;
-            }
-            if (regYear == "") {
-                alert("PLEASE SELECT STUDENT YEAR OF REGISTRATION");
-                return false;
-            }
-            if (studentType == "") {
-                alert("PLEASE SELECT STUDENT TYPE");
-                return false;
-            }
-            if (InstitutionOfficerId == "") {
-                alert("PLEASE SELECT INSTITUTION OFFICER");
-                return false;
-            }
-            if (nationalityId == "") {
-                alert("PLEASE STUDENT NATIONALITY");
-                return false;
-            }
-            if (matricNumber == "") {
-                alert("PLEASE ENTER STUDENT MATRIC. NUMBER");
-                return false;
-            }
-            //if (myLGA == "") {
-            //    alert("PLEASE SELECT STUDENT LOCAL GOVERNMENT OF ORIGIN");
-            //    return false;
-            //}
-            var d = {
+                  if (batchNo == "") {
+                      alert("PLEASE SELECT SIWES BATCH NUMBER");
+                      return false;
+                  }
+                  if (regYear == "") {
+                      alert("PLEASE SELECT STUDENT YEAR OF REGISTRATION");
+                      return false;
+                  }
+                  if (studentType == "") {
+                      alert("PLEASE SELECT STUDENT TYPE");
+                      return false;
+                  }
+                  if (InstitutionOfficerId == "") {
+                      alert("PLEASE SELECT INSTITUTION OFFICER");
+                      return false;
+                  }
+                  if (nationalityId == "") {
+                      alert("PLEASE STUDENT NATIONALITY");
+                      return false;
+                  }
+                  if (matricNumber == "") {
+                      alert("PLEASE ENTER STUDENT MATRIC. NUMBER");
+                      return false;
+                  }
+                  //if (myLGA == "") {
+                  //    alert("PLEASE SELECT STUDENT LOCAL GOVERNMENT OF ORIGIN");
+                  //    return false;
+                  //}
+                  var d = {
                 "Id": studentId,
                 "Surname": surname,
                 "OtherNames": otherNames,
@@ -635,30 +649,30 @@
                 "MatricNumber": matricNumber,
                 //"StudentType": myLGA
             };
-            var confirmation = confirm("ARE YOU SURE YOU WANT TO THIS STUDENT RECORD?");
+              var confirmation = confirm("ARE YOU SURE YOU WANT TO THIS STUDENT RECORD?");
             if (confirmation === false) {
                 return false;
             }
             var baseUrl = window.location.origin;
             $.ajax({
-                type: "PUT",
+                  type: "PUT",
                 url: baseUrl + '/Api/StudentSepUpMatric/' + studentId,
                 data: JSON.stringify(d),
                 xhrFields: {
-                    withCredentials: true
+                      withCredentials: true
                 },
                 contentType: "application/json; charset=utf-8",
                 error: function (data) {
-                    alert(data.responseText);
-                },
+                      alert(data.responseText);
+                  },
                 failure: function (data) {
-                    alert(data.responseText);
-                },
+                      alert(data.responseText);
+                  },
                 success: function (data) {
-                    alert("STUDENT RECORD SUCCESSFULLY UPDATED");
-                    location.reload();
-                }
-            });
+                      alert("STUDENT RECORD SUCCESSFULLY UPDATED");
+                      location.reload();
+                  }
+              });
         });
     });
     function pageRedirect() {
