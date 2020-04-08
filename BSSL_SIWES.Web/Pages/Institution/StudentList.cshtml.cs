@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using SiwesData.Setup;
 using SiwesData.Students;
 
 namespace BSSL_SIWES.Web.Pages.Institution
@@ -21,11 +22,17 @@ namespace BSSL_SIWES.Web.Pages.Institution
             _userManager = userManager;
         }
         public IList<StudentSetUp> ListOfStudent { get; set; }
+        public IList<InstitutionOfficer> InstitutionOfficers { get; set; }
         public async Task OnGetAsync(int id)
         {
             id = 10;
             ListOfStudent = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x =>x.Institution)
-                .Where(x => x.InstitutionOfficer.Institution.Id == id && x.CoursesId == x.Courses.Id && x.Suspended == false).ToListAsync();
+                .Where(x => x.CoursesId == x.Courses.Id && x.Suspended == false).ToListAsync();
+            //x.InstitutionOfficer.Institution.Id == id && 
+
+            InstitutionOfficers = await _context.InstitutionOfficers.Include(x => x.Institution)
+                .Where(x => x.InstitutionId == x.Institution.Id && x.InstitutionId == id
+                 && x.Deactivate == false).ToListAsync();
         }
         public ActionResult OnPostCreateNewStudent()
         {

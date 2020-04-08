@@ -1,0 +1,270 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Institution.AssignSupervisorModel
+@{
+    ViewData["Title"] = "AssignSupervisor";
+}
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Student Bio Data</h3>
+        </div>
+        <form role="form" method="post">
+            <div class="card-body">
+                @{
+                    if (Model.ListOfStudent.Count() == 0)
+                    {
+                        <div class="alert  alert-danger alert-dismissible fade show" role="alert" id="myShow">
+                            <span class="badge badge-pill badge-warning">Alert</span>@Model.Message
+                        </div>
+                    }
+                    else
+                    {
+
+                    }
+                }
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Registration/Matric. Number</label>
+                            <input type="hidden" id="studentId">
+                            <input type="text" id="matricNumber" onchange="MyFunctionMatricNumber()"
+                                   class="form-control" placeholder="Enter Registration/Matric No.">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Surname</label>
+                            <input type="text" id="surname" class="form-control"
+                                   readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Other Name(s)</label>
+                            <input type="text" id="otherNames" class="form-control" readonly="readonly">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Course of Study</label>
+                            <input type="text" class="form-control" id="courseStudy" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" id="phoneNo" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" id="email" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Enter Name of Supervisor</label>
+                            <input type="hidden" id="superId" />
+                            <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Phone No.</label>
+                            <input type="text" id="superPhone" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" id="superEmail" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                    <button type="button" class="btn btn-primary" id="mySubmitForm">Assign Supervisor</button>
+                    <button type="button" onclick="pageRedirect()" class="btn btn-warning">View Student List</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var studentList = [];
+
+    function addStudents(lbl, val) {
+        studentList.push({ label: lbl, value: val });
+    }
+    var supervisors = [];
+
+    function addsupervisors(lbl, val) {
+        supervisors.push({ label: lbl, value: val });
+    }
+    $(document).ready(function () {
+
+        @{ if (Model.ListOfStudent != null)
+           {
+                foreach (var item in Model.ListOfStudent)
+                {
+                    @:addStudents('@item.MatricNumber', '@item.Id');
+                }
+          }}
+
+        $("#matricNumber").autocomplete({
+            source: studentList,
+            select: function (event, ui) {
+                $('#matricNumber').val(ui.item.label);
+                $('#studentId').val(ui.item.value);
+                return false;
+            }
+        });
+         @{if (Model.InstitutionOfficers != null) {
+                foreach (var item in Model.InstitutionOfficers)
+                {
+                    @:addsupervisors('@item.IntOfficerName.ToString().Trim()', '@item.Id');
+                }
+                }
+                else
+                {
+
+                }
+        }
+        $("#superName").autocomplete({
+            source: supervisors,
+            select: function (event, ui) {
+                $('#superName').val(ui.item.label);
+                $('#superId').val(ui.item.value);
+                return false;
+            }
+        });
+        $('#mySubmitForm').on('click', function () {
+            var surname = $('#surname').val();
+            var other = $('#otherNames').val();
+            var SttId = $('#studentId').val();
+            var superId = $('#superId').val();
+            var superName = $('#superName').val();
+            var studentName = surname + ' ' + other;
+            var StudentId = parseInt(SttId);
+            var InstitutionOfficerId = parseInt(superId);
+            if (InstitutionOfficerId == "") {
+                alert("PLEASE ENTER A SUPERVISOR FOR " + studentName.toUpperCase() + "");
+                return false;
+            }
+            var d = {
+                "Id": StudentId,
+                "InstitutionOfficerId": InstitutionOfficerId
+            };
+            var confirmation = confirm("ARE SURE YOU WANT ASSIGN " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/StudentSetUpSupervisor/ ' + StudentId;
+            //alert(url);
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(superName.toUpperCase() + " SUCCESSFULLY ASSIGNED TO " + studentName.toUpperCase());
+                    location.reload();
+                },
+            });
+        });
+    });
+    function pageRedirect() {
+        var baseUrl = window.location.origin;
+        window.location.href = baseUrl + '/Institution/StudentList';
+    }
+    function MyFunctionMatricNumber() {
+
+        var studentId = $('#studentId').val();
+
+            var d = {
+                "Id": studentId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/StudentSetUps/' + studentId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#studentId').val(data['id']);
+                    $('#surname').val(data['surname']);
+                    $('#otherNames').val(data['otherNames']);
+                    $('#matricYear').val(data['matricYear']);
+                    $('#courseStudy').val(data['courses']['name']);
+                    $('#phoneNo').val(data['phoneNo']);
+                    $('#email').val(data['email']);
+
+                },
+            });
+    }
+    function MyFunctionSuperName() {
+        var superId = document.getElementById('superId').value;
+        var d = {
+            "Id": superId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/InstitutionOfficers/' + superId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                console.log(data);
+                var superPhone = data['phoneNo'];
+                var superEmail = data['email'];
+
+                $('#superPhone').val(superPhone);
+                $('#superEmail').val(superEmail);
+            },
+        });
+
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
