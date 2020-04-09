@@ -1,140 +1,193 @@
 ﻿@page
+@inject SiwesData.ApplicationDbContext db
 @model BSSL_SIWES.Web.Pages.Institution.StudentListModel
 @{
     ViewData["Title"] = "StudentList";
 }
-    <div class="col-md-12">
-        <div class="modal fade" tabindex="-1" id="loginModal"
-             data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog modal-lg" style="margin-left:25%;">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color:steelblue">
-                        <h4 class="modal-title" id="monthname" style="margin-left:30%; text-transform:uppercase">Reason For Suspension</h4>
-                        <button type="button" class="close" data-dismiss="modal">
-                            ×
-                        </button>
+<div class="col-md-12">
+    <div class="modal fade" tabindex="-1" id="loginModal"
+         data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg" style="margin-left:25%;">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:steelblue">
+                    <h4 class="modal-title" id="monthname" style="margin-left:30%; text-transform:uppercase">Reason For Suspension</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Matric Number</label>
+                                <input type="text" id="matricNo" class="form-control" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Student Name</label>
+                                <input id="studentName" class="form-control" type="text" readonly="readonly">
+                                <input id="studentId" class="form-control" type="hidden">
+                                <input type="hidden" id="rowIndex" />
+                                <input type="hidden" id="whatClick" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Matric Number</label>
-                                        <input type="text" id="matricNo" class="form-control" readonly="readonly" />
-                                    </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Student Name</label>
-                                    <input id="studentName" class="form-control" type="text" readonly="readonly">
-                                    <input id="studentId" class="form-control" type="hidden">
-                                    <input type="hidden" id="rowIndex" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row11" id="reasonSuspend">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Reason For Suspension</label>
-                                    <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                    <div class="row row11" id="reasonSuspend">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Reason For Suspension</label>
+                                <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
                                     font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                </div>
                             </div>
                         </div>
-                        <div class="row row12" id="mySuper">
-                            <div class="col-sm-4">
-                                <div class="form-group ui-widget">
-                                    <label>Enter Name of Supervisor</label>
-                                    <input type="hidden" id="superId" />
-                                    <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Phone No.</label>
-                                    <input type="text" id="superPhone" class="form-control" readonly="readonly">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" id="superEmail" class="form-control" readonly="readonly">
-                                </div>
+                    </div>
+                    <div class="row row12" id="mySuper">
+                        <div class="col-sm-4">
+                            <div class="form-group ui-widget">
+                                <label id="toDisplay">Enter Name of Supervisor</label>
+                                <input type="hidden" id="superId" />
+                                <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
                             </div>
                         </div>
-                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                            <button type="submit" id="BtnSuspend" class="btn btn-danger button button4">Suspend Student</button>
-                            <button type="submit" id="BtnAssignSuper" style="display:none" class="btn btn-primary button button4">Assign Supervisor</button>
-                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
-                                Hide
-                            </button>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label id="toDisplay1">Phone No.</label>
+                                <input type="text" id="superPhone" class="form-control" readonly="readonly">
+                            </div>
                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label id="toDisplay2">Email</label>
+                                <input type="text" id="superEmail" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row13" id="mySuper2">
+                        <div class="col-sm-4">
+                            <div class="form-group ui-widget">
+                                <label>Name of New Supervisor</label>
+                                <input type="hidden" id="superId2" />
+                                <input type="hidden" id="officerId" />
+                                <input type="text" id="superName2" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter New Name of Supervisor">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Phone No.</label>
+                                <input type="text" id="superPhone2" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" id="superEmail2" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                        <button type="submit" id="BtnSuspend" class="btn btn-danger button button4">Suspend Student</button>
+                        <button type="submit" id="BtnAssignSuper" style="display:none" class="btn btn-primary button button4">Assign Supervisor</button>
+                        <button type="submit" id="BtnChangeSuper" style="display:none" class="btn btn-primary button button4">Change Supervisor</button>
+                        <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                            Hide
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- general form elements -->
-        <form role="form" method="post">
-            <div class="justify-content-center" style="margin-left:40%;">
-                <button type="submit" asp-page-handler="CreateNewStudent" class="btn btn-outline-info">Create More Student</button>
-            </div>
-        </form>
-        <div class="card card-primary">
+    </div>
+    <!-- general form elements -->
+    <form role="form" method="post">
+        <div class="justify-content-center" style="margin-left:40%;">
+            <button type="submit" asp-page-handler="CreateNewStudent" class="btn btn-outline-info">Create More Student</button>
+        </div>
+    </form>
+    <div class="card card-primary">
 
-            <div style="display:table; margin:0 auto; width:100%; font-size:small">
-                <table id="StudentTab" class="table table-bordered" border="0">
-                    <thead style="background-color:steelblue;">
-                        <tr>
-                            <th style="width:12%; text-align:center">Assign Supervisor</th>
-                            <th style="width:10%; text-align:center">Suspend</th>
-                            <th style="width:0.25%; text-align:center">S/N</th>
-                            <th style="width:15%; text-align:center">Matric Number</th>
-                            <th style="width:25%; text-align:center">Student Name</th>
-                            <th style="width:30%; text-align:center">Course of Study</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.ListOfStudent.Count; i++)
-                        {
-                            var items = Model.ListOfStudent[i];
-                            var Name = items.Surname + ' ' + items.OtherNames;
-                            var assignSup = items.InstitutionOfficerId;
-                        <tr>
-                            @{
-                                if (assignSup != null)
+        <div style="display:table; margin:0 auto; width:100%; font-size:x-small">
+            <table id="StudentTab" class="table table-bordered" border="0">
+                <thead style="background-color:steelblue;">
+                    <tr>
+                        <th style="width:10%; text-align:center">Assign Supervisor</th>
+                        <th style="width:10%; text-align:center">Suspend</th>
+                        <th style="width:0.25%; text-align:center">S/N</th>
+                        <th style="width:10%; text-align:center">Matric Number</th>
+                        <th style="width:25%; text-align:center">Student Name</th>
+                        <th style="width:20%; text-align:center">Course of Study</th>
+                        <th style="width:20%; text-align:center">Supervisor Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ListOfStudent.Count; i++)
+                    {
+                        var items = Model.ListOfStudent[i];
+                        var Name = items.Surname + ' ' + items.OtherNames;
+                        var assignSup = items.InstitutionOfficerId;
+                        //var assignSupName = items.InstitutionOfficer.IntOfficerName;
+                    <tr>
+                        @{
+                            if (assignSup != null)
+                            {
+                                <td style="width:10%;">
+                                    <input type="hidden" class="studentId @i" value="@items.Id" />
+                                    <input type="hidden" class="officerId @i" value="@items.InstitutionOfficerId" />
+                                    <input type="hidden" class="PhoneNo @i" value="@items.InstitutionOfficer.PhoneNo" />
+                                    <input type="hidden" class="Email @i" value="@items.InstitutionOfficer.Email" />
+                                    <a id="changeSuper" changeSupervisor="@i" asp-route-id="@items.Id">Change Supervisor</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="width:10%;">
+                                    <input type="hidden" class="studentId @i" value="@items.Id" />
+                                    <a id="assignSuper" AssignSupervisor="@i" asp-route-id="@items.Id">Assign Supervisor</a>
+                                </td>
+                            }
+                        }
+                        <td style="width:10%;">
+                            <input type="hidden" class="studentId @i" value="@items.Id" />
+                            <a id="mySuspend" AddreSuspend="@i" asp-route-id="@items.Id">Suspend</a>
+                        </td>
+                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                        <td class="matricNo @i" style="width:10%; text-align:left">@items.MatricNumber</td>
+                        <td class="name @i" style="width:25%; text-align:left">@Name</td>
+                        <td class="courseName @i" style="width:20%; text-align:left">@items.Courses.Name</td>
+                        @{
+                            if (assignSup != null)
+                            {
+                                var myName = db.InstitutionOfficers.Where(x => x.Id == assignSup).ToList();
+                                foreach (var item in myName)
                                 {
-                                    <td style="width:12%;">
-                                        
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td style="width:12%;">
-                                        <input type="hidden" class="studentId @i" value="@items.Id" />
-                                        <a id="assignSuper" AssignSupervisor="@i" asp-route-id="@items.Id">Assign Supervisor</a>
-                                    </td>
+                                    
+                                                <td class="supName @i" style="width:20%; text-align:left">
+                                                    
+                                                    @item.IntOfficerName
+                                                </td>
                                 }
                             }
-                            <td style="width:10%;">
-                                <input type="hidden" class="studentId @i" value="@items.Id" />
-                                <a id="mySuspend" AddreSuspend="@i" asp-route-id="@items.Id">Suspend</a>
-                            </td>
-                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                            <td class="matricNo @i" style="width:15%; text-align:left">@items.MatricNumber</td>
-                            <td class="name @i" style="width:25%; text-align:left">@Name</td>
-                            <td class="courseName @i" style="width:30%; text-align:left">@items.Courses.Name</td>
-                        </tr>
+                            else
+                            {
+
+                                <td style="width:20%;">
+                                </td>
+
+                            }
                         }
-                    </tbody>
-                </table>
-            </div>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 <style>
     .ui-autocomplete {
         z-index: 10000;
     }
 </style>
-    <script type="text/javascript">
+<script type="text/javascript">
         var supervisors = [];
 
         function addsupervisors(lbl, val) {
@@ -154,12 +207,15 @@
             $('#monthname').html("REASON FOR SUSPENSION");
             $('.row11').show();
             $('.row12').hide();
+            $('.row13').hide();
+            $('#whatClick').val("0");
             $('#studentName').val(name);
             $('#studentId').val(SttId);
             $('#rowIndex').val(rowIndex);
             $('#matricNo').val(matricNo);
             document.getElementById('BtnSuspend').style.display = "inline-block";
             document.getElementById('BtnAssignSuper').style.display = "none";
+            document.getElementById('BtnChangeSuper').style.display = "none";
             return false;
         });
         $("#StudentTab").on('click', '#assignSuper', function () {
@@ -178,12 +234,65 @@
 
             $('.row11').hide();
             $('.row12').show();
+            $('.row13').hide();
             $('#studentName').val(name);
             $('#studentId').val(SttId);
             $('#rowIndex').val(rowIndex);
             $('#matricNo').val(matricNo);
+            $('#whatClick').val("1");
+            $('#toDisplay').html("Enter Name of Supervisor");
+            $('#toDisplay1').html("Supervisor Phone No.");
+            $('#toDisplay2').html("Supervisor Email");
+
+            $('#superName').prop("readonly", false);
             document.getElementById('BtnAssignSuper').style.display = "inline-block";
+            document.getElementById('BtnSuspend').style.display = "none"; 
+            document.getElementById('BtnChangeSuper').style.display = "none";
+            return false;
+        });
+        $("#StudentTab").on('click', '#changeSuper', function () {
+            var currentRow = $(this).closest("tr");
+            var rowIndex = currentRow.find("td:eq(0)").html();
+            var studentName = currentRow.find("td:eq(3)").html();
+            var editindex = $(this).attr('changeSupervisor');
+            var SttId = $('.studentId.' + editindex).val();
+            var matricNo = $('.matricNo.' + editindex).text();
+            var name = $('.name.' + editindex).text();
+            var supName = $('.supName.' + editindex).text();
+            var supNamePhoneNo = $('.PhoneNo.' + editindex).val(); 
+            var supNameEmail = $('.Email.' + editindex).val();
+            var officerId = $('.officerId.' + editindex).val(); 
+            var stringName = supName.toString().trim();
+            //alert(supNameEmail);
+            $("#loginModal").modal('show');
+
+            $('#monthname').html("CHANGE INSTITUTION SUPERVISOR");
+
+
+            $('.row11').hide();
+            $('.row12').show();
+            $('.row13').show();
+            $('#whatClick').val("2");
+            $('#studentName').val(name);
+            $('#studentId').val(SttId);
+            $('#rowIndex').val(rowIndex);
+            $('#matricNo').val(matricNo);
+            $('#officerId').val(officerId);
+            $('#toDisplay').html("Old Supervisor Name");
+            $('#toDisplay1').html("Old Supervisor Phone No.");
+            $('#toDisplay2').html("Old Supervisor Email");
+
+            $('#superName').val(stringName);
+            $('#superPhone').val(supNamePhoneNo);
+            $('#superEmail').val(supNameEmail);
+            $('#superName').prop("readonly", true);
+            //$('#rowIndex').val(rowIndex);
+            //$('#matricNo').val(matricNo);
+
+
+            document.getElementById('BtnAssignSuper').style.display = "none";
             document.getElementById('BtnSuspend').style.display = "none";
+            document.getElementById('BtnChangeSuper').style.display = "inline-block";
             return false;
         });
         $("#btnHideModal").click(function () {
@@ -193,6 +302,10 @@
             $("#superName").val("");
             $("#superPhone").val("");
             $("#superEmail").val("");
+            $("#superName2").val("");
+            $("#superPhone2").val("");
+            $("#superEmail2").val("");
+            $('#whatClick').val("");
         });
         $("#myClose").click(function () {
             $("#loginModal").modal('hide');
@@ -201,6 +314,10 @@
             $("#superName").val("");
             $("#superPhone").val("");
             $("#superEmail").val("");
+            $("#superName2").val("");
+            $("#superPhone2").val("");
+            $("#superEmail2").val("");
+            $('#whatClick').val("");
         });
         $('#BtnSuspend').on('click', function () {
             var studentName = $('#studentName').val();
@@ -289,6 +406,53 @@
                 },
             });
         });
+        $('#BtnChangeSuper').on('click', function () {
+            var studentName = $('#studentName').val();
+            var SttId = $('#studentId').val();
+            var superId2 = $('#superId2').val(); 
+            var officerId = $('#officerId').val();
+            var superName = $('#superName2').val();
+            var StudentId = parseInt(SttId);
+
+            var OldInstitutionOfficerId = parseInt(officerId);
+            var InstitutionOfficerId = parseInt(superId2);
+            if (InstitutionOfficerId == "") {
+                alert("PLEASE ENTER NEW SUPERVISOR FOR " + studentName.toUpperCase() + "");
+                return false;
+            }
+            var d = {
+                "Id": StudentId,
+                "OldInstitutionOfficerId": OldInstitutionOfficerId,
+                "InstitutionOfficerId": InstitutionOfficerId
+            };
+            var confirmation = confirm("ARE SURE YOU WANT RE-ASSIGN " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/StudentNewSupervisor/ ' + StudentId;
+            //alert(url);
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(superName.toUpperCase() + " SUCCESSFULLY RE-ASSIGNED TO " + studentName.toUpperCase());
+                    location.reload();
+                },
+            });
+        });
         @{if (Model.InstitutionOfficers != null) {
             foreach (var item in Model.InstitutionOfficers)
             {
@@ -303,9 +467,24 @@
                 return false;
             }
         });
+        $("#superName2").autocomplete({
+            source: supervisors,
+            select: function (event, ui) {
+                $('#superName2').val(ui.item.label);
+                $('#superId2').val(ui.item.value);
+                return false;
+            }
+        });
     });
-        function MyFunctionSuperName() {
-            var superId = document.getElementById('superId').value;
+    function MyFunctionSuperName() {
+        var superId = "";
+        var whatClick = $('#whatClick').val();
+        if (whatClick == "1") {
+            superId = document.getElementById('superId').value;
+        }
+        else {
+            superId = document.getElementById('superId2').value;
+        }  
             var d = {
                 "Id": superId
             };
@@ -325,14 +504,19 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     var superPhone = data['phoneNo'];
                     var superEmail = data['email'];
-
-                    $('#superPhone').val(superPhone);
-                    $('#superEmail').val(superEmail);
+                    if (whatClick == "1") {
+                        $('#superPhone').val(superPhone);
+                        $('#superEmail').val(superEmail);
+                    }
+                    else {
+                        $('#superPhone2').val(superPhone);
+                        $('#superEmail2').val(superEmail);
+                    }
                 },
             });
 
         }
-    </script>
+</script>
