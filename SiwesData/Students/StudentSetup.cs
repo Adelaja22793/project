@@ -28,12 +28,15 @@ namespace SiwesData.Students
         public bool Suspended { get; set; }
         public string ReasonSuspended { get; set; }
         public bool Attached { get; set; }
-
+        public int? EmployerSuperSetupId { get; set; }
+        public int? OldInstitutionOfficerId { get; set; }
+        public DateTime DateChanged { get; set; }
         public Setup.Courses Courses { get; set; }
         //public Setup.Nationality Nationalities { get; set; }
         public Setup.LGA LGA { get; set; }
         public Setup.Institution Institution { get; set; }
         //public Setup.State State { get; set; }
         public Setup.InstitutionOfficer InstitutionOfficer { get; set; }
+        public Employer.EmployerSuperSetup EmployerSuperSetup { get; set; }
     }
 }
