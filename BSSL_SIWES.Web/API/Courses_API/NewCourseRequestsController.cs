@@ -61,14 +61,7 @@ namespace BSSL_SIWES.Web.API.Courses_API
             {
                 return StatusCode(500, ex.Message);
             }
-            var newCourseRequest = await _context.NewCourseRequests.FindAsync(id);
-
-            if (newCourseRequest == null)
-            {
-                return NotFound();
-            }
-
-            return newCourseRequest;
+           
         }
 
         // PUT: api/NewCourseRequests/5
@@ -100,30 +93,7 @@ namespace BSSL_SIWES.Web.API.Courses_API
             {
                 return StatusCode(500, ex.Message);
             }
-            //if (id != newCourseRequest.Id)
-            //{
-            //    return BadRequest();
-            //}
-
-            //_context.Entry(newCourseRequest).State = EntityState.Modified;
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!NewCourseRequestExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return NoContent();
+            
         }
 
         // POST: api/NewCourseRequests
@@ -140,7 +110,8 @@ namespace BSSL_SIWES.Web.API.Courses_API
                     Name = newCourseRequest.Name,
                     Approved = newCourseRequest.Approved = false,
                     DateIn = newCourseRequest.DateIn = DateTime.Now,
-                    InstitiutionOfficerId = newCourseRequest.InstitiutionOfficerId,
+                    InstitiutionId = newCourseRequest.InstitiutionId,
+                    ReqstType = newCourseRequest.ReqstType,
                 };
                 _context.NewCourseRequests.Add(newCourseRecom);
                 await _context.SaveChangesAsync();
@@ -152,13 +123,6 @@ namespace BSSL_SIWES.Web.API.Courses_API
                 return StatusCode(500, $"{newCourseRequest.Name} HAS BEEN SENT FOR SETUP, PREVIOUSLY, PLEASE CHECK!!!");
             }
 
-
-
-
-            //_context.NewCourseRequests.Add(newCourseRequest);
-            //await _context.SaveChangesAsync();
-
-            //return CreatedAtAction("GetNewCourseRequest", new { id = newCourseRequest.Id }, newCourseRequest);
         }
 
         // DELETE: api/NewCourseRequests/5
@@ -188,17 +152,6 @@ namespace BSSL_SIWES.Web.API.Courses_API
 
                 return StatusCode(500, ex.Message);
             }
-
-            //var newCourseRequest = await _context.NewCourseRequests.FindAsync(id);
-            //if (newCourseRequest == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //_context.NewCourseRequests.Remove(newCourseRequest);
-            //await _context.SaveChangesAsync();
-
-            //return newCourseRequest;
         }
 
         private bool NewCourseRequestExists(int id)
