@@ -1,13 +1,49 @@
 ﻿@page
-@model BSSL_SIWES.Web.Pages.Institution.AssignSupervisorModel
+@model BSSL_SIWES.Web.Pages.Institution.AttachStudentEmployerModel
 @{
-    ViewData["Title"] = "AssignSupervisor";
+    ViewData["Title"] = "AttachStudentEmployer";
 }
+
 <div class="col-md-12">
     <!-- general form elements -->
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Assign/Change Student Supervisor</h3>
+            <h3 class="card-title">Attach Student Employer</h3>
+        </div>
+        <div class="modal fade" tabindex="-1" id="loginModal"
+             data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg" style="width:40%; margin-left:35%;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:steelblue">
+                        <h4 class="modal-title" id="monthname" style="margin-left:130px">Setup New Employer/Company</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            ×
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" id="sendRequest">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Company Name</label>
+                                    <div class="input-group ui-widget">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                        </div>
+                                        <input id="employerName" style="height:30px;" class="form-control" type="text">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                            <button type="submit" id="BtnSendCourse" class="btn btn-primary button button4">Submit</button>
+                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                                Hide
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <form role="form" method="post">
             <div class="card-body">
@@ -57,6 +93,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Phone Number</label>
+                            <input type="hidden" id="InstitutionId" asp-for="Institution.Id" />
                             <input type="text" class="form-control" id="phoneNo" readonly="readonly">
                         </div>
                     </div>
@@ -70,9 +107,9 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Enter Name of Supervisor</label>
+                            <label>Enter Name of Employer/Company</label>
                             <input type="hidden" id="superId" />
-                            <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
+                            <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Employer/Company">
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -111,9 +148,9 @@
                     </div>
                 </div>
                 <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                    <button type="button" class="btn btn-primary" id="mySubmitForm">Assign Supervisor</button>
-                    <button type="button" style="display:none" id="myChangeForm" class="btn btn-warning">Change Student Supervisor</button>
-                    <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
+                    <button type="button" class="btn btn-primary" id="mySubmitForm">Submit</button>
+                    <button type="button" style="display:none" id="myChangeForm" class="btn btn-warning">Change Student Employer</button>
+                    @*<a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>*@
                 </div>
             </div>
         </form>
@@ -133,7 +170,13 @@
         supervisors.push({ label: lbl, value: val });
     }
     $(document).ready(function () {
-
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        });
+        $("#myClose").click(function () {
+            $("#loginModal").modal('hide');
+            //$('.student').summernote('code', '');
+        });
         @{ if (Model.ListOfStudent != null)
            {
                 foreach (var item in Model.ListOfStudent)
@@ -150,10 +193,11 @@
                 return false;
             }
         });
-         @{if (Model.InstitutionOfficers != null) {
-                foreach (var item in Model.InstitutionOfficers)
+         @{if (Model.EmployerSuperSetUps != null) {
+                foreach (var item in Model.EmployerSuperSetUps)
                 {
-                    @:addsupervisors('@item.IntOfficerName.ToString().Trim()', '@item.Id');
+                     //var emplyName = item.Code + ' ' + item.Name;
+                    @:addsupervisors('@item.Name', '@item.Id');
                 }
                 }
                 else
@@ -177,6 +221,54 @@
                 return false;
             }
         });
+        $('#BtnSendCourse').on('click', function () {
+            var newEmployerName = document.getElementById('employerName').value;
+            var ReqstType = "employer";
+            var InstitutionId1 = $('#InstitutionId').val();
+            var InstitutionId = parseInt(InstitutionId1);
+            alert(InstitutionId);
+            if (newEmployerName == "") {
+                alert("PLEASE ENTER THE NAME OF THE EMPLOYER/COMPANY YOU WANT TO BE SET UP");
+                return false;
+            }
+            var d = {
+                "Name": newEmployerName,
+                "ReqstType": ReqstType,
+                "InstitutionId": InstitutionId,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT THIS " + newEmployerName.toUpperCase() + " TO BE SETUP?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/Api/NewCourseRequests',
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                    $("#loginModal").modal('hide');
+                    $("#courseAddReq").val("");
+                    $("#courseStudy").val("");
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("" + newEmployerName.toUpperCase() + " WAS SUCCESSFULLY SENT TO BE SETUP");
+
+                    $("#loginModal").modal('hide');
+                    $("#employerName").val("");
+                    $("#superName").val("");
+                    //console.log(data);
+
+                },
+            });
+        });
         $('#mySubmitForm').on('click', function () {
             var surname = $('#surname').val();
             var other = $('#otherNames').val();
@@ -185,21 +277,21 @@
             var superName = $('#superName').val();
             var studentName = surname + ' ' + other;
             var StudentId = parseInt(SttId);
-            var InstitutionOfficerId = parseInt(superId);
-            if (InstitutionOfficerId == "") {
-                alert("PLEASE ENTER A SUPERVISOR FOR " + studentName.toUpperCase() + "");
+            var employerId = parseInt(superId);
+            if (employerId == "") {
+                alert("PLEASE ENTER A EMPLOYER/COMPANY TO ATTACH " + studentName.toUpperCase() + "");
                 return false;
             }
             var d = {
                 "Id": StudentId,
-                "InstitutionOfficerId": InstitutionOfficerId
+                "EmployerSuperSetupId": employerId
             };
-            var confirmation = confirm("ARE SURE YOU WANT ASSIGN " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
+            var confirmation = confirm("ARE SURE YOU WANT ATTACH " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
             if (confirmation === false) {
                 return false;
             }
             var baseUrl = window.location.origin;
-            var url = baseUrl + '/Api/StudentSetUpSupervisor/ ' + StudentId;
+            var url = baseUrl + '/Api/AttachStudent/ ' + StudentId;
             //alert(url);
             $.ajax({
                 type: "PUT",
@@ -217,39 +309,36 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    alert(superName.toUpperCase() + " SUCCESSFULLY ASSIGNED TO " + studentName.toUpperCase());
+                    alert(superName.toUpperCase() + " SUCCESSFULLY ATTACHED TO " + studentName.toUpperCase());
                     location.reload();
                 },
             });
         });
         $('#myChangeForm').on('click', function () {
-      
+
             var surname = $('#surname').val();
             var other = $('#otherNames').val();
             var SttId = $('#studentId').val();
-            var superId = $('#superId').val();
             var superId2 = $('#superId2').val();
             var superName = $('#superName2').val();
             var officerId = $('#officerId').val();
             var studentName = surname + ' ' + other;
             var StudentId = parseInt(SttId);
-            var InstitutionOfficerId = parseInt(superId2);
-            var OldInstitutionOfficerId = parseInt(officerId);
-            if (InstitutionOfficerId == "") {
-                alert("PLEASE ENTER A NEW SUPERVISOR FOR " + studentName.toUpperCase() + "");
+            var EmployerSuperSetupId = parseInt(superId2);
+            if (EmployerSuperSetupId == "") {
+                alert("PLEASE ENTER A NEW EMPLOYER/COMPANY TO ATTACH " + studentName.toUpperCase() + "");
                 return false;
             }
             var d = {
                 "Id": StudentId,
-                "OldInstitutionOfficerId": OldInstitutionOfficerId,
-                "InstitutionOfficerId": InstitutionOfficerId
+                "EmployerSuperSetupId": EmployerSuperSetupId,
             };
-            var confirmation = confirm("ARE SURE YOU WANT RE-ASSIGN " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
+            var confirmation = confirm("ARE SURE YOU WANT RE-ATTACH " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
             if (confirmation === false) {
                 return false;
             }
             var baseUrl = window.location.origin;
-            var url = baseUrl + '/Api/StudentNewSupervisor/ ' + StudentId;
+            var url = baseUrl + '/Api/AttachStudent/ ' + StudentId;
             //alert(url);
             $.ajax({
                 type: "PUT",
@@ -267,16 +356,12 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    alert(superName.toUpperCase() + " SUCCESSFULLY RE-ASSIGNED TO " + studentName.toUpperCase());
+                    alert(superName.toUpperCase() + " SUCCESSFULLY RE-ATTACHED TO " + studentName.toUpperCase());
                     location.reload();
                 },
             });
         });
     });
-    function pageRedirect() {
-        var baseUrl = window.location.origin;
-        window.location.href = baseUrl + '/Institution/StudentList';
-    }
     function MyFunctionMatricNumber() {
 
         var studentId = $('#studentId').val();
@@ -308,12 +393,12 @@
                     $('#courseStudy').val(data['courses']['name']);
                     $('#phoneNo').val(data['phoneNo']);
                     $('#email').val(data['email']);
-                    var superId = data['institutionOfficerId'];
-                   // alert(superId)
+                    var superId = data['employerSuperSetupId'];
+                    // alert(superId)
                     if (superId != null) {
                         $.ajax({
                             type: "GET",
-                            url: baseUrl + '/Api/InstitutionOfficers/' + superId,
+                            url: baseUrl + '/Api/EmployerSuperSetups/' + superId,
                             data: JSON.stringify(d),
                             xhrFields: {
                                 withCredentials: true
@@ -326,16 +411,16 @@
                                 alert(data.responseText);
                             },
                             success: function (data) {
-                               
-                            $('#superName').val(data['intOfficerName']);
-                            $('#superId').val(data['id']);
-                            $('#officerId').val(data['id']);
-                            $('#superPhone').val(data['phoneNo']);
-                            $('#superEmail').val(data['email']);
-                            $('#superName').prop("readonly", true);
-                            $('.newSup').show();
-                            document.getElementById('myChangeForm').style.display = "inline-block";
-                            document.getElementById('mySubmitForm').style.display = "none";
+
+                                $('#superName').val(data['name']);
+                                $('#superId').val(data['id']);
+                                $('#officerId').val(data['id']);
+                                $('#superPhone').val(data['phoneNo']);
+                                $('#superEmail').val(data['email']);
+                                $('#superName').prop("readonly", true);
+                                $('.newSup').show();
+                                document.getElementById('myChangeForm').style.display = "inline-block";
+                                document.getElementById('mySubmitForm').style.display = "none";
                                 //alert($('#officerId').val());
                             },
                         });
@@ -351,55 +436,69 @@
                         document.getElementById('myChangeForm').style.display = "none";
                         document.getElementById('mySubmitForm').style.display = "inline-block";
                     }
-
-                    
-
                 },
             });
     }
     function MyFunctionSuperName() {
         var superId = "";
+        //superId = document.getElementById('superId').value;
+        var superName = "";
         var whatClick = $('#officerId').val();
-        //alert(whatClick);
         if (whatClick == "") {
             superId = document.getElementById('superId').value;
+            superName = document.getElementById('superName').value;
         }
         else {
             superId = document.getElementById('superId2').value;
+            superName = document.getElementById('superName2').value;
         } 
-        //superId = document.getElementById('superId').value;
-        var d = {
-            "Id": superId
-        };
-        var baseUrl = window.location.origin;
-        $.ajax({
-            type: "GET",
-            url: baseUrl + '/Api/InstitutionOfficers/' + superId,
-            data: JSON.stringify(d),
-            xhrFields: {
-                withCredentials: true
-            },
-            contentType: 'json',
-            error: function (data) {
-                alert(data.responseText);
-            },
-            failure: function (data) {
-                alert(data.responseText);
-            },
-            success: function (data) {
-                //console.log(data);
-                var superPhone = data['phoneNo'];
-                var superEmail = data['email'];
-                if (whatClick == "") {
-                    $('#superPhone').val(superPhone);
-                    $('#superEmail').val(superEmail);
-                }
-                else {
-                    $('#superPhone2').val(superPhone);
-                    $('#superEmail2').val(superEmail);
-                }
-            },
-        });
+        if (superId == "") {
+            var confirmation = confirm("EMPLOYER/COMPANY DO NOT EXIST. DO YOU WANT " + superName.toUpperCase() + " TO BE SET UP?");
+            if (confirmation === false) {
+                return false;
+            }
+            else {
+                $("#loginModal").modal('show');
+
+                $('#employerName').val(superName);
+                return false;
+            }
+        }
+        else {
+            var d = {
+                "Id": superId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/EmployerSuperSetups/' + superId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    var superPhone = data['phoneNo'];
+                    var superEmail = data['email'];
+                    if (whatClick == "") {
+                        $('#superPhone').val(superPhone);
+                        $('#superEmail').val(superEmail);
+                    }
+                    else {
+                        $('#superPhone2').val(superPhone);
+                        $('#superEmail2').val(superEmail);
+                    }
+                },
+            });
+        }
+        
 
     }
 </script>

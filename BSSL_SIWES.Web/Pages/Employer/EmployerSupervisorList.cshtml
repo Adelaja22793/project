@@ -1,0 +1,54 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Employer.EmployerSupervisorListModel
+@{
+    ViewData["Title"] = "EmployerSupervisorList";
+}
+<div class="col-md-12">
+    <div class="justify-content-center" style="margin-left:40%;">
+        <button type="button" onclick="pageRedirect()" class="btn btn-outline-info">Back to Page</button>
+    </div>
+    <div class="card card-primary">
+
+        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+            <table id="StudentTab" class="table table-bordered" border="0">
+                <thead style="background-color:steelblue;">
+                    <tr>
+                        <th style="width:0.25%; text-align:center">S/N</th>
+                        <th style="width:15%; text-align:center">Supervisor Name</th>
+                        <th style="width:25%; text-align:center">Designation</th>
+                        <th style="width:30%; text-align:center">Phone</th>
+                        <th style="width:10%; text-align:center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.EmployerSupervisorsList.Count; i++)
+                    {
+                        var items = Model.EmployerSupervisorsList[i];
+
+                        <tr>
+                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                            <td class="name @i" style="width:15%; text-align:left">@items.Name</td>
+                            <td class="desig @i" style="width:25%; text-align:left">@items.Designation</td>
+                            <td class="phone @i" style="width:30%; text-align:left">@items.Phone1</td>
+
+                            <td style="width:10%;">
+                                <input type="hidden" class="studentId @i" value="@items.Id" />
+                                @*<input type="hidden" class="studentId @i" value="@items." />
+                                    <input type="hidden" class="studentId @i" value="@items.Id" />*@
+                                <a id="studentVisit" AddreSuspend="@i" asp-route-id="@items.Id">Edit</a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function pageRedirect() {
+        var baseUrl = window.location.origin;
+        window.location.href = baseUrl + '/Employer/EmployerSupervisor';
+    }
+</script>
+

@@ -84,7 +84,7 @@
             </div>
             <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
                 <button type="button" InstitutionOfficerId="@Model.InstitutionOfficer.Id"  class="btn btn-primary SubmitVisitationReport">Submit Visitation Report</button>
-                <button type="button" onclick="pageRedirect()" class="btn btn-warning">View SIWES Student List</button>
+                <a type="button"asp-page="./SupervisorList" asp-route-id="@Model.InstitutionOfficer.Id" class="btn btn-warning">View SIWES Student List</a>
             </div>
         </div>
     </div>

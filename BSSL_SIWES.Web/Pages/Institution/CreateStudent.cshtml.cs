@@ -62,7 +62,7 @@ namespace BSSL_SIWES.Web
             {
                 return BadRequest("INSTITUTION NOT FOUND");
             }
-            Institution = await _context.Institution.Where(x => x.Id == id).SingleOrDefaultAsync();
+            //Institution = await _context.Institution.Where(x => x.Id == id).SingleOrDefaultAsync();
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -79,7 +79,7 @@ namespace BSSL_SIWES.Web
                 LGAId = CreateStudentsViewModels.LGAId,
                 PhoneNo = CreateStudentsViewModels.PhoneNumber,
                 Email = CreateStudentsViewModels.Email,
-                InstitutionId = Institution.Id,
+                InstitutionId = id,
                 StudentType=CreateStudentsViewModels.StudentType,
                 SiwesYear = CreateStudentsViewModels.SiwesYear,
                 BatchNo = CreateStudentsViewModels.BatchNo
@@ -87,7 +87,7 @@ namespace BSSL_SIWES.Web
             _context.StudentSetUps.Add(newStudentCreated);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./StudentList");
+            return Redirect("./StudentList?id=" + id);
         }
         public async Task<IActionResult> OnPostUpdateStudentRecordsAsync(int Id)
         {
@@ -117,7 +117,7 @@ namespace BSSL_SIWES.Web
             _context.StudentSetUps.Add(newStudentCreated);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./StudentList");
+            return RedirectToPage("./StudentList?id=" + Id);
         }
         public ActionResult OnPostViewListOfStudent()
         {

@@ -1,0 +1,208 @@
+﻿@page
+@inject SiwesData.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+@model BSSL_SIWES.Web.Pages.Employer.EmployerSupervisorModel
+@{
+    ViewData["Title"] = "EmployerSupervisor";
+}
+
+
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h4 class="card-title">Employer Supervisor Setup</h4>
+        </div>
+
+        <form role="form" method="post">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Rc Number</label>
+                            <input type="text" class="form-control" asp-for="EmployerName.Code" id="employerCode" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Employer Name</label>
+                            <input type="text" class="form-control" asp-for="EmployerName.Name" id="employername" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Employer Address</label>
+                            <input type="text" class="form-control" id="employaddress" asp-for="EmployerName.Address1" readonly="readonly">
+                            <input type="hidden" class="form-control"  id="employId" asp-for="EmployerName.Id">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Ind. Based Officer Name</label>
+                            <input type="text" class="form-control" onchange="myFunctionChange()" asp-for="EmployerSupervisor.Name" 
+                                   id="indoffname" placeholder="Enter Officer Name">
+                            <input type="hidden" id="indoffnameId" asp-for="EmployerSupervisor.Id"/>
+                            <span asp-validation-for="EmployerSupervisor.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Ind. Based Officer Code</label>
+                            <input type="text" class="form-control" asp-for="EmployerSupervisor.IndBaseCode" id="indoffcode" readonly="readonly">
+                            <span asp-validation-for="EmployerSupervisor.IndBaseCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <input type="text" class="form-control" asp-for="EmployerSupervisor.Designation" id="designation" placeholder="Enter Designation">
+                            <span asp-validation-for="EmployerSupervisor.Designation" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" asp-for="EmployerSupervisor.Phone1" id="Phone1" placeholder="Enter Phone Number">
+                            <span asp-validation-for="EmployerSupervisor.Phone1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Alternate Phone Number</label>
+                            <input type="text" class="form-control" asp-for="EmployerSupervisor.Phone2" id="Phone2" placeholder="Enter Alternate Phone Number">
+                            <span asp-validation-for="EmployerSupervisor.Phone2" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input type="text" class="form-control" id="email" asp-for="EmployerSupervisor.Email" placeholder="Enter Email">
+                            <span asp-validation-for="EmployerSupervisor.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                <button type="submit" asp-route-id="@Model.EmployerName.Id" id="Btnsave" class="btn btn-primary">Submit Supervisor Details</button>
+                <button type="button" id="Btnupdate" class="btn btn-warning" style="display:none">Update Supervisor Details</button>
+                <a asp-page="./EmployerSupervisorList" asp-route-id="@Model.EmployerName.Id" type="button" class="btn btn-warning">View Supervisor List</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var orgRepName = [];
+    function AddOrgRepName(lbl, val) {
+        orgRepName.push({ label: lbl, value: val });
+    }
+    $(document).ready(function () {
+
+        @{
+        if (Model.EmployerSupervisorsList != null)
+        {
+            foreach (var item in Model.EmployerSupervisorsList)
+            {
+                @:AddOrgRepName('@item.Name', '@item.Id');
+            }
+        }
+        else
+        {
+
+        }
+        }
+        $("#indoffname").autocomplete({
+            source: orgRepName,
+            select: function (event, ui) {
+                $('#indoffnameId').val(ui.item.value);
+                $('#indoffname').val(ui.item.label);
+                return false;
+            }
+        });
+    });
+    // Uncomment this Area
+    //function myFunctionChange() {
+    //    var indoffnameId = $('#indoffnameId').val();
+    //    var superName = $('#indoffname').val();
+    //    //$('#indoffnameId').val("");
+    //    var IndCode = superName.substring(0, 3);
+    //    var dt = new Date();
+    //    var time = IndCode + dt.getHours() + dt.getMinutes() + dt.getSeconds();
+    //    //$('#indoffcode').val(time);
+    //    var d = {
+    //        "Id": indoffnameId
+    //    };
+    //    var baseUrl = window.location.origin;
+    //    $.ajax({
+    //        type: "GET",
+    //        url: baseUrl + '/Api/EmployerSupervisors/' + indoffnameId,
+    //        data: JSON.stringify(d),
+    //        xhrFields: {
+    //            withCredentials: true
+    //        },
+    //        contentType: 'json',
+    //        error: function (data) {
+    //            alert(data.responseText);
+    //        },
+    //        failure: function (data) {
+    //            alert(data.responseText);
+    //        },
+    //        success: function (data) {
+    //            ////console.log(data);
+    //            ////var listDate = data.size;
+    //            ////alert(listDate);
+    //            //if (data == null) {
+    //            //    ////$('#indoffcode').val("");
+    //            //    //$('#designation').val("");
+    //            //    //$('#Phone1').val("");
+    //            //    //$('#Phone2').val("");
+    //            //    //$('#email').val("");
+
+    //            //    var IndCode = superName.substring(0, 3);
+    //            //    var dt = new Date();
+    //            //    var time = IndCode + dt.getHours() + dt.getMinutes() + dt.getSeconds();
+    //            //    $('#indoffcode').val(time);
+
+    //            //    document.getElementById('Btnsave').style.display = "inline-block";
+    //            //    document.getElementById('Btnupdate').style.display = "none";
+                    
+    //            //}
+    //            //else {
+                    
+
+
+    //                var indoffcode = data['indBaseCode'];
+    //                var Designation = data['designation'];
+    //                var Phone1 = data['phone1'];
+    //                var Phone2 = data['phone2'];
+    //            var Email = data['email'];
+    //            alert(indoffcode);
+    //                if (indoffcode == undefined) {
+    //                    $('#indoffcode').val(time);
+    //                }
+    //                $('#indoffcode').val(indoffcode);
+    //                $('#designation').val(Designation);
+    //                $('#Phone1').val(Phone1);
+    //                $('#Phone2').val(Phone2);
+    //                $('#email').val(Email);
+
+    //                //document.getElementById('Btnsave').style.display = "none";
+    //                //document.getElementById('Btnupdate').style.display = "inline-block";
+
+
+                    
+    //            //}
+    //        },
+    //    });
+    //}
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

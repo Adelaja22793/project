@@ -17,10 +17,11 @@
         <form role="form" method="post">
             <div class="card-body">
                 <div class="justify-content-center" style="float:right;">
-                    <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
+                        <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
+                 
                 </div>
                 <div class="justify-content-center" style="float:left;">
-                    <button type="button" onclick="pageRedirect()" class="btn btn-info">View SIWES Student</button>
+                    <a type="button" asp-page="./EmployerStudentList" asp-route-id="@Model.EmployerName.Id" class="btn btn-info">View SIWES Student</a>
                 </div>
                 <p style="clear:both"></p>
                 <div class="row">

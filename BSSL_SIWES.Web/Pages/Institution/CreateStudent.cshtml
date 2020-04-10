@@ -14,7 +14,7 @@
             <div class="modal-dialog modal-lg" style="width:40%; margin-left:35%;">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:steelblue">
-                        <h4 class="modal-title" id="monthname" style="margin-left:130px">Setup New Sub-Menu</h4>
+                        <h4 class="modal-title" id="monthname" style="margin-left:130px">Setup New Course</h4>
                         <button type="button" class="close" data-dismiss="modal">
                             ×
                         </button>
@@ -344,6 +344,7 @@
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
                                 <input type="email" id="orgEmail" class="form-control" readonly="readonly">
+                                <input type="hidden" id="InstitutionId" asp-for="Institution.Id" />
                             </div>
                         </div>
                     </div>
@@ -388,7 +389,7 @@
             <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
                 <button type="submit" class="btn btn-primary"  id="mySubmitForm">Submit</button>
                 <button type="button"  id="myUpdateForm" style="display:none" class="btn btn-primary">Update Student Record</button>
-                <button type="button" onclick="pageRedirect()"  class="btn btn-warning">View Student List</button>
+                <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
             </div>
         </form>
     </div>
@@ -426,7 +427,7 @@
     function addAvailableTags(lbl, val) {
         availableTags.push({label: lbl, value: val});
     }
-    
+
     var studentList = [];
 
     function addStudents(lbl, val) {
@@ -454,7 +455,8 @@
         });
         $('#BtnSendCourse').on('click', function () {
             var newCourseName = document.getElementById('courseAddReq').value;
-            var InstitiutionOfficerId = 1;
+            var InstitiutionOfficerId = $('#InstitutionId').val();
+            var ReqstType = "course";
             var Approval = false;
             if (newCourseName == "") {
                 alert("PLEASE ENTER THE NAME OF THE COURSE YOU WANT TO BE SET UP");
@@ -464,6 +466,7 @@
                 "Name": newCourseName,
                 "InstitiutionOfficerId": InstitiutionOfficerId,
                 "Approval": Approval,
+                "ReqstType": ReqstType,
             };
             var confirmation = confirm("ARE YOU SURE YOU WANT THIS " + newCourseName.toUpperCase() + " TO BE SETUP AS A COURSE ?");
             if (confirmation === false) {
@@ -498,15 +501,31 @@
                 },
             });
         });
-        @foreach (var item in Model.ListOfCourses)
-        {
-            @:addAvailableTags('@item.Name', '@item.Id');
+        @{
+            if (Model.ListOfCourses != null)
+            {
+                foreach (var item in Model.ListOfCourses)
+                {
+                    @:addAvailableTags('@item.Name', '@item.Id');
+                }
+            }
+            else
+            {
+
+            }
         }
-        
-        @foreach (var item in Model.ListOfStudent)
-        {
-            @:addStudents('@item.MatricNumber', '@item.Id');
-        }
+        @{
+            if (Model.ListOfStudent != null) 
+            {
+                foreach (var item in Model.ListOfStudent)
+                {
+                    @:addStudents('@item.MatricNumber', '@item.Id');
+                }
+            }
+            else {
+
+            }
+            }
         $("#courseStudy" ).autocomplete({
             source: availableTags,
             select: function (event, ui) {
@@ -546,6 +565,7 @@
             var InstitutionOfficerId = parseInt(superId);
             var courseId = parseInt(courseStudyId);
             var nationalityId = parseInt(nationaId);
+            var InstitutionId = $('#InstitutionId').val();
             //alert(studentId);
             if (studentId == "") {
                 alert("STUDENT DOES NOT HAVE RECORDS TO UPDATE");
@@ -621,7 +641,7 @@
                 "StudentType": studentType,
 
                 "SiwesYear": regYear,
-                "InstitutionOfficerId": InstitutionOfficerId,
+                //"InstitutionOfficerId": InstitutionOfficerId,
                 "NationalityId": nationalityId,
                 "MatricNumber": matricNumber,
                 //"StudentType": myLGA
@@ -647,7 +667,9 @@
                 },
                 success: function (data) {
                     alert("STUDENT RECORD SUCCESSFULLY UPDATED");
-                    location.reload();
+                    //alert(InstitutionId);
+                    window.location.href = baseUrl + '/Institution/StudentList?id=' + InstitutionId;
+                    //location.reload();
                 }
             });
         });
@@ -655,34 +677,14 @@
     function pageRedirect() {
         var baseUrl = window.location.origin;
         window.location.href = baseUrl + '/Institution/StudentList';
-    }      
+    }
     function MyFunctionMatricNumber() {
-       
+
         var studentId = $('#studentId').val();
- 
-        //$('#studentId').val("");
-        //$('#surname').val("");
-        //$('#otherNames').val("");
-        //$('#matricYear').val("");
-        //$('#courseStudy').val("");
-        //$('#courseStudyId').val("");
-        //$('#yearOfStudy').val("");
-        //$('#phoneNo').val("");
-        //$('#email').val("");
-        ////$('#nationChange').val(data['nationalityId']);
-        ////$('#myState').val(data['stateId']);
-        ////$('#myLGA').val(data['lgaId']);
-        //$('#batchNo').val("");
-        //$('.regYear').val("");
-        //$('#studentType').val("");
-        //$('#superId').val("");
-        //$('#superName').val("");
-        //$('#superPhone').val("");
-        //$('#superEmail').val("");
-        //alert(studentId);
+
         if (studentId == "") {
             document.getElementById('myUpdateForm').style.display = "none";
-            document.getElementById('mySubmitForm').style.display = "inline-block";           
+            document.getElementById('mySubmitForm').style.display = "inline-block";
         }
         else {
             var d = {
@@ -706,80 +708,30 @@
                 success: function (data) {
                     console.log(data);
                     var newRex = data['lga']['name'];
-                         $('#studentId').val(data['id']);
-                        $('#surname').val(data['surname']);
-                       $('#otherNames').val(data['otherNames']);
-                         $('#matricYear').val(data['matricYear']);
-                       $('#courseStudy').val(data['courses']['name']);
-                         $('#courseStudyId').val(data['coursesId']);
-                         $('#yearOfStudy').val(data['yearOfStudy']);
-                         $('#phoneNo').val(data['phoneNo']);
-                        $('#email').val(data['email']);
-                        //$('#nationChange').val(data['nationalityId']);
-                    //$('#myState').val(data['stateId']);
-                    $('.myLGAS').val(lgaId);
-                        $('#batchNo').val(data['batchNo']);
-                         $('.regYear').val(data['siwesYear']);
-                        $('#studentType').val(data['studentType']);
-                        //$('#superId').val(data['institutionOfficerId']);
-                        //$('#superName').val(data['institutionOfficer']['intOfficerName']);
-                        //$('#superPhone').val(data['institutionOfficer']['phoneNo']);
-                        //$('#superEmail').val(data['institutionOfficer']['email']);
-                        //var lgaId = data['lga']['name'];
-                    //var myLGA =   $('#myLGA').val(data['lga']['name']);
-                    //alert(newRex);
-                    //$('#studentId').val(studentId);
-                    //$('#surname').val(surname);
-                    //$('#otherNames').val(otherNames);
-                    //$('#matricYear').val(matricYear);
-                    //$('#courseStudy').val(courseStudy);
-                    //$('#courseStudyId').val(courseStudyId);
-                    //$('#yearOfStudy').val(yearOfStudy);
-                    //$('#phoneNo').val(phoneNo);
-                    //$('#email').val(email);
+                    $('#studentId').val(data['id']);
+                    $('#surname').val(data['surname']);
+                    $('#otherNames').val(data['otherNames']);
+                    $('#matricYear').val(data['matricYear']);
+                    $('#courseStudy').val(data['courses']['name']);
+                    $('#courseStudyId').val(data['coursesId']);
+                    $('#yearOfStudy').val(data['yearOfStudy']);
+                    $('#phoneNo').val(data['phoneNo']);
+                    $('#email').val(data['email']);
                     //$('#nationChange').val(data['nationalityId']);
                     //$('#myState').val(data['stateId']);
-                    //$('#myLGA').val(myLGA);
-                    //$('#batchNo').val(batchNo);
-                    //$('.regYear').val(regYear);
-                    //$('#studentType').val(studentType);
-
+                   // $('.myLGAS').val(lgaId);
+                    $('#batchNo').val(data['batchNo']);
+                    $('.regYear').val(data['siwesYear']);
+                    $('#studentType').val(data['studentType']);
 
                     document.getElementById('myUpdateForm').style.display = "inline-block";
                     document.getElementById('mySubmitForm').style.display = "none";
-           
-                        //var d1 = {
-                        //    "Id": lgaId
-                        //};
-                    
-                        //var baseUrl = window.location.origin;
-                        //$.ajax({
-                        //    type: "GET",
-                        //    url: baseUrl + '/Api/LGAs/' + lgaId,
-                        //    data: JSON.stringify(d1),
-                        //    xhrFields: {
-                        //        withCredentials: true
-                        //    },
-                        //    contentType: 'json',
-                        //    error: function (data1) {
-                        //        alert(data1.responseText);
-                        //    },
-                        //    failure: function (data1) {
-                        //        alert(data1.responseText);
-                        //    },
-                        //    success: function (data1) {
-                        //        console.log(data1);
-                        //        //$('#nationChange').val(data['nationalityId']);
-                        //        //$('#myState').val(data['state']['name']);
-                                
-                        //    },
-                        
-                        //});
+
                 },
             });
         }
     }
-    
+
     function MyFunctionNationality() {
         var nationId = document.getElementById('nationChange').value;
         var d = {

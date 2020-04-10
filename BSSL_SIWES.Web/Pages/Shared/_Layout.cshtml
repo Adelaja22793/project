@@ -170,8 +170,8 @@
             <!-- Right navbar links -->
             @{
                 //var InstOff = userManager.GetUserId(User);
-                var InstOff = 1;
-                var newCourse = db.NewCourseRequests.Where(s => s.InstitiutionOfficerId == InstOff && s.Approved == false).ToList();
+                var InstOff = 10;
+                var newCourse = db.NewCourseRequests.Where(s => s.InstitiutionId == InstOff && s.Approved == false).ToList();
                 var Counting = 0;
                 if (newCourse.Count > 0)
                 {
@@ -275,6 +275,12 @@
                                     <a asp-page="/Institution/AssignSupervisor" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Assign Student Supervisor</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Institution/AttachStudentEmployer" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Attach Student Employer</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -409,7 +415,7 @@
                                 <li class="nav-item">
                                     <a asp-page="/Setup/CourseSetup" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Course Setup @Counting</p>
+                                        <p>Course Setup<span class="badge-pill badge-danger"> @Counting</span></p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -445,6 +451,12 @@
                                     <a asp-page="/Employer/EmployerSetup" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Employer Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Employer/EmployerSupervisor" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Employer Supervisor Setup</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

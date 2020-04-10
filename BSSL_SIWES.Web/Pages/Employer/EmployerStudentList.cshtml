@@ -74,6 +74,7 @@
                 <table id="StudentTab" class="table table-bordered" border="0">
                     <thead style="background-color:steelblue;">
                         <tr>
+                            <th style="width:15%; text-align:center">Action</th>
                             <th style="width:0.25%; text-align:center">S/N</th>
                             <th style="width:15%; text-align:center">Matric Number</th>
                             <th style="width:18%; text-align:center">Student Name</th>
@@ -81,7 +82,6 @@
                             <th style="width:18%; text-align:center">Institution Name</th>
                             <th style="width:10%; text-align:center">Level</th>
                             <th style="width:20%; text-align:center">Supervisor</th>
-                            <th style="width:15%; text-align:center">Action</th>
                         </tr>
                     </thead>
                     <tbody style="font-size:small">
@@ -95,6 +95,10 @@
                                 .Where(c => c.Id == StudentId && c.CoursesId == c.Courses.Id && c.InstitutionId == c.Institution.Id).FirstOrDefaultAsync();
 
                             <tr>
+                                <td style="width:10%;">
+                                    <input type="hidden" class="studentId @i" value="@items.Id" />
+                                    <a id="mySuspend" AddreSuspend="@i" asp-route-id="@items.Id">Suspend</a>
+                                </td>
                                 <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
                                 <td class="matricNo @i" style="width:15%; text-align:left">@items.StudentSetUp.MatricNumber</td>
                                 <td class="name @i" style="width:18%; text-align:left">@Name</td>
@@ -102,12 +106,6 @@
                                 <td class="schoolName @i" style="width:18%; text-align:left">@courseName.Institution.Name</td>
                                 <td class="level @i" style="width:10%; text-align:left">@Level</td>
                                 <td class="supervisedBy @i" style="width:20%; text-align:left">@items.EmployerSupervisor.Name</td>
-
-                                <td style="width:10%;">
-                                    <input type="hidden" class="studentId @i" value="@items.Id" />
-                                    <a id="mySuspend" AddreSuspend="@i" asp-route-id="@items.Id">Suspend</a>
-                                </td>
-
                             </tr>
                         }
                     </tbody>
