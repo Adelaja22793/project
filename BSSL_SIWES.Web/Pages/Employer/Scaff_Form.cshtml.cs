@@ -59,7 +59,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
             EmployerSupervisorName = await _context.EmployerSupervisors.Include(super => super.EmployerSuperSetup)
                 .Where(super => super.EmployerSuperSetupId == EmployerName.Id).FirstOrDefaultAsync();
             StudentSetUp = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x =>x.Institution)
-                .Where(x => x.Suspended == false && x.Attached == false)
+                .Where(x => x.Suspended == false && x.Attached == false && x.InstitutionOfficerId != null)
                 .ToListAsync();
 
             //StudentName = StudentSetUp.Surname + ' ' + StudentSetUp.OtherNames;

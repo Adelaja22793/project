@@ -118,7 +118,7 @@
                 <div class="justify-content-center" style="margin-left:20%; margin-bottom:3%;">
                     <button type="button" id="BtnSubmitDailyActivities" class="btn btn-primary">Send Activities For Supervisor Cerification</button>
 
-                    <button type="button" id="btnHideModal" class="btn btn-danger button button4">
+                    <button type="button" id="btnHideModal" onclick="pageRedirect()" class="btn btn-danger button button4">
                         View Previous Activities
                     </button>
                 </div>
@@ -381,7 +381,10 @@
         return date;
 
     }
-
+    function pageRedirect() {
+        var baseUrl = window.location.origin;
+        window.location.href = baseUrl + '/Students/DailyList';
+    }
     function myFunctionDate() {
         var weekend = $('#weekend').val();
         var monday_Date = $('#monday_Date').val();

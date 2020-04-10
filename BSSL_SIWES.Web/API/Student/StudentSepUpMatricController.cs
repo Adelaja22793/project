@@ -80,7 +80,7 @@ namespace BSSL_SIWES.Web.API.Student
                 updateStudentRecords.SiwesYear = studentSetUp.SiwesYear;
                 updateStudentRecords.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
 
-                updateStudentRecords.NationalityId = studentSetUp.NationalityId;
+                //updateStudentRecords.NationalityId = studentSetUp.NationalityId;
                 //updateStudentRecords.S = studentSetUp.SiwesYear;
                 //updateStudentRecords.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
                 await _context.SaveChangesAsync();

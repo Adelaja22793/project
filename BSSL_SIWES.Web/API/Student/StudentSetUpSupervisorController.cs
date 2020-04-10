@@ -6,72 +6,47 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SiwesData;
-using SiwesData.Setup;
 using SiwesData.Students;
 
 namespace BSSL_SIWES.Web.API.Student
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentSetUpsController : ControllerBase
+    public class StudentSetUpSupervisorController : ControllerBase
     {
-        public Institution Institution { get; set; }
-        public class StudentsViewModel
-        {
-            public bool Suspended { get; set; }
-        }
         private readonly ApplicationDbContext _context;
 
-        public StudentSetUpsController(ApplicationDbContext context)
+        public StudentSetUpSupervisorController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/StudentSetUps
+        // GET: api/StudentSetUpSupervisor
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentSetUp>>> GetStudentSetUps()
         {
             return await _context.StudentSetUps.ToListAsync();
         }
 
-        // GET: api/StudentSetUps/5
+        // GET: api/StudentSetUpSupervisor/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudentSetUp>> GetStudentSetUp(int? id)
+        public async Task<ActionResult<StudentSetUp>> GetStudentSetUp(int id)
         {
-            if (id == null)
-            {
-                return BadRequest("StudentId is Empty");
-            }
-            try
-            {
-                //var studentId = await _context.StudentSetUps.Include(x => x.Courses).Include(x =>x.LGA)
-                //    .ThenInclude(x =>x.State).ThenInclude(x =>x.Nationality)
-                //    .Include(x => x.InstitutionOfficer).ThenInclude(x =>x.Institution)
-                //     .Where(x => x.Id == id && x.Courses.Id == x.CoursesId && x.LGAId == x.LGA.Id ).FirstOrDefaultAsync(x => x.Id == id);
-                //&& x.LGA.StateId == x.LGA.State.Id && x.LGA.State.NationalityId == x.LGA.State.Nationality.Id
-                
-                var studentId = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.Institution)
-                    .Include(x => x.LGA).Where(x => x.Id == id && x.Courses.Id == x.CoursesId && x.InstitutionId == x.Institution.Id
-                     && x.LGAId == x.LGA.Id).FirstOrDefaultAsync();
+            var studentSetUp = await _context.StudentSetUps.FindAsync(id);
 
-                if (studentId == null)
-                {
-                    return NotFound($"Student Not Found For The Selected Id {id}");
-                }
-                return Ok(studentId);
-            }
-            catch (Exception ex)
+            if (studentSetUp == null)
             {
-                return StatusCode(500, ex.Message);
+                return NotFound();
             }
-            
+
+            return studentSetUp;
         }
 
-        // PUT: api/StudentSetUps/5
+        // PUT: api/StudentSetUpSupervisor/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudentSetUp(int? id, StudentSetUp suspendStudent)
+        public async Task<IActionResult> PutStudentSetUp(int? id, StudentSetUp studentSetUp)
         {
             if (id == null)
             {
@@ -80,27 +55,25 @@ namespace BSSL_SIWES.Web.API.Student
 
             try
             {
-                var studentSuspended = await _context.StudentSetUps.FirstOrDefaultAsync(m => m.Id == id);
+                var InstitutionOfficer = await _context.StudentSetUps.FirstOrDefaultAsync(m => m.Id == id);
 
-                if (studentSuspended == null)
+                if (InstitutionOfficer == null)
                 {
                     return NotFound($"Student Not Found For The Selected Id {id}");
                 }
                 //bool nowSuspend = suspendStudent.Suspended = true;
-                studentSuspended.Suspended = suspendStudent.Suspended = true;
-                studentSuspended.ReasonSuspended = suspendStudent.ReasonSuspended;
+                InstitutionOfficer.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
 
                 await _context.SaveChangesAsync();
-                return Ok(studentSuspended);
+                return Ok(InstitutionOfficer);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
-
         }
 
-        // POST: api/StudentSetUps
+        // POST: api/StudentSetUpSupervisor
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
@@ -112,7 +85,7 @@ namespace BSSL_SIWES.Web.API.Student
             return CreatedAtAction("GetStudentSetUp", new { id = studentSetUp.Id }, studentSetUp);
         }
 
-        // DELETE: api/StudentSetUps/5
+        // DELETE: api/StudentSetUpSupervisor/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<StudentSetUp>> DeleteStudentSetUp(int id)
         {

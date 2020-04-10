@@ -16,7 +16,7 @@ namespace SiwesData.Employer
         public string Phone2 { get; set; }
         public string Email { get; set; }
         public string AreaOfficeId { get; set; }
-        public int EmployerSuperSetupId { get; set; }
+        public int? EmployerSuperSetupId { get; set; }
         
         public EmployerSuperSetup EmployerSuperSetup { get; set; }
         
