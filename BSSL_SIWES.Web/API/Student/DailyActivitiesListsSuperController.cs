@@ -12,23 +12,23 @@ namespace BSSL_SIWES.Web.API.Student
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DailyActivitiesListsDateController : ControllerBase
+    public class DailyActivitiesListsSuperController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public DailyActivitiesListsDateController(ApplicationDbContext context)
+        public DailyActivitiesListsSuperController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/DailyActivitiesListsDate
+        // GET: api/DailyActivitiesListsSuper
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DailyActivitiesList>>> GetDailyActivitiesLists()
         {
             return await _context.DailyActivitiesLists.ToListAsync();
         }
 
-        // GET: api/DailyActivitiesListsDate/5
+        // GET: api/DailyActivitiesListsSuper/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DailyActivitiesList>> GetDailyActivitiesList(int? id)
         {
@@ -38,13 +38,10 @@ namespace BSSL_SIWES.Web.API.Student
             }
             try
             {
-                //var dailyActivitiesList = await _context.DailyActivitiesLists
-                //    .Where(x => x.DailyActivitiesId == id && x.Approved == false).ToListAsync();
-
-
                 var dailyActivitiesList = await _context.DailyActivitiesLists
-                    .Where(x => x.DailyActivitiesId == id).ToListAsync();
-                //.FindAsync(id);
+                    .Where(x => x.DailyActivitiesId == id && x.Approved == false).ToListAsync();
+
+
 
                 if (dailyActivitiesList == null)
                 {
@@ -58,36 +55,39 @@ namespace BSSL_SIWES.Web.API.Student
             }
         }
 
-        // PUT: api/DailyActivitiesListsDate/5
+        // PUT: api/DailyActivitiesListsSuper/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDailyActivitiesList(int? id, DailyActivitiesList dailyActivitiesList)
+        public async Task<IActionResult> PutDailyActivitiesList(int id, DailyActivitiesList dailyActivitiesList)
         {
-            if (id == null)
+            if (id != dailyActivitiesList.Id)
             {
-                return BadRequest("No Activity Found");
+                return BadRequest();
             }
+
+            _context.Entry(dailyActivitiesList).State = EntityState.Modified;
 
             try
             {
-                var updateDailyActivities = await _context.DailyActivitiesLists.FirstOrDefaultAsync(m => m.Id == id);
-
-                if (updateDailyActivities == null)
-                {
-                    return NotFound($"Daily/Weekly Activities Not Found For The Selected Id {id}");
-                }
-                updateDailyActivities.DayDescription = dailyActivitiesList.DayDescription;
                 await _context.SaveChangesAsync();
-                return Ok(updateDailyActivities);
             }
-            catch (Exception ex)
+            catch (DbUpdateConcurrencyException)
             {
-                return StatusCode(500, ex.Message);
+                if (!DailyActivitiesListExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
+
+            return NoContent();
         }
 
-        // POST: api/DailyActivitiesListsDate
+        // POST: api/DailyActivitiesListsSuper
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
@@ -99,7 +99,7 @@ namespace BSSL_SIWES.Web.API.Student
             return CreatedAtAction("GetDailyActivitiesList", new { id = dailyActivitiesList.Id }, dailyActivitiesList);
         }
 
-        // DELETE: api/DailyActivitiesListsDate/5
+        // DELETE: api/DailyActivitiesListsSuper/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<DailyActivitiesList>> DeleteDailyActivitiesList(int id)
         {
