@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SiwesData;
-using SiwesData.Menu;
-using SiwesData.Setup;
+using SiwesData.Data;
+using SiwesData.Data.Menu;
+using SiwesData.Data.Setup;
 
 namespace BSSL_SIWES.Web
 {
     public class AssignMenuModel : PageModel
     {
-        private readonly SiwesData.ApplicationDbContext _context;
+        private readonly SiwesData.Data.ApplicationDbContext _context;
 
-        public AssignMenuModel(SiwesData.ApplicationDbContext context)
+        public AssignMenuModel(SiwesData.Data.ApplicationDbContext context)
         {
             _context = context;
         }
