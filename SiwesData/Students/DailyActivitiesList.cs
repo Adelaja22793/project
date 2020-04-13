@@ -11,7 +11,9 @@ namespace SiwesData.Students
         public DateTime DayDate { get; set; }
         public string DayDescription { get; set; }
         public string  WeekDayName { get; set; }
-        //public string Day2Description { get; set; }
+        public DateTime? DateApproved { get; set; }
+        public bool Approved { get; set; }
+
         //public DateTime Day3 { get; set; }
         //public string Day3Description { get; set; }
         //public DateTime Day4 { get; set; }
