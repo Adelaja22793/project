@@ -1,12 +1,12 @@
 ﻿
-using SiwesData.Data.Menu;
-using SiwesData.Data.Setup;
+using SiwesData.Menu;
+using SiwesData.Setup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SiwesData.Data.Menu
+namespace SiwesData.Menu
 {
     public class MenuAccess
     {
