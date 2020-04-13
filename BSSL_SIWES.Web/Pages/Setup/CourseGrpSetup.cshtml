@@ -57,6 +57,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="submit" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
                         <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
                         <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
                     </div>
@@ -116,9 +117,25 @@
              $('#hddtxtcode').val("");
             $("#Btnsave").show();
             $("#Btnupdate").hide();
-             $('#txtcode').prop("readonly", false);
+            $('#txtcode').prop("readonly", false);
         }
+         $('#BtnCancel').on('click', function (e) {
+            e.preventDefault();
+            formClear();
+        });
         $('#Btnsave').on('click', function (e) {
+            if ($('#drpgroup').val() == "-1") {
+                alert("Please Select Institution");
+                return false;
+            }
+            if ($('#txtcode').val() == "") {
+                alert("Please Enter Type Code");
+                return false;
+            }
+            if ($('#txtname').val() == "") {
+                alert("Please Enter Type Name");
+                return false;
+            }
             $("#Btnsave").show();
             $("#Btnupdate").hide();
             e.preventDefault();

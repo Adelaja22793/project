@@ -71,7 +71,7 @@ namespace BSSL_SIWES.Web.API
                 }
             }
 
-            return NoContent();
+            return Ok(instCarryCap);
         }
 
         // POST: api/InstCarryCaps
@@ -80,6 +80,7 @@ namespace BSSL_SIWES.Web.API
         [HttpPost]
         public async Task<ActionResult<InstCarryCap>> PostInstCarryCap(InstCarryCap instCarryCap)
         {
+           
             _context.InstCarryCap.Add(instCarryCap);
             await _context.SaveChangesAsync();
 

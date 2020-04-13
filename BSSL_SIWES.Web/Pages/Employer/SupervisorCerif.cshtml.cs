@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Students;
+using SiwesData.Employer;
+
 using SiwesData;
 namespace BSSL_SIWES.Web.Pages.Employer
 {
@@ -24,6 +26,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
         }
         public List<SelectListItem> StudentName { get; set; }
         public IList<Scaf> Scafs { get; set; }
+        public EmployerSupervisor EmployerSupervisor { get; set; }
         public List<SelectListItem> SelectMonth { get; set; }
         public async Task OnGetAsync(int? id)
         {
@@ -57,7 +60,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
 
             //ViewData["NationalityId"] = new SelectList( await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
             //    .Where(x => x.EmployerSupervisorId == id && x.StudentSetUp.Suspended == false), "Id", "Name");
-
+            EmployerSupervisor = await _context.EmployerSupervisors.Where(x => x.Id == id).SingleOrDefaultAsync();
             Scafs = await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
                 .Where(x => x.EmployerSupervisorId == id && x.StudentSetUp.Suspended == false).ToListAsync();
         }

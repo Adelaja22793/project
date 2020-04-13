@@ -12,6 +12,7 @@ namespace SiwesData.Setup
 
         public string Name { get; set; }
         public string Duration { get; set; }
+        public int InstitutionId { get; set; }
         public Institution Institution { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,25 @@ namespace BSSL_SIWES.Web
         {
             _context = context;
         }
-
+        //public class InputModel
+        //{
+        //    public int Id { get; set; }
+        //    [Required(ErrorMessage = "Please Enter Category Code.")]
+        //    public string Code { get; set; }
+        //    [Required]
+        //    public string Name { get; set; }
+        //    public Boolean Deactivate { get; set; }
+        //}
+        //[BindProperty]
+        //public InputModel Input { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
         public async Task OnGetAsync()
         {
+            if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                ModelState.AddModelError(string.Empty, ErrorMessage);
+            }
             InstCatSetups = await _context.InstCatSetup.ToListAsync();
            // return Page();
         }
