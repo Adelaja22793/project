@@ -1,11 +1,11 @@
-﻿using SiwesData.Data.Setup;
+﻿using SiwesData.Setup;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SiwesData.Data.Menu
+namespace SiwesData.Menu
 {
     //[Table("SubMenu")]
     public class MenuAccess

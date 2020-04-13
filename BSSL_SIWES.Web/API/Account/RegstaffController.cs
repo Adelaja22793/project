@@ -8,18 +8,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SiwesData;
 
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegController : Controller
+    public class RegstaffController : Controller
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
-        public RegController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RegstaffController(SiwesData.ApplicationDbContext context, UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -32,52 +33,59 @@ namespace BSSL_SIWES.Web.API
         }
 
         // GET api/<controller>/5
-        [HttpGet("{email}")]
-        public async Task<ActionResult<string>> GetCheckMatric(string email)
+  
+
+        // GET api/<controller>/5
+
+
+        [HttpGet("{staffid}")]
+        public async Task<ActionResult<List<string>>> Getstaffid(string staffid)
         {
-            var result = "";
+            //   var result = "";
+
+            List<string> result = new List<string>();
             try
             {
                 // get email 
 
                 // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
 
+                var staffidinfo = await _context.ItfStaff.FirstOrDefaultAsync(m => m.StaffId == staffid.Trim());
+              //  var AppUserTab = await _userManager.FindByNameAsync(rcno.Trim());
 
-                var identityUser = await _userManager.FindByEmailAsync(email.Trim());
 
-                if (identityUser != null)
+
+                if (staffidinfo == null)
                 {
-                    result ="exist";
+                    result.Insert(0, "notexist");
                 }
                 else
                 {
-                 //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
+                    //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
 
-                    var user =  _context.StudentSetUps.FirstOrDefault(m => m.Email == email.Trim());
-                    // check if email has beeen registered
-
-                    if (user != null)
+               
+                    if (staffidinfo != null)
                     {
-                        result = user.Surname + " " + user.OtherNames;
+                        result.Insert(0, staffidinfo.Surname.ToString().Trim() + " " + staffidinfo.OtherNames.ToString().Trim());
+                        result.Insert(1, staffidinfo.Email.ToString());
+
                     }
                     else
                     {
-                        result = "notexist";
+                        result.Insert(0, "notexist");
                     }
                 }
-              
+
 
 
             }
             catch
             {
-                result = "syserr";
+                result.Insert(0, "syserr");
             }
             return result;
 
         }
-
-        // GET a
 
         // POST api/<controller>
         [HttpPost]
