@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace SiwesData.Employer
 {
-    public class EmployerSuperSetup
+    public class EmployerSetupMain
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Please RC Number")]

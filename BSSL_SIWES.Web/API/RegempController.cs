@@ -86,55 +86,6 @@ namespace BSSL_SIWES.Web.API
 
         }
 
-        [HttpGet("{staffid}")]
-        public async Task<ActionResult<List<string>>> Getstaffid(string staffid)
-        {
-            //   var result = "";
-
-            List<string> result = new List<string>();
-            try
-            {
-                // get email 
-
-                // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
-
-                var staffidinfo = await _context.ItfStaff.FirstOrDefaultAsync(m => m.StaffId == staffid.Trim());
-              //  var identityUser = await _userManager.FindByNameAsync(rcno.Trim());
-
-
-
-                if (staffidinfo == null)
-                {
-                    result.Insert(0, "notexist");
-                }
-                else
-                {
-                    //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
-
-               
-                    if (staffidinfo != null)
-                    {
-                        result.Insert(0, staffidinfo.Surname.ToString().Trim() + " " + staffidinfo.OtherNames.ToString().Trim());
-                        result.Insert(1, staffidinfo.Email.ToString());
-
-                    }
-                    else
-                    {
-                        result.Insert(0, "notexist");
-                    }
-                }
-
-
-
-            }
-            catch
-            {
-                result.Insert(0, "syserr");
-            }
-            return result;
-
-        }
-
         // POST api/<controller>
         [HttpPost]
         public void Post([FromBody]string value)

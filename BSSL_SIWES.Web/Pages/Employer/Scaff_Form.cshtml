@@ -17,10 +17,11 @@
         <form role="form" method="post">
             <div class="card-body">
                 <div class="justify-content-center" style="float:right;">
-                    <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
+                        <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
+                 
                 </div>
                 <div class="justify-content-center" style="float:left;">
-                    <button type="button" onclick="pageRedirect()" class="btn btn-info">View SIWES Student</button>
+                    <a type="button" asp-page="./EmployerStudentList" asp-route-id="@Model.EmployerName.Id" class="btn btn-info">View SIWES Student</a>
                 </div>
                 <p style="clear:both"></p>
                 <div class="row">
@@ -164,7 +165,7 @@
          position:relative;
      }
  </style>
-<script type="text/javascript">
+ <script type="text/javascript">
      var orgName = [];
     var orgRepName = [];
     function AddOrgName(lbl, val) {
@@ -175,9 +176,18 @@
     }
     $(document).ready(function () {
         $('.newRemarks').summernote();
-        @foreach (var item in Model.StudentSetUp)
+        @{
+        if (Model.StudentSetUp != null)
         {
-            @:AddOrgName('@item.MatricNumber', '@item.Id');
+            foreach (var item in Model.StudentSetUp)
+            {
+                @:AddOrgName('@item.MatricNumber', '@item.Id');
+            }
+        }
+        else
+        {
+
+        }
         }
         $( "#matricNumber" ).autocomplete({
             source: orgName,
@@ -187,14 +197,24 @@
                 return false;
             }
         });
-       @foreach (var item in Model.EmployerSupervisor)
+        @{
+        if (Model.EmployerSupervisor != null)
         {
-            //int orgId = $('#orgNameId').val();
-            var orgRep = await db.EmployerSupervisors.Include(n => n.EmployerSuperSetup).
-                Where(employerName => employerName.EmployerSuperSetup.Id == employerName.Id).ToListAsync();
+            foreach (var item in Model.EmployerSupervisor)
+            {
+                //int orgId = $('#orgNameId').val();
+                var orgRep = await db.EmployerSupervisors.Include(n => n.EmployerSuperSetup).
+                    Where(employerName => employerName.EmployerSuperSetup.Id == employerName.Id).ToListAsync();
 
-            @:AddOrgRepName('@item.Name', '@item.Id');
+                @:AddOrgRepName('@item.Name', '@item.Id');
+            }
         }
+        else
+        {
+
+        }
+        }
+
         $( "#orgRep" ).autocomplete({
             source: orgRepName,
             select: function (event, ui) {
@@ -260,7 +280,7 @@
             }, 1);
             return false;
         }
-        
+
     }
     function MyFunctionOrganName() {
         var orgNameId = document.getElementById('orgNameId').value;
@@ -302,7 +322,7 @@
 
     }
     function MyFunctionMatricNo() {
-        
+
         var studentID = document.getElementById('studentID').value;
 
         //$('#studentID').val("");
@@ -349,7 +369,7 @@
             },
             success: function (data) {
                 console.log(data);
-               
+
                 if (!data) {
                     $.ajax({
                         type: "GET",
@@ -368,11 +388,12 @@
                         success: function (data) {
                             console.log(data);
                             var studentName = data['surname'] + ' ' + data['otherNames'];
-                            var studentSchool = data['institutionOfficer']['institution']['name'];
+                            var studentSchool = data['institution']['name'];
                             var courseId = data['coursesId'];
                             var courseName = data['courses']['name'];
                             var levelStudy = data['yearOfStudy'] + ' ' + "Level";
                             var phoneNo = data['phoneNo'];
+
 
                             $('#studentName').val(studentName);
                             $('#studentSchool').val(studentSchool);
@@ -422,7 +443,7 @@
             },
         });
     };
-</script>
+ </script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

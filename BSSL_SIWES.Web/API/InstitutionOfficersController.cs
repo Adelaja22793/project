@@ -91,10 +91,35 @@ namespace BSSL_SIWES.Web.API
         [HttpPost]
         public async Task<ActionResult<InstitutionOfficer>> PostInstitutionOfficer(InstitutionOfficer institutionOfficer)
         {
-            _context.InstitutionOfficers.Add(institutionOfficer);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var newOfficer= new InstitutionOfficer
+                {
+                    InstitutionId = institutionOfficer.InstitutionId,
+                    OfficerType = institutionOfficer.OfficerType,
+                    IntOfficerName = institutionOfficer.IntOfficerName,
+                    Address1 = institutionOfficer.Address1,
+                    IntOfficerDesig = institutionOfficer.IntOfficerDesig,
+                    PhoneNo = institutionOfficer.PhoneNo,
+                    Email = institutionOfficer.Email,
+                    //Change the stateID to LGA
+                    StaffId = institutionOfficer.StaffId, 
+                    AccountName = institutionOfficer.AccountName,
+                    //BankName = institutionOfficer.BankName,
+                    AccountNo = institutionOfficer.AccountNo,
+                    SwitchCode=institutionOfficer.SwitchCode,
+                    NumberOfStudent = institutionOfficer.NumberOfStudent,
+                };
+                _context.InstitutionOfficers.Add(newOfficer);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInstitutionOfficer", new { id = institutionOfficer.Id }, institutionOfficer);
+
+                return CreatedAtAction("PostInstitutionOfficer", new { id = newOfficer.Id }, newOfficer);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(500, "Menu Name Already Exist");
+            }
         }
 
         // DELETE: api/InstitutionOfficers/5

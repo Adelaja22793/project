@@ -9,11 +9,12 @@ namespace SiwesData.Setup
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DateIn { get; set; }
-        public int InstitiutionOfficerId { get; set; }
+        public int? InstitiutionId { get; set; }
         public bool Approved { get; set; }
         public string ApprovedBy { get; set; }
         public DateTime ApprovedDate { get; set; }
+        public string ReqstType { get; set; }
 
-        public Setup.InstitutionOfficer InstitiutionOfficer { get; set; }
+        public Institution Institution { get; set; }
     }
 }

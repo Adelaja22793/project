@@ -10,6 +10,29 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200407175657_EmployerId.cs" />
+    <Compile Remove="Migrations\20200407175657_EmployerId.Designer.cs" />
+    <Compile Remove="Migrations\20200407182148_newEmployer.cs" />
+    <Compile Remove="Migrations\20200407182148_newEmployer.Designer.cs" />
+    <Compile Remove="Migrations\20200407182717_newEmployerss.cs" />
+    <Compile Remove="Migrations\20200407182717_newEmployerss.Designer.cs" />
+    <Compile Remove="Migrations\20200407184046_newEmployerss111.cs" />
+    <Compile Remove="Migrations\20200407184046_newEmployerss111.Designer.cs" />
+    <Compile Remove="Migrations\20200407184535_newEmpy.cs" />
+    <Compile Remove="Migrations\20200407184535_newEmpy.Designer.cs" />
+    <Compile Remove="Migrations\20200407184902_newEmpyq.cs" />
+    <Compile Remove="Migrations\20200407184902_newEmpyq.Designer.cs" />
+    <Compile Remove="Migrations\20200407185537_newEmpyqas.cs" />
+    <Compile Remove="Migrations\20200407185537_newEmpyqas.Designer.cs" />
+    <Compile Remove="Migrations\20200407185953_newEmpyqas.cs" />
+    <Compile Remove="Migrations\20200407185953_newEmpyqas.Designer.cs" />
+    <Compile Remove="Migrations\20200407190708_newEmpyqasf.cs" />
+    <Compile Remove="Migrations\20200407190708_newEmpyqasf.Designer.cs" />
+    <Compile Remove="Migrations\20200407192338_newEm.cs" />
+    <Compile Remove="Migrations\20200407192338_newEm.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
@@ -136,9 +159,7 @@
     <_ContentIncludedByDefault Remove="Pages\Shared\_CookieConsentPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Students\EmployerForm8.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Students\Form8.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Students\Indus_MonthlyAssessment.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Students\InstitusionSupervisor.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Students\MonthlyAssessment.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Students\Scaff_Form.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Students\Student_Visit_Form.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\Students\SupervisorCerif.cshtml" />
@@ -246,32 +267,12 @@
 
 
   <ItemGroup>
-    <Watch Remove="Pages\Students\Indus_MonthlyAssessment.cshtml" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Students\Indus_MonthlyAssessment.cshtml" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <Watch Remove="Pages\Students\InstitusionSupervisor.cshtml" />
   </ItemGroup>
 
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\Students\InstitusionSupervisor.cshtml" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Watch Remove="Pages\Students\MonthlyAssessment.cshtml" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Students\MonthlyAssessment.cshtml" />
   </ItemGroup>
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,6 +20,8 @@ namespace SiwesData.Setup
         public string ZipCode { get; set; }
         public string PhoneNo1 { get; set; }
         public string PhoneNo2 { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public string Website { get; set; }
         public string Superagency { get; set; }

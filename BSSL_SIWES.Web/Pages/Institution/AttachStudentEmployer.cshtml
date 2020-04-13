@@ -1,0 +1,509 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Institution.AttachStudentEmployerModel
+@{
+    ViewData["Title"] = "AttachStudentEmployer";
+}
+
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Attach Student Employer</h3>
+        </div>
+        <div class="modal fade" tabindex="-1" id="loginModal"
+             data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg" style="width:40%; margin-left:35%;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:steelblue">
+                        <h4 class="modal-title" id="monthname" style="margin-left:130px">Setup New Employer/Company</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            ×
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" id="sendRequest">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Company Name</label>
+                                    <div class="input-group ui-widget">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                        </div>
+                                        <input id="employerName" style="height:30px;" class="form-control" type="text">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                            <button type="submit" id="BtnSendCourse" class="btn btn-primary button button4">Submit</button>
+                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                                Hide
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form role="form" method="post">
+            <div class="card-body">
+                @{
+                    if (Model.ListOfStudent.Count() == 0)
+                    {
+                        <div class="alert  alert-danger alert-dismissible fade show" role="alert" id="myShow">
+                            <span class="badge badge-pill badge-warning">Alert</span>@Model.Message
+                        </div>
+                    }
+                    else
+                    {
+
+                    }
+                }
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Registration/Matric. Number</label>
+                            <input type="hidden" id="studentId">
+                            <input type="text" id="matricNumber" onchange="MyFunctionMatricNumber()"
+                                   class="form-control" placeholder="Enter Registration/Matric No.">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Surname</label>
+                            <input type="text" id="surname" class="form-control"
+                                   readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Other Name(s)</label>
+                            <input type="text" id="otherNames" class="form-control" readonly="readonly">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Course of Study</label>
+                            <input type="text" class="form-control" id="courseStudy" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="hidden" id="InstitutionId" asp-for="Institution.Id" />
+                            <input type="text" class="form-control" id="phoneNo" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" id="email" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Enter Name of Employer/Company</label>
+                            <input type="hidden" id="superId" />
+                            <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Employer/Company">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Phone No.</label>
+                            <input type="text" id="superPhone" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" id="superEmail" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="row newSup" style="display:none">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Enter Name of New Supervisor</label>
+                            <input type="hidden" id="superId2" />
+                            <input type="hidden" id="officerId" />
+                            <input type="text" id="superName2" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of New Supervisor">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>New Supervisor Phone No.</label>
+                            <input type="text" id="superPhone2" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>New Supervisor Email</label>
+                            <input type="text" id="superEmail2" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                    <button type="button" class="btn btn-primary" id="mySubmitForm">Submit</button>
+                    <button type="button" style="display:none" id="myChangeForm" class="btn btn-warning">Change Student Employer</button>
+                    @*<a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>*@
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var studentList = [];
+
+    function addStudents(lbl, val) {
+        studentList.push({ label: lbl, value: val });
+    }
+    var supervisors = [];
+
+    function addsupervisors(lbl, val) {
+        supervisors.push({ label: lbl, value: val });
+    }
+    $(document).ready(function () {
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        });
+        $("#myClose").click(function () {
+            $("#loginModal").modal('hide');
+            //$('.student').summernote('code', '');
+        });
+        @{ if (Model.ListOfStudent != null)
+           {
+                foreach (var item in Model.ListOfStudent)
+                {
+                    @:addStudents('@item.MatricNumber', '@item.Id');
+                }
+          }}
+
+        $("#matricNumber").autocomplete({
+            source: studentList,
+            select: function (event, ui) {
+                $('#matricNumber').val(ui.item.label);
+                $('#studentId').val(ui.item.value);
+                return false;
+            }
+        });
+         @{if (Model.EmployerSuperSetUps != null) {
+                foreach (var item in Model.EmployerSuperSetUps)
+                {
+                     //var emplyName = item.Code + ' ' + item.Name;
+                    @:addsupervisors('@item.Name', '@item.Id');
+                }
+                }
+                else
+                {
+
+                }
+        }
+        $("#superName").autocomplete({
+            source: supervisors,
+            select: function (event, ui) {
+                $('#superName').val(ui.item.label);
+                $('#superId').val(ui.item.value);
+                return false;
+            }
+        });
+        $("#superName2").autocomplete({
+            source: supervisors,
+            select: function (event, ui) {
+                $('#superName2').val(ui.item.label);
+                $('#superId2').val(ui.item.value);
+                return false;
+            }
+        });
+        $('#BtnSendCourse').on('click', function () {
+            var newEmployerName = document.getElementById('employerName').value;
+            var ReqstType = "employer";
+            var InstitutionId1 = $('#InstitutionId').val();
+            var InstitutionId = parseInt(InstitutionId1);
+            alert(InstitutionId);
+            if (newEmployerName == "") {
+                alert("PLEASE ENTER THE NAME OF THE EMPLOYER/COMPANY YOU WANT TO BE SET UP");
+                return false;
+            }
+            var d = {
+                "Name": newEmployerName,
+                "ReqstType": ReqstType,
+                "InstitutionId": InstitutionId,
+            };
+            var confirmation = confirm("ARE YOU SURE YOU WANT THIS " + newEmployerName.toUpperCase() + " TO BE SETUP?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/Api/NewCourseRequests',
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+                    $("#loginModal").modal('hide');
+                    $("#courseAddReq").val("");
+                    $("#courseStudy").val("");
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert("" + newEmployerName.toUpperCase() + " WAS SUCCESSFULLY SENT TO BE SETUP");
+
+                    $("#loginModal").modal('hide');
+                    $("#employerName").val("");
+                    $("#superName").val("");
+                    //console.log(data);
+
+                },
+            });
+        });
+        $('#mySubmitForm').on('click', function () {
+            var surname = $('#surname').val();
+            var other = $('#otherNames').val();
+            var SttId = $('#studentId').val();
+            var superId = $('#superId').val();
+            var superName = $('#superName').val();
+            var studentName = surname + ' ' + other;
+            var StudentId = parseInt(SttId);
+            var employerId = parseInt(superId);
+            if (employerId == "") {
+                alert("PLEASE ENTER A EMPLOYER/COMPANY TO ATTACH " + studentName.toUpperCase() + "");
+                return false;
+            }
+            var d = {
+                "Id": StudentId,
+                "EmployerSuperSetupId": employerId
+            };
+            var confirmation = confirm("ARE SURE YOU WANT ATTACH " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/AttachStudent/ ' + StudentId;
+            //alert(url);
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(superName.toUpperCase() + " SUCCESSFULLY ATTACHED TO " + studentName.toUpperCase());
+                    location.reload();
+                },
+            });
+        });
+        $('#myChangeForm').on('click', function () {
+
+            var surname = $('#surname').val();
+            var other = $('#otherNames').val();
+            var SttId = $('#studentId').val();
+            var superId2 = $('#superId2').val();
+            var superName = $('#superName2').val();
+            var officerId = $('#officerId').val();
+            var studentName = surname + ' ' + other;
+            var StudentId = parseInt(SttId);
+            var EmployerSuperSetupId = parseInt(superId2);
+            if (EmployerSuperSetupId == "") {
+                alert("PLEASE ENTER A NEW EMPLOYER/COMPANY TO ATTACH " + studentName.toUpperCase() + "");
+                return false;
+            }
+            var d = {
+                "Id": StudentId,
+                "EmployerSuperSetupId": EmployerSuperSetupId,
+            };
+            var confirmation = confirm("ARE SURE YOU WANT RE-ATTACH " + superName.toUpperCase() + " TO " + studentName.toUpperCase() + "?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/AttachStudent/ ' + StudentId;
+            //alert(url);
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(superName.toUpperCase() + " SUCCESSFULLY RE-ATTACHED TO " + studentName.toUpperCase());
+                    location.reload();
+                },
+            });
+        });
+    });
+    function MyFunctionMatricNumber() {
+
+        var studentId = $('#studentId').val();
+
+            var d = {
+                "Id": studentId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/StudentSetUps/' + studentId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    $('#studentId').val(data['id']);
+                    $('#surname').val(data['surname']);
+                    $('#otherNames').val(data['otherNames']);
+                    $('#matricYear').val(data['matricYear']);
+                    $('#courseStudy').val(data['courses']['name']);
+                    $('#phoneNo').val(data['phoneNo']);
+                    $('#email').val(data['email']);
+                    var superId = data['employerSuperSetupId'];
+                    // alert(superId)
+                    if (superId != null) {
+                        $.ajax({
+                            type: "GET",
+                            url: baseUrl + '/Api/EmployerSuperSetups/' + superId,
+                            data: JSON.stringify(d),
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            contentType: 'json',
+                            error: function (data) {
+                                alert(data.responseText);
+                            },
+                            failure: function (data) {
+                                alert(data.responseText);
+                            },
+                            success: function (data) {
+
+                                $('#superName').val(data['name']);
+                                $('#superId').val(data['id']);
+                                $('#officerId').val(data['id']);
+                                $('#superPhone').val(data['phoneNo']);
+                                $('#superEmail').val(data['email']);
+                                $('#superName').prop("readonly", true);
+                                $('.newSup').show();
+                                document.getElementById('myChangeForm').style.display = "inline-block";
+                                document.getElementById('mySubmitForm').style.display = "none";
+                                //alert($('#officerId').val());
+                            },
+                        });
+                    }
+                    else {
+                        $('#superName').prop("readonly", false);
+                        $('#superName').val("");
+                        $('#superId').val("");
+                        $('#superPhone').val("");
+                        $('#officerId').val("");
+                        $('#superEmail').val("");
+                        $('.newSup').hide();
+                        document.getElementById('myChangeForm').style.display = "none";
+                        document.getElementById('mySubmitForm').style.display = "inline-block";
+                    }
+                },
+            });
+    }
+    function MyFunctionSuperName() {
+        var superId = "";
+        //superId = document.getElementById('superId').value;
+        var superName = "";
+        var whatClick = $('#officerId').val();
+        if (whatClick == "") {
+            superId = document.getElementById('superId').value;
+            superName = document.getElementById('superName').value;
+        }
+        else {
+            superId = document.getElementById('superId2').value;
+            superName = document.getElementById('superName2').value;
+        } 
+        if (superId == "") {
+            var confirmation = confirm("EMPLOYER/COMPANY DO NOT EXIST. DO YOU WANT " + superName.toUpperCase() + " TO BE SET UP?");
+            if (confirmation === false) {
+                return false;
+            }
+            else {
+                $("#loginModal").modal('show');
+
+                $('#employerName').val(superName);
+                return false;
+            }
+        }
+        else {
+            var d = {
+                "Id": superId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/EmployerSuperSetups/' + superId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    var superPhone = data['phoneNo'];
+                    var superEmail = data['email'];
+                    if (whatClick == "") {
+                        $('#superPhone').val(superPhone);
+                        $('#superEmail').val(superEmail);
+                    }
+                    else {
+                        $('#superPhone2').val(superPhone);
+                        $('#superEmail2').val(superEmail);
+                    }
+                },
+            });
+        }
+        
+
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

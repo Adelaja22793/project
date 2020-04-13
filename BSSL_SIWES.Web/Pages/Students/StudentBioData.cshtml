@@ -1,7 +1,7 @@
 ﻿@page
-@model BSSL_SIWES.Web.CreateStudentModel
+@model BSSL_SIWES.Web.Pages.Students.StudentBioDataModel
 @{
-    ViewData["Title"] = "CreateStudent";
+    ViewData["Title"] = "StudentBioData";
 }
 <div class="col-md-12">
     <!-- general form elements -->
@@ -9,42 +9,7 @@
         <div class="card-header">
             <h3 class="card-title">Student Bio Data</h3>
         </div>
-        <div class="modal fade" tabindex="-1" id="loginModal"
-             data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog modal-lg" style="width:40%; margin-left:35%;">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color:steelblue">
-                        <h4 class="modal-title" id="monthname" style="margin-left:130px">Setup New Course</h4>
-                        <button type="button" class="close" data-dismiss="modal">
-                            ×
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row" id="sendRequest">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Course Name</label>
-                                    <div class="input-group ui-widget">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                        </div>
-                                        <input id="courseAddReq" style="height:30px;" class="form-control" type="text">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="justify-content-center" style="margin-left:25%; margin-bottom:3%;">
-                            <button type="submit" id="BtnSendCourse" class="btn btn-primary button button4">Send Course</button>
-                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
-                                Hide
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
+        
         <form role="form" method="post">
             <div class="card-body">
                 <div class="justify-content-center" style="float:right; display:none">
@@ -54,59 +19,43 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Registration/Matric. Number</label>
-                                <input type="hidden" id="studentId">
-                                <input type="text" id="matricNumber"  onchange="MyFunctionMatricNumber()" asp-for="CreateStudentsViewModels.MatricNumber"
-                                       class="form-control" placeholder="Enter Registration/Matric No.">
-                                <span asp-validation-for="CreateStudentsViewModels.MatricNumber" class="text-danger"></span>
-                            </div>
+                            <input type="hidden" id="studentId">
+                            <input type="text" id="matricNumber" onchange="MyFunctionMatricNumber()" 
+                                   class="form-control" placeholder="Enter Registration/Matric No.">
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Surname</label>
-                            <input type="text" asp-for="CreateStudentsViewModels.Surname" id="surname" class="form-control" 
-                                      placeholder="Enter Surname">
-                                <span asp-validation-for="CreateStudentsViewModels.Surname" class="text-danger"></span>
+                            <input type="text"  id="surname" class="form-control"
+                                   placeholder="Enter Surname">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Other Name(s)</label>
-                                <input type="text" asp-for="CreateStudentsViewModels.OtherNames" id="otherNames" class="form-control" placeholder="Enter Other Name(s)">
-                                <span asp-validation-for="CreateStudentsViewModels.OtherNames" class="text-danger"></span>
-                            </div>
+                            <input type="text" id="otherNames" class="form-control" placeholder="Enter Other Name(s)">
+                           
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Select Reg. Year/Year of Matric</label>
-                            <select class="form-control regYear" id="matricYear" asp-for="CreateStudentsViewModels.MatricYear" style="width: 100%;">
-                                <option selected="selected" value="-1">--Select Reg. Year/Year of Matric--</option>
-                            </select>
+                            <label>Reg. Year/Year of Matric</label>
+                            <input type="text" class="form-control" id="courseStudyId">
                         </div>
-                        <span asp-validation-for="CreateStudentsViewModels.MatricYear" class="text-danger"></span>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Course of Study</label>
-                                <input type="text" class="form-control" id="courseStudy" required onchange="MyFunctionCourses()" placeholder="Enter Course of Study">
-                                <input type="hidden" asp-for="CreateStudentsViewModels.CourseId" class="form-control" id="courseStudyId">
-                                <span asp-validation-for="CreateStudentsViewModels.CourseId" class="text-danger"></span>
+                            <input type="text" class="form-control" id="courseStudy" readonly="readonly">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Level of Study</label>
-                            @*<div class="select2-purple">*@
-                            <select class="form-control select2 select2-danger" id="yearOfStudy" asp-for="CreateStudentsViewModels.LevelStudy" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                                <option selected="selected" id="lvlStudy" value="-1">--Select Level of Study--</option>
-                                <option value="600">600 Level</option>
-                                <option value="500">500 Level</option>
-                                <option value="400">400 Level</option>
-                                <option value="300">300 Level</option>
-                                <option value="200">200 Level</option>
-                            </select>
-                            <span asp-validation-for="CreateStudentsViewModels.LevelStudy" class="text-danger"></span>
+                            <input type="text" class="form-control" id="courseStudyId">
                         </div>
 
                     </div>
@@ -116,32 +65,30 @@
                         <div class="form-group">
                             <label>Select Nationality</label>
                             <select class="form-control"
-                                    asp-items="ViewBag.NationalityId"  style="width: 100%; text-transform:uppercase"
+                                    asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
                                     onchange="MyFunctionNationality()" id="nationChange">
                                 <option selected="selected" value="-1">-- Select Nationality--</option>
                             </select>
-                            @*<span asp-validation-for="CreateStudentsViewModels.NationalityId" class="text-danger"></span>*@
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Select State of Origin</label>
-                            <select class="form-control" 
+                            <select class="form-control"
                                     id="myState" style="width: 100%;" onchange="MyFunctionState()">
                                 <option selected="selected" value="-1">-- Select State--</option>
                             </select>
-                            @*<span asp-validation-for="CreateStudentsViewModels.StateId"></span>*@
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Select LGA of Origin</label>
-                            <select class="form-control myLGAS" asp-for="CreateStudentsViewModels.LGAId"
+                            <select class="form-control myLGAS" 
                                     id="myLGA" style="width: 100%;">
                                 <option selected="selected" value="-1">--Select LGA--</option>
                             </select>
-                            <span asp-validation-for="CreateStudentsViewModels.LGAId"></span>
+                            
                         </div>
                     </div>
                 </div>
@@ -149,76 +96,40 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Phone Number</label>
-                                <input type="text" id="phoneNo" asp-for="CreateStudentsViewModels.PhoneNumber" class="form-control"
-                                       placeholder="Enter Phone No.">
-                                <span asp-validation-for="CreateStudentsViewModels.PhoneNumber" class="text-danger"></span>
-                            </div>
+                            <input type="text" id="phoneNo"  class="form-control"
+                                   placeholder="Enter Phone No.">
+                            
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Email Address</label>
-                                <input type="text" asp-for="CreateStudentsViewModels.Email" id="email" class="form-control">
-                                <span asp-validation-for="CreateStudentsViewModels.Email" class="text-danger"></span>
-                            </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Is this student a diasporal student?</label>
-                            <select class="form-control" id="studentType" style="width: 100%;" asp-for="CreateStudentsViewModels.StudentType">
-                                <option selected="selected" value="NO">NO</option>
-                                <option value="YES">YES</option>
-                            </select>
-                            <span asp-validation-for="CreateStudentsViewModels.StudentType" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Specify SIWES Year</label>
-                            <select class="form-control regYear1" asp-for="CreateStudentsViewModels.SiwesYear" data-dropdown-css-class="select2-purple"
-                                    style="width: 100%;" id="yearOfStudy">
-                                
-                            </select>
-                            <span asp-validation-for="CreateStudentsViewModels.SiwesYear" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Batch No</label>
-                            <select class="form-control" id="batchNo" style="width: 100%;" asp-for="CreateStudentsViewModels.BatchNo">
-                                <option selected="selected" value="Batch A">Batch A</option>
-                                <option value="Batch B">Batch B</option>
-                                <option value="Batch C">Batch C</option>
-                                <option value="Batch D">Batch D</option>
-                            </select>
-                            <span asp-validation-for="CreateStudentsViewModels.BatchNo" class="text-danger"></span>
+                            <input type="text"id="email" class="form-control" readonly="readonly">
                         </div>
                     </div>
                 </div>
+                
                 <div class="row" style="display:none">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Enter Name of Supervisor</label>
-                                <input type="hidden" id="superId" />
-                                <input type="text" id="superName"  onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
-                            </div>
+                            <input type="hidden" id="superId" />
+                            <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Phone No.</label>
-                                <input type="text" id="superPhone" class="form-control" readonly="readonly">
-                            </div>
+                            <input type="text" id="superPhone" class="form-control" readonly="readonly">
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Email</label>
-                                <input type="text" id="superEmail" class="form-control" readonly="readonly">
-                            </div>
+                            <input type="text" id="superEmail" class="form-control" readonly="readonly">
+                        </div>
                     </div>
                 </div>
-                <fieldset class="fig" style="display:none;">
-                    <legend class="scheduler-border">Bank Details</legend>
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -259,137 +170,13 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
-
-
-                <div class="row" style="display:none">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Commencement Date</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                                <input type="date" id="commence_Date" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Completion Date</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                                <input type="date" id="complete_Date" onchange="MyFunctionCompleteDate()" class="form-control" placeholder="Enter Date">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Duration</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                </div>
-                                <input type="text" id="duration" readonly="readonly" class="form-control">
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="display:none">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Enter Name of Organisation</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="hidden" id="orgNameId" />
-                                <input type="text" id="orgName" onchange="MyFunctionOrganName()" class="form-control" placeholder="Enter Name of Organisation">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Organisation Location Address</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
-                                </div>
-                                <input type="text" id="orgAddress" class="form-control" readonly="readonly">
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="display:none">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Phone No. of Organisation</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                </div>
-                                <input type="text" id="orgPhone" class="form-control" readonly="readonly">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Email of Organisation</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                </div>
-                                <input type="email" id="orgEmail" class="form-control" readonly="readonly">
-                                <input type="hidden" id="InstitutionId" asp-for="Institution.Id" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="display:none">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>ITF Area Office</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-search-location"></i></span>
-                                </div>
-                                <input type="text" id="orgAreaITF" class="form-control" readonly="readonly">
-                                <input type="hidden" id="orgAreaITFId" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Name of Organisation Representative</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" id="orgRep" class="form-control">
-                                <input type="hidden" id="orgRepId" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="display:none">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label>Remarks</label>
-                            <textarea class="remarkSummerNote" rows="3" placeholder="Enter Remarks"></textarea>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- /.card-body -->
 
             <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
-                <button type="submit" class="btn btn-primary"  id="mySubmitForm">Submit</button>
-                <button type="button"  id="myUpdateForm" style="display:none" class="btn btn-primary">Update Student Record</button>
-                <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
+                <button type="submit" class="btn btn-primary" id="mySubmitForm">Submit</button>
+                <button type="button" id="myUpdateForm" style="display:none" class="btn btn-primary">Update Student Record</button>
+                <button type="button" onclick="pageRedirect()" class="btn btn-warning">View Student List</button>
             </div>
         </form>
     </div>
@@ -455,8 +242,7 @@
         });
         $('#BtnSendCourse').on('click', function () {
             var newCourseName = document.getElementById('courseAddReq').value;
-            var InstitiutionOfficerId = $('#InstitutionId').val();
-            var ReqstType = "course";
+            var InstitiutionOfficerId = 1;
             var Approval = false;
             if (newCourseName == "") {
                 alert("PLEASE ENTER THE NAME OF THE COURSE YOU WANT TO BE SET UP");
@@ -466,7 +252,6 @@
                 "Name": newCourseName,
                 "InstitiutionOfficerId": InstitiutionOfficerId,
                 "Approval": Approval,
-                "ReqstType": ReqstType,
             };
             var confirmation = confirm("ARE YOU SURE YOU WANT THIS " + newCourseName.toUpperCase() + " TO BE SETUP AS A COURSE ?");
             if (confirmation === false) {
@@ -501,31 +286,15 @@
                 },
             });
         });
-        @{
-            if (Model.ListOfCourses != null)
-            {
-                foreach (var item in Model.ListOfCourses)
-                {
-                    @:addAvailableTags('@item.Name', '@item.Id');
-                }
-            }
-            else
-            {
-
-            }
+        @*@foreach (var item in Model.ListOfCourses)
+        {
+            @:addAvailableTags('@item.Name', '@item.Id');
         }
-        @{
-            if (Model.ListOfStudent != null) 
-            {
-                foreach (var item in Model.ListOfStudent)
-                {
-                    @:addStudents('@item.MatricNumber', '@item.Id');
-                }
-            }
-            else {
 
-            }
-            }
+        @foreach (var item in Model.ListOfStudent)
+        {
+            @:addStudents('@item.MatricNumber', '@item.Id');
+        }*@
         $("#courseStudy" ).autocomplete({
             source: availableTags,
             select: function (event, ui) {
@@ -565,7 +334,6 @@
             var InstitutionOfficerId = parseInt(superId);
             var courseId = parseInt(courseStudyId);
             var nationalityId = parseInt(nationaId);
-            var InstitutionId = $('#InstitutionId').val();
             //alert(studentId);
             if (studentId == "") {
                 alert("STUDENT DOES NOT HAVE RECORDS TO UPDATE");
@@ -641,7 +409,7 @@
                 "StudentType": studentType,
 
                 "SiwesYear": regYear,
-                //"InstitutionOfficerId": InstitutionOfficerId,
+                "InstitutionOfficerId": InstitutionOfficerId,
                 "NationalityId": nationalityId,
                 "MatricNumber": matricNumber,
                 //"StudentType": myLGA
@@ -667,9 +435,7 @@
                 },
                 success: function (data) {
                     alert("STUDENT RECORD SUCCESSFULLY UPDATED");
-                    //alert(InstitutionId);
-                    window.location.href = baseUrl + '/Institution/StudentList?id=' + InstitutionId;
-                    //location.reload();
+                    location.reload();
                 }
             });
         });
@@ -682,6 +448,26 @@
 
         var studentId = $('#studentId').val();
 
+        //$('#studentId').val("");
+        //$('#surname').val("");
+        //$('#otherNames').val("");
+        //$('#matricYear').val("");
+        //$('#courseStudy').val("");
+        //$('#courseStudyId').val("");
+        //$('#yearOfStudy').val("");
+        //$('#phoneNo').val("");
+        //$('#email').val("");
+        ////$('#nationChange').val(data['nationalityId']);
+        ////$('#myState').val(data['stateId']);
+        ////$('#myLGA').val(data['lgaId']);
+        //$('#batchNo').val("");
+        //$('.regYear').val("");
+        //$('#studentType').val("");
+        //$('#superId').val("");
+        //$('#superName').val("");
+        //$('#superPhone').val("");
+        //$('#superEmail').val("");
+        //alert(studentId);
         if (studentId == "") {
             document.getElementById('myUpdateForm').style.display = "none";
             document.getElementById('mySubmitForm').style.display = "inline-block";
@@ -708,25 +494,75 @@
                 success: function (data) {
                     console.log(data);
                     var newRex = data['lga']['name'];
-                    $('#studentId').val(data['id']);
-                    $('#surname').val(data['surname']);
-                    $('#otherNames').val(data['otherNames']);
-                    $('#matricYear').val(data['matricYear']);
-                    $('#courseStudy').val(data['courses']['name']);
-                    $('#courseStudyId').val(data['coursesId']);
-                    $('#yearOfStudy').val(data['yearOfStudy']);
-                    $('#phoneNo').val(data['phoneNo']);
-                    $('#email').val(data['email']);
+                         $('#studentId').val(data['id']);
+                        $('#surname').val(data['surname']);
+                       $('#otherNames').val(data['otherNames']);
+                         $('#matricYear').val(data['matricYear']);
+                       $('#courseStudy').val(data['courses']['name']);
+                         $('#courseStudyId').val(data['coursesId']);
+                         $('#yearOfStudy').val(data['yearOfStudy']);
+                         $('#phoneNo').val(data['phoneNo']);
+                        $('#email').val(data['email']);
+                        //$('#nationChange').val(data['nationalityId']);
+                    //$('#myState').val(data['stateId']);
+                    $('.myLGAS').val(lgaId);
+                        $('#batchNo').val(data['batchNo']);
+                         $('.regYear').val(data['siwesYear']);
+                        $('#studentType').val(data['studentType']);
+                        //$('#superId').val(data['institutionOfficerId']);
+                        //$('#superName').val(data['institutionOfficer']['intOfficerName']);
+                        //$('#superPhone').val(data['institutionOfficer']['phoneNo']);
+                        //$('#superEmail').val(data['institutionOfficer']['email']);
+                        //var lgaId = data['lga']['name'];
+                    //var myLGA =   $('#myLGA').val(data['lga']['name']);
+                    //alert(newRex);
+                    //$('#studentId').val(studentId);
+                    //$('#surname').val(surname);
+                    //$('#otherNames').val(otherNames);
+                    //$('#matricYear').val(matricYear);
+                    //$('#courseStudy').val(courseStudy);
+                    //$('#courseStudyId').val(courseStudyId);
+                    //$('#yearOfStudy').val(yearOfStudy);
+                    //$('#phoneNo').val(phoneNo);
+                    //$('#email').val(email);
                     //$('#nationChange').val(data['nationalityId']);
                     //$('#myState').val(data['stateId']);
-                   // $('.myLGAS').val(lgaId);
-                    $('#batchNo').val(data['batchNo']);
-                    $('.regYear').val(data['siwesYear']);
-                    $('#studentType').val(data['studentType']);
+                    //$('#myLGA').val(myLGA);
+                    //$('#batchNo').val(batchNo);
+                    //$('.regYear').val(regYear);
+                    //$('#studentType').val(studentType);
+
 
                     document.getElementById('myUpdateForm').style.display = "inline-block";
                     document.getElementById('mySubmitForm').style.display = "none";
 
+                        //var d1 = {
+                        //    "Id": lgaId
+                        //};
+
+                        //var baseUrl = window.location.origin;
+                        //$.ajax({
+                        //    type: "GET",
+                        //    url: baseUrl + '/Api/LGAs/' + lgaId,
+                        //    data: JSON.stringify(d1),
+                        //    xhrFields: {
+                        //        withCredentials: true
+                        //    },
+                        //    contentType: 'json',
+                        //    error: function (data1) {
+                        //        alert(data1.responseText);
+                        //    },
+                        //    failure: function (data1) {
+                        //        alert(data1.responseText);
+                        //    },
+                        //    success: function (data1) {
+                        //        console.log(data1);
+                        //        //$('#nationChange').val(data['nationalityId']);
+                        //        //$('#myState').val(data['state']['name']);
+
+                        //    },
+
+                        //});
                 },
             });
         }
@@ -865,3 +701,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

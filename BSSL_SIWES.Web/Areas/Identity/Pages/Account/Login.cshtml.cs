@@ -37,12 +37,12 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         [TempData]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } 
 
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            //[EmailAddress]
             public string Email { get; set; }
 
             [Required]
@@ -107,10 +107,16 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                 //    return Page();
                 //}
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-
+                var user2 = await _userManager.FindByNameAsync(Input.Email);
                 if (await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToPage("home");
+                    // return LocalRedirect(returnUrl);
+                }
+               else if (await _userManager.CheckPasswordAsync(user2, Input.Password))
+                {
+                    await _signInManager.SignInAsync(user2, isPersistent: false);
                     return RedirectToPage("home");
                     // return LocalRedirect(returnUrl);
                 }

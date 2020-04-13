@@ -35,7 +35,9 @@ namespace BSSL_SIWES.Web.API
         public async Task<ActionResult<EmployerSuperSetup>> GetEmployerSuperSetup(int id)
         {
             var employerSuperSetup = await _context.EmployerSuperSetups.Include(x =>x.AreaOffice)
-                .Where(x => x.AreaOffice.Id == x.AreaOfficeId).FirstOrDefaultAsync(x =>x.Id == id);
+                .Include(x => x.LGA).Include(x => x.BusinessLine)
+                .Where(x => x.AreaOffice.Id == x.AreaOfficeId && x.BusinessLine.Id == x.BusinessLineId && x.LGAId == x.LGA.Id)
+                .FirstOrDefaultAsync(x =>x.Id == id);
 
             if (employerSuperSetup == null)
             {
