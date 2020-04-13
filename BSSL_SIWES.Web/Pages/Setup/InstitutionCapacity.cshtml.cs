@@ -18,15 +18,23 @@ namespace BSSL_SIWES.Web.Pages.Setup
             _context = context;
         }
         [BindProperty]
-        public InstTypeSetup InstTypeSetup { get; set; }
+        public InstCarryCap InstCarryCap { get; set; }
+        public IList<Courses> Courses { get; set; }
+        public IList<CourseGrpSetup> CourseGrpSetup { get; set; }
         public IList<Courses> CoursesList { get; set; }
-
+        public IList<InstCarryCap> InstCarryCapList { get; set; }
         public async Task OnGetAsync()
         {
+            //CoursesList = await _context.Courses.Include(x => x.CourseGrpSetup)
+            //     .Where(x => x.CourseGrpSetup.Id == x.CourseGrpSetupId)
+            //     .OrderBy(x => x.Name).OrderBy(x => x.CourseGrpSetupId).ToListAsync();
+           
+            //InstCarryCapList = await _context.InstCarryCap.Include(x => x.Courses)
+            //     .Where(x => x.Courses.Id == x.CoursesId).ToListAsync();
+            InstCarryCapList = await _context.InstCarryCap.ToListAsync();
             ViewData["InstitutionList"] = new SelectList(_context.Institution, "Id", "Name");
             ViewData["CourseGroup"] = new SelectList(_context.CourseGrpSetup, "Id", "Name");
-            CoursesList = await _context.Courses.Include(x => x.CourseGrpSetup).Where(x => x.CourseGrpSetup.Id == x.CourseGrpSetupId)
-               .OrderBy(x => x.Name).OrderBy(x => x.CourseGrpSetupId).ToListAsync();
+            ViewData["Courses"] = new SelectList(_context.Courses, "Id", "Name");
            
         }
     }

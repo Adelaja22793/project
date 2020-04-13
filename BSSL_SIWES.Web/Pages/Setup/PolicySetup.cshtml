@@ -6,8 +6,7 @@
 }
 
 
-<div class="content-wrapper" style="background-color:#fff">
-    <div class="col-md-12">
+  <div class="col-md-12">
         <!-- general form elements -->
         <div class="card card-primary">
             <div class="card-header">
@@ -19,14 +18,18 @@
                 <div class="card-body">
                     <div id="divinput">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Institution Type </label>
-                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.InstituTypes" style="width: 100%; text-transform:uppercase" id="drpgroup">
-                                        <option selected="selected" value="-1">-- Select Institution Type --</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-9">
+                                @*<div class="form-group">*@
+                                    <div class="col-md-3">
+                                        <label for="exampleInputFile">Institution Type </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                                asp-items="ViewBag.InstituTypes" style="width: 100%; text-transform:uppercase" id="drpgroup">
+                                            <option selected="selected" value="-1">-- Select Institution Type --</option>
+                                        </select>
+                                    </div>
+                                 @*</div>*@
                             </div>
                         </div>
                         <div class="row">
@@ -58,7 +61,7 @@
 
         </div>
     </div>
-</div>
+
 @*<div class="content-wrapper col-lg-12" style=" margin-left: 10%">
 
         <div class="row">

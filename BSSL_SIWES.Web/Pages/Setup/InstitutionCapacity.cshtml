@@ -20,40 +20,56 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Institution Name </label>
-                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.InstitutionList" style="width: 100%; text-transform:uppercase" id="drpinsti">
-                                        <option selected="selected" value="-1">-- Select--</option>
-                                    </select>
+
+
+                                    @*@if (ViewBag.InstitutionList != null)
+                                    {*@
+                                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                                asp-items="ViewBag.InstitutionList" style="width: 100%; text-transform:uppercase" id="drpinsti">
+                                            <option selected="selected" value="0">-- Select--</option>
+                                        </select>
+                                    @*}
+                                    else
+                                    {
+                                        <select class="form-control"
+                                                style="width: 100%; text-transform:uppercase"
+                                                id="drpinsti">
+                                            <option selected="selected" value="0">-- Select--</option>
+                                        </select>
+                                    }*@
+
+
+                                    <input id="hddeditid" type="hidden" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Base Carrying Capacity on</label>
-                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            style="width: 100%;" id="drpbased">
-                                        <option selected="selected">--Select--</option>
-                                        <option>Institution</option>
-                                        <option>Course</option>
+                                    <select class="form-control select2 select2-purple" onchange="myFucntionselect()" data-dropdown-css-class="select2-purple"
+                                             style="width: 100%;" id="drpbased">
+                                        <option selected="selected" value="0">--Select--</option>
+                                        <option  value="Institution">Institution</option>
+                                        <option value="Course">Course</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row " >
+                            <div class="col-md-6 selectCourse"  style="display:none">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Course Group </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
                                             asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpcoursegroup">
-                                        <option selected="selected" value="-1">-- Select Course Group--</option>
+                                        <option selected="selected" value="0">-- Select Course Group--</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 selectCourse"  style="display:none">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Course Name </label>
                                     <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            asp-items="ViewBag.CourseList" style="width: 100%; text-transform:uppercase" id="drpcourselist">
-                                        <option selected="selected" value="-1">-- Select Course--</option>
+                                            asp-items="ViewBag.Courses" style="width: 100%; text-transform:uppercase" id="drpcourselist">
+                                        <option selected="selected" value="0">-- Select Course--</option>
                                     </select>
                                 </div>
                             </div>
@@ -62,15 +78,16 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Specify Carrying Capacity</label>
-                                    <input type="text" class="form-control" id="txtcarrycap">
+                                    <input type="number" maxlength="5" class="form-control" id="txtcarrycap">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                     <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="submit" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
                         <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
-                        <button type="submit"  id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                        <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
                     </div>
                     <div class="row" id="divgrid">
                         <div style="display:table; margin:0 auto; width:100%; font-size:medium">
@@ -78,6 +95,7 @@
                                 <thead style="background-color:steelblue;">
                                     <tr>
                                         <th style="width:0.25%; text-align:center">S/N</th>
+                                        <th style="width:5%; text-align:center">Actions</th>
                                         @*<th style="width:20%; text-align:center">Category</th>*@
                                         @*<th style="width:20%; text-align:center">Institution Type</th>*@
                                         <th style="width:40%; text-align:center">Institution Name</th>
@@ -85,27 +103,32 @@
                                         @*<th style="width:20%; text-align:center">Course Group</th>*@
                                         <th style="width:40%; text-align:center">Course Name</th>
                                         <th style="width:10%; text-align:center">Capacity</th>
-                                        <th style="width:5%; text-align:center">Actions</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @*@for (int i = 0; i < Model.CoursesList.Count; i++)
+                                    @for (int i = 0; i < Model.InstCarryCapList.Count; i++)
                                     {
-                                        var items = Model.CoursesList[i];
+                                        var items = Model.InstCarryCapList[i];
                                         //var news = await db.Customers
 
-                                        <tr>
-                                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                            <td class="nameclass @i" style="width:15%; text-align:left">@items.Code</td>
-                                            <td class="nameclass @i" style="width:60%; text-align:left">@items.Name</td>
-                                            <td class="nameclass @i" style="width:15%; text-align:left">@items.ShortCode</td>
-                                            <td style="width:5%;">
-                                                <input type="hidden" class="readid @i" value="@items.Id">
-                                                <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
-                                            </td>
+                                    <tr>
+                                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                        <td style="width:5%;">
+                                            <input type="hidden" class="hddcourlist @i" value="@items.Courses.Id">
+                                            <input type="hidden" class="hddcourgrp @i" value="@items.CourseGrpSetup.Id">
+                                            <input type="hidden" class="hddinsti @i" value="@items.Institution.Id">
+                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
+                                        </td>
+                                        <td class="tabinstition @i" style="width:40%; text-align:left">@items.Institution.Name</td>
+                                        <td class="tabcarrybase @i" style="width:15%; text-align:left">@items.baseCarry</td>
+                                        <td class="tabcourname @i" style="width:40%; text-align:left">@items.Courses.Name</td>
+                                        <td class="tabcap @i" style="width:10%; text-align:left">@items.CarryCap</td>
 
-                                        </tr>
-                                    }*@
+
+                                    </tr>
+                                    }
                                 </tbody>
                             </table>
 
@@ -122,31 +145,83 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-       // $("#tabId").DataTable();
+        // $("#tabId").DataTable();
+        formClear();
         function formClear() {
-            $("#drpinsti").val("-1");
-            $("#drpbased").val("-1");
-            $("#drpcoursegroup").val("-1");
-            $("#drpcourselist").val("-1");
+            $("#drpinsti").val("0");
+            $("#drpbased").val("0");
+            $("#drpcoursegroup").val("0");
+            $("#drpcourselist").val("0");
             $("#txtcarrycap").val("");
+            $("#hddeditid").val("");
+            $(".selectCourse").css('display', 'none');
+             $("#Btnsave").show();
+            $("#Btnupdate").hide();
         }
+        $('#BtnCancel').on('click', function (e) {
+            e.preventDefault();
+            formClear();
+        });
+        $('#drpinsti').on('change', function (e) {
+            e.preventDefault();
+             $("#drpbased").val("0");
+            $("#drpcoursegroup").val("1");
+            $("#drpcourselist").val("2");
+            $("#txtcarrycap").val("");
+            $("#hddeditid").val("");
+            $(".selectCourse").css('display', 'none');
+        });
+        $('#drpcoursegroup').on('change', function (e) {
+            e.preventDefault();
+            $("#drpcourselist").val("0");
+            $("#txtcarrycap").val("");
+        });
         $('#Btnsave').on('click', function (e) {
+            if ($('#drpinsti').val() == "0") {
+                alert("Please Select Institution");
+                return false;
+            }
+            if ($('#drpbased').val() == "0") {
+                alert("Please Select Based Type");
+                return false;
+            }
+            if ($('#drpbased').val() == "Course" && $('#drpcoursegroup').val() == "0") {
+                alert("Please Select Course Group");
+                return false;
+            }
+             if ($('#drpbased').val() == "Course" && $('#drpcourselist').val() == "0") {
+                alert("Please Select Course");
+                return false;
+            }
+             if ($('#txtcarrycap').val() == "") {
+                alert("Please Enter Carrying Capacity");
+                return false;
+            }
             e.preventDefault();
             var instiId = document.getElementById('drpinsti').value;
             var instiname = $("#drpinsti option:selected").html();
             var basedId = document.getElementById('drpbased').value;
             var basedname = $("#drpbased option:selected").html();
-            var coursegroupId = document.getElementById('drpcoursegroup').value;
-            var coursegroupname = $("#drpcoursegroup option:selected").html();
-            var courselistId = document.getElementById('drpcourselist').value;
-            var courselistname = $("#drpcourselist option:selected").html();
+            
             var carrycap = document.getElementById('txtcarrycap').value;
+            if (basedId == "Course") {
+                var coursegroupId = document.getElementById('drpcoursegroup').value;
+                var coursegroupname = $("#drpcoursegroup option:selected").html();
+                var courselistId = document.getElementById('drpcourselist').value;
+                var courselistname = $("#drpcourselist option:selected").html();
+            }
+            else {
+                var coursegroupId = "1";
+                var coursegroupname = "0";
+                var courselistId = "2";
+                var courselistname = "All Courses";
+            }
             var d = {
-                "basecarry": basedId,
-                "CarryCap": carrycap,
-                "CourseGrpSetupId": coursegroupId,
-                "CoursesId": courselistId,
-                "InstitutionId": instiId
+                "baseCarry": basedId,
+                "CarryCap": Number(carrycap),
+                 "CoursesId": Number(courselistId),
+                "CourseGrpSetupId": Number(coursegroupId),
+                "InstitutionId": Number(instiId)
             };
             var baseUrl = window.location.origin;
             $.ajax({
@@ -166,20 +241,26 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
+                    alert(data);
                     var myid = data['id'];
+                    var CoursesId = data['coursesId'];
+                    var CourseGrpSetupId = data['courseGrpSetupId'];
+                    var InstitutionId = data['institutionid'];
                     var rowNumber = $('#tabId tr').length;
                     var html = `<tr>
                             </td>
                                 <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
-                                <td style="width:15%; text-align:left">${txtcode}</td>
-                                <td style="width:60%; text-align:left">${txtname}</td>
-                                <td style="width:15%; text-align:left">${txtshrtcode}</td>
-
                                 <td style="width:5%;" class="action">
-                                <input type="hidden" value=${myid}>
-                                <a href="/Setupmenu/Edit?id=${myid}">Edit</a>
-
-                            </td>
+                                    <input type="hidden"  value=${CoursesId}>
+                                    <input type="hidden"  value="${InstitutionId}>
+                                    <input type="hidden" value=${coursegroupId}>
+                                    <input type="hidden" value=${myid}>
+                                    <a href="/Setup/InstitutionCapacity/${myid}">Edit</a>
+                                </td>
+                                <td style="width:40%; text-align:left">${instiname}</td>
+                                <td style="width:15%; text-align:left">${basedname}</td>
+                                <td style="width:40%; text-align:left">${courselistname}</td>
+                                <td style="width:10%; text-align:left">${carrycap}</td>
                             </tr>`
                     $('#tabId').append(html);
                     formClear();
@@ -187,7 +268,124 @@
                 },
             });
         });
-    })
+         $("#tabId").on('click', '#myEdit', function () {
+            $("#Btnsave").hide();
+            $("#Btnupdate").show();
+            var currentRow = $(this).closest("tr");
+            var selectedIndex = currentRow.find("td:eq(0)").html();
+            var editindex = $(this).attr('AddreEdit');
+            var hddinsti = $('.hddinsti.' + editindex).val();
+            var tabcarrybase = $('.tabcarrybase.' + editindex).text();
+            
+            var hddeditid = $('.readid.' + editindex).val();
+            var tabcap = $('.tabcap.' + editindex).text();
+             if (tabcarrybase == "Course") {
+                 var hddcourgrp = $('.hddcourgrp.'  + editindex).val();
+            var hddcourlist = $('.hddcourlist.' + editindex).val();
+             }
+             else {
+                  var hddcourgrp = "1";
+                var hddcourlist = "0";
+             }
+            $("#drpinsti").val(hddinsti);
+            $("#drpbased").val(tabcarrybase);
+            $("#drpcoursegroup").val(hddcourgrp);
+            $("#drpcourselist").val(hddcourlist);
+            $("#hddeditid").val(hddeditid);
+            $('#txtcarrycap').val(tabcap);
+            $('#rowIndex').val(selectedIndex);
+             serialNo = $(this).closest('tr').find('.se_no').text();
+             myFucntionselect();
+            return false;
+
+        });
+        $('#Btnupdate').on('click', function (e) {
+            if ($('#drpinsti').val() == "0") {
+                alert("Please Select Institution");
+                return false;
+            }
+            if ($('#drpbased').val() == "0") {
+                alert("Please Select Based Type");
+                return false;
+            }
+            if ($('#drpbased').val() == "Course" && $('#drpcoursegroup').val() == "0") {
+                alert("Please Select Course Group");
+                return false;
+            }
+             if ($('#drpbased').val() == "Course" && $('#drpcourselist').val() == "0") {
+                alert("Please Select Course");
+                return false;
+            }
+             if ($('#txtcarrycap').val() == "") {
+                alert("Please Enter Carrying Capacity");
+                return false;
+            }
+            e.preventDefault();
+            var editindex = document.getElementById('hddeditid').value;
+            var instiId = document.getElementById('drpinsti').value;
+            var instiname = $("#drpinsti option:selected").html();
+            var basedId = document.getElementById('drpbased').value;
+            var basedname = $("#drpbased option:selected").html();
+            
+            var carrycap = document.getElementById('txtcarrycap').value;
+            if (basedId == "Course") {
+                var coursegroupId = document.getElementById('drpcoursegroup').value;
+                var coursegroupname = $("#drpcoursegroup option:selected").html();
+                var courselistId = document.getElementById('drpcourselist').value;
+                var courselistname = $("#drpcourselist option:selected").html();
+            }
+            else {
+                var coursegroupId = "1";
+                var coursegroupname = "0";
+                var courselistId = "2";
+                var courselistname = "All Courses";
+            }
+            var d = {
+                "Id": Number(editindex),
+                "baseCarry": basedId,
+                "CarryCap": Number(carrycap),
+                 "CoursesId": Number(courselistId),
+                "CourseGrpSetupId": Number(coursegroupId),
+                "InstitutionId": Number(instiId)
+            };
+            var t = serialNo - 1;
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/InstCarryCaps/ ' + editindex,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    $('.readid.' + t).text(data["id"]);
+                    $('.tabinstition.' + t).text(instiname);
+                    $('.tabcarrybase.' + t).text(data["baseCarry"]);
+                    $('.hddcourgrp.' + t).text(data["courseGrpSetupId"]);
+                    $('.tabcourname.' + t).text(courselistname);
+                    $('.tabcap.' + t).text(data["carryCap"]);
+                    formClear();
+                },
+            });
+        });
+    });
+     function myFucntionselect() {
+        mybase = $('#drpbased').val();
+        if (mybase == "Course" && !$(".selectCourse").is(':visible')) {
+            $(".selectCourse").css('display', 'block');
+        }
+        else {
+            $(".selectCourse").css('display', 'none');
+        }
+    }
 </script>
 
 @section Scripts {

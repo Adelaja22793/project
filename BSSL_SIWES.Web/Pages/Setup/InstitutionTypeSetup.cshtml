@@ -16,7 +16,6 @@
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form">
-                @*<a href="" id="Createnew">Create New</a>*@
                 <div class="card-body">
 
                     <div id="divinput">
@@ -45,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Institution Type Code</label>
+                                    <label for="txtcode">Institution Type Code</label>
                                     <input type="text" class="form-control" id="txtcode">
                                     <input id="hddtypeid" type="hidden" class="form-control" />
                                 </div>
@@ -61,6 +60,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="submit" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
                         <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
                         <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
                     </div>
@@ -124,9 +124,10 @@
             $("#drpAgency").val("-1");
             $("#Btnsave").show();
             $("#Btnupdate").hide();
+            $('#txtcode').prop("readonly", false);
         }
-        $('#Createnew').on('click', function () {
-            alert("Please Seleyes");
+        $('#BtnCancel').on('click', function (e) {
+            e.preventDefault();
             formClear();
         });
         $('#Btnsave').on('click', function (e) {
@@ -217,7 +218,7 @@
             $('#hddidagency').val(tabdrpAgency);
             $('#hddtypeid').val(typeid);
             $('#rowIndex').val(selectedIndex);
-
+             $('#txtcode').prop("readonly", true);
             serialNo = $(this).closest('tr').find('.se_no').text();
             return false;
 
