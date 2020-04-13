@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SiwesData.Employer;
 using SiwesData.Students;
 
 namespace BSSL_SIWES.Web.Pages.Students
@@ -42,8 +43,17 @@ namespace BSSL_SIWES.Web.Pages.Students
             //var userEmail = await _userManager.GetUserNameAsync(loginUser);
             var userEmail = _userManager.GetUserName(User);
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
-            StudentSetUp = await _context.StudentSetUps.Include(c => c.Courses).Include(c => c.LGA)
-                .Where(x => x.CoursesId == x.Courses.Id && x.Email == userEmail && x.LGA.Id == x.LGAId).FirstOrDefaultAsync();
+
+            StudentSetUp = await _context.StudentSetUps.Include(c => c.Courses).Include(c => c.LGA).Include(c => c.Institution)
+                .Include(c => c.InstitutionOfficer).Include(c =>c.EmployerSuperSetup).ThenInclude(c => c.AreaOffice)
+                .Where(x => x.CoursesId == x.Courses.Id && x.Email == userEmail && x.LGA.Id == x.LGAId
+                    && x.InstitutionId == x.Institution.Id && x.InstitutionOfficerId == x.InstitutionOfficer.Id
+                    && x.EmployerSuperSetupId == x.EmployerSuperSetup.Id && x.EmployerSuperSetup.AreaOfficeId == x.EmployerSuperSetup.AreaOffice.Id).FirstOrDefaultAsync();
+
+            Scaf = await _context.Scafs.Include(c => c.EmployerSupervisor).ThenInclude(c =>c.EmployerSuperSetup)
+                                .Where(x => x.EmployerSupervisorId == x.EmployerSupervisor.Id 
+                                && x.EmployerSupervisor.EmployerSuperSetupId == x.EmployerSupervisor.EmployerSuperSetup.Id && x.StudentSetUpId == StudentSetUp.Id)
+                                .SingleOrDefaultAsync();
 
             if (StudentSetUp == null)
             {

@@ -3,38 +3,213 @@
 @{
     ViewData["Title"] = "StudentBioData";
 }
-<div class="col-md-12">
-    <!-- general form elements -->
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Student Bio Data</h3>
-        </div>
-        
-        <form role="form" method="post">
-            <div class="card-body">
-                <div class="justify-content-center" style="float:right; display:none">
-                    <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header" id="pdata">
+                <h3 class="card-title">Personal Data</h3>
+            </div>
+            <div class="card-header" style="display:none" id="BankDe">
+                <h3 class="card-title">Bank Details</h3>
+            </div>
+            <div class="card-header" style="display:none" id="emId">
+                <h3 class="card-title">Employer Details</h3>
+            </div>
+            <div class="card-header" style="display:none" id="istD">
+                <h3 class="card-title">Institution Details</h3>
+            </div>
+            <div class="card-body" id="myList" style="margin-left:15%">
+                <ul class="list-group list-group-horizontal-sm">
+                    <li class="list-group-item">
+                        <button class="nav-link btn btn-warning" id="personalDetails">Personal Data</button>
+                    </li>
+                    <li class="list-group-item">
+                        <button class="nav-link btn btn-success" id="bankDetails">Bank Details</button>
+                    </li>
+                    <li class="list-group-item">
+                        <button class="nav-link btn btn-primary" id="employerDetails">Employer Details</button>
+                    </li>
+                    <li class="list-group-item">
+                        <button class="nav-link btn btn-danger" id="institutionDetails">Institution Details</button>
+                    </li>
+                </ul>
+
+            </div>
+            <form role="form" method="post" id="personalD">
+                <div class="card-body">
+                    <div class="justify-content-center" style="float:right; display:none">
+                        <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Registration/Matric. Number</label>
+                                <input type="hidden" id="studentId" asp-for="StudentSetUp.Id">
+                                <input type="text" id="matricNumber" asp-for="StudentSetUp.MatricNumber"
+                                       readonly="readonly" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Surname</label>
+                                <input type="text" id="surname" class="form-control" readonly="readonly"
+                                       asp-for="StudentSetUp.Surname">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Other Name(s)</label>
+                                <input type="text" id="otherNames" readonly="readonly" class="form-control" asp-for="StudentSetUp.OtherNames">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Reg. Year/Year of Matric</label>
+                                <input type="text" class="form-control" id="yearOfStudy" asp-for="StudentSetUp.MatricYear" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Course of Study</label>
+                                <input type="text" class="form-control" id="courseStudy" readonly="readonly" asp-for="StudentSetUp.Courses.Name">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Level of Study</label>
+                                <input type="text" class="form-control" id="leveStudy" asp-for="StudentSetUp.YearOfStudy" readonly="readonly">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" id="phoneNo" class="form-control"
+                                       asp-for="StudentSetUp.PhoneNo" placeholder="Enter Phone No. ">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="text" id="email" class="form-control" asp-for="StudentSetUp.Email" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Siwes Batch No </label>
+                                <input type="text" id="batch" class="form-control" asp-for="StudentSetUp.BatchNo" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Select Nationality</label>
+                                <select class="form-control"
+                                        asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
+                                        onchange="MyFunctionNationality()" id="nationChange">
+                                    <option selected="selected" value="-1">-- Select Nationality--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Select State of Origin</label>
+                                <select class="form-control"
+                                        id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                    <option selected="selected" value="-1">-- Select State--</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Select LGA of Origin</label>
+                                <select class="form-control myLGAS" asp-for="StudentSetUp.LGA.Name"
+                                        id="myLGA" style="width: 100%;">
+                                    <option selected="selected" value="-1">--Select LGA--</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
+                        <button type="submit" class="btn btn-primary" id="mySubmitForm">Update Records</button>
+                    </div>
                 </div>
+            </form>
+            <form role="form" style="display:none" id="bankDet">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label input-label" for="startTime">Select Bank Name</label>
+                                <div class="select2-purple">
+                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        <option selected="selected">Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label input-label" for="startTime">Account Number</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" id="acctNo" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label input-label" for="startTime">Account Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" id="acctName" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form role="form" style="display:none" id="emplyD">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Registration/Matric. Number</label>
-                            <input type="hidden" id="studentId" asp-for="StudentSetUp.Id">
-                            <input type="text" id="matricNumber" asp-for="StudentSetUp.MatricNumber"
+                            <label>Employer Name</label>
+                            <input type="text" asp-for="StudentSetUp.EmployerSuperSetup.Name"
                                    readonly="readonly" class="form-control">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Surname</label>
+                            <label>Employer Address</label>
                             <input type="text" id="surname" class="form-control" readonly="readonly"
-                                   asp-for="StudentSetUp.Surname">
+                                   asp-for="StudentSetUp.EmployerSuperSetup.Address1">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Other Name(s)</label>
-                            <input type="text" id="otherNames" readonly="readonly" class="form-control" asp-for="StudentSetUp.OtherNames">
+                            <label>Official Email</label>
+                            <input type="text" id="otherNames" readonly="readonly" class="form-control" asp-for="StudentSetUp.EmployerSuperSetup.Email">
 
                         </div>
                     </div>
@@ -42,20 +217,20 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Reg. Year/Year of Matric</label>
-                            <input type="text" class="form-control" id="yearOfStudy" asp-for="StudentSetUp.MatricYear" readonly="readonly">
+                            <label>Officail Phone No.</label>
+                            <input type="text" class="form-control" id="yearOfStudy" asp-for="StudentSetUp.EmployerSuperSetup.PhoneNo" readonly="readonly">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Course of Study</label>
-                            <input type="text" class="form-control" id="courseStudy" readonly="readonly" asp-for="StudentSetUp.Courses.Name">
+                            <label>Area Office</label>
+                            <input type="text" class="form-control" id="courseStudy" readonly="readonly" asp-for="StudentSetUp.EmployerSuperSetup.AreaOffice.Description">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Level of Study</label>
-                            <input type="text" class="form-control" id="leveStudy" asp-for="StudentSetUp.YearOfStudy" readonly="readonly">
+                            <label>Web Address</label>
+                            <input type="text" class="form-control" id="leveStudy" asp-for="StudentSetUp.EmployerSuperSetup.WebAddress" readonly="readonly">
                         </div>
 
                     </div>
@@ -63,102 +238,89 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Phone Number</label>
+                            <label>Employer Supervisor Name</label>
                             <input type="text" id="phoneNo" class="form-control"
-                                   asp-for="StudentSetUp.PhoneNo" placeholder="Enter Phone No. ">
+                                   asp-for="Scaf.EmployerSupervisor.Name" readonly="readonly">
 
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="text" id="email" class="form-control" asp-for="StudentSetUp.Email" readonly="readonly">
+                            <label>Supervisor Email</label>
+                            <input type="text" id="email" class="form-control" asp-for="Scaf.EmployerSupervisor.Email" readonly="readonly">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Siwes Batch No </label>
-                            <input type="text" id="batch" class="form-control" asp-for="StudentSetUp.BatchNo" readonly="readonly">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Select Nationality</label>
-                            <select class="form-control"
-                                    asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
-                                    onchange="MyFunctionNationality()" id="nationChange">
-                                <option selected="selected" value="-1">-- Select Nationality--</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Select State of Origin</label>
-                            <select class="form-control"
-                                    id="myState" style="width: 100%;" onchange="MyFunctionState()">
-                                <option selected="selected" value="-1">-- Select State--</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Select LGA of Origin</label>
-                            <select class="form-control myLGAS" asp-for="StudentSetUp.LGA.Name"
-                                    id="myLGA" style="width: 100%;">
-                                <option selected="selected" value="-1">--Select LGA--</option>
-                            </select>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label input-label" for="startTime">Select Bank Name</label>
-                            <div class="select2-purple">
-                                <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                    <option selected="selected">Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label input-label" for="startTime">Account Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                </div>
-                                <input type="text" id="acctNo" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label input-label" for="startTime">Account Name</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                </div>
-                                <input type="text" id="acctName" class="form-control">
-                            </div>
+                            <label>Supervisor Phone</label>
+                            <input type="text" id="batch" class="form-control" asp-for="Scaf.EmployerSupervisor.Phone1" readonly="readonly">
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /.card-body -->
+        </form>
+        <form role="form" style="display:none" id="instId">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Institution Name</label>
+                            <input type="text" id="matricNumber" asp-for="StudentSetUp.Institution.Name"
+                                   readonly="readonly" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Institution Address</label>
+                            <input type="text" id="surname" class="form-control" readonly="readonly"
+                                   asp-for="StudentSetUp.Institution.Address1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Officail Phone No.</label>
+                            <input type="text" class="form-control" id="yearOfStudy" asp-for="StudentSetUp.Institution.PhoneNo1" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Official Email</label>
+                            <input type="text" id="otherNames" readonly="readonly" class="form-control" asp-for="StudentSetUp.Institution.Email">
 
-            <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
-                <button type="submit" class="btn btn-primary" id="mySubmitForm">Update Records</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Web Address</label>
+                            <input type="text" class="form-control" id="leveStudy" asp-for="StudentSetUp.Institution.Website" readonly="readonly">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Institution Supervisor Name</label>
+                            <input type="text" id="phoneNo" class="form-control"
+                                   asp-for="StudentSetUp.InstitutionOfficer.IntOfficerName" placeholder="Enter Phone No." readonly="readonly">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Supervisor Email</label>
+                            <input type="text" id="email" class="form-control" asp-for="StudentSetUp.InstitutionOfficer.Email" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Supervisor Phone</label>
+                            <input type="text" id="batch" class="form-control" asp-for="StudentSetUp.InstitutionOfficer.PhoneNo" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -168,22 +330,47 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#courseStudy" ).autocomplete({
-            source: availableTags,
-            select: function (event, ui) {
-                $('#courseStudy').val(ui.item.label);
-                $('#courseStudyId').val(ui.item.value);
-                return false;
-            }
+        $('#personalDetails').on('click', function () {
+            document.getElementById('personalD').style.display = "block";
+            document.getElementById('emplyD').style.display = "none";
+            document.getElementById('instId').style.display = "none";
+            document.getElementById('bankDet').style.display = "none";
+            document.getElementById('pdata').style.display = "block";
+            document.getElementById('emId').style.display = "none";
+            document.getElementById('BankDe').style.display = "none";
+            document.getElementById('istD').style.display = "none";
         });
-        $("#matricNumber").autocomplete({
-            source: studentList,
-            select: function (event, ui) {
-                $('#matricNumber').val(ui.item.label);
-                $('#studentId').val(ui.item.value);
-                return false;
-            }
+        $('#bankDetails').on('click', function () {
+            document.getElementById('personalD').style.display = "none";
+            document.getElementById('emplyD').style.display = "none";
+            document.getElementById('instId').style.display = "none";
+            document.getElementById('bankDet').style.display = "block";
+            document.getElementById('pdata').style.display = "none";
+            document.getElementById('emId').style.display = "none";
+            document.getElementById('BankDe').style.display = "block";
+            document.getElementById('istD').style.display = "none";
         });
+        $('#employerDetails').on('click', function () {
+            document.getElementById('personalD').style.display = "none";
+            document.getElementById('emplyD').style.display = "block"; 
+            document.getElementById('instId').style.display = "none"; 
+            document.getElementById('bankDet').style.display = "none";
+            document.getElementById('pdata').style.display = "none";
+            document.getElementById('emId').style.display = "block";
+            document.getElementById('BankDe').style.display = "none";
+            document.getElementById('istD').style.display = "none";
+        });
+        $('#institutionDetails').on('click', function () {
+            document.getElementById('personalD').style.display = "none";
+            document.getElementById('emplyD').style.display = "none"; 
+            document.getElementById('instId').style.display = "block"; 
+            document.getElementById('bankDet').style.display = "none";
+            document.getElementById('pdata').style.display = "none";
+            document.getElementById('emId').style.display = "none";
+            document.getElementById('BankDe').style.display = "none";
+            document.getElementById('istD').style.display = "block";
+        });
+
         $('#myUpdateForm').on('click', function () {
             var studtId =  $('#studentId').val();
             var matricNumber = $('#matricNumber').val();
@@ -374,7 +561,7 @@
                 alert(data.responseText);
             },
             success: function (data) {
-               // console.log(data);
+              //console.log(data);
                 $('#myLGA').empty();
                 $('#myLGA').append('<option value=-1>--Select LGA--</option>');
                 var option = '';

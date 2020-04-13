@@ -1,11 +1,10 @@
 ﻿@page
 @inject SiwesData.ApplicationDbContext db
-@using Microsoft.EntityFrameworkCore; 
-@model BSSL_SIWES.Web.Pages.Students.DailyListModel
+@using Microsoft.EntityFrameworkCore;
+@model BSSL_SIWES.Web.Pages.Students.MonthlyListModel
 @{
-    ViewData["Title"] = "DailyList";
+    ViewData["Title"] = "MonthlyList";
 }
-
 <div class="col-md-12">
     <div class="card card-primary">
         <div class="modal fade" tabindex="-1" id="loginModal"
@@ -60,7 +59,7 @@
                             </div>
                         </div>
 
-                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                        <div class="justify-content-center" style="margin-left:25%; margin-bottom:3%;">
                             <button type="submit" id="BtnSuspend" class="btn btn-primary button button4">Update Daily Record</button>
                             <button type="submit" id="BtnAssignSuper" style="display:none" class="btn btn-primary button button4">Assign Supervisor</button>
                             <button type="submit" id="BtnChangeSuper" style="display:none" class="btn btn-primary button button4">Change Supervisor</button>
@@ -87,28 +86,24 @@
                 <thead>
                     <tr>
                         <th style="width:0.25%; text-align:center">S/N</th>
-                        <th style="width:10%; text-align:center">Week End Date</th>
-                        <th style="width:10%; text-align:center">Week Day</th>
+                        <th style="width:10%; text-align:center">Month</th>
                         <th style="width:10%; text-align:center">Date</th>
-                        <th style="width:30%; text-align:center">Summary of Activities</th>
+                        <th style="width:30%; text-align:center">Summary of Assessment</th>
                         <th style="width:10%; text-align:center">Status</th>
                         <th style="width:10%; text-align:center">Update</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < Model.DailyActivitiesLists.Count; i++)
+                    @for (int i = 0; i < Model.MonthlyAssessments.Count; i++)
                     {
-                        var items = Model.DailyActivitiesLists[i];
-                        var DailyAct = await db.DailyActivities
-                            .Where(x => x.Id == items.DailyActivitiesId).Select(c =>c.StudentSetUpId).SingleOrDefaultAsync();
-                        string s = items.DayDate.ToString("dd/M/yyyy");
+                        var items = Model.MonthlyAssessments[i];
+                        string s = items.AssessmentDate.ToString("dd/M/yyyy");
                         var myStatus = items.Approved;
                         <tr>
                             <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                            <td class="WeekNumber @i" style="width:10%; text-align:left">@items.DailyActivities.WeekNumber</td>
-                            <td class="WeekDayName @i" style="width:8%; text-align:left">@items.WeekDayName</td>
+                            <td class="WeekNumber @i" style="width:10%; text-align:left">@items.AssessmentMonth</td>
                             <td class="DayDate @i" style="width:5%; text-align:left">@s</td>
-                            <td class="DayDescription @i" style="width:45%; text-align:left">@items.DayDescription.ToString().Trim()</td>
+                            <td class="DayDescription @i" style="width:45%; text-align:left">@items.MonthlyRemarksByStudent.ToString().Trim()</td>
                             @{
                                 if (myStatus == false)
                                 {
@@ -117,9 +112,7 @@
 
                                     </td>
                                     <td style="width:10%; text-align:center">
-                                        <input type="hidden" class="studentId @i" value="@DailyAct" />
                                         <input type="hidden" class="myId @i" value="@items.Id" />
-                                        <input type="hidden" class="date1 @i" value="@items.DayDate" />
                                         <a id="updateActivities" updateDailyActivities="@i" asp-route-id="@items.Id">Update</a>
                                     </td>
                                 }
@@ -157,23 +150,18 @@
             var rowIndex = currentRow.find("td:eq(0)").html();
             var studentName = currentRow.find("td:eq(3)").html();
             var editindex = $(this).attr('updateDailyActivities');
-            var WeekDayName = $('.WeekDayName.' + editindex).text();
-            var DayDate = $('.date1.' + editindex).val();
-            var x = DayDate.substring(0, 10);
             var rowId = $('.myId.' + editindex).val();
-            var studentId = $('.studentId.' + editindex).val();
             var WeekNumber = $('.WeekNumber.' + editindex).text();
             var DayDescription = $('.DayDescription.' + editindex).text();
             //alert(DayDate); alert(x);
             $("#loginModal").modal('show');
-            $('#monthname').html("UPDATE DAILY/WEEKLY ACTIVITIES");
-
+            $('#monthname').html("UPDATE MONTHLY ASSESSMENT");
+            $('#BtnSuspend').html("Update " + WeekNumber + " Assessment Record");
             $('#rowId').val(rowId);
             $('#weekend').val(WeekNumber);
-            $('#weekDay').val(WeekDayName);
             $('#rowIndex').val(rowIndex);
-            $('#studentId').val(studentId);
-            $('.monday').val(x);
+            //$('#studentId').val(studentId);
+            //$('.monday').val(x);
             $(".remarks").summernote('code', DayDescription);
             document.getElementById('BtnSuspend').style.display = "inline-block";
             document.getElementById('BtnAssignSuper').style.display = "none";
@@ -185,21 +173,21 @@
             var rowId = $('#rowId').val();
             var remarks = $('.remarks').val();
             //alert(remarks);
-            var dailyActivitiesListID = parseInt(rowId);
+            var monthlyAssessmentId = parseInt(rowId);
             if (remarks == "") {
                 alert("PLEASE ENTER DESCRIPTION OF WORK");
                 return false;
             }
             var d = {
-                "Id": dailyActivitiesListID,
-                "DayDescription": remarks
+                "Id": monthlyAssessmentId,
+                "MonthlyRemarksByStudent": remarks
             };
             var confirmation = confirm("ARE SURE YOU WANT UPDATE THIS RECORD?");
             if (confirmation === false) {
                 return false;
             }
             var baseUrl = window.location.origin;
-            var url = baseUrl + '/Api/DailyActivitiesListsDate/ ' + dailyActivitiesListID;
+            var url = baseUrl + '/Api/MonthlyCheck/ ' + monthlyAssessmentId;
             //alert(url);
             $.ajax({
                 type: "PUT",
@@ -217,7 +205,7 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    //alert(studentName.toUpperCase() + " WAS SUCCESSFULLY SUSPENDED ");
+                    alert("RECORD SUCCESSFULLY UPDATED");
                     location.reload();
                 },
             });
@@ -229,3 +217,4 @@
     }
 
 </script>
+
