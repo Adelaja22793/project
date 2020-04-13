@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Students;
+using SiwesData;
 
 namespace BSSL_SIWES.Web.Pages.Students
 {
     public class DailyListModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUserTab> _userManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
 
-        public DailyListModel(SiwesData.ApplicationDbContext context, SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+        public DailyListModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

@@ -10,7 +10,9 @@ namespace SiwesData.Setup
         public int Id { get; set; }
         public string baseCarry{ get; set; }
         public int CarryCap { get; set; }
-
+        public int? CoursesId { get; set; }
+        public int? CourseGrpSetupId { get; set; }
+        public int InstitutionId { get; set; }
 
         public Courses Courses { get; set; }
         public CourseGrpSetup CourseGrpSetup { get; set; }

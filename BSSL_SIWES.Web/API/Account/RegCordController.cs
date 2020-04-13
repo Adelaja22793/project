@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using SiwesData;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,12 +15,12 @@ namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegstaffController : Controller
+    public class RegCordController : Controller
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
-        public RegstaffController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RegCordController(SiwesData.ApplicationDbContext context, UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -37,8 +38,8 @@ namespace BSSL_SIWES.Web.API
         // GET api/<controller>/5
 
 
-        [HttpGet("{staffid}")]
-        public async Task<ActionResult<List<string>>> Getstaffid(string staffid)
+        [HttpGet("{instCordEmail}")]
+        public async Task<ActionResult<List<string>>> Getstaffid(string instCordEmail)
         {
             //   var result = "";
 
@@ -49,23 +50,34 @@ namespace BSSL_SIWES.Web.API
 
                 // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
 
-                var staffidinfo = await _context.ItfStaff.FirstOrDefaultAsync(m => m.StaffId == staffid.Trim());
-              //  var identityUser = await _userManager.FindByNameAsync(rcno.Trim());
+                //    var getinstid = instCordEmail;
+
+                var staffidinfo = await _context.InstitutionOfficers.FirstOrDefaultAsync(m => m.Email == instCordEmail.Trim()
+                && m.OfficerType == "1");
+             //  &&  Convert.ToInt32(m.InstitutionId) == Convert.ToInt32(instid));
+              //  var AppUserTab = await _userManager.FindByNameAsync(rcno.Trim());
 
 
-
+                
                 if (staffidinfo == null)
-                {
+                {     
                     result.Insert(0, "notexist");
                 }
                 else
                 {
                     //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
 
-               
-                    if (staffidinfo != null)
+                    #region  check if the account has been registered 
+                    var user = _userManager.FindByEmailAsync(instCordEmail.Trim());
+                    if(user != null)
                     {
-                        result.Insert(0, staffidinfo.Surname.ToString().Trim() + " " + staffidinfo.OtherNames.ToString().Trim());
+                        result.Insert(0, "alreg");
+                    }
+                      #endregion
+
+                    else  if (staffidinfo != null)
+                    {
+                        result.Insert(0, staffidinfo.IntOfficerName.ToString().Trim());
                         result.Insert(1, staffidinfo.Email.ToString());
 
                     }
@@ -78,13 +90,16 @@ namespace BSSL_SIWES.Web.API
 
 
             }
-            catch
+            catch (Exception ex)
             {
+                result.Insert(0, ex.Message + ex.StackTrace);
                 result.Insert(0, "syserr");
             }
             return result;
 
         }
+
+  
 
         // POST api/<controller>
         [HttpPost]

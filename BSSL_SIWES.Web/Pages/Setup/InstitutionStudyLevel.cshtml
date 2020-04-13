@@ -34,6 +34,7 @@
                             <div class="form-group">
                                 <label for="exampleInputFile">Level Code</label>
                                 <input type="text" class="form-control" id="txtcode">
+                                <input id="hddeditid" type="hidden" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -56,6 +57,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                    <button type="submit" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
                     <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
                     <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
                 </div>
@@ -112,22 +114,38 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-        $("divinput").hide();
-        $("divgrid").show();
-        $("#divadd").click(function () {
-            $("divinput").show();
-            $("divgrid").hide();
-            // document.getElementById('divinput').style.display = "none";
-            //document.getElementById('divgrid').style.display = "inline-block";
-        });
+        formClear();
         function formClear() {
             $("#txtcode").val("");
             $("#txtname").val("");
+             $("#txtduration").val("");
             $("#drpinstitution").val("-1")
             $("#hddidinstitution").val("");
+            $("#hddeditid").val("");
+            $("#Btnsave").show();
+            $("#Btnupdate").hide(); $('#txtcode').prop("readonly", false);
         }
+        $('#BtnCancel').on('click', function (e) {
+            e.preventDefault();
+            formClear();
+        });
         $('#Btnsave').on('click', function (e) {
+             if ($('#drpinstitution').val() == "-1") {
+                alert("Please Select Institution");
+                return false;
+            }
+            if ($('#txtcode').val() == "") {
+                alert("Please Enter Level Code");
+                return false;
+            }
+             if ($('#txtname').val() == "") {
+                alert("Please Enter Level Name");
+                return false;
+            }
+             if ($('#txtduration').val() == "") {
+                alert("Please Enter Level Duration");
+                return false;
+            }
             e.preventDefault();
             var drpinstitution = document.getElementById('drpinstitution').value;
             var hdddrpname = $("#drpinstitution option:selected").html();
@@ -137,7 +155,7 @@
             var d = {
                 "Code": txtcode,
                 "Name": txtname,
-                "InstitutionId": drpinstitution,
+                "InstitutionId": Number(drpinstitution),
                 "Duration": txtduration
             };
             var baseUrl = window.location.origin;
@@ -169,7 +187,8 @@
                                 </td>
                                 <td class="tabdrpname" style="width:15%; text-align:left">${hdddrpname}</td>
                                 <td class="tabcode" style="width:20%; text-align:left">${txtcode}</td>
-                                <td class="tabname" style="width:60%; text-align:left">${txtname}</td>
+                                <td class="tabname" style="width:20%; text-align:left">${txtname}</td>
+                                <td class="tabdura" style="width:60%; text-align:left">${txtduration}</td>
 
                             </tr>`
                     $('#tabId').append(html);
@@ -189,31 +208,49 @@
             var tabcode = $('.tabcode.' + editindex).text();
              var tabname = $('.tabname.' + editindex).text();
              var tabdura = $('.tabdura.' + editindex).text();
-            var tabdrpinstitution = $('.tabdrpinstitution.'  + editindex).val();
+             var tabdrpinstitution = $('.tabdrpinstitution.' + editindex).val();
+              var hddeditid = $('.readid.' + editindex).val();
             $("#drpinstitution").val(tabdrpinstitution);
             $("#txtcode").val(tabcode);
             $("#txtname").val(tabname);
             $("#txtduration").val(tabdura);
             $("#hddidinstitution").val(tabdrpinstitution);
+            $("#hddeditid").val(hddeditid);
             $('#rowIndex').val(selectedIndex);
-
+              $('#txtcode').prop("readonly", true);
             serialNo = $(this).closest('tr').find('.se_no').text();
             return false;
 
         });
         $('#Btnupdate').on('click', function (e) {
+             if ($('#drpinstitution').val() == "-1") {
+                alert("Please Select Institution");
+                return false;
+            }
+            if ($('#txtcode').val() == "") {
+                alert("Please Enter Level Code");
+                return false;
+            }
+             if ($('#txtname').val() == "") {
+                alert("Please Enter Level Name");
+                return false;
+            }
+             if ($('#txtduration').val() == "") {
+                alert("Please Enter Level Duration");
+                return false;
+            }
             e.preventDefault();
-            var editindex = document.getElementById('hddidinstitution').value;
+            var editindex = document.getElementById('hddeditid').value;
             var drpinstitution = document.getElementById('drpinstitution').value;
             var hdddrpname = $("#drpinstitution option:selected").html();
             var txtcode = document.getElementById('txtcode').value;
             var txtname = document.getElementById('txtname').value;
             var txtduration = document.getElementById('txtduration').value;
             var d = {
-                "Id": Number(drpinstitution),
+                "Id": Number(editindex),
                 "Code": txtcode,
                 "Name": txtname,
-                "InstitutionId": drpinstitution,
+                "InstitutionId":Number(drpinstitution),
                 "Duration": txtduration
             };
             //alert(editindex); alert(txtname); alert(txtcode); alert(drpListCat); alert(drpAgency);

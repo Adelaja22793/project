@@ -15,14 +15,14 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-       private readonly UserManager<IdentityUser> _userManager;
+       private readonly UserManager<AppUserTab> _userManager;
         public string successm { get; set; }
         public string errorm { get; set; }
-        public LoginModel(SignInManager<IdentityUser> signInManager,
+        public LoginModel(SignInManager<AppUserTab> signInManager,
             ILogger<LoginModel> logger,
-             UserManager<IdentityUser> userManager)
+             UserManager<AppUserTab> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -37,12 +37,12 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         [TempData]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } 
 
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            //[EmailAddress]
             public string Email { get; set; }
 
             [Required]
@@ -107,10 +107,16 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                 //    return Page();
                 //}
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-
+                var user2 = await _userManager.FindByNameAsync(Input.Email);
                 if (await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToPage("home");
+                    // return LocalRedirect(returnUrl);
+                }
+               else if (await _userManager.CheckPasswordAsync(user2, Input.Password))
+                {
+                    await _signInManager.SignInAsync(user2, isPersistent: false);
                     return RedirectToPage("home");
                     // return LocalRedirect(returnUrl);
                 }

@@ -17,24 +17,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BSSL_SIWES.Web.Areas.Identity.Pages.Account;
 using Microsoft.EntityFrameworkCore;
 
-namespace BSSL_SIWES.Web.Pages.Setup
+namespace BSSL_SIWES.Web.Pages.Account
 { 
     [AllowAnonymous]
 
     public class CreateItfStaff : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<RoleTb> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         public string successm { get; set; }
         public string errorm { get; set; }
         private readonly IEmailSender _emailSender;
 
         public CreateItfStaff(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUserTab> userManager,
+            SignInManager<AppUserTab> signInManager,
             RoleManager<RoleTb> roleManager,
             ILogger<RegisterModel> logger,
             ApplicationDbContext context,
@@ -122,7 +122,7 @@ namespace BSSL_SIWES.Web.Pages.Setup
             returnUrl = returnUrl ?? Url.Content("/");
             //if (ModelState.IsValid)
             //{
-                var user = new IdentityUser { UserName = Input.Sfaffid, Email = Input.Email };
+                var user = new AppUserTab { UserName = Input.Sfaffid, Email = Input.Email };
            
                 if (Input.Password.Any(Char.IsUpper) == false)
                 {

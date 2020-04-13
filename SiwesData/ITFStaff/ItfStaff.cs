@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace SiwesData.ITFStaff
 {
@@ -13,7 +14,9 @@ namespace SiwesData.ITFStaff
         public string Gradelvl { get; set; }
         public string OfficeCode { get; set; }
 
+       
         public string Email { get; set; }
+    
         public Boolean Suspended { get; set; }
 
     }

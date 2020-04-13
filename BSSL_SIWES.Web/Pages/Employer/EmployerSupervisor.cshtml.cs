@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Employer;
 using Microsoft.AspNetCore.Identity;
-
+using SiwesData;
 namespace BSSL_SIWES.Web.Pages.Employer
 {
     public class EmployerSupervisorModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
         public EmployerSupervisorModel(SiwesData.ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

@@ -18,9 +18,9 @@ namespace BSSL_SIWES.Web.Pages.Institution
     public class AttachStudentEmployerModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
         public AttachStudentEmployerModel(SiwesData.ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

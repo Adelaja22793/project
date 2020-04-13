@@ -9,16 +9,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Setup;
 using SiwesData.Students;
-
+using SiwesData;
 namespace BSSL_SIWES.Web.Pages.Institution
 {
     public class Student_Visit_FormModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
         public Student_Visit_FormModel(SiwesData.ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

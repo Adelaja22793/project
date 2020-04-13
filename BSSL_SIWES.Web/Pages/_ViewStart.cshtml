@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+
+@using SiwesData
+@inject SignInManager<AppUserTab> SignInManager
+@inject UserManager<AppUserTab> UserManager
 @{
     if (SignInManager.IsSignedIn(User))
     {
@@ -8,6 +10,6 @@
     }
     else
     {
-        Layout = "_Welcome";
+        Layout = "_Layout";
     }
 }

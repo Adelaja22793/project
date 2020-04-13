@@ -13,7 +13,9 @@ namespace SiwesData.Setup
         public string Name { get; set; }
         [DisplayName("Nationality")]
         public string Code { get; set; }
+        public string NationCode { get; set; }
         public int NationalityId { get; set; }
+
         public Nationality Nationality { get; set; }
         public ICollection<LGA> LGAs { get; set; }
     }

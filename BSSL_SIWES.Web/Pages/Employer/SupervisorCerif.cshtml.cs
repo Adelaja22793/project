@@ -10,15 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using SiwesData.Students;
 using SiwesData.Employer;
 
+using SiwesData;
 namespace BSSL_SIWES.Web.Pages.Employer
 {
     public class SupervisorCerifModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
         public SupervisorCerifModel(SiwesData.ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

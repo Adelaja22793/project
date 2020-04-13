@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SiwesData.Setup;
+using SiwesData;
 
 namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 {
@@ -18,17 +19,17 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 
     public class RegisterModel : PageModel
     { 
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
         private readonly RoleManager<RoleTb>_roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         public string successm { get; set; }
         public string errorm { get; set; }
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUserTab> userManager,
+            SignInManager<AppUserTab> signInManager,
             RoleManager<RoleTb> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
@@ -98,7 +99,7 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
               
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new AppUserTab { UserName = Input.Email, Email = Input.Email, RealName = Input.Name };
                 if (Input.Password.Any(Char.IsUpper) == false)
                 {
                     errorm = "Your password must contain at least 1 upper case";
@@ -109,16 +110,28 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     // creating Creating Manager role     
-                  
-                  bool  x = await _roleManager.RoleExistsAsync("Student");
-                    if (!x)
+
+                    //bool  x = await _roleManager.RoleExistsAsync("Student");
+                    //if (!x)
+                    //{
+                    //    var role = new RoleTb();
+                    //    role.Name = "Student";
+                    //    role.RoleId = "STD01";
+                    //    await _roleManager.CreateAsync(role);
+                    //}
+
+                    var userd = new AppUserTab
                     {
-                        var role = new RoleTb();
-                        role.Name = "Student";
-                        role.RoleId = "STD01";
-                        await _roleManager.CreateAsync(role);
-                    }
-                    await _userManager.AddToRoleAsync(user, "Student");
+                        Email = "admin@bssl.com.ng",
+                        UserName = "Administrator",
+                        RealName = "Bssl Administrator"
+               
+                        
+
+                    };
+                    await _userManager.CreateAsync(userd, "Oj5!%hs17");
+                    await _userManager.AddToRoleAsync(user, SiwesData.ConstantRole.Student);
+                    await _userManager.AddToRoleAsync(userd, SiwesData.ConstantRole.Admin);
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

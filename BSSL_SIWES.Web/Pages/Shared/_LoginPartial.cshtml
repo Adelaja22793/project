@@ -1,6 +1,7 @@
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using SiwesData
+@inject SignInManager<AppUserTab> SignInManager
+@inject UserManager<AppUserTab> UserManager
  
                     <ul class="navbar-nav ml-auto my-2 my-lg-0" style="font-size:large">
                         @if (SignInManager.IsSignedIn(User))

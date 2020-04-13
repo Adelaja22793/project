@@ -17,9 +17,9 @@ namespace BSSL_SIWES.Web.API
     public class RegempController : Controller
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<SiwesData.AppUserTab> _userManager;
 
-        public RegempController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RegempController(SiwesData.ApplicationDbContext context, UserManager<SiwesData.AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -48,11 +48,11 @@ namespace BSSL_SIWES.Web.API
                 // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
 
 
-                var identityUser = await _userManager.FindByNameAsync(rcno.Trim());
+                var AppUserTab = await _userManager.FindByNameAsync(rcno.Trim());
 
            
 
-                if (identityUser != null)
+                if (AppUserTab != null)
                 {
                     result.Insert(0, "exist");
                 }
@@ -68,55 +68,6 @@ namespace BSSL_SIWES.Web.API
                         result.Insert(0, user.Name.Trim());
                         result.Insert(1, user.Email.Trim());
                      
-                    }
-                    else
-                    {
-                        result.Insert(0, "notexist");
-                    }
-                }
-
-
-
-            }
-            catch
-            {
-                result.Insert(0, "syserr");
-            }
-            return result;
-
-        }
-
-        [HttpGet("{staffid}")]
-        public async Task<ActionResult<List<string>>> Getstaffid(string staffid)
-        {
-            //   var result = "";
-
-            List<string> result = new List<string>();
-            try
-            {
-                // get email 
-
-                // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
-
-                var staffidinfo = await _context.ItfStaff.FirstOrDefaultAsync(m => m.StaffId == staffid.Trim());
-              //  var identityUser = await _userManager.FindByNameAsync(rcno.Trim());
-
-
-
-                if (staffidinfo == null)
-                {
-                    result.Insert(0, "notexist");
-                }
-                else
-                {
-                    //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
-
-               
-                    if (staffidinfo != null)
-                    {
-                        result.Insert(0, staffidinfo.Surname.ToString().Trim() + " " + staffidinfo.OtherNames.ToString().Trim());
-                        result.Insert(1, staffidinfo.Email.ToString());
-
                     }
                     else
                     {

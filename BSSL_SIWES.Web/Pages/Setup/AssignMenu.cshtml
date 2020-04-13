@@ -1,0 +1,220 @@
+﻿@page
+@inject SiwesData.Data.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+@model BSSL_SIWES.Web.AssignMenuModel
+
+@{
+    ViewData["Title"] = "AssignMenu";
+}
+
+<div class="content-wrapper" style="margin-top:-50px">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">User Definition</h3>
+                        </div>
+                        <form>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <div class="form-group">
+                                            <label asp-for="MenuAccess.RoleId" class="control-label"></label>
+                                            @*<select asp-for="MenuAccess.RoleId" class="form-control menuID" name="myMenu" id="myMenu" asp-items="ViewBag.RoleId">
+                                <option value="0">--Select Menu--</option>
+                            </select>*@
+                                            <input type="hidden" id="orgNameId" />
+                                            <input type="text" id="orgName" asp-for="MenuAccess.RoleId" onchange="MyFunctionOrganName()" class="form-control">
+                                            <span asp-validation-for="MenuAccess.RoleId" class="text-danger"></span>
+                                        </div>
+                                        @*<div class="form-group">
+                            <label asp-for="MenuAccess.SubMenuId" class="control-label"></label>
+                            <select asp-for="MenuAccess.SubMenuId" class="form-control" asp-items="ViewBag.SubMenuId"></select>
+                        </div>*@
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                            <table id="tabId" class="table table-bordered" border="0">
+                                <thead style="background-color:steelblue;">
+                                    <tr>
+                                        @*<th style="width:6%; text-align:center">Actions</th>*@
+                                        <th style="width:6%; text-align:center; display:none"></th>
+                                        <th style="width:6%; text-align:center; display:none"></th>
+                                        <th style="width:0.25%; text-align:center">S/N</th>
+
+                                        <th style="width:25%; text-align:center">SubMenu Name</th>
+                                        <th style="width:25%; text-align:center">MainMenu Name</th>
+                                        <th style="width:6%; text-align:center">Attach</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @for (int i = 0; i < Model.SubMenus.Count; i++)
+                                    {
+                                        var items = Model.SubMenus[i];
+                                    <tr>
+                                        <td class="number" style="display:none">@items.Id</td>
+                                        <td class="number" style="display:none">@items.MenuId</td>
+                                        <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
+
+                                        <td class="subname @i" id="subname" style="width:25%; text-align:left">
+
+                                            @items.Name
+                                        </td>
+                                        <td class="menname @i" id="menname" style="width:25%; text-align:left">@items.Menu.Name</td>
+                                        <td style="width:6%; text-align:left">
+                                            
+                                            <input type="checkbox" class="checking" />
+                                        </td>
+
+
+                                    </tr>
+                                        
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" id="btnSave" value="Create" class="btn btn-primary" />
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+     $(document).ready(function () {
+     var orgName = [];
+
+    function AddOrgName(lbl, val) {
+        orgName.push({ label: lbl, value: val});
+    }
+   
+        @foreach (var item in Model.RoleTb)
+        {
+            @:AddOrgName('@item.Name', '@item.Id');
+        }
+            $("#orgName").autocomplete({
+                source: orgName,
+                select: function (event, ui) {
+                    $('#orgNameId').val(ui.item.value);
+                    $('#orgName').val(ui.item.label);
+                    return false;
+                }
+            });
+       });
+        function MyFunctionOrganName() {
+            var orgNameId = document.getElementById('orgNameId').value;
+            var d = {
+                "Id": orgNameId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/RoleTbs/' + orgNameId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                   
+                },
+            });
+
+        
+    };
+   
+    
+   
+     $("#btnSave").on('click', function (e) {
+            e.preventDefault();
+           // alert("fjfgjf");
+            var orgName = $('#orgNameId').val();
+            var grid = document.getElementById("tabId");
+            //alert(grid);
+            //get the checkboxes checked
+            var checkBoxes = grid.getElementsByClassName('checking');
+            //alert(checkBoxes);
+
+            var SubMenuId = "";
+            var MenuId = "";
+         var submenunewId = "";
+
+            //Loop through the CheckBoxes.
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
+                    var row = checkBoxes[i].parentNode.parentNode;
+                    //alert(row);
+                    SubMenuId = row.cells[1].innerHTML;
+                    //MenuId = row.cells[1].innerHTML;
+                }
+                //submenunewId = parseInt(SubMenuId);
+                //alert(subMenuId);
+                //alert(MenuId);
+                //alert(orgName);
+                var d = {
+                    "RoleId": orgName,
+                   // "SubMenuId": submenunewId,
+                    "SubMenuId": Number(SubMenuId),
+                    //"MenuId": MenuId,
+                    
+                };
+               
+                var baseUrl = window.location.origin;
+            //Send the JSON array to Controller using AJAX.
+                $.ajax({
+                    type: "POST",
+                    url: baseUrl + '/Api/MenuAccesses',
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    error: function (data) {
+                        alert(data.responseText);
+
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (d) {
+                        //alert(data + " record(s) inserted.");
+                    }
+                });
+            };
+           //successfully save
+            alert("record(s) inserted.");
+            
+        });
+  
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
