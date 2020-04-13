@@ -31,6 +31,10 @@
     <Compile Remove="Migrations\20200407190708_newEmpyqasf.Designer.cs" />
     <Compile Remove="Migrations\20200407192338_newEm.cs" />
     <Compile Remove="Migrations\20200407192338_newEm.Designer.cs" />
+    <Compile Remove="Migrations\20200408204116_updatedbnew.cs" />
+    <Compile Remove="Migrations\20200408204116_updatedbnew.Designer.cs" />
+    <Compile Remove="Migrations\20200412040258_upd2353.cs" />
+    <Compile Remove="Migrations\20200412040258_upd2353.Designer.cs" />
   </ItemGroup>
 
 

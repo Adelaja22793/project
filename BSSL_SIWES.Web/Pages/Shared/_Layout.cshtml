@@ -1,14 +1,15 @@
 ﻿@inject SiwesData.ApplicationDbContext db
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity
+@using SiwesData
 
 @using System.Collections.Generic
 
 @using Microsoft.AspNetCore.Http
 
 @using SiwesData.Setup
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<AppUserTab> SignInManager
+@inject UserManager<AppUserTab> UserManager
 @inject RoleManager<RoleTb> roleManager
 
 
@@ -16,10 +17,10 @@
     //var ListCategories = db.mainCategories.Include(m => m.SubCategories);
 
     // var menulist = db.SubMenu.Include(m => m.MenuAccesses);
-    //private readonly UserManager<IdentityUser> _userManager;
+    //private readonly UserManager<AppUserTab> _userManager;
     //private readonly AspNetRoleManager<RoleTb> _roleManager;
 
-    //public LayoutModel( UserManager<IdentityUser> userManager, AspNetRoleManager<RoleTb> roleManager)
+    //public LayoutModel( UserManager<AppUserTab> userManager, AspNetRoleManager<RoleTb> roleManager)
     //{
     //    _userManager = userManager;
     //    _roleManager = roleManager;
@@ -170,7 +171,7 @@
             <!-- Right navbar links -->
             @{
                 //var InstOff = userManager.GetUserId(User);
-                var InstOff = 10;
+                var InstOff = 1;
                 var newCourse = db.NewCourseRequests.Where(s => s.InstitiutionId == InstOff && s.Approved == false).ToList();
                 var Counting = 0;
                 if (newCourse.Count > 0)
@@ -365,6 +366,12 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a asp-page="/Account/CreateEmpSuper" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create School Cordinator</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a asp-page="/Setup/Menu" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Setup Menu</p>
@@ -422,6 +429,12 @@
                                     <a asp-page="/Setup/SupervisoryAgency" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Supervisory Agency Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Institution/SetUpInstOfficer" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>School Cordinator Bio-data</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

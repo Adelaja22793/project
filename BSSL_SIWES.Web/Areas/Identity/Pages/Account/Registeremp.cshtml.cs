@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SiwesData.Setup;
+using SiwesData;
 
 namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 {
@@ -18,17 +19,17 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 
     public class RegisterempModel : PageModel
     { 
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
         private readonly RoleManager<RoleTb>_roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         public string successm { get; set; }
         public string errorm { get; set; }
         private readonly IEmailSender _emailSender;
 
         public RegisterempModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUserTab> userManager,
+            SignInManager<AppUserTab> signInManager,
             RoleManager<RoleTb> roleManager,
             ILogger<RegisterModel> logger,
       IEmailSender emailSender)
@@ -102,7 +103,7 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("/Areas/Identity/Pages/Account/Login");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.RcNo, Email = Input.Email };
+                var user = new AppUserTab { UserName = Input.RcNo, Email = Input.Email };
            
                 if (Input.Password.Any(Char.IsUpper) == false)
                 {
@@ -124,15 +125,15 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                 {
                     // creating Creating Manager role     
                   
-                  bool  x = await _roleManager.RoleExistsAsync("Employer");
-                    if (!x)
-                    {
-                        var role = new RoleTb();
-                        role.Name = "Employer";
-                        role.RoleId = "EMP01";
-                        await _roleManager.CreateAsync(role);
-                    }
-                    await _userManager.AddToRoleAsync(user, "Employer");
+                  //bool  x = await _roleManager.RoleExistsAsync("Employer");
+                  //  if (!x)
+                  //  {
+                  //      var role = new RoleTb();
+                  //      role.Name = "Employer";
+                  //      role.RoleId = "EMP01";
+                  //      await _roleManager.CreateAsync(role);
+                  //  }
+                  //  await _userManager.AddToRoleAsync(user, "Employer");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

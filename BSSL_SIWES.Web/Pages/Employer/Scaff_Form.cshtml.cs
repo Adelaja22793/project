@@ -10,16 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using SiwesData.Employer;
 using SiwesData.Setup;
 using SiwesData.Students;
-
+using SiwesData;
 namespace BSSL_SIWES.Web.Pages.Employer
 {
     public class Scaff_FormModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
         public Scaff_FormModel(SiwesData.ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

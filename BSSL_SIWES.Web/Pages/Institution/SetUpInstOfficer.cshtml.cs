@@ -8,16 +8,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Setup;
+using SiwesData;
 
 namespace BSSL_SIWES.Web.Pages.Institution
 {
     public class SetUpInstOfficerModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
         public SetUpInstOfficerModel(SiwesData.ApplicationDbContext context,
-          UserManager<IdentityUser> userManager)
+          UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -27,7 +28,7 @@ namespace BSSL_SIWES.Web.Pages.Institution
         public IList<InstitutionOfficer> InstitutionOfficers { get; set; }
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            id = 10;
+            id = 1;
 
             if (id < 0)
             {

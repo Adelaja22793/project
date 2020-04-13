@@ -13,26 +13,26 @@ using Microsoft.Extensions.Logging;
 using SiwesData.Setup;
 using SiwesData;
 
-namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
+namespace BSSL_SIWES.Web.Pages.Account
 {
     [AllowAnonymous]
 
-    public class RegisterModel : PageModel
+    public class CreateEmpSuperModel : PageModel
     { 
         private readonly SignInManager<AppUserTab> _signInManager;
         private readonly RoleManager<RoleTb>_roleManager;
         private readonly UserManager<AppUserTab> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
+        private readonly ILogger<CreateEmpSuperModel> _logger;
         public string successm { get; set; }
         public string errorm { get; set; }
         private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
+        public CreateEmpSuperModel(
             UserManager<AppUserTab> userManager,
             SignInManager<AppUserTab> signInManager,
             RoleManager<RoleTb> roleManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            ILogger<CreateEmpSuperModel> logger,
+      IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -52,12 +52,11 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             [StringLength(100, ErrorMessage = "Please  email address is compulsory")]
             [EmailAddress]
             [Display(Name = "Email")]
-         
+
             public string Email { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
-            
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -68,19 +67,18 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 
             public string ConfirmPassword { get; set; }
-             
-            //[Required]
-            //[StringLength(100, ErrorMessage = "Matric No is required")]
-            //[DataType(DataType.Text)]
-            //[Display(Name = "Matric Number")]
-          
 
-            public string MatricNo { get; set; }
+
+
+            [Required]
+            [StringLength(100, ErrorMessage = "Please Supervisor Phone Number")]
+            [Phone]
+            public string PhoneNo { get; set; }
+
+
 
             [DataType(DataType.Text)]
             [Display(Name = "Name")]
-
-
             public string Name { get; set; }
 
 
@@ -98,40 +96,32 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("/");
             if (ModelState.IsValid)
             {
-              
-                var user = new AppUserTab { UserName = Input.Email, Email = Input.Email, RealName = Input.Name };
+      
+                var user = new AppUserTab { UserName = Input.Email, 
+                    Email = Input.Email,
+                    RealName=Input.Name, 
+                    EmpRcNo = User.Identity.Name,
+                    PhoneNumber=Input.PhoneNo };
+           
                 if (Input.Password.Any(Char.IsUpper) == false)
                 {
                     errorm = "Your password must contain at least 1 upper case";
                     return Page();
                 }
+                var useremail = await _userManager.FindByEmailAsync(Input.Email);
+              //  var username = await _userManager.GetUserNameAsync(user);
+
+                if (useremail != null)
+                {
+                    errorm = "Email alrealdy exist please check s";
+                    return Page();
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
             
                 if (result.Succeeded)
                 {
-                    // creating Creating Manager role     
-
-                    //bool  x = await _roleManager.RoleExistsAsync("Student");
-                    //if (!x)
-                    //{
-                    //    var role = new RoleTb();
-                    //    role.Name = "Student";
-                    //    role.RoleId = "STD01";
-                    //    await _roleManager.CreateAsync(role);
-                    //}
-
-                    var userd = new AppUserTab
-                    {
-                        Email = "admin@bssl.com.ng",
-                        UserName = "Administrator",
-                        RealName = "Bssl Administrator"
-               
-                        
-
-                    };
-                    await _userManager.CreateAsync(userd, "Oj5!%hs17");
-                    await _userManager.AddToRoleAsync(user, SiwesData.ConstantRole.Student);
-                    await _userManager.AddToRoleAsync(userd, SiwesData.ConstantRole.Admin);
+                   await _userManager.AddToRoleAsync(user, ConstantRole.Employer);
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -146,12 +136,9 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     successm = "ACCOUNT SUCCESSFULY CREATED";
-                   // Response.Redirect(returnUrl);
-                  //  return LocalRedirect(returnUrl);
+                 
+                    return Page();
 
-                    return RedirectToPage("Login");
-                 // return Redirect("/Login?Message=" + successm);
-             
                 }
                 foreach (var error in result.Errors)
                 {
