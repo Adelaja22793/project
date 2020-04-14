@@ -36,11 +36,10 @@ namespace BSSL_SIWES.Web
                     Configuration.GetConnectionString("SiwesConn"),
                     b => b.MigrationsAssembly("BSSL_SIWES.Web")));
 
-            //services.AddIdentity<IdentityUser,RoleTb>()
+            //services.AddIdentity<AppUserTab,RoleTb>()
             // .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<AppUserTab>()
             .AddRoles<RoleTb>()
-            
             .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllers();
@@ -74,13 +73,15 @@ namespace BSSL_SIWES.Web
             //});
             services.AddAuthorization();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<SeedRole>();
           //  services.AddSingleton(new DynamicAuthorizationOptions { DefaultAdminUser = "admin@bssltech.com" });
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedRole seedRole)
         {
+            seedRole.SeedRoles();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

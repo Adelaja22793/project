@@ -10,19 +10,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SiwesData.Students;
+using SiwesData;
 
 namespace BSSL_SIWES.Web
 {
     public class DailyActivitiesModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUserTab> _userManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         
-        public DailyActivitiesModel(SiwesData.ApplicationDbContext context, SignInManager<IdentityUser> signInManager,
+        public DailyActivitiesModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

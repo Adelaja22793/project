@@ -7,6 +7,7 @@ namespace SiwesData
 {
    public class AppUserTab: IdentityUser
     {
-      //  public 
+       public string RealName { get; set; }
+       public string EmpRcNo { get; set; }
     }
 }

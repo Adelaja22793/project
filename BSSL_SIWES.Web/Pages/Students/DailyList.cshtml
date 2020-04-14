@@ -1,4 +1,6 @@
 ﻿@page
+@inject SiwesData.ApplicationDbContext db
+@using Microsoft.EntityFrameworkCore; 
 @model BSSL_SIWES.Web.Pages.Students.DailyListModel
 @{
     ViewData["Title"] = "DailyList";
@@ -6,58 +8,224 @@
 
 <div class="col-md-12">
     <div class="card card-primary">
+        <div class="modal fade" tabindex="-1" id="loginModal"
+             data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg" style="margin-left:25%;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:steelblue">
+                        <h4 class="modal-title" id="monthname" style="margin-left:30%; text-transform:uppercase">Reason For Suspension</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            ×
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="row" id="activities" style="display:none">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Week Ending Date</label>
+                                    <input type="text" id="weekend" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Week Days</label>
+                                    <select class="form-control" id="weekDay" style="width: 100%;">
+                                        <option selected="selected" value="-1">--Select Day of Week--</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label id="toDisplay">Date</label>
+                                    <input type="hidden" id="rowId" />
+                                    <input type="hidden" id="studentId" />
+                                    <input type="date" id="monday_Date" onchange="myFunctionDate()" class="form-control monday">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Trainee Students' Remark</label>
+                                    <textarea class="textarea remarks" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                        font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                            <button type="submit" id="BtnSuspend" class="btn btn-primary button button4">Update Daily Record</button>
+                            <button type="submit" id="BtnAssignSuper" style="display:none" class="btn btn-primary button button4">Assign Supervisor</button>
+                            <button type="submit" id="BtnChangeSuper" style="display:none" class="btn btn-primary button button4">Change Supervisor</button>
+                            <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                                Hide
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <div class="card-header" id="myDay">
             <h3 class="card-title justify-content-center">Daily Record of Activities</h3>
         </div>
-        <div  class="justify-content-center" style="margin-left:30%; margin-top:1.5%;">
+        <div class="justify-content-center" style="margin-left:30%; margin-top:1.5%;">
             <button type="button" onclick="pageRedirect()" class="btn btn-info">Back to Daily Activities Page</button>
         </div>
-        <table id="example2" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th style="width:0.25%; text-align:center">S/N</th>
-                    <th style="width:8%; text-align:center">Week End Date</th>
-                    <th style="width:5%; text-align:center">Week Day</th>
-                    <th style="width:5%; text-align:center">Date</th>
-                    <th style="width:45%; text-align:center">Summary of Activities</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.DailyActivitiesLists.Count; i++)
-                {
-                    var items = Model.DailyActivitiesLists[i];
-                    string s = items.DayDate.ToString("dd/M/yyyy");
+        <div style="display:table; margin:0 auto; width:100%; font-size:small">
+            <table id="StudentTab" class="table table-bordered" border="0">
+                <thead>
                     <tr>
-                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                        <td class="matricNo @i" style="width:8%; text-align:left">@items.DailyActivities.WeekNumber</td>
-                        <td class="name @i" style="width:5%; text-align:left">@items.WeekDayName</td>
-                        <td class="courseName @i" style="width:5%; text-align:left">@s</td>
-                        <td class="schoolName @i" style="width:45%; text-align:left">@items.DayDescription.ToString().Trim()</td>
-
-                        @*<td style="width:10%;">
-                            <input type="hidden" class="studentId @i" value="@items.Id" />
-                            <a id="mySuspend" AddreSuspend="@i" asp-route-id="@items.Id">Suspend</a>
-                        </td>*@
-
+                        <th style="width:0.25%; text-align:center">S/N</th>
+                        <th style="width:10%; text-align:center">Week End Date</th>
+                        <th style="width:10%; text-align:center">Week Day</th>
+                        <th style="width:10%; text-align:center">Date</th>
+                        <th style="width:30%; text-align:center">Summary of Activities</th>
+                        <th style="width:10%; text-align:center">Status</th>
+                        <th style="width:10%; text-align:center">Update</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.DailyActivitiesLists.Count; i++)
+                    {
+                        var items = Model.DailyActivitiesLists[i];
+                        var DailyAct = await db.DailyActivities
+                            .Where(x => x.Id == items.DailyActivitiesId).Select(c =>c.StudentSetUpId).SingleOrDefaultAsync();
+                        string s = items.DayDate.ToString("dd/M/yyyy");
+                        var myStatus = items.Approved;
+                        <tr>
+                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                            <td class="WeekNumber @i" style="width:10%; text-align:left">@items.DailyActivities.WeekNumber</td>
+                            <td class="WeekDayName @i" style="width:8%; text-align:left">@items.WeekDayName</td>
+                            <td class="DayDate @i" style="width:5%; text-align:left">@s</td>
+                            <td class="DayDescription @i" style="width:45%; text-align:left">@items.DayDescription.ToString().Trim()</td>
+                            @{
+                                if (myStatus == false)
+                                {
+                                    <td style="width:10%; text-align:center; color:red">
+                                        PENDING
 
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th style="width:0.25%; text-align:center">S/N</th>
-                    <th style="width:8%; text-align:center">Week End Date</th>
-                    <th style="width:5%; text-align:center">Week Day</th>
-                    <th style="width:5%; text-align:center">Date</th>
-                    <th style="width:45%; text-align:center">Summary of Activities</th>
-                </tr>
-            </tfoot>
-        </table>
+                                    </td>
+                                    <td style="width:10%; text-align:center">
+                                        <input type="hidden" class="studentId @i" value="@DailyAct" />
+                                        <input type="hidden" class="myId @i" value="@items.Id" />
+                                        <input type="hidden" class="date1 @i" value="@items.DayDate" />
+                                        <a id="updateActivities" updateDailyActivities="@i" asp-route-id="@items.Id">Update</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="width:10%; text-align:center;color:green;">
+                                        APPROVED
+
+                                    </td>
+                                    <td style="width:10%; text-align:center;">
+                                    </td>
+                                }
+                            }
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        });
+        $("#myClose").click(function () {
+            $("#loginModal").modal('hide');
+        });
+        $("#StudentTab").on('click', '#updateActivities', function () {
+            var currentRow = $(this).closest("tr");
+            var rowIndex = currentRow.find("td:eq(0)").html();
+            var studentName = currentRow.find("td:eq(3)").html();
+            var editindex = $(this).attr('updateDailyActivities');
+            var WeekDayName = $('.WeekDayName.' + editindex).text();
+            var DayDate = $('.date1.' + editindex).val();
+            var x = DayDate.substring(0, 10);
+            var rowId = $('.myId.' + editindex).val();
+            var studentId = $('.studentId.' + editindex).val();
+            var WeekNumber = $('.WeekNumber.' + editindex).text();
+            var DayDescription = $('.DayDescription.' + editindex).text();
+            //alert(DayDate); alert(x);
+            $("#loginModal").modal('show');
+            $('#monthname').html("UPDATE DAILY/WEEKLY ACTIVITIES");
+
+            $('#rowId').val(rowId);
+            $('#weekend').val(WeekNumber);
+            $('#weekDay').val(WeekDayName);
+            $('#rowIndex').val(rowIndex);
+            $('#studentId').val(studentId);
+            $('.monday').val(x);
+            $(".remarks").summernote('code', DayDescription);
+            document.getElementById('BtnSuspend').style.display = "inline-block";
+            document.getElementById('BtnAssignSuper').style.display = "none";
+            document.getElementById('BtnChangeSuper').style.display = "none";
+            return false;
+        });
+        $('#BtnSuspend').on('click', function () {
+            //var studentName = $('#studentName').val();
+            var rowId = $('#rowId').val();
+            var remarks = $('.remarks').val();
+            //alert(remarks);
+            var dailyActivitiesListID = parseInt(rowId);
+            if (remarks == "") {
+                alert("PLEASE ENTER DESCRIPTION OF WORK");
+                return false;
+            }
+            var d = {
+                "Id": dailyActivitiesListID,
+                "DayDescription": remarks
+            };
+            var confirmation = confirm("ARE SURE YOU WANT UPDATE THIS RECORD?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/DailyActivitiesListsDate/ ' + dailyActivitiesListID;
+            //alert(url);
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //alert(studentName.toUpperCase() + " WAS SUCCESSFULLY SUSPENDED ");
+                    location.reload();
+                },
+            });
+        });
+    });
     function pageRedirect() {
         var baseUrl = window.location.origin;
         window.location.href = baseUrl + '/Students/DailyActivities';
     }
+
 </script>

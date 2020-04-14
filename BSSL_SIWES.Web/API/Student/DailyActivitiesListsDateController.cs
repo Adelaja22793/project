@@ -38,6 +38,10 @@ namespace BSSL_SIWES.Web.API.Student
             }
             try
             {
+                //var dailyActivitiesList = await _context.DailyActivitiesLists
+                //    .Where(x => x.DailyActivitiesId == id && x.Approved == false).ToListAsync();
+
+
                 var dailyActivitiesList = await _context.DailyActivitiesLists
                     .Where(x => x.DailyActivitiesId == id).ToListAsync();
                 //.FindAsync(id);
@@ -58,32 +62,29 @@ namespace BSSL_SIWES.Web.API.Student
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDailyActivitiesList(int id, DailyActivitiesList dailyActivitiesList)
+        public async Task<IActionResult> PutDailyActivitiesList(int? id, DailyActivitiesList dailyActivitiesList)
         {
-            if (id != dailyActivitiesList.Id)
+            if (id == null)
             {
-                return BadRequest();
+                return BadRequest("No Activity Found");
             }
-
-            _context.Entry(dailyActivitiesList).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DailyActivitiesListExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var updateDailyActivities = await _context.DailyActivitiesLists.FirstOrDefaultAsync(m => m.Id == id);
 
-            return NoContent();
+                if (updateDailyActivities == null)
+                {
+                    return NotFound($"Daily/Weekly Activities Not Found For The Selected Id {id}");
+                }
+                updateDailyActivities.DayDescription = dailyActivitiesList.DayDescription;
+                await _context.SaveChangesAsync();
+                return Ok(updateDailyActivities);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST: api/DailyActivitiesListsDate

@@ -15,14 +15,14 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-       private readonly UserManager<IdentityUser> _userManager;
+       private readonly UserManager<AppUserTab> _userManager;
         public string successm { get; set; }
         public string errorm { get; set; }
-        public LoginModel(SignInManager<IdentityUser> signInManager,
+        public LoginModel(SignInManager<AppUserTab> signInManager,
             ILogger<LoginModel> logger,
-             UserManager<IdentityUser> userManager)
+             UserManager<AppUserTab> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;

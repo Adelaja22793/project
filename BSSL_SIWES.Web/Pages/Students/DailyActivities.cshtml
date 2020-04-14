@@ -39,21 +39,34 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-7 daySelected">
+                    <div class="col-sm-6 daySelected">
                         <div class="form-group">
                             <label>Description of Work for The Month of:</label>
-                            <select class="form-control" id="myMonth" style="width: 100%;">
+                            <select class="form-control" id="myMonth" style="width: 100%;" onchange="myFunctionMonthlyDate()">
+                                <option selected="selected" value="0">--Select Month to Assess--</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label>Assessment Date</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                 </div>
-                                <input type="date" id="certdate" class="form-control">
+                                <input type="date" id="certdate" class="form-control newDate">
                             </div>
                         </div>
                     </div>
@@ -62,7 +75,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Description of Work</label>
-                            <textarea class="textarea" id="workDescription" placeholder="Place some text here" style="width: 100%; height: 200px;
+                            <textarea class="textarea workDescription" placeholder="Place some text here" style="width: 100%; height: 200px;
                                             font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                         </div>
                     </div>
@@ -70,8 +83,12 @@
 
                 <!-- /.card-body -->
 
-                <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                <div class="justify-content-center" style="margin-left:27%; margin-bottom:3%;">
                     <button type="button" id="monthlyAssessment" class="btn btn-primary">Submit Monthly Assessment</button>
+                    <button type="button" id="updateMonthlyAssessment" style="display:none" class="btn btn-primary">Update Monthly Assessment</button>
+                    <a type="button" id="btnHideModal" asp-page="./MonthlyList" asp-route-id="@Model.StudentId" class="btn btn-danger button button4">
+                        View Previous Montly Assessments
+                    </a>
                 </div>
             </div>
 
@@ -118,9 +135,9 @@
                 <div class="justify-content-center" style="margin-left:20%; margin-bottom:3%;">
                     <button type="button" id="BtnSubmitDailyActivities" class="btn btn-primary">Send Activities For Supervisor Cerification</button>
 
-                    <button type="button" id="btnHideModal" onclick="pageRedirect()" class="btn btn-danger button button4">
+                    <a type="button" id="btnHideModal" asp-page="./DailyList" asp-route-id="@Model.StudentId" class="btn btn-danger button button4">
                         View Previous Activities
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -129,16 +146,16 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"];
-        var month = (new Date()).getMonth();
-        for (; month < monthNames.length; month++) {
+        //var monthNames = [
+        //    "January", "February", "March", "April", "May", "June",
+        //    "July", "August", "September", "October", "November", "December"
+        //];
+        //var month = (new Date()).getMonth();
+        //for (var i = 0; i < monthNames.length; i++) {
             //option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
             //$('select').append('<option value ="' + monthNames[month] + '">' + monthNames[month] + '</option>');
-            $('div.daySelected select').append('<option value ="' + monthNames[month] + '">' + monthNames[month] + '</option>');
-        }
-
-
+        //$('div.daySelected select').append('<option value ="' + monthNames + '">' + monthNames + '</option>');
+    //}
 
 
         $('.textarea').summernote();
@@ -155,6 +172,14 @@
             document.getElementById('myDay').style.display = "none";
             document.getElementById('myMonth').style.display = "block";
             document.getElementById('myForm').style.display = "block";
+
+            $("div.daySelected select").prop("disabled", false);
+        $("div.daySelected select").val("0");
+        $(".newDate").val("");
+        $(".workDescription").summernote('code', '');
+        document.getElementById('updateMonthlyAssessment').style.display = "none";
+        document.getElementById('monthlyAssessment').style.display = "inline-block";
+
         });
         $('#radioDanger1').on('click', function () {
             document.getElementById('myList').style.display = "block";
@@ -315,11 +340,12 @@
         })
         $('#monthlyAssessment').on('click', function () {
             var stdId = $('#studentId').val();
-            var myMonth = $('select').val();
+            var myMonth = $("div.daySelected select").val();
             var certdate = $('#certdate').val();
-            var workDescription = $('#workDescription').val();
+            var workDescription = $('.workDescription').val();
             var Approved = false;
-            var studentId = parseInt(stdId)
+            var studentId = parseInt(stdId);
+            //alert(workDescription);
             if (stdId == "") {
                 alert("STUDENT DOES NOT EXISTS, PLEASE CHECK!!");
                 return false;
@@ -365,6 +391,7 @@
                     location.reload();
                 },
             });
+            
         });
     });
 
@@ -459,6 +486,77 @@
                                 }
                             }
                         });
+                    }
+                    //console.log(list[i]);
+                }
+            }
+        });
+    }
+    function myFunctionMonthlyDate() {
+        var stdId = $('#studentId').val();
+        var myMonth = $("div.daySelected select").val();
+        var studentId = parseInt(stdId);
+        
+        var dateDay = {
+            "Id": studentId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/MonthlyCheck/' + studentId,
+            data: JSON.stringify(dateDay),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                var list = data
+
+                for (var i = 0; i < list.length; i++) {
+                    //var MonthlyActivitiesId = list[i].id;
+                    var listDate = list[i].assessmentMonth;
+                    var approvedAssess = list[i].approved;
+                    var DaylistDate = list[i].assessmentDate;
+                    var newDate = DaylistDate.substring(0, 10);
+                   // alert(newDate);
+                    var remarks = data[i].monthlyRemarksByStudent;
+                    if (listDate == myMonth) {
+                        if (approvedAssess == false) {
+                            alert( myMonth.toUpperCase() + " MONTHLY ASSESSMENT AWAITING APPROVAL");
+                            //var confirmation = confirm( myMonth.toUpperCase() + " MONTHLY ASSESSMENT AWAITING APPROVAL");
+                            //if (confirmation === false) {
+                                //alert(newDate);
+                                $("div.daySelected select").val("0");
+                                //$(".newDate").val("");
+                                //$(".workDescription").summernote('code', '');
+                                document.getElementById('updateMonthlyAssessment').style.display = "none";
+                                document.getElementById('monthlyAssessment').style.display = "inline-block";
+                                return false;
+                           // }
+                        }
+                        else {
+                            alert("MONTHLY ASSESSMENT FOR THE MONTH OF " + myMonth.toUpperCase() + " HAS BEEN APPROVED")
+                            $("div.daySelected select").val("0");
+                            //$(".newDate").val("");
+                            //$(".workDescription").summernote('code', '');
+                            document.getElementById('updateMonthlyAssessment').style.display = "none";
+                            document.getElementById('monthlyAssessment').style.display = "inline-block";
+                            return false;
+                        }
+                        
+                    }
+                    else {
+                        //$(".newDate").val("");
+                        //$(".workDescription").summernote('code', '');
+                        document.getElementById('updateMonthlyAssessment').style.display = "none";
+                            document.getElementById('monthlyAssessment').style.display = "inline-block";
                     }
                     //console.log(list[i]);
                 }

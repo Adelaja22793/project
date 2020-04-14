@@ -8,16 +8,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Setup;
 using SiwesData.Students;
-
+using SiwesData;
 namespace BSSL_SIWES.Web
 {
     public class InstitusionSupervisorModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
         public InstitusionSupervisorModel(SiwesData.ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

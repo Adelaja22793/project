@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Students;
+using SiwesData;
 
 namespace BSSL_SIWES.Web.Pages.Students
 {
     public class DailyListModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUserTab> _userManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
 
-        public DailyListModel(SiwesData.ApplicationDbContext context, SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+        public DailyListModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -25,7 +26,7 @@ namespace BSSL_SIWES.Web.Pages.Students
         }
         public IList<DailyActivitiesList> DailyActivitiesLists { get; set; }
         public int StudentId { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             //this gets the id from the AspNetUsers table
             var loginUser = _userManager.GetUserId(User);
@@ -35,7 +36,7 @@ namespace BSSL_SIWES.Web.Pages.Students
             StudentId = await _context.StudentSetUps.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
 
             DailyActivitiesLists = await _context.DailyActivitiesLists.Include(b => b.DailyActivities)
-                           .Where(x => x.DailyActivitiesId == x.DailyActivities.Id && x.DailyActivities.StudentSetUpId == StudentId)
+                           .Where(x => x.DailyActivitiesId == x.DailyActivities.Id && x.DailyActivities.StudentSetUpId == id)
                            .ToListAsync();
 
             return Page();

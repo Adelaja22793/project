@@ -95,11 +95,22 @@
                         <div class="form-group">
                             <label>Country</label>
                             <div class="select2-purple">
-                                <select class="form-control"
-                                        asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
-                                        onchange="MyFunctionNationality()" id="nationChange">
-                                    <option selected="selected" value="-1">-- Select Nationality--</option>
-                                </select>
+                                @if (ViewBag.NationalityId != null)
+                                {
+                                    <select class="form-control"
+                                            asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
+                                            onchange="MyFunctionNationality()" id="nationChange">
+                                        <option selected="selected" value="-1">-- Select Nationality--</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select class="form-control"
+                                         style="width: 100%; text-transform:uppercase"
+                                           id="nationChange">
+                                        <option selected="selected" value="-1">-- Select Nationality--</option>
+                                    </select>
+                                }
                             </div>
                         </div>
                     </div>

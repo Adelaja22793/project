@@ -80,10 +80,23 @@ namespace BSSL_SIWES.Web.API
         [HttpPost]
         public async Task<ActionResult<MenuAccess>> PostMenuAccess(MenuAccess menuAccess)
         {
-            _context.MenuAccess.Add(menuAccess);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var newMonthlyAssessment = new MenuAccess
+                {
+                    RoleId = menuAccess.RoleId,
+                    SubMenuId = menuAccess.SubMenuId,
+                };
+                _context.MenuAccess.Add(newMonthlyAssessment);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMenuAccess", new { id = menuAccess.Id }, menuAccess);
+
+                return CreatedAtAction("PostMenuAccess", new { id = newMonthlyAssessment.Id }, newMonthlyAssessment);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(500);
+            }
         }
         
         // DELETE: api/MenuAccesses/5

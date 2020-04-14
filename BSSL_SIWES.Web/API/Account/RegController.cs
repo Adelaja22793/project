@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-
+using SiwesData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,12 +14,12 @@ namespace BSSL_SIWES.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegempController : Controller
+    public class RegController : Controller
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUserTab> _userManager;
 
-        public RegempController(SiwesData.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public RegController(SiwesData.ApplicationDbContext context, UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -32,15 +32,10 @@ namespace BSSL_SIWES.Web.API
         }
 
         // GET api/<controller>/5
-  
-
-        // GET api/<controller>/5
-        [HttpGet("{rcno}")]
-        public async Task<ActionResult<List<string>>> GetRcNo(string rcno)
+        [HttpGet("{email}")]
+        public async Task<ActionResult<string>> GetCheckMatric(string email)
         {
-         //   var result = "";
-
-            List<string> result = new List<string>();
+            var result = "";
             try
             {
                 // get email 
@@ -48,43 +43,41 @@ namespace BSSL_SIWES.Web.API
                 // var user = _context.StudentSetUps.FirstOrDefault(m => m.MatricNumber == matricno.Trim());
 
 
-                var identityUser = await _userManager.FindByNameAsync(rcno.Trim());
+                var AppUserTab = await _userManager.FindByEmailAsync(email.Trim());
 
-           
-
-                if (identityUser != null)
+                if (AppUserTab != null)
                 {
-                    result.Insert(0, "exist");
+                    result ="exist";
                 }
                 else
                 {
-                    //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
+                 //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
 
-                    var user = _context.EmployerSuperSetups.FirstOrDefault(m => m.Code == rcno.Trim());
+                    var user =  _context.StudentSetUps.FirstOrDefault(m => m.Email.Trim() == email.Trim());
                     // check if email has beeen registered
 
                     if (user != null)
                     {
-                        result.Insert(0, user.Name.Trim());
-                        result.Insert(1, user.Email.Trim());
-                     
+                        result = user.Surname + " " + user.OtherNames;
                     }
                     else
                     {
-                        result.Insert(0, "notexist");
+                        result = "notexist";
                     }
                 }
-
+              
 
 
             }
             catch
             {
-                result.Insert(0, "syserr");
+                result = "syserr";
             }
             return result;
 
         }
+
+        // GET a
 
         // POST api/<controller>
         [HttpPost]
