@@ -88,195 +88,192 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        formClear();
-        function formClear() {
-            $("#txtcode").val("");
-            $("#txtname").val("");
-            $("#hddid").val("");
-            $("#rowIndex").val("");
-            $("#Btnsave").show();
-            $("#Btnupdate").hide();
-            $('#txtcode').prop("readonly", false);
-        }
-        $('#BtnCancel').on('click', function (e) {
-            e.preventDefault();
-            formClear();
-        });
-        $('#Btnsave').on('click', function (e) {
-            $("#Btnsave").show();
-            $("#Btnupdate").hide();
-            e.preventDefault();
-            var txtcode = document.getElementById('txtcode').value;
-            var txtname = document.getElementById('txtname').value;
-            var d = {
-                "Code": txtcode,
-                "Name": txtname,
-            };
-            var baseUrl = window.location.origin;
-
-            $.ajax({
-                type: "POST",
-                url: baseUrl + '/Api/InstCatSetups',
-                data: JSON.stringify(d),
-                xhrFields: {
-                    withCredentials: true
-                },
-
-                contentType: "application/json; charset=utf-8",
-                error: function (data) {
-                    alert(data.responseText);
-                    //  var container = document.getElementById("formid");
-                    //container.insertAdjacentHTML("beforeend", data);
-                    //var forms = container.getElementsByTagName("form");
-                    //var newForm = forms[forms.length - 1];
-                    //$.validator.unobtrusive.parse(newForm);
-
-                },
-                failure: function (data) {
-                    alert(data.responseText);
-                },
-                success: function (data) {
-                   
-
-
-                    var myid = data['id'];
-                    var rowNumber = $('#tabId tr').length;
-                    var html = `<tr>
-                            </td>
-                                <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
-                                <td style="width:5%;" class="action">
-                                   <input type="hidden" value=${myid}>
-                                   <a href="/Setup/InstitutionCategory?id=${myid}">Edit</a>
-                                </td>
-
-                                <td style="width:20%; text-align:left">${txtcode}</td>
-                                <td style="width:60%; text-align:left">${txtname}</td>
-
-                            </tr>`
-                    $('#tabId').append(html);
-                    formClear();
-                    location.reload();
-                },
-            });
-
-        });
-        $("#tabId").on('click', '#myEdit', function () {
-            $("#Btnsave").hide();
-            $("#Btnupdate").show();
-            // $("#BtnEditSubMenu").show()
-            var currentRow = $(this).closest("tr");
-            var selectedIndex = currentRow.find("td:eq(0)").html();
-
-            var editindex = $(this).attr('AddreEdit');
-            var tabcode = $('.tabcode.' + editindex).text();
-            var tabname = $('.tabname.' + editindex).text();
-            var tabid = $('.readid.' + editindex).val();
-            $("#txtcode").val(tabcode);
-            $("#txtname").val(tabname);
-            $('#hddid').val(tabid);
-            $('#rowIndex').val(selectedIndex);
-             $('#txtcode').prop("readonly", true);
-            serialNo = $(this).closest('tr').find('.se_no').text();
-            return false;
-
-        });
-        $('#Btnupdate').on('click', function (e) {
-            e.preventDefault();
-            var editindex = document.getElementById('hddid').value;
-            var txtcode = document.getElementById('txtcode').value;
-            var txtname = document.getElementById('txtname').value;
-            var d = {
-                "Code": txtcode,
-                "Name": txtname,
-                "Id": Number(editindex),
-            };
-            var t = serialNo - 1;
-            var baseUrl = window.location.origin;
-            $.ajax({
-                type: "PUT",
-                url: baseUrl + '/Api/InstCatSetups/ ' + editindex,
-                data: JSON.stringify(d),
-                xhrFields: {
-                    withCredentials: true
-                },
-                contentType: "application/json; charset=utf-8",
-                error: function (data) {
-                    alert(data.responseText);
-                },
-                failure: function (data) {
-                    alert(data.responseText);
-                },
-                success: function (data) {
-                    $('.readid.' + t).text(data["id"]);
-                    $('.tabcode.' + t).text(data["code"]);
-                    $('.tabname.' + t).text(data["name"]);
-                    formClear();
-
-                    //var w = $('.tabcode.' + t);
-                    //var p = data['code'];
-                    //var a = $('.tabname.' + t);
-                    //var h = data['name'];
-
-                    //var v = $('.readid.' + t);
-                    //var y = data["id"];
-
-                    //v.text(y);
-                    //w.text(p);
-                    //a.text(h);
-
-                },
-            });
-        });
-        $('#txtcode').on('change', function () {
-            var txtcode = $("#txtcode").val();
-            //alert(txtcode);
-            return false;
-            var d = {
-                "Code": txtcode
-            };
-            var baseUrl = window.location.origin;
-
-            $.ajax({
-                type: "GET",
-                url: baseUrl + '/Api/InstCatSetups/' + txtcode,
-                data: JSON.stringify(d),
-                xhrFields: {
-                    withCredentials: true
-                },
-
-                contentType: "application/json; charset=utf-8",
-                error: function (data) {
-                    alert(data.responseText);
-
-                },
-                failure: function (data) {
-                    alert(data.responseText);
-                },
-                success: function (data) {
-                    // $('#myEdit')
-                    var myid = data['Id'];
-                    var rowNumber = $('#tabId tr').length;
-                    $('#hddid').val(data["1d"]);
-                    $('#txtcode').val(data["code"]);
-                    $('#txtname').val(data["name"]);
-
-                    // $('#hddid').val(tabid);
-                    // $('#rowIndex').val(selectedIndex);
-                    // formClear();
-                    // formClear();
-                    // location.reload();
-                },
-            });
-
-        });
-    })
-</script>
-
-@*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
 @section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            formClear();
+            function formClear() {
+                $("#txtcode").val("");
+                $("#txtname").val("");
+                $("#hddid").val("");
+                $("#rowIndex").val("");
+                $("#Btnsave").show();
+                $("#Btnupdate").hide();
+                $('#txtcode').prop("readonly", false);
+            }
+            $('#BtnCancel').on('click', function (e) {
+                e.preventDefault();
+                formClear();
+            });
+            $('#Btnsave').on('click', function (e) {
+                $("#Btnsave").show();
+                $("#Btnupdate").hide();
+                e.preventDefault();
+                var txtcode = document.getElementById('txtcode').value;
+                var txtname = document.getElementById('txtname').value;
+                var d = {
+                    "Code": txtcode,
+                    "Name": txtname,
+                };
+                var baseUrl = window.location.origin;
+
+                $.ajax({
+                    type: "POST",
+                    url: baseUrl + '/Api/InstCatSetups',
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+
+                    contentType: "application/json; charset=utf-8",
+                    error: function (data) {
+                        alert(data.responseText);
+                        //  var container = document.getElementById("formid");
+                        //container.insertAdjacentHTML("beforeend", data);
+                        //var forms = container.getElementsByTagName("form");
+                        //var newForm = forms[forms.length - 1];
+                        //$.validator.unobtrusive.parse(newForm);
+
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+
+
+
+                        var myid = data['id'];
+                        var rowNumber = $('#tabId tr').length;
+                        var html = `<tr>
+                                    </td>
+                                        <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>
+                                        <td style="width:5%;" class="action">
+                                           <input type="hidden" value=${myid}>
+                                           <a href="/Setup/InstitutionCategory?id=${myid}">Edit</a>
+                                        </td>
+
+                                        <td style="width:20%; text-align:left">${txtcode}</td>
+                                        <td style="width:60%; text-align:left">${txtname}</td>
+
+                                    </tr>`
+                        $('#tabId').append(html);
+                        formClear();
+                        location.reload();
+                    },
+                });
+
+            });
+            $("#tabId").on('click', '#myEdit', function () {
+                $("#Btnsave").hide();
+                $("#Btnupdate").show();
+                // $("#BtnEditSubMenu").show()
+                var currentRow = $(this).closest("tr");
+                var selectedIndex = currentRow.find("td:eq(0)").html();
+
+                var editindex = $(this).attr('AddreEdit');
+                var tabcode = $('.tabcode.' + editindex).text();
+                var tabname = $('.tabname.' + editindex).text();
+                var tabid = $('.readid.' + editindex).val();
+                $("#txtcode").val(tabcode);
+                $("#txtname").val(tabname);
+                $('#hddid').val(tabid);
+                $('#rowIndex').val(selectedIndex);
+                $('#txtcode').prop("readonly", true);
+                serialNo = $(this).closest('tr').find('.se_no').text();
+                return false;
+
+            });
+            $('#Btnupdate').on('click', function (e) {
+                e.preventDefault();
+                var editindex = document.getElementById('hddid').value;
+                var txtcode = document.getElementById('txtcode').value;
+                var txtname = document.getElementById('txtname').value;
+                var d = {
+                    "Code": txtcode,
+                    "Name": txtname,
+                    "Id": Number(editindex),
+                };
+                var t = serialNo - 1;
+                var baseUrl = window.location.origin;
+                $.ajax({
+                    type: "PUT",
+                    url: baseUrl + '/Api/InstCatSetups/ ' + editindex,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        $('.readid.' + t).text(data["id"]);
+                        $('.tabcode.' + t).text(data["code"]);
+                        $('.tabname.' + t).text(data["name"]);
+                        formClear();
+
+                        //var w = $('.tabcode.' + t);
+                        //var p = data['code'];
+                        //var a = $('.tabname.' + t);
+                        //var h = data['name'];
+
+                        //var v = $('.readid.' + t);
+                        //var y = data["id"];
+
+                        //v.text(y);
+                        //w.text(p);
+                        //a.text(h);
+
+                    },
+                });
+            });
+            $('#txtcode').on('change', function () {
+                var txtcode = $("#txtcode").val();
+                //alert(txtcode);
+                return false;
+                var d = {
+                    "Code": txtcode
+                };
+                var baseUrl = window.location.origin;
+
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/InstCatSetups/' + txtcode,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+
+                    contentType: "application/json; charset=utf-8",
+                    error: function (data) {
+                        alert(data.responseText);
+
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        // $('#myEdit')
+                        var myid = data['Id'];
+                        var rowNumber = $('#tabId tr').length;
+                        $('#hddid').val(data["1d"]);
+                        $('#txtcode').val(data["code"]);
+                        $('#txtname').val(data["name"]);
+
+                        // $('#hddid').val(tabid);
+                        // $('#rowIndex').val(selectedIndex);
+                        // formClear();
+                        // formClear();
+                        // location.reload();
+                    },
+                });
+
+            });
+        })
+    </script>
+
     <partial name="_ValidationScriptsPartial" />
 }

@@ -20,23 +20,25 @@ namespace BSSL_SIWES.Web
 
         public IActionResult OnGet()
         {
+            ViewData["InstituTypes"] = new SelectList(_context.InstTypeSetup, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
         public PolicyTb PolicyTb { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, PolicyTb PolicyTb)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
             _context.PolicyTb.Add(PolicyTb);
             await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            ModelState.Clear();
+            return Page();
+           // return RedirectToPage("./Index");
         }
     }
 }

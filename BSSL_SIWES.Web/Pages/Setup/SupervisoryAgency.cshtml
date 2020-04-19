@@ -1,4 +1,5 @@
 ﻿@page
+@inject SiwesData.ApplicationDbContext db
 @model BSSL_SIWES.Web.SupervisoryAgencyModel
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity;
@@ -14,23 +15,25 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form">
+        <form role="form" method="post">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Agency Code</label>
                             <div class="input-group">
-                                <input type="text" id="txtcode" class="form-control">
+                                <input asp-for="AgencySuperSetup.Code" type="text" id="txtcode" class="form-control"
+                                       style="width: 100%; text-transform:uppercase">
                                 <input id="readid" type="hidden" class="form-control" />
                             </div>
+                            <span asp-validation-for="AgencySuperSetup.Code" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Short Code</label>
                             <div class="input-group">
-                                <input type="text" id="txtshortcode" class="form-control" placeholder="Short Code">
+                                <input asp-for="AgencySuperSetup.ShortCode" type="text" id="txtshortcode" class="form-control" placeholder="Short Code">
                             </div>
                         </div>
                     </div>
@@ -40,11 +43,9 @@
                         <div class="form-group">
                             <label>Agency Name</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" id="txtname" class="form-control" placeholder="Agency Name">
+                                <input asp-for="AgencySuperSetup.Name" type="text" id="txtname" class="form-control" placeholder="Agency Name">
                             </div>
+                            <span asp-validation-for="AgencySuperSetup.Name" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -53,21 +54,16 @@
                         <div class="form-group">
                             <label>Address 1</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
+                                <input asp-for="AgencySuperSetup.Address1" type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
                             </div>
+                            <span asp-validation-for="AgencySuperSetup.Address1" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Address 2</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" id="txtaddr2" class="form-control" placeholder="Address 2">
+                                <input type="text" asp-for="AgencySuperSetup.Address2" id="txtaddr2" class="form-control" placeholder="Address 2">
                             </div>
                         </div>
                     </div>
@@ -76,35 +72,31 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Country</label>
-                            <div class="select2-purple">
-                                <select class="form-control"
-                                        asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
-                                        onchange="MyFunctionNationality()" id="nationChange">
-                                    <option selected="selected" value="-1">-- Select--</option>
-                                </select>
-                            </div>
+                            <select class="form-control" asp-for="AgencySuperSetup.Country"
+                                    asp-items="ViewBag.NationalityId" onchange="MyFunctionNationality()" id="nationChange">
+                                <option selected="selected" value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="AgencySuperSetup.Country" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>State</label>
-                            <div class="select2-purple">
-                                <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                        id="myState" style="width: 100%;" onchange="MyFunctionState()">
-                                    <option selected="selected" value="-1">-- Select--</option>
-                                </select>
-                            </div>
+                            <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                    asp-for="AgencySuperSetup.State" id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                <option selected="selected" value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="AgencySuperSetup.State" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>City</label>
-                            <div class="select2-purple">
-                                <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                        id="myLGA" style="width: 100%;">
-                                    <option selected="selected" value="-1">--Select--</option>
-                                </select>
-                            </div>
+                            <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                    asp-for="AgencySuperSetup.City" id="myLGA" style="width: 100%;">
+                                <option selected="selected" value="">--Select--</option>
+                            </select>
+                            <span asp-validation-for="AgencySuperSetup.City" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -113,8 +105,7 @@
                         <div class="form-group">
                             <label>Zip Cope</label>
                             <div class="input-group">
-                                <input type="hidden" id="txtzipId" />
-                                <input type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
+                                <input asp-for="AgencySuperSetup.ZipCode" type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
                             </div>
                         </div>
                     </div>
@@ -122,20 +113,18 @@
                         <div class="form-group">
                             <label>Phone Number</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-swimming-pool"></i></span>
-                                </div>
-                                <input type="text" id="txtphone1" class="form-control" placeholder="Enter Phone No.">
+                                <input asp-for="AgencySuperSetup.PhoneNo" type="text" id="txtphone1" class="form-control" placeholder="Enter Phone No.">
                             </div>
+                            <span asp-validation-for="AgencySuperSetup.PhoneNo" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Email Address</label>
                             <div class="input-group">
-                                <input type="text" id="txtemail" class="form-control">
+                                <input asp-for="AgencySuperSetup.Email" type="text" id="txtemail" class="form-control">
                             </div>
-
+                            <span asp-validation-for="AgencySuperSetup.Email" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -144,7 +133,7 @@
                         <div class="form-group">
                             <label>Website</label>
                             <div class="input-group">
-                                <input type="text" id="txtwebsite" class="form-control" placeholder="Website">
+                                <input asp-for="AgencySuperSetup.WebAddress" type="text" id="txtwebsite" class="form-control" placeholder="Website">
                             </div>
                         </div>
                     </div>
@@ -154,61 +143,64 @@
                         <div class="form-group">
                             <label>Name of Contact Person</label>
                             <div class="input-group">
-                                <input type="text" id="txtContactname" class="form-control" placeholder="Name of Contact Person">
+                                <input asp-for="AgencySuperSetup.NameOfCPerson" type="text" id="txtContactname" class="form-control" placeholder="Name of Contact Person">
                             </div>
+                            <span asp-validation-for="AgencySuperSetup.NameOfCPerson" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Phone Number</label>
                             <div class="input-group">
-                                <input type="text" id="txtContactphone" class="form-control" placeholder="Phone Number of Contact Person">
+                                <input asp-for="AgencySuperSetup.CPersonPhone" type="text" id="txtContactphone" class="form-control" placeholder="Phone Number of Contact Person">
                             </div>
+                            <span asp-validation-for="AgencySuperSetup.CPersonPhone" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>E-mail</label>
                             <div class="input-group">
-                                <input type="text" id="txtContactemail" class="form-control" placeholder="E-mail">
+                                <input asp-for="AgencySuperSetup.CPersonEmail" type="text" id="txtContactemail" class="form-control" placeholder="E-mail">
                             </div>
+                            <span asp-validation-for="AgencySuperSetup.CPersonEmail" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     @*<div class="form-group">
-                        <div class="col-md-4 col-sm-6">
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" asp-for="AgencySuperSetup.Deactivate" data-val="true" name="Deactivate" data-val-required="The Fever field is required." id="txtdrpdeact" value="true"> Deactivate Agency?
-                                </label>
-                            </div>
-                        </div>
-                    </div>*@
-                        @*<div class="col-sm-4">
-                <div class="form-group">
-                    <label>Deactivate Agency?</label>
-                    <div class="select2-purple">
-                        <select class="form-control select2 select2-purple" id="txtdrpdeact" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                            <option selected="selected" value="0">NO</option>
-                            <option value="1">YES</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="exampleInputFile">Date Deactivated</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                    </div>
-                                    <input type="date" id="txtdeactDate" class="form-control" placeholder="Enter Date">
+                            <div class="col-md-4 col-sm-6">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" asp-for="AgencySuperSetup.Deactivate" data-val="true" name="Deactivate" data-val-required="The Fever field is required." id="txtdrpdeact" value="true"> Deactivate Agency?
+                                    </label>
                                 </div>
                             </div>
                         </div>*@
-                    </div>
+                    @*<div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Deactivate Agency?</label>
+                                <div class="select2-purple">
+                                    <select class="form-control select2 select2-purple" id="txtdrpdeact" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        <option selected="selected" value="0">NO</option>
+                                        <option value="1">YES</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Date Deactivated</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                </div>
+                                                <input type="date" id="txtdeactDate" class="form-control" placeholder="Enter Date">
+                                            </div>
+                                        </div>
+                                    </div>*@
                 </div>
+            </div>
             <!-- /.card-body -->
             <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
                 <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
@@ -217,13 +209,6 @@
         </form>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
-<script type="text/javascript">
-
-
-</script>
 <script type="text/javascript">
     $(document).ready(function () {
         formClear();
@@ -233,9 +218,9 @@
              $("#txtname").val("");
              $("#txtaddr1").val("");
              $("#txtaddr2").val("");
-             $("#nationChange").val("-1");
-             $("#myState").val("-1");
-             $("#myLGA").val("-1");
+             $("#nationChange").val("");
+             $("#myState").val("");
+             $("#myLGA").val("");
              $("#txtzip").val("");
              $("#txtphone1").val("");
              $("#txtemail").val("");
@@ -249,7 +234,7 @@
              $("#Btnsave").show();
              $("#Btnupdate").hide();
          }
-        $('#Btnsave').on('click', function (e) {
+        $('#Btnsave1').on('click', function (e) {
            // alert("i change3"); return false;
              e.preventDefault();
              var txtcode = document.getElementById('txtcode').value;
@@ -310,7 +295,7 @@
                  },
              });
          });
-        $('#Btnupdate').on('click', function (e) {
+        $('#Btnupdate1').on('click', function (e) {
             alert("i click");
             e.preventDefault();
              var readid = document.getElementById('readid').value;
@@ -424,12 +409,20 @@
          var availableTags = [];
          function addAvailableTags(lbl, val) {
              availableTags.push({ label: lbl, value: val });
-         }
-        @foreach (var item in Model.AgencySuperSetupList)
-        {
-            @:addAvailableTags('@item.Code', '@item.Id');
         }
+         @{
+        if (Model.AgencySuperSetupList != null)
+        {
+            foreach (var item in Model.AgencySuperSetupList)
+            {
+                @:addAvailableTags('@item.Code', '@item.Id');
+            }
+        }
+        else
+        {
 
+        }
+        }
         $("#txtcode" ).autocomplete({
             source: availableTags,
             select: function (event, ui) {
@@ -522,3 +515,6 @@
 
     }
 </script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
