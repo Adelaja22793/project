@@ -57,6 +57,8 @@ namespace SiwesData
             builder.Entity<Menu.Menu>().HasIndex(b => b.Name).IsUnique();
             builder.Entity<Setup.Courses>().HasIndex(b => b.Name).IsUnique();
             builder.Entity<Setup.NewCourseRequest>().HasIndex(b => b.Name).IsUnique();
+            builder.Entity<Employer.EmployerSuperSetup>().HasIndex(b => b.Code).IsUnique();
+            builder.Entity<Setup.Institution>().HasIndex(b => b.Name).IsUnique();
             base.OnModelCreating(builder);
 
         }
