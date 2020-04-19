@@ -186,7 +186,13 @@
             var studentName = surname + ' ' + other;
             var StudentId = parseInt(SttId);
             var InstitutionOfficerId = parseInt(superId);
-            if (InstitutionOfficerId == "") {
+           //alert(SttId);
+            //alert(superId)
+            if (SttId == "") {
+                alert("PLEASE ENTER A STUDENT TO ASSIGN SUPERVISOR");
+                return false;
+            }
+            if (superId == "") {
                 alert("PLEASE ENTER A SUPERVISOR FOR " + studentName.toUpperCase() + "");
                 return false;
             }
@@ -351,9 +357,6 @@
                         document.getElementById('myChangeForm').style.display = "none";
                         document.getElementById('mySubmitForm').style.display = "inline-block";
                     }
-
-                    
-
                 },
             });
     }
