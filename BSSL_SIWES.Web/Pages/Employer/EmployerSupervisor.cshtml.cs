@@ -8,36 +8,45 @@ using Microsoft.EntityFrameworkCore;
 using SiwesData.Employer;
 using Microsoft.AspNetCore.Identity;
 using SiwesData;
+using Microsoft.Extensions.Logging;
+using BSSL_SIWES.Web.Areas.Identity.Pages.Account;
+
 namespace BSSL_SIWES.Web.Pages.Employer
 {
     public class EmployerSupervisorModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<AppUserTab> _userManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
 
-        public EmployerSupervisorModel(SiwesData.ApplicationDbContext context,
+        public EmployerSupervisorModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
+            ILogger<LoginModel> logger,
             UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
         public EmployerSuperSetup EmployerName { get; set; }
         [BindProperty]
         public EmployerSupervisor EmployerSupervisor { get; set; }
         public IList<EmployerSupervisor> EmployerSupervisorsList { get; set; }
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            //dont know the id of ur employer so put the id
-            id = 3;
-
-            if (id < 0)
+            //this gets the id from the AspNetUsers table
+            var loginUser = _userManager.GetUserId(User);
+            //var userEmail = await _userManager.GetUserNameAsync(loginUser);
+            var userEmail = _userManager.GetUserName(User);
+            if (userEmail ==  null)
             {
                 return Page();
             }
 
-            EmployerName = await _context.EmployerSuperSetups.Where(c => c.Id == id).FirstOrDefaultAsync();
+            EmployerName = await _context.EmployerSuperSetups.Where(c => c.Code == userEmail).FirstOrDefaultAsync();
             EmployerSupervisorsList = await _context.EmployerSupervisors.Include(x =>x.EmployerSuperSetup)
-                .Where(x =>x.EmployerSuperSetupId == x.EmployerSuperSetup.Id && x.EmployerSuperSetupId == id).ToListAsync();
+                .Where(x =>x.EmployerSuperSetupId == x.EmployerSuperSetup.Id && x.EmployerSuperSetupId == EmployerName.Id).ToListAsync();
             if (EmployerName == null)
             {
                 return NotFound();
@@ -59,7 +68,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
             };
             _context.EmployerSupervisors.Add(newEmployerSupervisor);
             await _context.SaveChangesAsync();
-            return RedirectToPage("./EmployerStudentList");
+            return Redirect("./EmployerSupervisorList?id=" + id);
         }
     }
 }

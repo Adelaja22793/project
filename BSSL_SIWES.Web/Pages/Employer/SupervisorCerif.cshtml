@@ -266,7 +266,7 @@
                             var DaylistDate = data[i]['assessmentDate'];
                             var mydate = DaylistDate.substring(0, 10);
                             var myCount = i + 1;
-                            str += '<tr>';
+                            str += '<tr class="row-select">';
                             str += '<td style="width:10%; text-align:center" >'
                                 + '<input type = "checkbox" class="check"/>'
                                 + '<input type = "hidden" value=' + data[i]['id'] + ' class="checkbox"/>'
@@ -560,6 +560,10 @@
             });
         })
         $('#BtnSubmitDailyActivities').on('click', function () {
+        
+            
+
+
             var SupervisorRemarks = $('.super').val();
             var DateAssessed = $('#certdate').val();
             var monthSelected = $("#monthAssessed").val();
@@ -587,13 +591,14 @@
             }
             var montlyAssessId = "";
             var monthlyAssessmentId = "";
-            for (var i = 0; i < checkBoxes.length; i++) {
-                if (checkBoxes[i].checked) {
-                    var row = checkBoxes[i].parentNode.parentNode;
-                    montlyAssessId = row.cells[1].innerHTML;
-                }
-                monthlyAssessmentId = parseInt(montlyAssessId);
-      
+
+            $('.row-select input:checked').each(function () {
+                //alert("scsc");
+                var id = "";
+                id = $(this).closest('tr').find('.checkbox').val();
+
+                //name = $(this).closest('tr').find('.name').html();
+                monthlyAssessmentId = parseInt(id);
                 var d = {
                     "Id": monthlyAssessmentId,
                     "SupervisorRemarks": SupervisorRemarks,
@@ -621,11 +626,30 @@
 
                     },
                 });
-            }
+            })
+
+
+
+
+
+
+
+            //for (var i = 0; i < checkBoxes.length; i++) {
+            //    if (checkBoxes[i].checked) {
+            //        var row = checkBoxes[i].parentNode.parentNode;
+            //        montlyAssessId = row.cells[1].innerHTML;
+            //    }
+            //    monthlyAssessmentId = parseInt(montlyAssessId);
+      
+                
+            //}
 
             alert("MONTLY RECORD SUCCESSFULLY APPROVED");
             location.reload();
         })
+
+
+
     });
     function MyFunctionDailyActivities() {
         var studentSelectedId = $("#studentSelected option:selected").val();
