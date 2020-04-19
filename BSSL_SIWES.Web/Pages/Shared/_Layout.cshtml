@@ -170,10 +170,14 @@
 
             <!-- Right navbar links -->
             @{
-                //var InstOff = userManager.GetUserId(User);
-                var InstOff = 1;
-                var newCourse = db.NewCourseRequests.Where(s => s.InstitiutionId == InstOff && s.Approved == false).ToList();
-                var Counting = 0;
+                var loginEmployer = UserManager.GetUserName(User);
+             
+                var newCourse = db.NewCourseRequests.Where(s =>s.ReqstType == "course" && s.Approved == false).ToList();
+                var newEmployer = db.NewCourseRequests.Where(s => s.ReqstType == "employer" && s.Approved == false).ToList();
+                var employerName = await db.EmployerSuperSetups.Where(c => c.Code == loginEmployer).FirstOrDefaultAsync();
+
+                var attachedStudent = db.StudentSetUps.Where(s => s.Attached == false && s.EmployerSuperSetupId == employerName.Id).ToList();
+                var Counting = 0; var CountingEmployer = 0; var CountingEmployerStudent = 0;
                 if (newCourse.Count > 0)
                 {
                     Counting = newCourse.Count();
@@ -181,6 +185,22 @@
                 else
                 {
                     Counting = 0;
+                }
+                if (newEmployer.Count > 0)
+                {
+                    CountingEmployer = newEmployer.Count();
+                }
+                else
+                {
+                    CountingEmployer = 0;
+                }
+                if (attachedStudent.Count > 0)
+                {
+                    CountingEmployerStudent = attachedStudent.Count();
+                }
+                else
+                {
+                    CountingEmployerStudent = 0;
                 }
 
             }
@@ -469,7 +489,7 @@
                                 <li class="nav-item">
                                     <a asp-page="/Employer/EmployerSetup" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Employer Setup</p>
+                                        <p>Employer Setup<span class="badge-pill badge-danger"> @CountingEmployer</span></p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -481,7 +501,7 @@
                                 <li class="nav-item">
                                     <a asp-page="/Employer/Scaff_Form" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Commencement Form</p>
+                                        <p>Commencement Form<span class="badge-pill badge-danger"> @CountingEmployerStudent</span></p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
