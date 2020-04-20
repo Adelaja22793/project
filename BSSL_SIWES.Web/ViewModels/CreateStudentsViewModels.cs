@@ -22,8 +22,6 @@ namespace BSSL_SIWES.Web.ViewModels
         [Required(ErrorMessage = "Please Select Level of Study")]
         public string LevelStudy { get; set; }
         [Required(ErrorMessage = "Please Select LGA")]
-        //public int NationalityId { get; set; }
-
         public int? LGAId { get; set; }
         //public int StateId { get; set; }
         [Required(ErrorMessage = "Please Student Phone no.")]

@@ -51,6 +51,11 @@ namespace BSSL_SIWES.Web.Pages.Institution
 
 
             Message = "ALL STUDENT HAVE BEEN ASSIGNED SUPERVISOR OR THERE ARE NO STUDENT";
+
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
+            ViewData["Areaoffice"] = new SelectList(_context.AreaOffices, "Id", "Description");
+            ViewData["BusinessLine"] = new SelectList(_context.businessLine, "Id", "Description");
+
             return Page();
         }
 

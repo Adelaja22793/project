@@ -11,18 +11,26 @@ using SiwesData.Employer;
 using SiwesData.Setup;
 using SiwesData.Students;
 using SiwesData;
+using BSSL_SIWES.Web.Areas.Identity.Pages.Account;
+using Microsoft.Extensions.Logging;
+
 namespace BSSL_SIWES.Web.Pages.Employer
 {
     public class Scaff_FormModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<AppUserTab> _userManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
 
-        public Scaff_FormModel(SiwesData.ApplicationDbContext context,
+        public Scaff_FormModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
+            ILogger<LoginModel> logger,
             UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
         [BindProperty]
         public ScafViewModels ScafViewModels { get; set; }
@@ -40,29 +48,39 @@ namespace BSSL_SIWES.Web.Pages.Employer
         public CourseGrpSetup CourseGrp { get; set; }
         public string Message { get; set; }
         public string StudentName { get; set; }
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IList<StudentSetUp> AttachedList { get; set; }
+        public string MessageAlert { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
-            id = 1;
-           // int InstId = 1;
-            if (id < 0)
+            //this gets the id from the AspNetUsers table
+            var loginUser = _userManager.GetUserId(User);
+            //var userEmail = await _userManager.GetUserNameAsync(loginUser);
+            var userEmail = _userManager.GetUserName(User);
+            //id = 1;
+            if (userEmail == null)
             {
                 return RedirectToPage("./Scaff_Form");
             }
             EmployerSuperSetup = await _context.EmployerSuperSetups.ToListAsync();
-            EmployerName = await _context.EmployerSuperSetups.Include(x => x.AreaOffice).Where(c => c.AreaOfficeId == c.AreaOffice.Id && c.Id == id)
-          .FirstOrDefaultAsync();
+
+            EmployerName = await _context.EmployerSuperSetups.Include(x => x.AreaOffice).Where(c => c.AreaOfficeId == c.AreaOffice.Id 
+                            && c.Code == userEmail).FirstOrDefaultAsync();
+
             EmployerSupervisor = await _context.EmployerSupervisors.Include(e => e.EmployerSuperSetup)
                 .Where(employerName => employerName.EmployerSuperSetupId == EmployerName.Id).ToListAsync();
 
-      
-
             EmployerSupervisorName = await _context.EmployerSupervisors.Include(super => super.EmployerSuperSetup)
-                .Where(super => super.EmployerSuperSetupId == EmployerName.Id).FirstOrDefaultAsync();
-            StudentSetUp = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x =>x.Institution)
-                .Where(x => x.Suspended == false && x.Attached == false && x.InstitutionOfficerId != null && x.EmployerSuperSetupId == EmployerName.Id)
-                .ToListAsync();
+                                    .Where(super => super.EmployerSuperSetupId == EmployerName.Id).FirstOrDefaultAsync();
+           
+            StudentSetUp = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).ThenInclude(x => x.Institution)
+                           .Where(x => x.Suspended == false && x.Attached == false && x.InstitutionOfficerId != null).ToListAsync();
 
-            //StudentName = StudentSetUp.Surname + ' ' + StudentSetUp.OtherNames;
+            AttachedList = await _context.StudentSetUps.Include(c =>c.Courses).Include(inst =>inst.Institution)
+                            .Where(x =>x.CoursesId == x.Courses.Id && x.InstitutionId == x.Institution.Id)
+                            .Where(att => att.Attached == false && att.EmployerSuperSetupId == EmployerName.Id).ToListAsync();
+
+            MessageAlert = $"You have {AttachedList.Count()} Student(s) Attached to Your Organization";
+
             if (StudentSetUp == null)
             {
                 return NotFound();
@@ -71,13 +89,14 @@ namespace BSSL_SIWES.Web.Pages.Employer
             return Page();
 
         }
-        public ActionResult OnPostDownloadFile()
+        
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            return File("/downloads/Scaf.pdf", "application/octet-stream",
-                        "NewName34.pdf");
-        }
-        public async Task<IActionResult> OnPostAsync()
-        {
+            if (id == null)
+            {
+                return BadRequest("INSTITUTION NOT FOUND");
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -100,7 +119,12 @@ namespace BSSL_SIWES.Web.Pages.Employer
             studentTab.Attached = StudentAttached.Attached = true;
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./EmployerStudentList");
+            return Redirect("./EmployerStudentList?id=" + id);
+        }
+        public ActionResult OnPostDownloadFile()
+        {
+            return File("/downloads/Scaf.pdf", "application/octet-stream",
+                        "Scaf.pdf");
         }
     }
 }

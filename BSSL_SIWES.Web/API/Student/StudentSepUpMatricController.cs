@@ -78,9 +78,9 @@ namespace BSSL_SIWES.Web.API.Student
                 updateStudentRecords.BatchNo = studentSetUp.BatchNo;
                 updateStudentRecords.StudentType = studentSetUp.StudentType;
                 updateStudentRecords.SiwesYear = studentSetUp.SiwesYear;
-                updateStudentRecords.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
+                //updateStudentRecords.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
 
-                //updateStudentRecords.NationalityId = studentSetUp.NationalityId;
+                updateStudentRecords.LGAId = studentSetUp.LGAId;
                 //updateStudentRecords.S = studentSetUp.SiwesYear;
                 //updateStudentRecords.InstitutionOfficerId = studentSetUp.InstitutionOfficerId;
                 await _context.SaveChangesAsync();

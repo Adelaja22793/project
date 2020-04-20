@@ -11,6 +11,10 @@ using SiwesData.Setup;
 using SiwesData;
 using BSSL_SIWES.Web.ViewModels;
 using SiwesData.Students;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using ExcelDataReader;
+using System.Data;
 
 namespace BSSL_SIWES.Web
 {
@@ -18,11 +22,13 @@ namespace BSSL_SIWES.Web
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<AppUserTab> _userManager;
+        private readonly IHostingEnvironment _environment;
         public CreateStudentModel(SiwesData.ApplicationDbContext context,
-            UserManager<AppUserTab> userManager)
+            UserManager<AppUserTab> userManager, IHostingEnvironment environment)
         {
             _context = context;
             _userManager = userManager;
+            _environment = environment;
         }
         [BindProperty]
         public CreateStudentsViewModels CreateStudentsViewModels { get; set; }
@@ -31,9 +37,18 @@ namespace BSSL_SIWES.Web
         public string NewCourseToApprove { get; set; }
         public Institution Institution { get; set; }
         public IList<StudentSetUp> ListOfStudent { get; set; }
+        public IEnumerable<string> ImageFiles { get; set; }
+
+        
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            id = 10;
+                    string imagePath =
+                $"{_environment.WebRootPath}\\downloads";
+
+                    this.ImageFiles = Directory.GetFiles
+            (imagePath).Select(fileName => Path.GetFileName(fileName));
+
+            id = 11;
             if (id < 0)
             {
                 return RedirectToPage("./CreateStudent");
@@ -123,5 +138,13 @@ namespace BSSL_SIWES.Web
         {
             return RedirectToPage("./StudentList");
         }
+        public ActionResult OnPostDownloadFile()
+        {
+            return File("/downloads/StudentListFormat.xlsx", "application/octet-stream",
+                        "StudentListFormat.xlsx");
+        }
+
+        
+
     }
 }

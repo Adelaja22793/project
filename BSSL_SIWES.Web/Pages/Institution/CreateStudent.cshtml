@@ -45,35 +45,43 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form role="form" method="post">
+        <div class="card-body" id="myList" style="margin-left:15%">
+            <ul class="list-group list-group-horizontal-md">
+                <li class="list-group-item">
+                    <button class="nav-link btn btn-warning" id="manualDetails">Manually Enter Student Details</button>
+                </li>
+                <li class="list-group-item">
+                    <button class="nav-link btn btn-success" id="dataExcel">Import Data from Excel</button>
+                </li>
+            </ul>
+
+        </div>
+        <form role="form" method="post" id="man">
             <div class="card-body">
-                <div class="justify-content-center" style="float:right; display:none">
-                    <button type="submit" asp-page-handler="DownloadFile" class="btn btn-warning">Download SCAF</button>
-                </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Registration/Matric. Number</label>
-                                <input type="hidden" id="studentId">
-                                <input type="text" id="matricNumber"  onchange="MyFunctionMatricNumber()" asp-for="CreateStudentsViewModels.MatricNumber"
-                                       class="form-control" placeholder="Enter Registration/Matric No.">
-                                <span asp-validation-for="CreateStudentsViewModels.MatricNumber" class="text-danger"></span>
-                            </div>
+                            <input type="hidden" id="studentId">
+                            <input type="text" id="matricNumber" onchange="MyFunctionMatricNumber()" asp-for="CreateStudentsViewModels.MatricNumber"
+                                   class="form-control" placeholder="Enter Registration/Matric No.">
+                            <span asp-validation-for="CreateStudentsViewModels.MatricNumber" class="text-danger"></span>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Surname</label>
-                            <input type="text" asp-for="CreateStudentsViewModels.Surname" id="surname" class="form-control" 
-                                      placeholder="Enter Surname">
-                                <span asp-validation-for="CreateStudentsViewModels.Surname" class="text-danger"></span>
+                            <input type="text" asp-for="CreateStudentsViewModels.Surname" id="surname" class="form-control"
+                                   placeholder="Enter Surname">
+                            <span asp-validation-for="CreateStudentsViewModels.Surname" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Other Name(s)</label>
-                                <input type="text" asp-for="CreateStudentsViewModels.OtherNames" id="otherNames" class="form-control" placeholder="Enter Other Name(s)">
-                                <span asp-validation-for="CreateStudentsViewModels.OtherNames" class="text-danger"></span>
-                            </div>
+                            <input type="text" asp-for="CreateStudentsViewModels.OtherNames" id="otherNames" class="form-control" placeholder="Enter Other Name(s)">
+                            <span asp-validation-for="CreateStudentsViewModels.OtherNames" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -89,9 +97,10 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Course of Study</label>
-                                <input type="text" class="form-control" id="courseStudy" required onchange="MyFunctionCourses()" placeholder="Enter Course of Study">
-                                <input type="hidden" asp-for="CreateStudentsViewModels.CourseId" class="form-control" id="courseStudyId">
-                                <span asp-validation-for="CreateStudentsViewModels.CourseId" class="text-danger"></span>
+                            <input type="text" class="form-control" id="courseStudy" required onchange="MyFunctionCourses()" placeholder="Enter Course of Study">
+                            <input type="hidden" asp-for="CreateStudentsViewModels.CourseId" class="form-control" id="courseStudyId">
+                            <input type="hidden" class="form-control" id="courseStudyId2">
+                            <span asp-validation-for="CreateStudentsViewModels.CourseId" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -116,7 +125,7 @@
                         <div class="form-group">
                             <label>Select Nationality</label>
                             <select class="form-control"
-                                    asp-items="ViewBag.NationalityId"  style="width: 100%; text-transform:uppercase"
+                                    asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
                                     onchange="MyFunctionNationality()" id="nationChange">
                                 <option selected="selected" value="-1">-- Select Nationality--</option>
                             </select>
@@ -126,7 +135,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Select State of Origin</label>
-                            <select class="form-control" 
+                            <select class="form-control"
                                     id="myState" style="width: 100%;" onchange="MyFunctionState()">
                                 <option selected="selected" value="-1">-- Select State--</option>
                             </select>
@@ -149,17 +158,17 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Phone Number</label>
-                                <input type="text" id="phoneNo" asp-for="CreateStudentsViewModels.PhoneNumber" class="form-control"
-                                       placeholder="Enter Phone No.">
-                                <span asp-validation-for="CreateStudentsViewModels.PhoneNumber" class="text-danger"></span>
-                            </div>
+                            <input type="text" id="phoneNo" asp-for="CreateStudentsViewModels.PhoneNumber" class="form-control"
+                                   placeholder="Enter Phone No.">
+                            <span asp-validation-for="CreateStudentsViewModels.PhoneNumber" class="text-danger"></span>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Email Address</label>
-                                <input type="text" asp-for="CreateStudentsViewModels.Email" id="email" class="form-control">
-                                <span asp-validation-for="CreateStudentsViewModels.Email" class="text-danger"></span>
-                            </div>
+                            <input type="text" asp-for="CreateStudentsViewModels.Email" id="email" class="form-control">
+                            <span asp-validation-for="CreateStudentsViewModels.Email" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -178,7 +187,6 @@
                             <label>Specify SIWES Year</label>
                             <select class="form-control regYear1" asp-for="CreateStudentsViewModels.SiwesYear" data-dropdown-css-class="select2-purple"
                                     style="width: 100%;" id="yearOfStudy">
-                                
                             </select>
                             <span asp-validation-for="CreateStudentsViewModels.SiwesYear" class="text-danger"></span>
                         </div>
@@ -200,21 +208,21 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Enter Name of Supervisor</label>
-                                <input type="hidden" id="superId" />
-                                <input type="text" id="superName"  onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
-                            </div>
+                            <input type="hidden" id="superId" />
+                            <input type="text" id="superName" onchange="MyFunctionSuperName()" class="form-control" placeholder="Enter Name of Supervisor">
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Phone No.</label>
-                                <input type="text" id="superPhone" class="form-control" readonly="readonly">
-                            </div>
+                            <input type="text" id="superPhone" class="form-control" readonly="readonly">
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Email</label>
-                                <input type="text" id="superEmail" class="form-control" readonly="readonly">
-                            </div>
+                            <input type="text" id="superEmail" class="form-control" readonly="readonly">
+                        </div>
                     </div>
                 </div>
                 <fieldset class="fig" style="display:none;">
@@ -386,10 +394,34 @@
             </div>
             <!-- /.card-body -->
 
-            <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
-                <button type="submit" class="btn btn-primary"  id="mySubmitForm">Submit</button>
-                <button type="button"  id="myUpdateForm" style="display:none" class="btn btn-primary">Update Student Record</button>
+            <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                <button type="submit" asp-route-id="@Model.Institution.Id" class="btn btn-primary" id="mySubmitForm">Submit Student Record</button>
+                <button type="button" id="myUpdateForm" style="display:none" class="btn btn-primary">Update Student Record</button>
                 <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
+            </div>
+        </form>
+        <form role="form" method="post" enctype="multipart/form-data" id="excel" style="display:none">
+            <div class="card-body">
+                <div class="justify-content-center">
+                    <button type="submit" asp-page-handler="DownloadFile" class="btn btn-outline-info">Download Excel Format</button>
+                    
+                    
+                </div>
+                <p style="clear:both"></p>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div id="imagesList" class="form-group">
+                            <label>Upload List From Excel</label>
+                            @*<input asp-for="Product_Image[0]" />*@
+                            <input type="file" class="btn btn-info" name="Product_Image" accept="image/*" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
+                    <button type="button" class="btn btn-primary" asp-route-id="@Model.Institution.Id" id="mySubmitForm">Upload File</button>
+                    <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
+                </div>
             </div>
         </form>
     </div>
@@ -434,6 +466,30 @@
         studentList.push({ label: lbl, value: val });
     }
     $(document).ready(function () {
+
+        $("#btnUpload").on('click', function () {
+            var files = $("#Product_Image").get(0).files;
+
+            var formData = new FormData();
+            formData.append('Product_Image', files[0]);
+
+            $.ajax({
+                url: '/ExportExcel/ImportFile',
+                data: formData,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.Status === 1) {
+                        alert(data.Message);
+                    } else {
+                        alert("Failed to Import");
+                    }
+                }
+            });
+        });  
+
+
         var thisYear = new Date().getFullYear();
         var optionReg = ''; var optionReg1 = '';
         for (var i = 0; i <= 5; i++) {
@@ -565,8 +621,9 @@
             var InstitutionOfficerId = parseInt(superId);
             var courseId = parseInt(courseStudyId);
             var nationalityId = parseInt(nationaId);
+            var LGAId = parseInt(myLGA);
             var InstitutionId = $('#InstitutionId').val();
-            //alert(studentId);
+            //alert(myLGA);
             if (studentId == "") {
                 alert("STUDENT DOES NOT HAVE RECORDS TO UPDATE");
                 return false;
@@ -642,7 +699,7 @@
 
                 "SiwesYear": regYear,
                 //"InstitutionOfficerId": InstitutionOfficerId,
-                "NationalityId": nationalityId,
+                "LGAId": LGAId,
                 "MatricNumber": matricNumber,
                 //"StudentType": myLGA
             };
@@ -672,6 +729,14 @@
                     //location.reload();
                 }
             });
+        });
+        $('#manualDetails').on('click', function () {
+            document.getElementById('man').style.display = "block";
+            document.getElementById('excel').style.display = "none";
+        });
+        $('#dataExcel').on('click', function () {
+            document.getElementById('excel').style.display = "block";
+            document.getElementById('man').style.display = "none";
         });
     });
     function pageRedirect() {
@@ -706,20 +771,19 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    console.log(data);
-                    var newRex = data['lga']['name'];
+                    //console.log(data);
+                    var option = ''; var stateOption = '';
+                    var lga = ''; var lgaOption = '';
+                    var newRex = data['lgaId'];
                     $('#studentId').val(data['id']);
                     $('#surname').val(data['surname']);
                     $('#otherNames').val(data['otherNames']);
                     $('#matricYear').val(data['matricYear']);
                     $('#courseStudy').val(data['courses']['name']);
-                    $('#courseStudyId').val(data['coursesId']);
+                    $('#courseStudyId2').val(data['coursesId']);
                     $('#yearOfStudy').val(data['yearOfStudy']);
                     $('#phoneNo').val(data['phoneNo']);
                     $('#email').val(data['email']);
-                    //$('#nationChange').val(data['nationalityId']);
-                    //$('#myState').val(data['stateId']);
-                   // $('.myLGAS').val(lgaId);
                     $('#batchNo').val(data['batchNo']);
                     $('.regYear').val(data['siwesYear']);
                     $('#studentType').val(data['studentType']);
@@ -727,6 +791,86 @@
                     document.getElementById('myUpdateForm').style.display = "inline-block";
                     document.getElementById('mySubmitForm').style.display = "none";
 
+                    if (newRex != null) {
+                        var newRexId = data['lga']['stateId'];
+                        var d = {
+                            "Id": newRexId
+                        };
+                        var Rex = {
+                            "Id": newRexId
+                        };
+                        var baseUrl = window.location.origin;
+                        $.ajax({
+                            type: "GET",
+                            url: baseUrl + '/Api/States',
+                            data: JSON.stringify(d),
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            contentType: 'json',
+                            error: function (data) {
+                                alert(data.responseText);
+                            },
+                            failure: function (data) {
+                                alert(data.responseText);
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                var nationalityId = "";
+                                for (var i = 0; i < data.length; i++) {
+                                    var nationalityId = data[i]['nationalityId'];
+                                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+
+                                }
+                                $('#myState').append(option);
+                                for (var i = 0; i < $('select#myState option').length; i++) {
+                                    if ($('select#myState option')[i].value == newRexId - 1) {
+                                        stateOption = '<option selected="selected" value="' + newRexId + '">' + data[i]['name'] + '</option>';
+                                        //Here the code for select automatically in operator the option found
+                                    }
+                                }
+                                //alert(stateOption);
+                                $('#myState').append(stateOption);
+                                $('#nationChange').val(nationalityId);
+                                $.ajax({
+                                    type: "GET",
+                                    url: baseUrl + '/Api/lgas/' + newRexId,
+                                    data: JSON.stringify(Rex),
+                                    xhrFields: {
+                                        withCredentials: true
+                                    },
+                                    contentType: 'json',
+                                    error: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    failure: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    success: function (data) {
+                                        //console.log(data);
+                                        for (var i = 0; i < data.length; i++) {
+                                            lga += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+
+                                        }
+                                        $('#myLGA').append(lga);
+                                        for (var i = 0; i < $('select#myLGA option').length; i++) {
+                                            if ($('select#myLGA option')[i].value == newRex - 1) {
+                                                lgaOption = '<option selected="selected" value="' + newRex + '">' + data[i]['name'] + '</option>';
+                                                //Here the code for select automatically in operator the option found
+                                            }
+                                        }
+                                        $('#myLGA').append(lgaOption);
+                                    },
+
+
+                                });
+
+
+                            },
+
+
+                        });
+                    }
                 },
             });
         }
