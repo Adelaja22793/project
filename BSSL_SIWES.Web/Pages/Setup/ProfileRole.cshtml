@@ -7,98 +7,91 @@
     ViewData["Title"] = "ProfileRole";
 }
 
-<div class="content-wrapper" style="margin-top:-50px">
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">User Definition</h3>
+            </div>
 
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">User Definition</h3>
-                        </div>
-                        <form>
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-10">
-                                        <div class="form-group">
-                                            <label class="control-label">User RoleId/Group ID:</label>
-                                            <input asp-for="RoleTb.RoleId" id="roleId" class="form-control" onchange="UserCheck()" />
-                                            <p id="Status"></p>
-                                            <span asp-validation-for="RoleTb.RoleId"></span>
-                                            <input asp-for="RoleTb.Id" id="myidd" type="hidden" class="form-control" />
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="card-body">
 
-                                        </div>
-                                    </div>
+                    <div id="divinput">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label class="control-label">User RoleId/Group ID:</label>
+                                    <input asp-for="RoleTb.RoleId" id="roleId" class="form-control" onchange="UserCheck()" />
+                                    
+                                    <span asp-validation-for="RoleTb.RoleId"></span>
+                                    <input asp-for="RoleTb.Id" id="myidd" type="hidden" class="form-control" />
+
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-10">
-                                        <div class="form-group">
-                                            <label class="control-label">User Role/Group Name:</label>
-                                            <input asp-for="RoleTb.Name" id="roleName" class="form-control" onchange="UserCheck()" />
-                                            <p id="Status"></p>
-                                            <span asp-validation-for="RoleTb.Name"></span>
-                                            @*<input asp-for="RoleTb.Id" id="myidd" type="hidden" class="form-control" />*@
-                                            @*<input type="hidden" id="menuhdd" class="form-control" />
-                                                <input type="hidden" id="rowIndex" class="form-control" />
-                                                <label asp-for="Menu.Name" class="control-label"></label>
-                                                <input asp-for="Menu.Name" id="MENUNAME" class="form-control" />
-                                                <span asp-validation-for="Menu.Name" class="text-danger"></span>*@
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="margin: 0 auto; text-align: center">
-                                    <button type="submit" id="BtnMenu" style="width:300px" class="btn btn-primary button button4">SUBMIT</button>
-
-                                    <button type="submit" id="BtnUpdate" style="width:300px; display:none" class="btn btn-primary button button4">UPDATE</button>
-                                </div>
-
                             </div>
-                        </form>
-                        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
-                            <table id="tabId" class="table table-bordered" border="0">
-                                <thead style="background-color:steelblue;">
-                                    <tr>
-                                        <th style="width:6%; text-align:center">Actions</th>
-                                        <th style="width:0.25%; text-align:center">S/N</th>
-                                        <th style="width:20%; text-align:center">UserRole ID/Group ID</th>
-                                        <th style="width:30%; text-align:center">UserRole Name</th>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label class="control-label">User Role/Group Name:</label>
+                                    <input asp-for="RoleTb.Name" id="roleName" class="form-control" onchange="UserCheck()" />
+                                    <p id="Status"></p>
+                                    <span asp-validation-for="RoleTb.Name"></span>
+                                   
+                                </div>
+                            </div>
+                        </div>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model.RoleTbs != null)
-                                    {
-                                        for (int i = 0; i < Model.RoleTbs.Count; i++)
-                                        {
-                                            var items = Model.RoleTbs[i];
+                        <div class="form-group" style="margin: 0 auto; text-align: center">
+                            <button type="submit" id="BtnMenu" style="width:300px" class="btn btn-primary button button4">SUBMIT</button>
 
-                                    <tr>
-                                        <td style="width:6%;">
-                                            <input type="hidden" class="readid @i" value="@items.Id">
-                                            <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Select</a>
-                                        </td>
-                                        <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
-                                        <td class="roleclass @i" style="width:20%; text-align:left">@items.RoleId</td>
-                                        <td class="titleclass @i" style="width:30%; text-align:left">@items.Name</td>
-
-
-                                    </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-
+                            <button type="submit" id="BtnUpdate" style="width:300px; display:none" class="btn btn-primary button button4">UPDATE</button>
                         </div>
 
                     </div>
                 </div>
+            </form>
+            <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                <table id="tabId" class="table table-bordered" border="0">
+                    <thead style="background-color:steelblue;">
+                        <tr>
+                            <th style="width:6%; text-align:center">Actions</th>
+                            <th style="width:0.25%; text-align:center">S/N</th>
+                            <th style="width:20%; text-align:center">UserRole ID/Group ID</th>
+                            <th style="width:30%; text-align:center">UserRole Name</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RoleTbs != null)
+                        {
+                            for (int i = 0; i < Model.RoleTbs.Count; i++)
+                            {
+                                var items = Model.RoleTbs[i];
+
+                                <tr>
+                                    <td style="width:6%;">
+                                        <input type="hidden" class="readid @i" value="@items.Id">
+                                        <a id="myEdit" AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
+                                    </td>
+                                    <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                    <td class="roleclass @i" style="width:20%; text-align:left">@items.RoleId</td>
+                                    <td class="titleclass @i" style="width:30%; text-align:left">@items.Name</td>
+
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
             </div>
+
         </div>
-    </section>
-</div>
+    </div>
+          
 <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
@@ -175,7 +168,8 @@
                     var rowNumber = $('#tabId tr').length;
                     var html = `<tr>
                         <td style="width:6%;" class="action">
-                        <a id=${myid}">Select</a>
+                        <input type="hidden" value=${myid}>
+                        <a href="/Setup/ProfileRole/${myid}">Edit</a>
                         </td>
                         <td class="se_no" style="width:3%; text-align:left">${rowNumber}</td>
                         <td style="width:20%; text-align:left">${rol}</td>
@@ -185,7 +179,7 @@
 
                     $('#tabId').append(html);
                     formClear();
-
+                    location.reload();
                 },
             });
         });

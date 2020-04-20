@@ -49,42 +49,81 @@ namespace BSSL_SIWES.Web.API
 
         // PUT: api/EmployerSuperSetups/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployerSuperSetup(int id, EmployerSuperSetup employerSuperSetup)
+        public async Task<IActionResult> PutEmployerSuperSetup(int? id, EmployerSuperSetup employerSuperSetup)
         {
-            if (id != employerSuperSetup.Id)
+            if (id == null)
             {
-                return BadRequest();
+                return BadRequest("Employer is Empty");
             }
-
-            _context.Entry(employerSuperSetup).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployerSuperSetupExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var updateEmployerRecord = await _context.EmployerSuperSetups.FirstOrDefaultAsync(m => m.Id == id);
 
-            return NoContent();
+                if (updateEmployerRecord == null)
+                {
+                    return NotFound($"Employer Not Found For The Selected Id {id}");
+                }
+                updateEmployerRecord.Name = employerSuperSetup.Name;
+                updateEmployerRecord.Code = employerSuperSetup.Code;
+
+                updateEmployerRecord.Address1 = employerSuperSetup.Address1;
+                updateEmployerRecord.Address2 = employerSuperSetup.Address2;
+                updateEmployerRecord.LGAId = employerSuperSetup.LGAId;
+                updateEmployerRecord.CoporationType = employerSuperSetup.CoporationType;
+                updateEmployerRecord.YearOfIncop = employerSuperSetup.YearOfIncop;
+                updateEmployerRecord.BusinessLineId = employerSuperSetup.BusinessLineId;
+
+                updateEmployerRecord.BusinessType = employerSuperSetup.BusinessType;
+                updateEmployerRecord.AreaOfficeId = employerSuperSetup.AreaOfficeId;
+                updateEmployerRecord.WebAddress = employerSuperSetup.WebAddress;
+                updateEmployerRecord.Email = employerSuperSetup.Email;
+                updateEmployerRecord.PhoneNo = employerSuperSetup.PhoneNo;
+                updateEmployerRecord.PhoneNo2 = employerSuperSetup.PhoneNo2;
+                await _context.SaveChangesAsync();
+                return Ok(updateEmployerRecord);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST: api/EmployerSuperSetups
         [HttpPost]
         public async Task<ActionResult<EmployerSuperSetup>> PostEmployerSuperSetup(EmployerSuperSetup employerSuperSetup)
         {
-            _context.EmployerSuperSetups.Add(employerSuperSetup);
-            await _context.SaveChangesAsync();
+            try
+            {
 
-            return CreatedAtAction("GetEmployerSuperSetup", new { id = employerSuperSetup.Id }, employerSuperSetup);
+                var newCourseRecom = new EmployerSuperSetup
+                {
+                    Name = employerSuperSetup.Name,
+                    Code = employerSuperSetup.Code,
+
+                    Address1 = employerSuperSetup.Address1,
+                    Address2 = employerSuperSetup.Address2,
+                    LGAId = employerSuperSetup.LGAId,
+                    CoporationType = employerSuperSetup.CoporationType,
+                    YearOfIncop = employerSuperSetup.YearOfIncop,
+                    BusinessLineId = employerSuperSetup.BusinessLineId,
+
+                    BusinessType = employerSuperSetup.BusinessType,
+                    AreaOfficeId = employerSuperSetup.AreaOfficeId,
+                    WebAddress = employerSuperSetup.WebAddress,
+                    Email = employerSuperSetup.Email,
+                    PhoneNo = employerSuperSetup.PhoneNo,
+                    PhoneNo2 = employerSuperSetup.PhoneNo2,
+                };
+                _context.EmployerSuperSetups.Add(newCourseRecom);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("PostemployerSuperSetup", new { id = newCourseRecom.Id }, newCourseRecom);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(500, $"{employerSuperSetup.Name} HAS BEEN SENT FOR SETUP, PREVIOUSLY, PLEASE CHECK!!!");
+            }
         }
 
         // DELETE: api/EmployerSuperSetups/5

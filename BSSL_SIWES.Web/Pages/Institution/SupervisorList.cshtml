@@ -153,11 +153,11 @@
             <table id="StudentTab" class="table table-bordered" border="0">
                 <thead style="background-color:steelblue;">
                     <tr>
+                        <th style="width:10%; text-align:center">Action</th>
                         <th style="width:0.25%; text-align:center">S/N</th>
                         <th style="width:15%; text-align:center">Matric Number</th>
                         <th style="width:25%; text-align:center">Student Name</th>
                         <th style="width:30%; text-align:center">Course of Study</th>
-                        <th style="width:10%; text-align:center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -167,20 +167,16 @@
                         var Name = items.Surname + ' ' + items.OtherNames;
                         var Level = items.YearOfStudy + ' ' + "Level";
 
-                        <tr>
-                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
-                            <td class="matricNo @i" style="width:15%; text-align:left">@items.MatricNumber</td>
-                            <td class="name @i" style="width:25%; text-align:left">@Name</td>
-                            <td class="courseName @i" style="width:30%; text-align:left">@items.Courses.Name</td>
-
-                            <td style="width:10%;">
-                                <input type="hidden" class="studentId @i" value="@items.Id" />
-                                @*<input type="hidden" class="studentId @i" value="@items." />
-                                <input type="hidden" class="studentId @i" value="@items.Id" />*@
-                                <a id="studentVisit" AddreSuspend="@i" asp-route-id="@items.Id">Visit Student</a>
-                            </td>
-
-                        </tr>
+                    <tr>
+                        <td style="width:10%;">
+                            <input type="hidden" class="studentId @i" value="@items.Id" />
+                            <a id="studentVisit" AddreSuspend="@i" asp-route-id="@items.Id">Visit Student</a>
+                        </td>
+                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                        <td class="matricNo @i" style="width:15%; text-align:left">@items.MatricNumber</td>
+                        <td class="name @i" style="width:25%; text-align:left">@Name</td>
+                        <td class="courseName @i" style="width:30%; text-align:left">@items.Courses.Name</td>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -255,13 +251,26 @@
             var editindex = $(this).attr('InstitutionOfficer');
             var studentName = $('#studentName').val();
             var newStudentId = parseInt(StudentSetUpId);
+
+            if (DateVisited == "") {
+                alert("PLEASE ENTER DATE OF VISITATION");
+                return false;
+            }
+            if (areaToImprove == "") {
+                alert("PLEASE ENTER PROPOSED AREA OF IMPROVEMENT");
+                return false;
+            }
+            if (studentInvolvement == "") {
+                alert("PLEASE ENTER YOUR IMPRESSION OF STUDENT'S INVOLVEMENT IN TRAINING");
+                return false;
+            }
             var d = {
                 "StudentSetUpId": newStudentId,
                 "DateVisited": DateVisited,
                 "AreaToImprove": areaToImprove,
                 "StudentInvolvement": studentInvolvement
             };
-            var confirmation = confirm("ARE YOU SURE YOU WANT TO SAVEED " + studentName.toUpperCase() + " VISITATION REPORTS ?");
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO SAVE " + studentName.toUpperCase() + " VISITATION REPORTS ?");
             if (confirmation === false) {
                 return false;
             }

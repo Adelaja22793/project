@@ -370,7 +370,7 @@
             var superName = $('#superName').val();
             var StudentId = parseInt(SttId);
             var InstitutionOfficerId = parseInt(superId);
-            if (InstitutionOfficerId == "") {
+            if (superId == "") {
                 alert("PLEASE ENTER A SUPERVISOR FOR " + studentName.toUpperCase() + "");
                 return false;
             }
@@ -416,7 +416,7 @@
 
             var OldInstitutionOfficerId = parseInt(officerId);
             var InstitutionOfficerId = parseInt(superId2);
-            if (InstitutionOfficerId == "") {
+            if (superId2 == "") {
                 alert("PLEASE ENTER NEW SUPERVISOR FOR " + studentName.toUpperCase() + "");
                 return false;
             }

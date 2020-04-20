@@ -62,9 +62,10 @@ namespace BSSL_SIWES.Web.API
 
 
             }
-            catch
+            catch (Exception ex)
             {
-                result.Insert(0, "syserr");
+                
+                result.Insert(0,  ex.Message);
             }
             return result;
 

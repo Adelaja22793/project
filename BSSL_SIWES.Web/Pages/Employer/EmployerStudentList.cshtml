@@ -70,11 +70,11 @@
         </form>
         <div class="card card-primary">
 
-            <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+            <div style="display:table; margin:0 auto; width:100%; font-size:medium" id="printer">
                 <table id="StudentTab" class="table table-bordered" border="0">
                     <thead style="background-color:steelblue;">
                         <tr>
-                            <th style="width:15%; text-align:center">Action</th>
+                            <th id="nt1" style="width:10%; text-align:center">Action</th>
                             <th style="width:0.25%; text-align:center">S/N</th>
                             <th style="width:15%; text-align:center">Matric Number</th>
                             <th style="width:18%; text-align:center">Student Name</th>
@@ -84,7 +84,7 @@
                             <th style="width:20%; text-align:center">Supervisor</th>
                         </tr>
                     </thead>
-                    <tbody style="font-size:small">
+                    <tbody style="font-size:x-small">
                         @for (int i = 0; i < Model.EmpoyerStudentList.Count; i++)
                         {
                             var items = Model.EmpoyerStudentList[i];
@@ -95,7 +95,7 @@
                                 .Where(c => c.Id == StudentId && c.CoursesId == c.Courses.Id && c.InstitutionId == c.Institution.Id).FirstOrDefaultAsync();
 
                             <tr>
-                                <td style="width:10%;">
+                                <td id="nt" style="width:10%;">
                                     <input type="hidden" class="studentId @i" value="@items.Id" />
                                     <a id="mySuspend" AddreSuspend="@i" asp-route-id="@items.Id">Suspend</a>
                                 </td>
@@ -112,7 +112,7 @@
                 </table>
             </div>
             <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
-                <button type="button" class="btn btn-success"> Print and Preview SCAF</button>
+                <button type="button" class="btn btn-success" onclick="printDiv()"> Print and Preview SCAF</button>
             </div>
         </div>
         </div>
@@ -189,5 +189,18 @@
             });
         });
     });
+        function printDiv() {
+            //document.getElementById('nt1').style.display = "none";
+            //document.getElementById('nt').display = "none";
+            //$(this).attr('AddreSuspend').style.display = "none";
+            var printContents = document.getElementById("printer").innerHTML;
+
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
     </script>
 

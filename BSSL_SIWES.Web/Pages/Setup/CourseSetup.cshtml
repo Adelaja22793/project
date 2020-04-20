@@ -26,8 +26,9 @@
                                 <table id="tabCourse" class="table table-bordered" border="0">
                                     <thead style="background-color:steelblue;">
                                         <tr>
-                                            <th style="width:0.25%; text-align:center">S/N</th>
+
                                             <th style="width:10%; text-align:center">Action</th>
+                                            <th style="width:0.25%; text-align:center">S/N</th>
                                             <th style="width:25%; text-align:center">Courses Name</th>
 
                                         </tr>
@@ -37,14 +38,15 @@
                                         {
                                             var items = Model.NewCourseToApprove[c];
 
-                                            <tr>
-                                                <td class="serialNo @c" style="width:0.25%; text-align:left">@(c + 1)</td>
-                                                <td style="width:5%;">
-                                                    <input type="hidden" class="idselect @c" value="@items.Id">
-                                                    <a id="whatSelect" CourseSelected="@c" asp-route-id="@items.Id">Select</a>
-                                                </td>
-                                                <td class="courseName @c" style="width:25%; text-align:left">@items.Name</td>
-                                            </tr>
+                                        <tr>
+                                            <td style="width:5%;">
+                                                <input type="hidden" class="idselect @c" value="@items.Id">
+                                                <a id="whatSelect" CourseSelected="@c" asp-route-id="@items.Id">Select</a>
+                                            </td>
+                                            <td class="serialNo @c" style="width:0.25%; text-align:left">@(c + 1)</td>
+
+                                            <td class="courseName @c" style="width:25%; text-align:left">@items.Name</td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -85,14 +87,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Courses Code</label>
-                                        <input type="text" class="form-control" id="courseCode">
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Courses Name</label>
@@ -108,9 +102,16 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                
                             </div>
                             <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Courses Code</label>
+                                        <input type="text" class="form-control" id="courseCode">
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Short Code</label>
@@ -281,7 +282,7 @@
             
             var currentRow = $(this).closest("tr");
             var selectedIndex = currentRow.find("td:eq(0)").html(); // get current row 1st TD value
-             var courseName = currentRow.find("td:eq(1)").html();
+             var courseName = currentRow.find("td:eq(2)").html();
              //alert(selectedIndex1)
              var CourseSelected = $(this).attr('CourseSelected');
              var courseId = $('.idselect.' + CourseSelected).val();
@@ -312,6 +313,14 @@
             var newCourseGrpId = parseInt(courseGrpId);
             var signedUser = parseInt(signedUser);
             var ApprovedBy = "02656";
+            if (courseGrpId == "-1") {
+                alert("PLEASE SELECT A COURSE GROUP");
+                return false;
+            }
+            if (courseName == "") {
+                alert("PLEASE ENTER COURSE NAME");
+                return false;
+            }
             var d = {
                 "CourseCode": courseCode,
                 "CourseName": courseName,
