@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SiwesData;
 using SiwesData.Employer;
 using SiwesData.Students;
 
@@ -17,13 +18,13 @@ namespace BSSL_SIWES.Web.Pages.Students
     public class StudentBioDataModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUserTab> _userManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public StudentBioDataModel(SiwesData.ApplicationDbContext context, SignInManager<IdentityUser> signInManager,
+        public StudentBioDataModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;

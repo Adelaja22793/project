@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SiwesData.Employer;
 using SiwesData;
+using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web.Pages.Employer
 {
@@ -26,7 +27,8 @@ namespace BSSL_SIWES.Web.Pages.Employer
         [BindProperty]
         public EmployerSuperSetup EmployerSuperSetup { get; set; }
         public List<EmployerSuperSetup> EmployerSuperSetupList { get; set; }
-
+        public IList<NewCourseRequest> NewCourseToApprove { get; set; }
+        public string MessageAlert { get; set; }
         public async Task<IActionResult> OnGet()
         {
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
@@ -34,7 +36,8 @@ namespace BSSL_SIWES.Web.Pages.Employer
             ViewData["BusinessLine"] = new SelectList(_context.businessLine, "Id", "Description");
 
             EmployerSuperSetupList = await _context.EmployerSuperSetups.ToListAsync();
-
+            NewCourseToApprove = await _context.NewCourseRequests.Where(app => app.Approved == false && app.ReqstType == "employer").ToListAsync();
+            MessageAlert = $"You have {NewCourseToApprove.Count()} Employer(s) Recommended to Setup";
             return Page();
         }
         

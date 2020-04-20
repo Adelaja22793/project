@@ -128,7 +128,7 @@
             var studentName = $('#studentName').val();
             var newStudentId = parseInt(StudentSetUpId);
             //alert(employerId);
-            if (newStudentId == "") {
+            if (StudentSetUpId == "") {
                 alert("STUDENT DOES NOT EXISTS OR STUDENT HAVE NOT BEEN SET UP.");
                 setTimeout(function () {
                     $('#matricNo').val("");
@@ -137,9 +137,12 @@
                 }, 1);
                 return false;
             }
-            if (newStudentId != "" && employerId == "") {
+            if (DateVisited == "") {
+                alert("PLEASE ENTER DATE OF VISITATION");
+                return false;
+            }
+            if (StudentSetUpId != "" && employerId == "") {
                 alert("THE SELECTED STUDENT HAVE NOT BEEN ATTACHED/ACCEPTED BY EMPLOYER");
-
                 return false;
             }
             if (areaToImprove == "") {
@@ -148,10 +151,6 @@
             }
             if (studentInvolvement == "") {
                 alert("PLEASE ENTER YOUR IMPRESSION OF STUDENT'S INVOLVEMENT IN TRAINING");
-                return false;
-            }
-            if (DateVisited == "") {
-                alert("PLEASE ENTER DATE OF VISITATION");
                 return false;
             }
             var d = {

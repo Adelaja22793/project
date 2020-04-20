@@ -30,7 +30,7 @@ namespace BSSL_SIWES.Web
                .OrderBy(x => x.Name).OrderBy(x => x.CourseGrpSetupId).ToListAsync();
             ViewData["CourseGroup"] = new SelectList(_context.CourseGrpSetup, "Id", "Name");
 
-            NewCourseToApprove = await _context.NewCourseRequests.Where(app => app.Approved == false).ToListAsync();
+            NewCourseToApprove = await _context.NewCourseRequests.Where(app => app.Approved == false && app.ReqstType == "course").ToListAsync();
             MessageAlert = $"You have {NewCourseToApprove.Count()} Course(s) Recommended to Setup";
             
         }

@@ -12,16 +12,16 @@
         </div>
         <div class="modal fade" tabindex="-1" id="loginModal"
              data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog modal-lg" style="width:40%; margin-left:35%;">
+            <div class="modal-dialog modal-lg" style="width:100%; margin-left:25%;">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:steelblue">
-                        <h4 class="modal-title" id="monthname" style="margin-left:130px">Setup New Employer/Company</h4>
+                        <h4 class="modal-title" id="monthname" style="margin-left:25%">Setup New Employer/Company</h4>
                         <button type="button" class="close" data-dismiss="modal">
                             ×
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="row" id="sendRequest">
+                        @*<div class="row" id="sendRequest">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Company Name</label>
@@ -30,13 +30,157 @@
                                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                                         </div>
                                         <input id="employerName" style="height:30px;" class="form-control" type="text">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>RC Number</label>
+                                        <input type="hidden" id="employerID">
+                                        <input type="text" id="employerNumber" onchange="MyFunctionRcNumber()"
+                                               class="form-control" placeholder="Enter RC Number">
+                                        <input type="hidden" id="employerNumberId" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label>Employer Name</label>
+                                        <input type="text" id="employerName"  class="form-control"
+                                               placeholder="Enter Employer Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Official Address</label>
+                                        <input type="text" id="offAddress" class="form-control" placeholder="Enter Official Address">
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Alternate Address</label>
+                                        <input type="text" id="altAddress" class="form-control" placeholder="Enter Alternate Address">
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Resident Country</label>
+                                        <select class="form-control" asp-items="ViewBag.NationalityId"
+                                                style="width: 100%;"
+                                                onchange="MyFunctionNationality()" id="nationChange">
+                                            <option selected="selected" value="-1">-- Select Resident Country--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Resident State</label>
+                                        <select class="form-control"
+                                                id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                            <option selected="selected" value="-1">-- Select Resident State--</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Resident City</label>
+                                        <select class="form-control myLGAS"
+                                                id="myLGA" style="width: 100%;">
+                                            <option selected="selected" value="-1">--Select Resident City--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Official Phone No.</label>
+                                        <input type="text" class="form-control" id="phone1" placeholder="Enter Official Phone No.">
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alternate Phone No.</label>
+                                        <input type="text" class="form-control" id="phone2"  placeholder="Enter Alternate Phone No.">
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>E-mail</label>
+                                        <input type="text" class="form-control" id="email" placeholder="Enter Official Email">
+                                   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Coporation Type</label>
+                                        <select class="form-control" id="typeCoporation"  style="width: 100%;">
+                                            <option selected="selected" value="-1">--Select Type of Coporation--</option>
+                                            <option value="Limited Liability Company">Limited Liability Company</option>
+                                            <option value="Publicly Held Corporation">Publicly Held Corporation</option>
+                                            <option value="Closely Held Corporation">Closely Held Corporation</option>
+                                            <option value="Non Profit Corporation">Non Profit Corporation</option>
+                                            <option value="Professional Corporation">Professional Corporation</option>
+                                            <option value="S Corporation">S Corporation</option>
+                                            <option value="C Corporation">C Corporation</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Type Of Business</label>
+                                        <input type="text" class="form-control"  id="busType" placeholder="Enter Type Of Business" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Year of Incoporation</label>
+                                        <input type="text" class="form-control" id="incopYear"  placeholder="Enter Year of Incoporation" />
+                                   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Business Line</label>
+                                        <select class="form-control BusinessLine1" id="BusinessLine"  asp-items="ViewBag.BusinessLine" style="width: 100%;">
+                                            <option selected="selected" value="-1">--Select Business Line--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>ITF Area Office Attached To</label>
+                                        <select class="form-control AreaOffice1" id="AreaOffice"  asp-items="ViewBag.AreaOffice" style="width: 100%;">
+                                            <option selected="selected" value="-1">--Select Area Office--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Website</label>
+                                        <input type="text"  required class="form-control" id="website" placeholder="Enter Company Official Website">
                                         
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                            <button type="submit" id="BtnSendCourse" class="btn btn-primary button button4">Submit</button>
+                            <button type="submit" id="BtnSendCourse" class="btn btn-primary button button4">Submit Employer Record</button>
                             <button type="button" id="btnHideModal" class="btn btn-info button button4">
                                 Hide
                             </button>
@@ -222,28 +366,115 @@
             }
         });
         $('#BtnSendCourse').on('click', function () {
+            var employerNumber = document.getElementById('employerNumber').value;
             var newEmployerName = document.getElementById('employerName').value;
+            var offAddress = document.getElementById('offAddress').value;
+            var altAddress = document.getElementById('altAddress').value;
+            var myLGA = document.getElementById('myLGA').value;
+            var nationChange = document.getElementById('nationChange').value;
+            var myState = document.getElementById('myState').value;
+            var typeCoporation = document.getElementById('typeCoporation').value;
+            var busType = document.getElementById('busType').value;
+            var BusinessLine = document.getElementById('BusinessLine').value;
+            var incopYear = document.getElementById('incopYear').value;
+            var AreaOffice = document.getElementById('AreaOffice').value;
+            var WebAddress = document.getElementById('website').value;
+
+            var phone1 = document.getElementById('phone1').value;
+            var phone2 = document.getElementById('phone2').value;
+            var email = document.getElementById('email').value;
+
             var ReqstType = "employer";
             var InstitutionId1 = $('#InstitutionId').val();
             var InstitutionId = parseInt(InstitutionId1);
-            alert(InstitutionId);
+
+            var myLGA1 = parseInt(myLGA);
+            var BusinessLineiD = parseInt(BusinessLine);
+            var AreaOfficeID = parseInt(AreaOffice);
+            //var InstitutionId = parseInt(InstitutionId1);
+            //alert(InstitutionId);
+            if (employerNumber == "") {
+                alert("PLEASE ENTER EMPLOYER/COMPANY RC NUMBER");
+                return false;
+            }
             if (newEmployerName == "") {
                 alert("PLEASE ENTER THE NAME OF THE EMPLOYER/COMPANY YOU WANT TO BE SET UP");
                 return false;
             }
+            if (offAddress == "") {
+                alert("PLEASE ENTER THE ADDRESS OF THE EMPLOYER/COMPANY");
+                return false;
+            }
+            if (phone1 == "") {
+                alert("PLEASE ENTER EMPLOYER/COMPANY PHONE NUMBER");
+                return false;
+            }
+            if (email == "") {
+                alert("PLEASE ENTER EMPLOYER/COMPANY EMAIL");
+                return false;
+            }
+            if (WebAddress == "") {
+                alert("PLEASE ENTER THE WEB-ADDRESS OF THE EMPLOYER/COMPANY");
+                return false;
+            }
+            if (nationChange == "-1") {
+                alert("PLEASE SELECT EMPLOYER/COMPANY RESIDENT COUNTRY");
+                return false;
+            }
+            if (myState == "-1") {
+                alert("PLEASE SELECT EMPLOYER/COMPANY RESIDENT STATE");
+                return false;
+            }
+            if (myLGA == "-1") {
+                alert("PLEASE SELECT EMPLOYER/COMPANY RESIDENT CITY");
+                return false;
+            }
+            if (typeCoporation == "-1") {
+                alert("PLEASE SELECT EMPLOYER/COMPANY COPORATION TYPE");
+                return false;
+            }
+            if (incopYear == "") {
+                alert("PLEASE ENTER EMPLOYER/COMPANY YEAR OF INCOPORATION");
+                return false;
+            }
+            if (BusinessLine == "-1") {
+                alert("PLEASE SELECT EMPLOYER/COMPANY BUSINESS LINE");
+                return false;
+            }
+            if (busType == "") {
+                alert("PLEASE ENTER EMPLOYER/COMPANY BUSINESS TYPE");
+                return false;
+            }
+            if (AreaOffice == "-1") {
+                alert("PLEASE ENTER EMPLOYER/COMPANY NEAREST ITF AREA OFFICE");
+                return false;
+            }
             var d = {
                 "Name": newEmployerName,
+                "Code": employerNumber,
                 "ReqstType": ReqstType,
                 "InstitutionId": InstitutionId,
+                "Address1": offAddress,
+                "Address2": altAddress,
+                "LGAId": myLGA1,
+                "CoporationType": typeCoporation,
+                "BusinessType": busType,
+                "BusinessLineId": BusinessLineiD,
+                "YearOfIncop": incopYear,
+                "AreaOfficeId": AreaOfficeID,
+                "WebAddress": WebAddress,
+                "PhoneNo": phone1,
+                "PhoneNo2": phone2,
+                "Email": email,
             };
-            var confirmation = confirm("ARE YOU SURE YOU WANT THIS " + newEmployerName.toUpperCase() + " TO BE SETUP?");
+            var confirmation = confirm("ARE YOU SURE YOU WANT TO SEND " + newEmployerName.toUpperCase() + " TO BE SETUP?");
             if (confirmation === false) {
                 return false;
             }
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "POST",
-                url: baseUrl + '/Api/NewCourseRequests',
+                url: baseUrl + '/Api/NewEmployerRequest',
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true
@@ -264,8 +495,27 @@
                     $("#loginModal").modal('hide');
                     $("#employerName").val("");
                     $("#superName").val("");
-                    //console.log(data);
+                    //$('#employerNumber').val("");
+                    $('#employerName').val("");
+                    $('#offAddress').val("");
+                    $('#altAddress').val("");
+                    $('#website').val("");
 
+                    $('#nationChange').val("-1");
+                    $('#myState').val("-1");
+                    $('#myLGA').val("-1");
+
+                    $('#phone1').val("");
+                    $('#phone2').val("");
+                    $('#email').val("");
+                    $('#typeCoporation').val("-1");
+
+                    $('#busType').val("");
+                    $('#incopYear').val("");
+                    $('.BusinessLine').val("-1");
+                    $('.AreaOffice').val("-1");
+                    //console.log(data);
+                    location.reload();
                 },
             });
         });
@@ -278,7 +528,11 @@
             var studentName = surname + ' ' + other;
             var StudentId = parseInt(SttId);
             var employerId = parseInt(superId);
-            if (employerId == "") {
+            if (SttId == "") {
+                alert("PLEASE ENTER A STUDENT MATRIC. NO.");
+                return false;
+            }
+            if (superId == "") {
                 alert("PLEASE ENTER A EMPLOYER/COMPANY TO ATTACH " + studentName.toUpperCase() + "");
                 return false;
             }
@@ -325,7 +579,11 @@
             var studentName = surname + ' ' + other;
             var StudentId = parseInt(SttId);
             var EmployerSuperSetupId = parseInt(superId2);
-            if (EmployerSuperSetupId == "") {
+            if (SttId == "") {
+                alert("PLEASE ENTER A STUDENT MATRIC. NO.");
+                return false;
+            }
+            if (superId2 == "") {
                 alert("PLEASE ENTER A NEW EMPLOYER/COMPANY TO ATTACH " + studentName.toUpperCase() + "");
                 return false;
             }
@@ -365,7 +623,12 @@
     function MyFunctionMatricNumber() {
 
         var studentId = $('#studentId').val();
-
+        if (studentId == "") {
+            alert("THE SELECTED STUDENT HAVE NOT ASSIGNED INSTITUTION SUPERVISOR, THEREFORE CANNOT BE ATTACHED TO EMPLOYER");
+            $('#matricNumber').val("");
+            $('#studentId').val("");
+            return false;
+        }
             var d = {
                 "Id": studentId
             };
@@ -499,6 +762,87 @@
             });
         }
         
+
+    }
+    function MyFunctionNationality() {
+        var nationId = document.getElementById('nationChange').value;
+        var d = {
+            "Id": nationId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/States/' + nationId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myState').empty();
+                    $('#myState').append('<option value=-1>--Select State--</option>');
+                }
+                $('#myState').append(option);
+
+            },
+        });
+
+    }
+    function MyFunctionState() {
+        var stateId = document.getElementById('myState').value;
+        // alert(stateId);
+        var d = {
+            "Id": stateId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/LGAs/' + stateId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                // console.log(data);
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myLGA').empty();
+                    $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                }
+
+                //$('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                $('#myLGA').append(option);
+
+            },
+        });
 
     }
 </script>
