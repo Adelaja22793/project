@@ -43,7 +43,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
         public async Task<IActionResult> OnGetAsync(int id)
         {
             id = 1;
-            int InstId = 1;
+           // int InstId = 1;
             if (id < 0)
             {
                 return RedirectToPage("./Scaff_Form");

@@ -37,7 +37,7 @@
 
         if (currole != null)
         {
-            getuserrole = rolem.RoleId.ToString();
+            getuserrole = rolem.Id.ToString();
         }
         //  var roleuser = db.RoleTb.Join(db.RoleTb, m => m.Id, sub => sub. )
         menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
@@ -50,7 +50,6 @@
              SubMenuid = m.Macc.sub.Id,
              Pageurl = m.Macc.sub.PageUrl,
              SubMenuName = m.Macc.sub.Name
-
 
          }).ToList();
 
@@ -372,9 +371,9 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Account/CreateEmpSuper" class="nav-link">
+                                    <a asp-page="/Setup/AssignMenu" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Create School Cordinator</p>
+                                        <p>Assign Menu to Role/Group</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

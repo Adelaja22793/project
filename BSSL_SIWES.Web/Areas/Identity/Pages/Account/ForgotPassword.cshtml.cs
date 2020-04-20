@@ -32,16 +32,20 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
         }
-
+        public string successm { get; set; }
+        public string errorm { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+              //  if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+              if ( user == null)
                 {
+                    errorm = "Your email has not been registered please check";
+                    return Page();
                     // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
+                   // return RedirectToPage("./ForgotPasswordConfirmation");//
                 }
 
                 // For more information on how to enable account confirmation and password reset please 
@@ -58,7 +62,9 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                successm = "Please check your email for the password reset link  ";
+                return Page();
+                   //return RedirectToPage("./ForgotPasswordConfirmation");
             }
 
             return Page();

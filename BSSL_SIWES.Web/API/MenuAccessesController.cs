@@ -82,12 +82,28 @@ namespace BSSL_SIWES.Web.API
         {
             try
             {
+                // var role =  _context.MenuAccess.Where(m => m.RoleId.ToString() == menuAccess.RoleId.ToString());
+                // var widgets = context.Widgets
+                //.Where(w => w.WidgetId == widgetId);
+
+                // foreach (Widget widget in widgets)
+                // {
+                //     context.Widgets.DeleteObject(widget);
+                // }
+                //var roles =  _context.MenuAccess.Where(m => m.RoleId.ToString() == menuAccess.RoleId.ToString());
+                //var roles = _context.MenuAccess.FindAsync(menuAccess.RoleId);
+                //if (roles != null)
+                //{
+                //    await _context.MenuAccess.Remove(roles);
+
+                //}
                 var newMonthlyAssessment = new MenuAccess
                 {
                     RoleId = menuAccess.RoleId,
                     SubMenuId = menuAccess.SubMenuId,
                 };
                 _context.MenuAccess.Add(newMonthlyAssessment);
+               
                 await _context.SaveChangesAsync();
 
 

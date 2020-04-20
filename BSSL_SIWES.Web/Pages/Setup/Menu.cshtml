@@ -56,7 +56,7 @@
                                     <tr>
                                         <td style="width:6%;">
                                             <input type="hidden" class="readid @i" value="@items.Id">
-                                            <a id="myEdit"  AddreEdit="@i" asp-route-id="@items.Id">Select</a>
+                                            <a id="myEdit"  AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
                                         </td>
                                         <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
                                         <td class="titleclass @i" style="width:30%; text-align:left">@items.Name</td>
@@ -130,14 +130,14 @@
                 success: function (data) {
                
                     alert("Succesfully");   
-                    var myid = data['id'];
+                    var myidd = data['id'];
                     var nam = data['name'];
                    
                     
                     var rowNumber = $('#tabId tr').length;
                     var html = `<tr>
                         <td style="width:6%;" class="action">
-                        <a id=${myid}">Select</a>  
+                        <a href="{myidd}" target="_self">Edit</a>
                         </td>
                         <td class="se_no" style="width:3%; text-align:left">${rowNumber}</td>
                         <td style="width:30%; text-align:left">${menuname}</td>
@@ -146,7 +146,7 @@
 
                     $('#tabId').append(html);
                     formClear();
-
+                    location.reload();
                 },
             });
         });
