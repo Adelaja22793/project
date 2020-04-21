@@ -61,16 +61,16 @@ namespace BSSL_SIWES.Web
             });
 
             services.AddControllers();
-            //services.AddAuthentication().AddCookie("Vendors", o =>
-            //{// Cookie settings
-            //    o.Cookie.HttpOnly = true;
-            //    o.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+            services.AddAuthentication().AddCookie("Users", o =>
+            {// Cookie settings
+                o.Cookie.HttpOnly = true;
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(2);
 
-            //    o.LoginPath = "/VendorIdentity/Account/Login";
-            //    o.SlidingExpiration = true;
-            //    o.Cookie.IsEssential = true;
-            //    o.ForwardAuthenticate = "Identity.Application";
-            //});
+                o.LoginPath = "/Identity/Account/Login";
+                o.SlidingExpiration = true;
+                o.Cookie.IsEssential = true;
+                o.ForwardAuthenticate = "Identity.Application";
+            });
             services.AddAuthorization();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<SeedRole>();
