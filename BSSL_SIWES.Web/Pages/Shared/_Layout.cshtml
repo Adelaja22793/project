@@ -29,6 +29,7 @@
     //if (SignInManager.IsSignedIn(User))
     //{
     var getuserrole = "";   var menulist3 = (dynamic)null;    var menulist = (dynamic)null;
+     
     if (SignInManager.IsSignedIn(User))
     {
         var CurUser = await UserManager.GetUserAsync(User);
@@ -49,7 +50,8 @@
              Menuid = m.Macc.m.Id,
              SubMenuid = m.Macc.sub.Id,
              Pageurl = m.Macc.sub.PageUrl,
-             SubMenuName = m.Macc.sub.Name
+             SubMenuName = m.Macc.sub.Name,
+             FormId = m.Macc.sub.FormId
 
          }).ToList();
 
@@ -144,11 +146,11 @@
                                 <span class="right badge badge-danger">New</span>
                             </p>
                         </a>*@
-                <li class="nav-item">
+                @*<li class="nav-item">
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
                         <button type="submit" class="nav-link btn btn-link">Log in</button>
                     </form>
-                </li>
+                </li>*@
                 @*<li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li>*@
@@ -169,37 +171,51 @@
 
             <!-- Right navbar links -->
             @{
+                //  var menulist3 = (dynamic)null;    var menulist = (dynamic)null;
+                //  var menulist3 = (dynamic)null;    var menulist = (dynamic)null;
+                var attachedStudent = (dynamic)null;
                 var loginEmployer = UserManager.GetUserName(User);
-             
+
                 var newCourse = db.NewCourseRequests.Where(s =>s.ReqstType == "course" && s.Approved == false).ToList();
                 var newEmployer = db.NewCourseRequests.Where(s => s.ReqstType == "employer" && s.Approved == false).ToList();
                 var employerName = await db.EmployerSuperSetups.Where(c => c.Code == loginEmployer).FirstOrDefaultAsync();
-
-                var attachedStudent = db.StudentSetUps.Where(s => s.Attached == false && s.EmployerSuperSetupId == employerName.Id).ToList();
+              //  if (db.StudentSetUps != null)
+              //  {
+               //     attachedStudent = db.StudentSetUps.Where(s => s.Attached == false && s.EmployerSuperSetupId == employerName.Id).ToList();
+              //  }
                 var Counting = 0; var CountingEmployer = 0; var CountingEmployerStudent = 0;
-                if (newCourse.Count > 0)
+                if (newCourse != null)
                 {
-                    Counting = newCourse.Count();
+                    if (newCourse.Count > 0)
+                    {
+                        Counting = newCourse.Count();
+                    }
+                    else
+                    {
+                        Counting = 0;
+                    }
                 }
-                else
+                if (newEmployer != null)
                 {
-                    Counting = 0;
+                    if (newEmployer.Count > 0)
+                    {
+                        CountingEmployer = newEmployer.Count();
+                    }
+                    else
+                    {
+                        CountingEmployer = 0;
+                    }
                 }
-                if (newEmployer.Count > 0)
+                if (attachedStudent != null)
                 {
-                    CountingEmployer = newEmployer.Count();
-                }
-                else
-                {
-                    CountingEmployer = 0;
-                }
-                if (attachedStudent.Count > 0)
-                {
-                    CountingEmployerStudent = attachedStudent.Count();
-                }
-                else
-                {
-                    CountingEmployerStudent = 0;
+                    if (attachedStudent.Count > 0)
+                    {
+                        CountingEmployerStudent = attachedStudent.Count();
+                    }
+                    else
+                    {
+                        CountingEmployerStudent = 0;
+                    }
                 }
 
             }
@@ -267,7 +283,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview menu-open">
+                        @*<li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -345,7 +361,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>*@
                        @if (menulist != null)
                        {
                        @foreach (var row in menulist)
@@ -370,7 +386,20 @@
                                             <li class="nav-item">
                                                 <a asp-page=@rsub.Pageurl.ToString().Trim() class="nav-link">
                                                     <i class="far fa-circle nav-icon"></i>
-                                                    <p>@rsub.SubMenuName.ToString()</p>
+                                                    <p>@rsub.SubMenuName.ToString()
+                                                    @if (rsub.FormId.ToString().Trim() == "CS001")
+                                                    {
+                                                        <span class="badge-pill badge-danger"> @Counting</span>
+                                                    }
+                                                    @if (rsub.FormId.ToString().Trim() == "EM001")
+                                                    {
+                                                        <span class="badge-pill badge-danger"> @CountingEmployer</span>
+                                                    }
+                                                    @if (rsub.FormId.ToString().Trim() == "CF001")
+                                                    {
+                                                    <span class="badge-pill badge-danger"> @CountingEmployerStudent</span>
+                                                    }
+                                                    </p>
                                                 </a>
                                             </li>
 
@@ -381,7 +410,7 @@
                             </li>
                        }
                        }
-                        <li class="nav-item has-treeview">
+                        @*<li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
@@ -518,7 +547,7 @@
                                 </li>
                             </ul>
 
-                        </li>
+                        </li>*@
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

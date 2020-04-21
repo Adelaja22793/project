@@ -9,11 +9,11 @@
 <h1>@ViewData["Title"]</h1>
 @*<div class="content-wrapper" style="margin:0 auto; background-color:#fff; display:table">
     <div class="row">*@
-        <div class="col-md-8" style="margin:0 auto; display:table">
+        <div class="col-md-8" style="margin:0 auto; background-color:#fff; display:table">
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create Employer account</h3>
+                    <h3 class="card-title">Create ITF Staff Account</h3>
                 </div>
                 <div>
                     @if (!string.IsNullOrWhiteSpace(Model.successm))
@@ -195,20 +195,19 @@
                         $("#txtstafffid").val("");
                         $("#txtname").val("");
                     }
-                    else if (data == "exist") {
+                    else if (data[0] == "exist") {
 
-                        alert("Account already exist ");
-                        $("#txtemail").val("");
-                        $("#txtstafffid").val("");
-                        $("#txtname").val("");
+                         $("#txtname").val(data[1]);
+                           $("#txtemail").val(data[2]);
                     }
                     else if (data == "syserr") {
 
                         alert("System error: Please try again or contact adminitrator  ")
                     }
                     else {
-                        $("#txtname").val(data[0]);
-                           $("#txtemail").val(data[1]);
+
+                          alert("System error: Please try again or contact adminitrator  ")
+                     
                     }
                   
                 },

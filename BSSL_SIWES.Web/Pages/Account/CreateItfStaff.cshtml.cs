@@ -111,7 +111,8 @@ namespace BSSL_SIWES.Web.Pages.Account
         //}
         public async Task OnGetAsync()
         {
-            ViewData["RoleGrp"] =  new SelectList(_context.RoleTb, "RoleId", "Name");
+            ViewData["RoleGrp"] =  new SelectList(_context.RoleTb.Where(x => x.Name != ConstantRole.Admin
+            && x.Name != ConstantRole.Student && x.Name != ConstantRole.Employer ), "RoleId", "Name");
             //id = 2;
             Listofstaff = await _context.ItfStaff.Where(x=>x.Suspended == false).ToListAsync();
         }
@@ -157,9 +158,13 @@ namespace BSSL_SIWES.Web.Pages.Account
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     successm = "ACCOUNT SUCCESSFULY CREATED";
-                    // Response.Redirect(returnUrl);
-                    //  return LocalRedirect(returnUrl);
+                   
+                    ModelState.Clear();
                     return Page();
+                 //   return RedirectToPage("/Account/CreateItfStaff");
+                // Response.Redirect(returnUrl);
+               //  return LocalRedirect(returnUrl);
+              //  return View();
                   //  return RedirectToPage("Login");
                  // return Redirect("/Login?Message=" + successm);
              
