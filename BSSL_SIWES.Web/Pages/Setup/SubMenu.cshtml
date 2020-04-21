@@ -52,10 +52,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" id="BtnSubMenu" class="btn btn-primary button button4">SUBMIT</button>
-                                    <button type="submit" id="BtnEditSubMenu" class="btn btn-primary button button4" style="display:none">UPDATE</button>
+                                <div class="form-group" style="text-align:center">
+                                    <button type="submit" id="BtnSubMenu" style="width:300px" class="btn btn-primary button button4">SUBMIT</button>
+
+                                    <button type="submit" id="BtnEditSubMenu" style="width:300px; display:none" class="btn btn-primary button button4">UPDATE</button>
                                 </div>
+                                
                             </div>
                         </form>
                         <div style="display:table; margin:0 auto; width:100%; font-size:medium">
@@ -79,7 +81,7 @@
                                         <td style="width:4%;">
                                             @*<input type="hidden" class="menuID" value="@items.MenuId" />*@
                                             <input type="hidden" class="readid @i" value="@items.Id">
-                                            <a id="myEdit" onclick="BtnEdit" AddreEdit="@i" asp-route-id="@items.Id">Select</a>
+                                            <a id="myEdit"  AddreEdit="@i" asp-route-id="@items.Id">Edit</a>
                                         </td>
                                         <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
                                         <td class="menuclass @i" style="width:20%; text-align:left">
@@ -204,7 +206,8 @@
                     var rowNumber = $('#tabId tr').length;
                     var html = `<tr>
                         <td style="width:4%;" class="action">
-                        <a href id="${myid}">Select</a>
+                        <input type="hidden" class="readid " value=${myid}>
+                        <a href="/Setup/SubMenu/Edit?id=${myid}">Edit</a>
                         </td>
                         <td class="se_no" style="width:0.25%; text-align:left">${rowNumber}</td>                      
                         <td style="width:20%; text-align:left">${menuName}</td>
@@ -215,6 +218,7 @@
                     $('#tabId').append(html);   
                    
                     formClear();
+                    location.reload();
 
                 },
             });

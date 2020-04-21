@@ -11,7 +11,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">ROLES ACCESS DEFINITION</h3>
+                <h3 class="card-title">Menu Access</h3>
             </div>
             <form>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -19,30 +19,25 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-10">
-                            <div class="form-group">
-                                <input asp-for="MenuAccess.Id" id="myidd" type="hidden" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                            <label asp-for="RolesTb.RoleId" class="control-label"></label>
-                            <select asp-for="RolesTb.RoleId" id="roleid" name="roleid" class="form-control" asp-items="ViewBag.RoleId">
-                                <option value="0">--Select Menu--</option>
-                            </select>
-                        </div>
                             @*<div class="form-group">
+                                <input asp-for="MenuAccess.Id" id="myidd" type="hidden" class="form-control" />
+                                <label asp-for="MenuAccess.RoleId" class="control-label"></label>
 
+                                <input type="hidden" id="orgNameId" />
+                                <input type="text" id="orgName" asp-for="MenuAccess.RoleId" onchange="MyFunctionOrganName()" class="form-control">
+                                <span asp-validation-for="MenuAccess.RoleId" class="text-danger"></span>
+
+                            </div>*@
+                            <div class="form-group">
+                             
                                 <label asp-for="RolesTb.RoleId" class="control-label"> Roles/Groups</label>
-                                <select asp-for="RolesTb.RoleId" id="orgName" asp-items="Model.options" class="form-control">
+                                <select asp-for="RolesTb.RoleId" id="orgName"   asp-items="Model.options"  class="form-control" >
                                     <option selected="selected" value="0">-- Select Role/Group--</option>
                                 </select>
                                 <span asp-validation-for="RolesTb.RoleId" class="text-danger"></span>
-                            </div>*@
+                            </div>
 
                         </div>
-                    </div>
-                    <div class="form-group" style="margin: 0 auto; text-align: center">
-                        <button type="submit" id="btnSave" style="width:300px" class="btn btn-primary button button4">SUBMIT</button>
-
-                        <button type="submit" id="BtnUpdate" style="width:300px; display:none" class="btn btn-primary button button4">UPDATE</button>
                     </div>
                 </div>
             </form>
@@ -56,8 +51,8 @@
                             <th style="width:6%; text-align:center; display:none"></th>
                             <th style="width:0.25%; text-align:center">S/N</th>
 
-                            <th style="width:25%; text-align:center">SubMenu Name</th>
-                            <th style="width:25%; text-align:center">MainMenu Name</th>
+                            <th style="width:25%; text-align:center">Sub Menu Name</th>
+                            <th style="width:25%; text-align:center">Main Menu Name</th>
                             <th style="width:6%; text-align:center">Attach</th>
 
                         </tr>
@@ -67,9 +62,9 @@
                         @for (int i = 0; i < Model.SubMenus.Count; i++)
                         {
                             var items = Model.SubMenus[i];
-                            <tr class="row-select">
-                                <td class="subId" style="display:none">@items.Id</td>
-                                <td class="menu" style="display:none">@items.MenuId</td>
+                            <tr>
+                                <td class="number" id="submenuid" style="display:none" @items.Id> </td>
+                                <td class="number" style="display:none">@items.MenuId</td>
                                 <td class="se_no" style="width:0.25%; text-align:left">@(i + 1)</td>
 
                                 <td class="subname @i" id="subname" style="width:25%; text-align:left">
@@ -78,7 +73,6 @@
                                 </td>
                                 <td class="menname @i" id="menname" style="width:25%; text-align:left">@items.Menu.Name</td>
                                 <td style="width:6%; text-align:left">
-
                                     <input type="checkbox" class="checking" />
                                 </td>
 
@@ -89,8 +83,9 @@
                     </tbody>
                 </table>
             </div>
-            
-          
+            <div class="form-group">
+                <input type="submit" id="btnSave" value="Create" class="btn btn-primary" />
+            </div>
 
         </div>
     </div>
@@ -100,12 +95,27 @@
         crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+    $(document).ready(function () {
         var orgName = [];
 
-    function AddOrgName(lbl, val) {
-        orgName.push({ label: lbl, value: val});
-    }
-    function MyFunctionOrganName() {
+        function AddOrgName(lbl, val) {
+            orgName.push({ label: lbl, value: val });
+        }
+
+        @*@foreach (var item in Model.RoleTb)
+        {
+            @:AddOrgName('@item.Name', '@item.Id');
+        }
+            $("#orgName").autocomplete({
+                source: orgName,
+                select: function (event, ui) {
+                    $('#orgNameId').val(ui.item.value);
+                    $('#orgName').val(ui.item.label);
+                    return false;
+                }
+            });
+       });*@
+        function MyFunctionOrganName() {
             var orgNameId = document.getElementById('orgNameId').value;
             var d = {
                 "Id": orgNameId
@@ -128,70 +138,60 @@
                 },
                 success: function (data) {
                     //console.log(data);
-                   
+
                 },
             });
 
-        
-    }
-    function formClear() {
-            $("#roleid")[0].selectedIndex = 0;    
-            $('input[type="checkbox"]').prop('checked', false); // Uncheck
 
-        }
-    $(document).ready(function () {
-
-
-        @foreach (var item in Model.RoleTb)
-        {
-            @:AddOrgName('@item.Name', '@item.Id');
-        }
-        $("#orgName").autocomplete({
-            source: orgName,
-            select: function (event, ui) {
-                $('#orgNameId').val(ui.item.value);
-                $('#orgName').val(ui.item.label);
-                return false;
-            }
-        });
-
-
-
-
-
+        };
         $("#btnSave").on('click', function (e) {
+
             e.preventDefault();
-            // alert("fjfgjf");
-            //var orgName = $('#orgNameId').val();
-            var roleid = document.getElementById('roleid').value;
-            var menuName = $('#roleid option:selected').html();
+
+            var orgName = $('#orgName').val();
+
+
             var grid = document.getElementById("tabId");
             //alert(grid);
             //get the checkboxes checked
             var checkBoxes = grid.getElementsByClassName('checking');
             //alert(checkBoxes);
 
-            var SubMenuId = "";
+            var SubMenuId;
             var MenuId = "";
             var submenunewId = "";
-
-            $('.row-select input:checked').each(function () {
-                //alert("scsc");
-                var SubMenuId = "";
-                SubMenuId = $(this).closest('tr').find('.subId').html();
-              
-
-                submenunewId = parseInt(SubMenuId);
-                //alert(SubMenuId);
-
+          for (var i = 1; i < $("#tabId tr").length; i++) {
+        tri = $("#tabId tr")[i];
+              if ($("#tabId").find(tri).find("td").find('input[type="checkbox"]').prop("checked") == true) {
+                  alert($('#tabId').find(tri).find('td').find('input[name="submenuid"]').val());
+               SubMenuId = $('#tabId').find(tri).find('td').find('#submenuid').val();
+             }
+         }
+          //  alert(SubMenuId); return false;
+            //Loop through the CheckBoxes.
+            var dele ;
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
+                    var row = checkBoxes[i].parentNode.parentNode;
+                   // dele = row.cells[0].innerHTML;
+                    //alert(dele);
+                    SubMenuId = row.cells[0].innerHTML;
+                    //MenuId = row.cells[1].innerHTML;
+                };
+                alert(SubMenuId);
+                return false;
+                //submenunewId = parseInt(SubMenuId);
+                //alert(subMenuId);
+                //alert(MenuId);
+                //alert(orgName);
                 var d = {
-                    "RoleId": roleid,
+                    "RoleId": orgName,
                     // "SubMenuId": submenunewId,
-                    "SubMenuId": submenunewId,
+                    "SubMenuId": Number(SubMenuId),
                     //"MenuId": MenuId,
 
                 };
-               
+
                 var baseUrl = window.location.origin;
                 //Send the JSON array to Controller using AJAX.
                 $.ajax({
@@ -209,21 +209,19 @@
                     failure: function (data) {
                         alert(data.responseText);
                     },
-                    success: function (data) {
-
-                    },
+                    success: function (d) {
+                        //alert(data + " record(s) inserted.");
+                    }
                 });
-            });
-                
+            };
+            //successfully save
             alert("record(s) inserted.");
-            formClear();
-           //successfully save
-            
-            });
 
-    });
+        });
+    })
   
 </script>
+
 
 
 @section Scripts {

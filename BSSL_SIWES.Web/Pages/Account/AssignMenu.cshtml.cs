@@ -22,21 +22,22 @@ namespace BSSL_SIWES.Web
         }
         
         public List<RoleTb> RoleTb { get; set; }
-        public RoleTb RolesTb { get; set; }
         public List<SelectListItem> options { get; set; }
+
+
         public async Task OnGetAsync()
         {
             RoleTb = await _context.RoleTb.ToListAsync();
-            MenuAccesses = await _context.MenuAccess.Include(s => s.RoleTb).ToListAsync();
-            ViewData["RoleId"] = new SelectList(_context.RoleTb.Where(m => m.RoleId.ToUpper() != "STD01"), "Id", "Name");
+            //MenuAccesses = await _context.MenuAccess.Include(s => s.RoleTb).ToListAsync();
+            //ViewData["RoleId"] = new SelectList(_context.RoleTb, "Id", "Name");
             SubMenus = await _context.SubMenu.Include(b => b.Menu).Where(n => n.MenuId == n.Menu.Id).ToListAsync();
-           
+       
+
             options = await _context.RoleTb.Select(m => new SelectListItem
             {
                 Value = m.RoleId,
                 Text = m.Name
             }).ToListAsync();
-
 
 
 
@@ -47,7 +48,7 @@ namespace BSSL_SIWES.Web
    
         [BindProperty]
         public MenuAccess MenuAccess { get; set; }
-
+        public RoleTb RolesTb { get; set; }
         public IList<SubMenu> SubMenus { get; set; }
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
