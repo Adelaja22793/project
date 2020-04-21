@@ -12,6 +12,8 @@ using SiwesData;
 using BSSL_SIWES.Web.ViewModels;
 using SiwesData.Students;
 using SiwesData.Employer;
+using Microsoft.Extensions.Logging;
+using BSSL_SIWES.Web.Areas.Identity.Pages.Account;
 
 namespace BSSL_SIWES.Web.Pages.Institution
 {
@@ -19,32 +21,43 @@ namespace BSSL_SIWES.Web.Pages.Institution
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<AppUserTab> _userManager;
-        public AttachStudentEmployerModel(SiwesData.ApplicationDbContext context,
+        private readonly SignInManager<AppUserTab> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
+
+        public AttachStudentEmployerModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
+            ILogger<LoginModel> logger,
             UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
         public IList<InstitutionOfficer> InstitutionOfficers { get; set; }
         public IList<EmployerSuperSetup> EmployerSuperSetUps { get; set; }
         public SiwesData.Setup.Institution Institution { get; set; }
         public string Message { get; set; }
         public IList<StudentSetUp> ListOfStudent { get; set; }
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int? InstitutionId)
         {
-            id = 10;
-            if (id < 0)
+            var loginUser = _userManager.GetUserId(User);
+            //var userEmail = await _userManager.GetUserNameAsync(loginUser);
+            var userEmail = _userManager.GetUserName(User);
+
+            InstitutionId = await _context.Institution.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
+
+            if (InstitutionId == null)
             {
-                return RedirectToPage("./CreateStudent");
+                return NotFound();
             }
-            Institution = await _context.Institution.Where(x => x.Id == id).SingleOrDefaultAsync();
+            //Institution = await _context.Institution.Where(x => x.Id == id).SingleOrDefaultAsync();
 
             ListOfStudent = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.Institution)
-                     .Where(x => x.InstitutionId == id && x.Courses.Id == x.CoursesId && x.InstitutionOfficerId != null
+                     .Where(x => x.InstitutionId == InstitutionId && x.Courses.Id == x.CoursesId && x.InstitutionOfficerId != null
                      && x.InstitutionId == x.Institution.Id && x.Attached == false).ToListAsync();
 
             InstitutionOfficers = await _context.InstitutionOfficers.Include(x => x.Institution)
-                .Where(x => x.InstitutionId == x.Institution.Id && x.InstitutionId == id
+                .Where(x => x.InstitutionId == x.Institution.Id && x.InstitutionId == InstitutionId
                  && x.Deactivate == false).ToListAsync();
 
             EmployerSuperSetUps = await _context.EmployerSuperSetups.ToListAsync();

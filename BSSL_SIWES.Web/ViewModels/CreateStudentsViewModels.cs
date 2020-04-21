@@ -25,8 +25,10 @@ namespace BSSL_SIWES.Web.ViewModels
         public int? LGAId { get; set; }
         //public int StateId { get; set; }
         [Required(ErrorMessage = "Please Student Phone no.")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone Number")]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Please Student Email")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Not a valid Email Address")]
         public string Email { get; set; }
         public string StudentType { get; set; }
         public string SiwesYear { get; set; }

@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using ExcelDataReader;
 using System.Data;
+using Microsoft.Extensions.Logging;
+using BSSL_SIWES.Web.Areas.Identity.Pages.Account;
 
 namespace BSSL_SIWES.Web
 {
@@ -23,12 +25,17 @@ namespace BSSL_SIWES.Web
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<AppUserTab> _userManager;
         private readonly IHostingEnvironment _environment;
+        private readonly SignInManager<AppUserTab> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
         public CreateStudentModel(SiwesData.ApplicationDbContext context,
-            UserManager<AppUserTab> userManager, IHostingEnvironment environment)
+            UserManager<AppUserTab> userManager, IHostingEnvironment environment, ILogger<LoginModel> logger,
+            SignInManager<AppUserTab> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _environment = environment;
+            _signInManager = signInManager;
+            _logger = logger;
         }
         [BindProperty]
         public CreateStudentsViewModels CreateStudentsViewModels { get; set; }
@@ -40,7 +47,7 @@ namespace BSSL_SIWES.Web
         public IEnumerable<string> ImageFiles { get; set; }
 
         
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int? InstitutionId)
         {
                     string imagePath =
                 $"{_environment.WebRootPath}\\downloads";
@@ -48,20 +55,23 @@ namespace BSSL_SIWES.Web
                     this.ImageFiles = Directory.GetFiles
             (imagePath).Select(fileName => Path.GetFileName(fileName));
 
-            id = 11;
-            if (id < 0)
+            //id = 11;
+            var loginUser = _userManager.GetUserId(User);
+            //var userEmail = await _userManager.GetUserNameAsync(loginUser);
+            var userEmail = _userManager.GetUserName(User);
+
+            InstitutionId = await _context.Institution.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
+
+            if (InstitutionId == null)
             {
-                return RedirectToPage("./CreateStudent");
+                return NotFound();
             }
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
             ListOfCourses = await _context.Courses.ToListAsync();
-            Institution = await _context.Institution.Where(x => x.Id == id).SingleOrDefaultAsync();
-            //id = 2;
-            //ListOfStudent = await _context.StudentSetUps.Include(x => x.Courses).Include(x => x.InstitutionOfficer).Include(x => x.Institution)
-            //    .Where(x => x.InstitutionOfficer.Institution.Id == id && x.CoursesId == x.Courses.Id && x.Suspended == false).ToListAsync();
 
             ListOfStudent = await _context.StudentSetUps.Include(x => x.Courses).Include(x =>x.Institution)
-                     .Where(x => x.InstitutionId == id && x.Courses.Id == x.CoursesId && x.InstitutionId == x.Institution.Id).ToListAsync();
+                     .Where(x => x.InstitutionId == InstitutionId && x.Courses.Id == x.CoursesId 
+                     && x.InstitutionId == x.Institution.Id).ToListAsync();
 
 
             return Page();

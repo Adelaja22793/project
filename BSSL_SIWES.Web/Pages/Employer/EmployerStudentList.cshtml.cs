@@ -25,8 +25,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
         public EmployerSupervisor Employers { get; set; }
         public async Task OnGetAsync(int id)
         {
-            //Employers = await _context.EmployerSupervisors.Include(v => v.EmployerSuperSetup)
-            //    .Where(c => c.EmployerSuperSetupId == c.EmployerSuperSetup.Id && c.EmployerSuperSetup.Id == id).SingleOrDefaultAsync();
+           
             EmpoyerStudentList = await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
                 .ThenInclude(x => x.EmployerSuperSetup)
                 .Where(x => x.EmployerSupervisor.EmployerSuperSetupId == id && x.Suspended == false).ToListAsync();
