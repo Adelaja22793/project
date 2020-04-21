@@ -66,7 +66,7 @@ namespace BSSL_SIWES.Web
                 role.RoleId = "SchSuper";
                 await _roleManager.CreateAsync(role);
             }
-            var getadmin = await _userManager.FindByEmailAsync("admin2@bssl.com.ng");
+            var getadmin = await _userManager.FindByEmailAsync("admin@bssl.com.ng");
             if (getadmin == null)
             {
                 var userd = new AppUserTab
