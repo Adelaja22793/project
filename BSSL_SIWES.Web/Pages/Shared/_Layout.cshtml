@@ -29,44 +29,47 @@
     //if (SignInManager.IsSignedIn(User))
     //{
     var getuserrole = "";   var menulist3 = (dynamic)null;    var menulist = (dynamic)null;
-     var CurUser = (dynamic)null;    var currole = (dynamic)null;
+    var CurUser = (dynamic)null;    var currole = (dynamic)null;
     if (SignInManager.IsSignedIn(User))
     {
-         CurUser = await UserManager.GetUserAsync(User);
-         currole = await UserManager.GetRolesAsync(CurUser);
-        var rolem = await roleManager.FindByNameAsync(currole[0]);
-
+        CurUser = await UserManager.GetUserAsync(User);
+        currole = await UserManager.GetRolesAsync(CurUser);
         if (currole != null)
         {
-            getuserrole = rolem.Id.ToString();
+            var rolem = await roleManager.FindByNameAsync(currole[0]);
+
+            if (currole != null)
+            {
+                getuserrole = rolem.Id.ToString();
+            }
+            //  var roleuser = db.RoleTb.Join(db.RoleTb, m => m.Id, sub => sub. )
+            menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+             .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+             .Where(k => k.macc2.RoleId == getuserrole)
+             .Select(m => new
+             {
+                 MenuName = m.Macc.m.Name,
+                 Menuid = m.Macc.m.Id,
+                 SubMenuid = m.Macc.sub.Id,
+                 Pageurl = m.Macc.sub.PageUrl,
+                 SubMenuName = m.Macc.sub.Name,
+                 FormId = m.Macc.sub.FormId
+
+             }).ToList();
+
+
+            var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
+             .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
+             .Where(k => k.macc2.RoleId == getuserrole)
+             //  .GroupBy( k = k )
+             .Select(m => new
+             {
+                 MenuName = m.Macc.m.Name,
+                 Menuid = m.Macc.m.Id
+             }).ToList();
+
+            menulist = menulist4.GroupBy(c => c.Menuid, (key, c) => c.FirstOrDefault());
         }
-        //  var roleuser = db.RoleTb.Join(db.RoleTb, m => m.Id, sub => sub. )
-        menulist3 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
-         .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
-         .Where(k => k.macc2.RoleId == getuserrole)
-         .Select(m => new
-         {
-             MenuName = m.Macc.m.Name,
-             Menuid = m.Macc.m.Id,
-             SubMenuid = m.Macc.sub.Id,
-             Pageurl = m.Macc.sub.PageUrl,
-             SubMenuName = m.Macc.sub.Name,
-             FormId = m.Macc.sub.FormId
-
-         }).ToList();
-
-
-        var menulist4 = db.Menu.Join(db.SubMenu, m => m.Id, sub => sub.MenuId, (m, sub) => new { m, sub })
-         .Join(db.MenuAccess, Macc => Macc.sub.Id, macc2 => macc2.SubMenuId, (Macc, macc2) => new { Macc, macc2 })
-         .Where(k => k.macc2.RoleId == getuserrole)
-         //  .GroupBy( k = k )
-         .Select(m => new
-         {
-             MenuName = m.Macc.m.Name,
-             Menuid = m.Macc.m.Id
-         }).ToList();
-
-        menulist = menulist4.GroupBy(c => c.Menuid, (key, c) => c.FirstOrDefault());
     }
     //  }
 
@@ -362,8 +365,11 @@
                 </li>
             </ul>
         </li>*@
-                        @if (currole[0] == ConstantRole.Admin)
+                        
+                        @if (currole != null )
                         {
+                            if (currole[0] == ConstantRole.Admin)
+                            {
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
@@ -387,6 +393,7 @@
                                 </li>
                                 </ul>
                             </li>
+                            }
                         }
                                 @if (menulist != null)
                                 {
