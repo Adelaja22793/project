@@ -11,37 +11,39 @@ using SiwesData.Students;
 using SiwesData.Employer;
 
 using SiwesData;
+using BSSL_SIWES.Web.Areas.Identity.Pages.Account;
+using Microsoft.Extensions.Logging;
+
 namespace BSSL_SIWES.Web.Pages.Employer
 {
     public class SupervisorCerifModel : PageModel
     {
         private readonly SiwesData.ApplicationDbContext _context;
         private readonly UserManager<AppUserTab> _userManager;
+        private readonly SignInManager<AppUserTab> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
 
-        public SupervisorCerifModel(SiwesData.ApplicationDbContext context,
+        public SupervisorCerifModel(SiwesData.ApplicationDbContext context, SignInManager<AppUserTab> signInManager,
+            ILogger<LoginModel> logger,
             UserManager<AppUserTab> userManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
         public List<SelectListItem> StudentName { get; set; }
         public IList<Scaf> Scafs { get; set; }
         public EmployerSupervisor EmployerSupervisor { get; set; }
         public List<SelectListItem> SelectMonth { get; set; }
-        public async Task OnGetAsync(int? id)
+        public async Task OnGetAsync(int? EmployerSupervisorId)
         {
-            id = 3;
-            
-            StudentName = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "Mr.", Text = "Ceaser Azpilicueta" },
-                new SelectListItem { Value = "Mrs.", Text = "Christain Pulisic" },
-                new SelectListItem { Value = "Doctor", Text = "Hakim Zyech" },
-                new SelectListItem { Value = "Prof.", Text = "Mason Mount" },
-                new SelectListItem { Value = "Engr.", Text = "Rose Barkley" },
-                new SelectListItem { Value = "Master", Text = "Ngolo Kante" },
-                new SelectListItem { Value = "Miss", Text = "Marcos Alonso" },
-            };
+            var loginUser = _userManager.GetUserId(User);
+            //var userEmail = await _userManager.GetUserNameAsync(loginUser);
+            var userEmail = _userManager.GetUserName(User);
+
+            EmployerSupervisorId = await _context.EmployerSupervisors.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
+
             SelectMonth = new List<SelectListItem>
             {
                 new SelectListItem { Value = "January", Text = "January" },
@@ -58,11 +60,8 @@ namespace BSSL_SIWES.Web.Pages.Employer
                 new SelectListItem { Value = "December", Text = "December" },
             };
 
-            //ViewData["NationalityId"] = new SelectList( await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
-            //    .Where(x => x.EmployerSupervisorId == id && x.StudentSetUp.Suspended == false), "Id", "Name");
-            EmployerSupervisor = await _context.EmployerSupervisors.Where(x => x.Id == id).SingleOrDefaultAsync();
             Scafs = await _context.Scafs.Include(x => x.StudentSetUp).Include(x => x.EmployerSupervisor)
-                .Where(x => x.EmployerSupervisorId == id && x.StudentSetUp.Suspended == false).ToListAsync();
+                .Where(x => x.EmployerSupervisorId == EmployerSupervisorId && x.StudentSetUp.Suspended == false).ToListAsync();
         }
     }
 }
