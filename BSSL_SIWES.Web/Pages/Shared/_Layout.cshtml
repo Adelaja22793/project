@@ -179,10 +179,7 @@
                 var newCourse = db.NewCourseRequests.Where(s =>s.ReqstType == "course" && s.Approved == false).ToList();
                 var newEmployer = db.NewCourseRequests.Where(s => s.ReqstType == "employer" && s.Approved == false).ToList();
                 var employerName = await db.EmployerSuperSetups.Where(c => c.Code == loginEmployer).FirstOrDefaultAsync();
-              //  if (db.StudentSetUps != null)
-              //  {
-               //     attachedStudent = db.StudentSetUps.Where(s => s.Attached == false && s.EmployerSuperSetupId == employerName.Id).ToList();
-              //  }
+
                 var Counting = 0; var CountingEmployer = 0; var CountingEmployerStudent = 0;
                 if (newCourse != null)
                 {
@@ -195,6 +192,16 @@
                         Counting = 0;
                     }
                 }
+
+                //if (attachedStudent.Count > 0)
+                //{
+                //    CountingEmployerStudent = attachedStudent.Count();
+                //}
+                //else
+                //{
+                //    CountingEmployerStudent = 0;
+                //}
+
                 if (newEmployer != null)
                 {
                     if (newEmployer.Count > 0)
@@ -217,6 +224,7 @@
                         CountingEmployerStudent = 0;
                     }
                 }
+
 
             }
         <ul class="navbar-nav ml-auto">
