@@ -44,7 +44,7 @@ namespace BSSL_SIWES.Web.Pages.Employer
                 return Page();
             }
 
-            EmployerName = await _context.EmployerSuperSetups.Where(c => c.Code == userEmail).FirstOrDefaultAsync();
+            EmployerName = await _context.EmployerSuperSetups.Where(c => c.Code == userEmail || c.Email == userEmail).FirstOrDefaultAsync();
             EmployerSupervisorsList = await _context.EmployerSupervisors.Include(x =>x.EmployerSuperSetup)
                 .Where(x =>x.EmployerSuperSetupId == x.EmployerSuperSetup.Id && x.EmployerSuperSetupId == EmployerName.Id).ToListAsync();
             if (EmployerName == null)

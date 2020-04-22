@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Pages\Account\home.cshtml.cs" />
     <Compile Remove="Migrations\20200407175657_EmployerId.cs" />
     <Compile Remove="Migrations\20200407175657_EmployerId.Designer.cs" />
     <Compile Remove="Migrations\20200407182148_newEmployer.cs" />
@@ -35,10 +36,13 @@
     <Compile Remove="Migrations\20200408204116_updatedbnew.Designer.cs" />
     <Compile Remove="Migrations\20200412040258_upd2353.cs" />
     <Compile Remove="Migrations\20200412040258_upd2353.Designer.cs" />
+    <Compile Remove="Migrations\20200421090600_RecentWorks.cs" />
+    <Compile Remove="Migrations\20200421090600_RecentWorks.Designer.cs" />
     <Compile Remove="Pages\Account\AssignMenu.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Identity\Pages\Account\home.cshtml" />
     <Content Remove="Pages\Account\AssignMenu.cshtml" />
   </ItemGroup>
 

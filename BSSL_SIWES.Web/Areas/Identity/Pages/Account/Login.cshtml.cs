@@ -111,13 +111,20 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                 if (await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToPage("home");
+                    returnUrl = Url.Content("~/Account/home");
+                    //  return RedirectToPage("home");
+                 
+                    return LocalRedirect(returnUrl);
                     // return LocalRedirect(returnUrl);
                 }
                else if (await _userManager.CheckPasswordAsync(user2, Input.Password))
                 {
                     await _signInManager.SignInAsync(user2, isPersistent: false);
-                    return RedirectToPage("home");
+                    returnUrl = Url.Content("~/Account/home");
+                    //  return RedirectToPage("home");
+
+                    return LocalRedirect(returnUrl);
+                    //  return RedirectToPage("home");
                     // return LocalRedirect(returnUrl);
                 }
                 else

@@ -62,12 +62,14 @@ namespace BSSL_SIWES.Web.API
                 else
                 {
                     //   var user = _context.StudentSetUps.Where(m => m.Email == email.Trim()).ToList();
-
-               
                     if (staffidinfo != null)
                     {
-                        result.Insert(0, staffidinfo.Surname.ToString().Trim() + " " + staffidinfo.OtherNames.ToString().Trim());
-                        result.Insert(1, staffidinfo.Email.ToString());
+                        result.Insert(0, "exist");
+
+                        result.Insert(1, staffidinfo.Surname.ToString().Trim() + " " + staffidinfo.OtherNames.ToString().Trim());
+                        if(staffidinfo.Email != null)
+                        result.Insert(2, staffidinfo.Email.ToString());
+                        else result.Insert(2, "");
 
                     }
                     else
@@ -75,13 +77,10 @@ namespace BSSL_SIWES.Web.API
                         result.Insert(0, "notexist");
                     }
                 }
-
-
-
             }
-            catch
+            catch (Exception ex)
             {
-                result.Insert(0, "syserr");
+                result.Insert(0, ex.Message + ex.StackTrace);
             }
             return result;
 
