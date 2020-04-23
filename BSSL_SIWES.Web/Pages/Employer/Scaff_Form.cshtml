@@ -304,7 +304,7 @@
              var currentRow = $(this).closest("tr");
              var selectedIndex = currentRow.find("td:eq(0)").html(); // get current row 1st TD value
              var courseName = currentRow.find("td:eq(2)").html();
-      
+
              var CourseSelected = $(this).attr('CourseSelected');
              var matricNumber = $('.matricNumber.' + CourseSelected).html();
              var studentName = $('.studentName.' + CourseSelected).html();
@@ -361,7 +361,9 @@
         const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
         var noDays = diffDays + ' ' + "Days";
         $('#duration').val(noDays);
-        $(function () {
+
+     }
+     @*$(function () {
         $("#scafForm").click(function () {
             $.ajax(
             {
@@ -378,8 +380,7 @@
             });
 
         });
-    });
-    }
+    });*@
     function MyFunctionRepName() {
         var orgRpId = $('#orgRepId').val();
         var orgRepId = parseInt(orgRepId);
