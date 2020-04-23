@@ -1,0 +1,203 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Institution.InstOfficersListModel
+@{
+    ViewData["Title"] = "InstOfficersList";
+}
+<div class="col-md-12">
+    <div class="modal fade" tabindex="-1" id="loginModal"
+         data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg" style="margin-left:25%;">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:steelblue">
+                    <h4 class="modal-title" id="monthname" style="margin-left:30%; text-transform:uppercase">Deactivate Institution Officer</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Officer Name</label>
+                                <input type="text" id="officername" class="form-control" readonly="readonly" />
+                                <input id="officernameId" class="form-control" type="hidden">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Officer Institution</label>
+                                <input id="drpinstitiu" class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Reason For Deactivation</label>
+                                <textarea class="textarea student" id="remark" placeholder="Place some text here" style="width: 100%; height: 200px;
+                                    font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                        <button type="submit" id="BtnSuspend" class="btn btn-danger button button4">Deactivate Officer</button>
+                        <button type="button" id="btnHideModal" class="btn btn-info button button4">
+                            Hide
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- general form elements -->
+    <form role="form" method="post">
+        <div class="justify-content-center" style="margin-left:40%; margin-top:0.1%;margin-bottom:1%">
+            <button type="submit" asp-page-handler="CreateNewStudent" class="btn btn-warning">Create/Update Officer Record</button>
+        </div>
+    </form>
+    <div class="card card-primary">
+
+        <div style="display:table; margin:0 auto; width:100%; font-size:medium" id="printer">
+            <table id="officerTab" class="table table-bordered" border="0">
+                <thead style="background-color:steelblue;">
+                    <tr>
+                        <th id="nt1" style="width:10%; text-align:center">Action</th>
+                        <th style="width:0.25%; text-align:center">S/N</th>
+                        <th style="width:20%; text-align:center">Officer Name</th>
+                        <th style="width:20%; text-align:center">Institution Name</th>
+                        <th style="width:10%; text-align:center">Designation</th>
+                        <th style="width:12%; text-align:center">Officer Type</th>
+                        <th style="width:10%; text-align:center">Phone No.</th>
+                        <th style="width:15%; text-align:center">Stud. Attached</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size:x-small">
+                    @for (int i = 0; i < Model.InstitutionOfficer.Count; i++)
+                    {
+                        var items = Model.InstitutionOfficer[i];
+                        var status = items.Deactivate;
+                        <tr>
+                            @{
+                                if (status == false)
+                                {
+                                    <td id="nt" style="width:10%;">
+                                        <input type="hidden" class="officerId @i" value="@items.Id" />
+                                        <a id="myDeactivate" Deactivate="@i" asp-route-id="@items.Id">Deactivate</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td id="nt" style="width:10%; text-align:center; color:red">
+                                        NOT ACTIVE
+                                    </td>
+                                }
+                            }
+                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                            <td class="offName @i" style="width:20%; text-align:left">@items.IntOfficerName</td>
+                            <td class="instName @i" style="width:20%; text-align:left">@items.Institution.Name</td>
+                            <td class="courseName @i" style="width:10%; text-align:left">@items.IntOfficerDesig</td>
+                            <td class="schoolName @i" style="width:12%; text-align:left">@items.OfficerType</td>
+                            <td class="level @i" style="width:10%; text-align:left">@items.PhoneNo</td>
+                            <td class="supervisedBy @i" style="width:15%; text-align:left">@items.NumberOfStudent</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
+            <button type="button" class="btn btn-success" onclick="printDiv()"> Print and Preview Officer List</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#officerTab").on('click', '#myDeactivate', function () {
+            var currentRow = $(this).closest("tr");
+            var rowIndex = currentRow.find("td:eq(0)").html();
+            var studentName = currentRow.find("td:eq(2)").html();
+
+            var editindex = $(this).attr('Deactivate');
+            var officerId = $('.officerId.' + editindex).val();
+            var offName = $('.offName.' + editindex).text();
+            var instName = $('.instName.' + editindex).text();
+            //alert(name);
+
+            $("#loginModal").modal('show');
+            $('#officername').val(offName);
+            $('#officernameId').val(officerId);
+            $('#drpinstitiu').val(instName);
+            return false;
+        });
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+            $('.student').summernote('code', '');
+            //$(".super").val("");
+        });
+        $("#myClose").click(function () {
+            $("#loginModal").modal('hide');
+            $('.student').summernote('code', '');
+        });
+        $('#BtnSuspend').on('click', function () {
+            var officerName = $('#officername').val();
+            var officernameId = $('#officernameId').val();
+            var ReasonDeactivate = $('.student').val();
+
+            var officerId = parseInt(officernameId);
+            if (ReasonDeactivate == "") {
+                alert("PLEASE ENTER REASON FOR DEACTIVATING " + officerName.toUpperCase() + "");
+                return false;
+            }
+            var d = {
+                "Id": officerId,
+                "ReasonDeactivate": ReasonDeactivate
+            };
+            var confirmation = confirm("ARE SURE YOU WANT DEACTIVATE " + officerName.toUpperCase() + "?");
+            if (confirmation === false) {
+                return false;
+            }
+            var baseUrl = window.location.origin;
+            var url = baseUrl + '/Api/InstOfficerDetails/ ' + officerId;
+            //alert(url);
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(officerName.toUpperCase() + " WAS SUCCESSFULLY DEACTIVATED ");
+                    location.reload();
+                },
+            });
+        });
+    });
+    function printDiv() {
+        var printContents = document.getElementById("printer").innerHTML;
+
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+    $(function () {
+        $("#officerTab").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    }
+</script>

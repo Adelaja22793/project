@@ -14,80 +14,85 @@
         <form role="form">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">Institiution Name</label>
-                            <input type="text" class="form-control" id="drpinstitiu" asp-for="InstitionNmae.Name"  readonly="readonly">
-                            <input type="hidden" asp-for="InstitionNmae.Id" id="instId" />
+                            <label>Officer Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Institution Officer Name"
+                                   id="officername" onchange="MyFunctionOfficerName()">
+                            <input type="hidden" id="officernameId" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <input type="text" class="form-control" id="designa" placeholder="Enter Officer Designation">
 
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">Institiution Address</label>
-                           <input type="text" class="form-control" id="institiuaddress" asp-for="InstitionNmae.Address1" readonly="readonly" >
-
+                            <label>No. Of Student Currently Supervising</label>
+                            <input type="text" class="form-control" id="noofstu" placeholder="Enter No. Of Student Supervising">
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="exampleInputFile">Officer Name</label>
-                            <input type="text" class="form-control" id="officername"  onchange="MyFunctionMatricNumber()">
-                            <input type="hidden" id="officernameId" />
+                            <label>Institiution Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Officer Institution Name" id="drpinstitiu">
+                            <input type="hidden" id="instId" />
+
                         </div>
                     </div>
-                    <div class="col-sm-4 studentSelectedActivities">
+                    <div class="col-sm-6 studentSelectedActivities">
                         <div class="form-group">
                             <label>Officer Type</label>
                             <select class="form-control" id="officertype">
-                                <option selected="selected">--Select Officer Type--</option>
+                                <option selected="selected" value="-1">--Select Officer Type--</option>
                                 <option value="Coordinator">Coordinator</option>
                                 <option value="Supervisor">Supervisor</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Designation</label>
-                            <input type="text" class="form-control" id="designa">
+                    @*<div class="col-sm-6">
+            <div class="form-group">
+                <label for="exampleInputFile">Institiution Address</label>
+               <input type="text" class="form-control" id="institiuaddress" asp-for="InstitionNmae.Address1" readonly="readonly" >
 
-                        </div>
-                    </div>
+            </div>
+        </div>*@
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">Address 1</label>                         
-                            <input type="text" class="form-control" id="address1">
+                            <label> Contact Address</label>
+                            <input type="text" class="form-control" id="address1" placeholder="Enter Officer Contact Address">
 
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">Phone</label>                          
-                            <input type="text" class="form-control" id="Phone">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" id="Phone" placeholder="Enter Phone Number">
 
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">E-mail</label>                           
-                           <input type="text" class="form-control" id="email">
-
-                        
+                            <label>E-mail</label>
+                            <input type="text" class="form-control" id="email" placeholder="Enter Email">
                         </div>
                     </div>
                 </div>
-             
+
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Select Nationality</label>
                             <select class="form-control" asp-items="ViewBag.NationalityId"
-                                   style="width: 100%; text-transform:uppercase"
+                                    style="width: 100%; text-transform:capitalize"
                                     onchange="MyFunctionNationality()" id="nationChange">
                                 <option selected="selected" value="-1">-- Select Nationality--</option>
                             </select>
@@ -97,7 +102,7 @@
                         <div class="form-group">
                             <label>Select State of Origin</label>
                             <select class="form-control"
-                                    id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                    id="myState" style="width: 100%; text-transform:capitalize" onchange="MyFunctionState()">
                                 <option selected="selected" value="-1">-- Select State--</option>
                             </select>
                         </div>
@@ -106,24 +111,9 @@
                         <div class="form-group">
                             <label>Select LGA of Origin</label>
                             <select class="form-control"
-                                    id="myLGA" style="width: 100%;">
+                                    id="myLGA" style="width: 100%; text-transform:capitalize">
                                 <option selected="selected" value="-1">--Select LGA--</option>
                             </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                   
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="exampleInputFile">No. Of Student Currently Supervising</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" class="form-control" id="noofstu" placeholder="No. Of Student">
-
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,54 +121,37 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="exampleInputFile">Select Bank</label>
-                            <select class="form-control regYear" style="width: 100%;" id="drpbank">
-                                <option selected="selected" value="-1">--Select Bank--</option>
+                            <select class="form-control regYear" style="width: 100%;" id="drpbank" asp-items="ViewBag.BankSetUp">
+                                <option selected="selected" value="-1">--Select Bank Name--</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="exampleInputFile">Enter Account Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" style="width: 100%;"><i class="fas fa-sort-numeric-asc"></i></span>
-                                </div>
-                                <input type="text" class="form-control" id="accountnum">
-
-                            </div>
+                            <label>Enter Account Number</label>
+                                <input type="text" class="form-control" id="accountnum" placeholder="Enter Account Number">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="exampleInputFile">Enter Account Name</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-sort-numeric-asc"></i></span>
-                                </div>
-                                <input type="text" class="form-control" id="accountname">
-
-                            </div>
+                            <label>Enter Account Name</label>
+                                <input type="text" class="form-control" id="accountname" placeholder="Enter Account Name">
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="exampleInputFile">Enter Switch Code</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-sort-numeric-asc"></i></span>
-                                </div>
-                                <input type="text" class="form-control" id="switchcode">
-
-                            </div>
+                            <label>Enter Switch Code</label>
+                                <input type="text" class="form-control" id="switchcode" placeholder="Enter Switch Code">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="justify-content-center" style="margin-left:23%; margin-bottom:3%;">
-                <button type="button" id="Btnsave" class="btn btn-primary">Submit</button>
-                <button type="button" id="Btnupdate" class="btn btn-warning" style="display:none">Update</button>
+            <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
+                <button type="button" id="Btnsave" class="btn btn-primary">Submit Officer Details</button>
+                <button type="button" id="Btnupdate" class="btn btn-primary" style="display:none">Update Officer Details</button>
+                <a type="button" asp-page="./InstOfficersList" id="BtnOfficersList" class="btn btn-warning">View List of Officers</a>
             </div>
         </form>
     </div>
@@ -192,6 +165,11 @@
     function addStudents(lbl, val) {
         studentList.push({ label: lbl, value: val });
     }
+    var intName = [];
+
+    function addintName(lbl, val) {
+        intName.push({ label: lbl, value: val });
+    }
     $(document).ready(function () {
         @{
             if (Model.InstitutionOfficers != null)
@@ -199,6 +177,19 @@
                 foreach (var item in Model.InstitutionOfficers)
                 {
                     @:addStudents('@item.IntOfficerName.ToString().Trim()', '@item.Id');
+                }
+            }
+            else
+            {
+
+            }
+            }
+        @{
+            if (Model.InstitionNmae != null)
+            {
+                foreach (var item in Model.InstitionNmae)
+                {
+                    @:addintName('@item.Name.ToString().Trim()', '@item.Id');
                 }
             }
             else
@@ -215,62 +206,113 @@
                 return false;
             }
         });
-
+        $("#drpinstitiu").autocomplete({
+            source: intName,
+            select: function (event, ui) {
+                $('#drpinstitiu').val(ui.item.label);
+                $('#instId').val(ui.item.value);
+                return false;
+            }
+        });
 
         $('#Btnsave').on('click', function () {
-            //alert("uedhduedehdu");
+            var drpinstitiu = $('#drpinstitiu').val();
             var instId = $('#instId').val();
-            //var institiuaddress = $('#institiuaddress').val();
             var officertype = $("div.studentSelectedActivities select").val();
-            //var officertype = $('#officertype').val();
-            var offidnum = $('#offidnum').val();
+            //var offidnum = $('#offidnum').val();
             var officername = $('#officername').val();
             var designa = $('#designa').val();
             var address1 = $('#address1').val();
-            //var nationChange = $('#nationChange').val();
-            //var myState = $('#myState').val();
+            var nationChange = $('#nationChange').val();
+            var myState = $('#myState').val();
             var myLGA = $('#myLGA').val();
             var Phone = $('#Phone').val();
             var email = $('#email').val();
             var noofstu = $('#noofstu').val();
-            //var drpbank = $('#drpbank').val();
+            var drpbank = $('#drpbank').val();
             var accountnum = $('#accountnum').val();
             var accountname = $('#accountname').val();
             var switchcode = $('#switchcode').val();
             var InstitutionId = parseInt(instId);
+            var BankId = parseInt(drpbank);
             var NumberOfStudent = parseInt(noofstu);
-            //alert(instId);
-            //alert(drpagency);
-            //alert(txtdeactDate);
-            //alert(institiuaddress);
-            //alert(officertype);
-            //alert(offidnum);
-            //alert(officername);
-            //alert(designa);
+            var LGAId = parseInt(myLGA);
 
-
+            if (officername == "") {
+                alert("PLEASE ENTER INSTITUTION OFFICER NAME");
+                return false;
+            }
+            if (designa == "") {
+                alert("PLEASE ENTER INSTITUTION OFFICER DESIGNATION");
+                return false;
+            }
+            if (noofstu == "") {
+                alert("PLEASE ENTER NUMBER OF STUDENTS ATTACHED TO THE OFFICER");
+                return false;
+            }
+            if (drpinstitiu == "") {
+                alert("PLEASE ENTER INSTITUTION NAME");
+                return false;
+            }
+            if (officertype == "-1") {
+                alert("PLEASE SELECT TYPE OF OFFICER");
+                return false;
+            }
+            if (address1 == "") {
+                alert("PLEASE ENTER OFFICER ADDRESS");
+                return false;
+            }
+            if (Phone == "") {
+                alert("PLEASE ENTER OFFICER PHONE NUMBER");
+                return false;
+            }
+            if (email == "") {
+                alert("PLEASE ENTER OFFICER EMAIL");
+                return false;
+            }
+            if (nationChange == "-1") {
+                alert("PLEASE SELECT OFFICER NATIONALITY");
+                return false;
+            }
+            if (myState == "-1") {
+                alert("PLEASE SELECT OFFICER STATE");
+                return false;
+            }
+            if (myLGA == "-1") {
+                alert("PLEASE SELECT OFFICER LGA");
+                return false;
+            }
+            if (drpbank == "-1") {
+                alert("PLEASE SELECT OFFICER BANK NAME");
+                return false;
+            }
+            if (accountnum == "") {
+                alert("PLEASE ENTER OFFICER ACCOUNT NUMBER");
+                return false;
+            }
+            if (accountname == "") {
+                alert("PLEASE ENTER OFFICER ACCOUNT NAME");
+                return false;
+            }
             var d = {
                 "InstitutionId": InstitutionId,
-                //"Deactivate": drpagency,
-                //"DateActivated": txtdeactDate,
-                //"InstitiutionAddress": institiuaddress,
                 "OfficerType": officertype,
-                //"StaffId": offidnum,
                 "IntOfficerName": officername,
                 "IntOfficerDesig": designa,
                 "Address1": address1,
-                //"Address2": address2,
-                //"NationalityId": nationChange,
-                //"StatesId": myState,
-                "StaffId": myLGA,
+                "LGAId": LGAId,
                 "PhoneNo": Phone,
                 "Email": email,
-                //"BankName": drpbank,
+                "BankSetUpId": BankId,
                 "AccountNo": accountnum,
                 "AccountName": accountname,
                 "SwitchCode": switchcode,
                 "NumberOfStudent": NumberOfStudent,
             };
+            var confirmation = confirm("ARE SURE YOU WANT SAVE " + officername.toUpperCase() + " RECORD ?");
+            if (confirmation === false) {
+                return false;
+            }
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "POST",
@@ -287,70 +329,121 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    alert("RECORD SUCCESSFULLY SAVED");
-                    location.reload();
+                    alert("OFFICER RECORDS SUCCESSFULLY SAVED");
+                    window.location.href = baseUrl + '/Institution/InstOfficersList';
+                    //location.reload();
                 },
             });
 
         });
         $('#Btnupdate').on('click', function () {
-            //alert("uedhduedehdu");
+            var officernameId = $('#officernameId').val();
+            var drpinstitiu = $('#drpinstitiu').val();
             var instId = $('#instId').val();
-            //var institiuaddress = $('#institiuaddress').val();
             var officertype = $("div.studentSelectedActivities select").val();
-            //var officertype = $('#officertype').val();
-            var offidnum = $('#offidnum').val();
+            //var offidnum = $('#offidnum').val();
             var officername = $('#officername').val();
             var designa = $('#designa').val();
             var address1 = $('#address1').val();
-            //var nationChange = $('#nationChange').val();
-            //var myState = $('#myState').val();
+            var nationChange = $('#nationChange').val();
+            var myState = $('#myState').val();
             var myLGA = $('#myLGA').val();
             var Phone = $('#Phone').val();
             var email = $('#email').val();
             var noofstu = $('#noofstu').val();
-            //var drpbank = $('#drpbank').val();
+            var drpbank = $('#drpbank').val();
             var accountnum = $('#accountnum').val();
             var accountname = $('#accountname').val();
             var switchcode = $('#switchcode').val();
             var InstitutionId = parseInt(instId);
+            var BankId = parseInt(drpbank);
             var NumberOfStudent = parseInt(noofstu);
-            //alert(instId);
-            //alert(drpagency);
-            //alert(txtdeactDate);
-            //alert(institiuaddress);
-            //alert(officertype);
-            //alert(offidnum);
-            //alert(officername);
-            //alert(designa);
-
-
+            var LGAId = parseInt(myLGA);
+            var officerId = parseInt(officernameId);
+            if (officernameId == "") {
+                alert("PLEASE ENTER INSTITUTION OFFICER NAME");
+                return false;
+            }
+            if (officername == "") {
+                alert("PLEASE ENTER INSTITUTION OFFICER NAME");
+                return false;
+            }
+            if (designa == "") {
+                alert("PLEASE ENTER INSTITUTION OFFICER DESIGNATION");
+                return false;
+            }
+            if (noofstu == "") {
+                alert("PLEASE ENTER NUMBER OF STUDENTS ATTACHED TO THE OFFICER");
+                return false;
+            }
+            if (drpinstitiu == "") {
+                alert("PLEASE ENTER INSTITUTION NAME");
+                return false;
+            }
+            if (officertype == "-1") {
+                alert("PLEASE SELECT TYPE OF OFFICER");
+                return false;
+            }
+            if (address1 == "") {
+                alert("PLEASE ENTER OFFICER ADDRESS");
+                return false;
+            }
+            if (Phone == "") {
+                alert("PLEASE ENTER OFFICER PHONE NUMBER");
+                return false;
+            }
+            if (email == "") {
+                alert("PLEASE ENTER OFFICER EMAIL");
+                return false;
+            }
+            if (nationChange == "-1") {
+                alert("PLEASE SELECT OFFICER NATIONALITY");
+                return false;
+            }
+            if (myState == "-1") {
+                alert("PLEASE SELECT OFFICER STATE");
+                return false;
+            }
+            if (myLGA == "-1") {
+                alert("PLEASE SELECT OFFICER LGA");
+                return false;
+            }
+            if (drpbank == "-1") {
+                alert("PLEASE SELECT OFFICER BANK NAME");
+                return false;
+            }
+            if (accountnum == "") {
+                alert("PLEASE ENTER OFFICER ACCOUNT NUMBER");
+                return false;
+            }
+            if (accountname == "") {
+                alert("PLEASE ENTER OFFICER ACCOUNT NAME");
+                return false;
+            }
             var d = {
+                "Id": officerId,
                 "InstitutionId": InstitutionId,
-                //"Deactivate": drpagency,
-                //"DateActivated": txtdeactDate,
-                //"InstitiutionAddress": institiuaddress,
                 "OfficerType": officertype,
-                //"StaffId": offidnum,
                 "IntOfficerName": officername,
                 "IntOfficerDesig": designa,
                 "Address1": address1,
-                //"Address2": address2,
-                //"NationalityId": nationChange,
-                //"StatesId": myState,
-                "StaffId": myLGA,
+                "LGAId": LGAId,
                 "PhoneNo": Phone,
                 "Email": email,
-                //"BankName": drpbank,
+                "BankSetUpId": BankId,
                 "AccountNo": accountnum,
                 "AccountName": accountname,
                 "SwitchCode": switchcode,
                 "NumberOfStudent": NumberOfStudent,
             };
+            var confirmation = confirm("ARE SURE YOU WANT UPDATE " + officername.toUpperCase() + " RECORD ?");
+            if (confirmation === false) {
+                return false;
+            }
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "PUT",
-                url: baseUrl + '/Api/InstitutionOfficers' + ,
+                url: baseUrl + '/Api/InstitutionOfficers/ ' + officerId,
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true
@@ -363,14 +456,162 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                    alert("RECORD SUCCESSFULLY SAVED");
-                    location.reload();
+                    alert("OFFICER RECORDS SUCCESSFULLY UPDATED");
+                    window.location.href = baseUrl + '/Institution/InstOfficersList';
+                    //location.reload();
                 },
             });
 
         });
     });
+    function MyFunctionOfficerName() {
+        var officernameId = $('#officernameId').val();
+        var officerId = parseInt(officernameId);
+        if (officernameId == "") {
+            document.getElementById('Btnupdate').style.display = "none";
+            document.getElementById('Btnsave').style.display = "inline-block";
+        }
+        else {
+            var d = {
+                "Id": officerId
+            };
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "GET",
+                url: baseUrl + '/Api/InstOfficerDetails/' + officerId,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: 'json',
+                error: function (data) {
+                    alert(data.responseText);
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    //console.log(data);
+                    var option = ''; var stateOption = '';
+                    var lga = ''; var lgaOption = '';
+                    var newRex = data['lgaId'];
+                    var bankId = data['bankSetUpId'];
+                    $('#officernameId').val(data['id']);
+                    $('#officername').val(data['intOfficerName']);
+                    $('#officertype').val(data['officerType']);
+                    $('#designa').val(data['intOfficerDesig']);
+                    $('#drpinstitiu').val(data['institution']['name']);
+                    $('#instId').val(data['institutionId']);
+                    $('#address1').val(data['address1']);
+                    $('#Phone').val(data['phoneNo']);
+                    $('#email').val(data['email']);
+                    $('#noofstu').val(data['numberOfStudent']);
+                    
+                    $('#accountnum').val(data['accountNo']);
+                    $('#accountname').val(data['accountName']);
+                    $('#switchcode').val(data['switchCode']);
 
+                    document.getElementById('Btnsave').style.display = "none";
+                    document.getElementById('Btnupdate').style.display = "inline-block";
+                    if (bankId != null) {
+                        $('#drpbank').val(data['bankSetUpId']);
+                    }
+                    else {
+                        //$('#drpbank').empty();
+                        $('#drpbank').append('<option value=-1>--Select Bank Name--</option>');
+                    }
+                    if (newRex != null) {
+                        var newRexId = data['lga']['stateId'];
+                        var d = {
+                            "Id": newRexId
+                        };
+                        var Rex = {
+                            "Id": newRexId
+                        };
+                        var baseUrl = window.location.origin;
+                        $.ajax({
+                            type: "GET",
+                            url: baseUrl + '/Api/States',
+                            data: JSON.stringify(d),
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            contentType: 'json',
+                            error: function (data) {
+                                alert(data.responseText);
+                            },
+                            failure: function (data) {
+                                alert(data.responseText);
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                var nationalityId = "";
+                                for (var i = 0; i < data.length; i++) {
+                                    var nationalityId = data[i]['nationalityId'];
+                                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+
+                                }
+                                $('#myState').append(option);
+                                for (var i = 0; i < $('select#myState option').length; i++) {
+                                    if ($('select#myState option')[i].value == newRexId - 1) {
+                                        stateOption = '<option selected="selected" value="' + newRexId + '">' + data[i]['name'] + '</option>';
+                                        //Here the code for select automatically in operator the option found
+                                    }
+                                }
+                                //alert(stateOption);
+                                $('#myState').append(stateOption);
+                                $('#nationChange').val(nationalityId);
+                                $.ajax({
+                                    type: "GET",
+                                    url: baseUrl + '/Api/lgas/' + newRexId,
+                                    data: JSON.stringify(Rex),
+                                    xhrFields: {
+                                        withCredentials: true
+                                    },
+                                    contentType: 'json',
+                                    error: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    failure: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    success: function (data) {
+                                        //console.log(data);
+                                        for (var i = 0; i < data.length; i++) {
+                                            lga += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+
+                                        }
+                                        $('#myLGA').append(lga);
+                                        for (var i = 0; i < $('select#myLGA option').length; i++) {
+                                            if ($('select#myLGA option')[i].value == newRex - 1) {
+                                                lgaOption = '<option selected="selected" value="' + newRex + '">' + data[i]['name'] + '</option>';
+                                                //Here the code for select automatically in operator the option found
+                                            }
+                                        }
+                                        $('#myLGA').append(lgaOption);
+                                    },
+
+
+                                });
+
+
+                            },
+
+
+                        });
+                    }
+                    else {
+                        //$('#nationChange').empty();
+                        $('#nationChange').append('<option value=-1>--Select Nationality--</option>');
+                        $('#myState').empty();
+                        $('#myState').append('<option value=-1>--Select State--</option>');
+                        $('#myLGA').empty();
+                        $('#myLGA').append('<option value=-1>--Select LGA--</option>');
+                    }
+                },
+            });
+        }
+    }
     function MyFunctionNationality() {
         var nationId = document.getElementById('nationChange').value;
         var d = {
