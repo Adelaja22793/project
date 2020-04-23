@@ -12,38 +12,46 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SiwesData.Setup;
 using SiwesData;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using BSSL_SIWES.Web.Areas.Identity.Pages.Account;
+using Microsoft.EntityFrameworkCore;
 
-namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
-{
+namespace BSSL_SIWES.Web.Pages.Account
+{ 
     [AllowAnonymous]
 
-    public class RegisterempModel : PageModel
-    { 
+    public class CreateSuperA : PageModel
+    {
         private readonly SignInManager<AppUserTab> _signInManager;
-        private readonly RoleManager<RoleTb>_roleManager;
+        private readonly ApplicationDbContext _context;
+        private readonly RoleManager<RoleTb> _roleManager;
         private readonly UserManager<AppUserTab> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         public string successm { get; set; }
         public string errorm { get; set; }
         private readonly IEmailSender _emailSender;
 
-        public RegisterempModel(
+        public CreateSuperA(
             UserManager<AppUserTab> userManager,
             SignInManager<AppUserTab> signInManager,
             RoleManager<RoleTb> roleManager,
             ILogger<RegisterModel> logger,
-      IEmailSender emailSender)
+            ApplicationDbContext context,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _logger = logger;
-          _emailSender = emailSender;
+            _context = context;
+            _emailSender = emailSender;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
-
+        public AgencySuperSetup Superv {get;set;}
+        public List<SelectListItem> options { get; set; }
+        public IList<SiwesData.Setup.Institution> Listofinst { get; set; }
         public string ReturnUrl { get; set; }
 
         public class InputModel
@@ -76,46 +84,61 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             //[Display(Name = "Matric Number")]
         
             [Required]
-            [StringLength(100, ErrorMessage = "Please enter Rc number")]
-            public string RcNo { get; set; }
+            [StringLength(100, ErrorMessage = "Please select Role/Gruop")]
+            public string RoleId { get; set; }
 
 
+            [Required]
+            [StringLength(100, ErrorMessage = "Please enter Staff Id")]
+            public string Sfaffid { get; set; }
 
 
             [DataType(DataType.Text)]
             [Display(Name = "Name")]
-
-
             public string Name { get; set; }
 
+            public string RoleName { get; set; }
 
+            [Required]
+            [StringLength(100, ErrorMessage = "Please  enter institution")]
+            public string InstName { get; set; }
+            public string InstId { get; set; }
 
         }
 
-        public void OnGet(string returnUrl = null)
+        //public void OnGet(string returnUrl = null)
+        //{
+        //    ReturnUrl = returnUrl;
+        //}
+        public async Task OnGetAsync( string instid)
         {
-            ReturnUrl = returnUrl;
-        }
+            options = await _context.AgencySuperSetup.Select(m => new SelectListItem
+            {
+                Value = m.Id.ToString().Trim(),
+                Text = m.Name.Trim()
+            }).ToListAsync();
 
+        }
+         
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
         
-            returnUrl = returnUrl ?? Url.Content("/Areas/Identity/Pages/Account/Login");
-            if (ModelState.IsValid)
-            {
-                var user = new AppUserTab { UserName = Input.RcNo, Email = Input.Email };
-           
-                if (Input.Password.Any(Char.IsUpper) == false)
+            returnUrl = returnUrl ?? Url.Content("/");
+            //if (ModelState.IsValid)
+            //{
+              
+            var user = new AppUserTab { UserName = Input.Email, Email = Input.Email, RealName= Input.Name, EmpRcNo = Input.InstId };
+       
+            if (Input.Password.Any(Char.IsUpper) == false)
                 {
                     errorm = "Your password must contain at least 1 upper case";
                     return Page();
                 }
                 var useremail = await _userManager.FindByEmailAsync(Input.Email);
-              //  var username = await _userManager.GetUserNameAsync(user);
 
                 if (useremail != null)
                 {
-                    errorm = "Email alrealdy exist please check ";
+                    errorm = "Cordinator already exist please check ";
                     return Page();
                 }
 
@@ -123,36 +146,14 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
             
                 if (result.Succeeded)
                 {
-                    // creating Creating Manager role     
-                  
-                  //bool  x = await _roleManager.RoleExistsAsync("Employer");
-                  //  if (!x)
-                  //  {
-                  //      var role = new RoleTb();
-                  //      role.Name = "Employer";
-                  //      role.RoleId = "EMP01";
-                  //      await _roleManager.CreateAsync(role);
-                  //  }
-                   await _userManager.AddToRoleAsync(user, ConstantRole.Employer );
+                   
+                    await _userManager.AddToRoleAsync(user,ConstantRole.AgencySuper);
                     _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { userId = user.Id, code = code },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                 //   await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     successm = "ACCOUNT SUCCESSFULY CREATED";
-                   // Response.Redirect(returnUrl);
-                  //  return LocalRedirect(returnUrl);
-
-                    return RedirectToPage("Login");
-                 // return Redirect("/Login?Message=" + successm);
+                
+                    return Page();
+              
              
                 }
                 foreach (var error in result.Errors)
@@ -160,11 +161,9 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                     errorm = error.Description;
                 }
-            }
-
-            // If we got this far, something failed, redisplay form
-            // return Page();
-            return LocalRedirect(returnUrl);
+       
+             return Page();
+        
         }
     }
 }

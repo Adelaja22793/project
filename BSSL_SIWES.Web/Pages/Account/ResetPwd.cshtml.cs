@@ -8,25 +8,26 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SiwesData;
-namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
+namespace BSSL_SIWES.Web.Pages.Account
 {
     [AllowAnonymous]
-    public class ResetPasswordModel : PageModel
+    public class ResetPwdModel : PageModel
     {
         private readonly UserManager<AppUserTab> _userManager;
 
-        public ResetPasswordModel(UserManager<AppUserTab> userManager)
+        public ResetPwdModel(UserManager<AppUserTab> userManager)
         {
             _userManager = userManager;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
-
+        public string successm { get; set; }
+        public string errorm { get; set; }
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+          //  [EmailAddress]
             public string Email { get; set; }
 
             [Required]
@@ -46,7 +47,8 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
         {
             if (code == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                //return BadRequest("A code must be supplied for password reset.");
+                errorm = "A code must be supplied for password reset.";
             }
             else
             {
@@ -56,6 +58,7 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                 };
                 return Page();
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -65,21 +68,44 @@ namespace BSSL_SIWES.Web.Areas.Identity.Pages.Account
                 return Page();
             }
             var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null)
+            var user2 = await _userManager.FindByNameAsync(Input.Email);
+            if (user == null && user2 == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                // return RedirectToPage("./ResetPasswordConfirmation");
+                errorm = " User name or email does not exist please check ";
+                return Page();
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
+            var result = await _userManager.ResetPasswordAsync(user, "ACHJGKKDL08479LDIILLL", Input.Password);
+           
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation");
+                successm = "ACCOUNT SUCCESSFULLY RESET ";
+                return Page();
+               // return RedirectToPage("./ResetPasswordConfirmation");
             }
-
+            else
+            {
+             
+                result = await _userManager.ResetPasswordAsync(user, "ACHJGKKDL08479LDIILLL", Input.Password);
+                if (result.Succeeded)
+                {
+                    successm = "ACCOUNT SUCCESSFULLY RESET ";
+                    return Page();
+                    // return RedirectToPage("./ResetPasswordConfirmation");
+                }
+                else
+                {
+                    errorm = "RESETING OF ACCOUNT WAS NOT SUCCESFULL PLEASE AGAIN OR CONTACT ADMINISTARTOR ";
+                  //  return Page();
+                }
+            }
+        
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
+                errorm = error.Description;
             }
             return Page();
         }
