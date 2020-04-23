@@ -44,12 +44,17 @@ namespace BSSL_SIWES.Web.Pages.Students
             //var userEmail = await _userManager.GetUserNameAsync(loginUser);
             var userEmail = _userManager.GetUserName(User);
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
+            ViewData["BankSetUp"] = new SelectList(_context.BankSetUp, "Id", "Name");
 
-            StudentSetUp = await _context.StudentSetUps.Include(c => c.Courses).Include(c => c.LGA).Include(c => c.Institution)
-                .Include(c => c.InstitutionOfficer).Include(c =>c.EmployerSuperSetup).ThenInclude(c => c.AreaOffice)
+            StudentSetUp = await _context.StudentSetUps.Include(c => c.Courses).Include(c => c.LGA).ThenInclude(b =>b.State)
+                .ThenInclude(lga =>lga.Nationality).Include(c => c.Institution)
+                .Include(c => c.InstitutionOfficer).Include(c =>c.EmployerSuperSetup)
+                .ThenInclude(c => c.AreaOffice)
                 .Where(x => x.CoursesId == x.Courses.Id && x.Email == userEmail && x.LGA.Id == x.LGAId
                     && x.InstitutionId == x.Institution.Id && x.InstitutionOfficerId == x.InstitutionOfficer.Id
-                    && x.EmployerSuperSetupId == x.EmployerSuperSetup.Id && x.EmployerSuperSetup.AreaOfficeId == x.EmployerSuperSetup.AreaOffice.Id).FirstOrDefaultAsync();
+                    && x.EmployerSuperSetupId == x.EmployerSuperSetup.Id 
+                    && x.EmployerSuperSetup.AreaOfficeId == x.EmployerSuperSetup.AreaOffice.Id
+                    && x.LGA.StateId == x.LGA.State.Id && x.LGA.State.NationalityId == x.LGA.State.Nationality.Id).FirstOrDefaultAsync();
 
             Scaf = await _context.Scafs.Include(c => c.EmployerSupervisor).ThenInclude(c =>c.EmployerSuperSetup)
                                 .Where(x => x.EmployerSupervisorId == x.EmployerSupervisor.Id 
