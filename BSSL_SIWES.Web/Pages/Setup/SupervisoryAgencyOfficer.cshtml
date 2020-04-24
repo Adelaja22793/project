@@ -1,0 +1,690 @@
+﻿@page
+@inject SiwesData.ApplicationDbContext db
+@model BSSL_SIWES.Web.SupervisoryAgencyOfficerModel
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+@{
+    ViewData["Title"] = "SupervisoryAgencyOfficer";
+}
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Supervisory Agency Officer Setup</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form role="form" method="post">
+            <div class="card-body">
+                <div id="divinput">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Supervisory Agency Type</label>
+                                <select asp-for="SupervisoryAgency.AgencySuperSetupId" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                        asp-items="ViewBag.AgencySuperSetup" style="width: 100%; text-transform:uppercase" id="drptype">
+                                    <option selected="selected" value="">-- Select--</option>
+                                </select>
+                                <span asp-validation-for="SupervisoryAgency.AgencySuperSetupId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Agency Officer Id</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.StaffId" type="text" id="txtstaff" class="form-control">
+                                    <input id="readid" type="hidden" class="form-control" />
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.StaffId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Agency Officer Name</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.AgencyOfficerName" type="text" id="txtname" class="form-control">
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.AgencyOfficerName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Agency Officer Designation</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.AgencyOfficerDesig" type="text" id="txtdesg" class="form-control" >
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.AgencyOfficerDesig" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Address 1</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.Address1" type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.Address1" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Address 2</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.Address2" type="text" id="txtaddr2" class="form-control" placeholder="Address 2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <div class="select2-purple">
+
+                                    @if (ViewBag.NationalityId != null)
+                                    {
+                                        <select asp-for="SupervisoryAgency.NationalityId" class="form-control"
+                                                asp-items="ViewBag.NationalityId" style="width: 100%;"
+                                                onchange="MyFunctionNationality()" id="nationChange">
+                                            <option selected="selected" value="">-- Select --</option>
+                                        </select>
+                                        <span asp-validation-for="SupervisoryAgency.NationalityId" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <select class="form-control"
+                                                style="width: 100%; text-transform:uppercase"
+                                                id="nationChange">
+                                            <option selected="selected" value="">-- Select Nationality--</option>
+                                        </select>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>State</label>
+                                <div class="select2-purple">
+                                    <select asp-for="SupervisoryAgency.StatesId" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                        <option selected="selected" value="">-- Select--</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.StatesId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>City</label>
+                                <div class="select2-purple">
+                                    <select asp-for="SupervisoryAgency.City" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            id="myLGA" style="width: 100%;">
+                                        <option selected="selected" value="">--Select--</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Zip Cope</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.ZipCode" type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.PhoneNo" type="text" id="txtphone1" class="form-control" placeholder="Enter Phone No.">
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.PhoneNo" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <div class="input-group">
+                                    <input asp-for="SupervisoryAgency.Email" type="text" id="txtemail" class="form-control">
+                                </div>
+                                <span asp-validation-for="SupervisoryAgency.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                    @*<div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Name of Contact Person</label>
+                    <div class="input-group">
+                        <input type="text" id="txtContactname" class="form-control" placeholder="Name of Contact Person">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="input-group">
+                        <input type="text" id="txtContactphone" class="form-control" placeholder="Phone Number of Contact Person">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <div class="input-group">
+                        <input type="text" id="txtContactemail" class="form-control" placeholder="E-mail">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                    <div class="row">
+
+                        @*<div class="col-sm-4">
+                <div class="form-group">
+                    <label>Deactivate Agency?</label>
+                    <div class="select2-purple">
+                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                style="width: 100%;" id="txtdrpdeact">
+                            <option selected="selected" value="0">NO</option>
+                            <option value="1">YES</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="exampleInputFile">Date Deactivated</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="date" id="txtdeactDate" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
+                    </div>
+                </div>
+            </div>*@
+                    </div>
+
+                    <!-- /.card-body -->
+                    <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="button" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
+                        <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                        <button type="button" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                    </div>
+                </div>
+                <div class="row" id="divgrid" style="display:none">
+                    <div class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="button" id="BtnNew" class="btn btn-primary button button4">Create New Records</button>
+                    </div>
+
+                    <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                        <table id="tabId" class="table table-bordered" border="0">
+                            <thead style="background-color:steelblue;">
+                                <tr>
+                                    <th style="width:0.25%; text-align:center">S/N</th>
+                                    <th style="width:8%; text-align:center">Actions</th>
+                                    <th style="width:25%; text-align:center">Agency Name</th>
+                                    <th style="width:15%; text-align:center">Staff Id</th>
+                                    <th style="width:25%; text-align:center">Staff Name</th>
+                                    <th style="width:40%; text-align:center">Designation</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.SupervisoryAgencyList.Count; i++)
+                                {
+                                    var items = Model.SupervisoryAgencyList[i];
+                                <tr>
+                                    <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                    <td style="width:5%;">
+                                        <input type="hidden" class="readid @i" value="@items.Id">
+                                        <a id="myEdit" href="/Setup/SupervisoryAgencyOfficer" AddreEdit="@i">Edit</a>
+                                    </td>
+                                    <td class="tabagename @i" style="width:25%; text-align:left">@items.AgencySuperSetup.Name</td>
+                                    <td class="tabstaff @i" style="width:15%; text-align:left">@items.StaffId</td>
+                                    <td class="taboffname @i" style="width:25%; text-align:left">@items.AgencyOfficerName</td>
+                                    <td class="taboffdesg @i" style="width:40%; text-align:left">@items.AgencyOfficerDesig</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+     $(document).ready(function () {
+         formClear();
+         function formNew() {
+           // $("#drptype").val("");
+             $("#txtstaff").val("");
+              $("#txtname").val("");
+             $("#txtdesg").val("");
+             $("#txtaddr1").val("");
+             $("#txtaddr2").val("");
+             $("#nationChange").val("");
+             $("#myState").val("");
+             $("#myLGA").val("");
+             $("#txtzip").val("");
+             $("#txtphone1").val("");
+             $("#txtphone2").val("");
+             $("#txtemail").val("");
+             $("#txtwebsite").val("");
+             //$("#txtdrpdeact").val("0");
+             //$("#txtdeactDate").val("");
+
+             $("#Btnsave").show();
+             $("#Btnupdate").hide();
+             document.getElementById('divgrid').style.display = "none";
+             document.getElementById('divinput').style.display = "block";
+         }
+         function formClear() {
+            $("#drptype").val("");
+             $("#txtstaff").val("");
+              $("#txtname").val("");
+             $("#txtdesg").val("");
+             $("#txtaddr1").val("");
+             $("#txtaddr2").val("");
+             $("#nationChange").val("");
+             $("#myState").val("");
+             $("#myLGA").val("");
+             $("#txtzip").val("");
+             $("#txtphone1").val("");
+             $("#txtphone2").val("");
+             $("#txtemail").val("");
+             $("#txtwebsite").val("");
+             //$("#txtdrpdeact").val("0");
+             //$("#txtdeactDate").val("");
+
+             $("#Btnsave").show();
+             $("#Btnupdate").hide();
+             document.getElementById('divgrid').style.display = "block";
+             document.getElementById('divinput').style.display = "none";
+         }
+          $('#BtnNew').on('click', function (e) {
+                document.getElementById('divinput').style.display = "block";
+                document.getElementById('divgrid').style.display = "none";
+                e.preventDefault();
+            });
+            $('#BtnCancel').on('click', function (e) {
+                document.getElementById('divgrid').style.display = "block";
+                document.getElementById('divinput').style.display = "none";
+                e.preventDefault();
+                formClear();
+            });
+         $('#Btnsave1').on('click', function (e) {
+             e.preventDefault();
+             var txtcode = document.getElementById('txtcode').value;
+             var txtshortcode = document.getElementById('txtshortcode').value;
+             var txtinstiname = document.getElementById('txtinstiname').value;
+             var txtaddr1 = document.getElementById('txtaddr1').value;
+             var txtaddr2 = document.getElementById('txtaddr2').value;
+             var nationChange = document.getElementById('nationChange').value;
+             var myState = document.getElementById('myState').value;
+             var myLGA = document.getElementById('myLGA').value;
+             var txtzip = document.getElementById('txtzip').value;
+             var txtphone1 = document.getElementById('txtphone1').value;
+             var txtphone2 = document.getElementById('txtphone2').value;
+             var txtemail = document.getElementById('txtemail').value;
+             var txtwebsite = document.getElementById('txtwebsite').value;
+             var drpSuperagency = document.getElementById('drpSuperagency').value;
+             var drpareaoffice = document.getElementById('drpareaoffice').value;
+             var drpaffiliate = document.getElementById('drpaffiliate').value;
+             var txtcapacity = document.getElementById('txtcapacity').value;
+             //var txtdrpdeact = document.getElementById('txtdrpdeact').value;
+             //var txtdeactDate = document.getElementById('txtdeactDate').value;
+             var drptype = document.getElementById('drptype').value;
+
+             var d = {
+                    "Code": txtcode,
+                    "ShortCode": txtshortcode,
+                    "Name": txtinstiname,
+                    "Address1": txtaddr1,
+                    "Address2": txtaddr2,
+                    "Country": nationChange,
+                    "State": myState,
+                    "City": myLGA,
+                    "ZipCode": txtzip,
+                    "PhoneNo1": txtphone1,
+                    "PhoneNo2": txtphone2,
+                    "Email": txtemail,
+                    "Website": txtwebsite,
+                    "Superagency": drpSuperagency,
+                    "AreaOffice": drpareaoffice,
+                 "AffiliateInst": drpaffiliate,
+                 "CapacityNo": Number(txtcapacity),
+                    //"Deactivate": txtdrpdeact,
+                 //"Datedectivated": txtdeactDate,
+                 "InstTypeSetupId": Number( drptype),
+             };
+             var baseUrl = window.location.origin;
+             $.ajax({
+                 type: "POST",
+                 url: baseUrl + '/Api/Institutions',
+                 data: JSON.stringify(d),
+                 xhrFields: {
+                     withCredentials: true
+                 },
+                 contentType: "application/json; charset=utf-8",
+                 error: function (data) {
+                     alert(data.responseText);
+                 },
+                 failure: function (data) {
+                     alert(data.responseText);
+                 },
+                 success: function (data) {
+                     formClear();
+                     location.reload();
+                 },
+             });
+         });
+         $('#Btnupdate').on('click', function (e) {
+             e.preventDefault();
+             var readid = document.getElementById('readid').value;
+             var txtstaff = document.getElementById('txtstaff').value;
+             var txtdesg = document.getElementById('txtdesg').value;
+             var txtname = document.getElementById('txtname').value;
+             var txtaddr1 = document.getElementById('txtaddr1').value;
+             var txtaddr2 = document.getElementById('txtaddr2').value;
+             var nationChange = document.getElementById('nationChange').value;
+             var myState = document.getElementById('myState').value;
+             var myLGA = document.getElementById('myLGA').value;
+             var txtzip = document.getElementById('txtzip').value;
+             var txtphone1 = document.getElementById('txtphone1').value;
+             var txtemail = document.getElementById('txtemail').value;
+             //var txtdrpdeact = document.getElementById('txtdrpdeact').value;
+             //var txtdeactDate = document.getElementById('txtdeactDate').value;
+             var drptype = document.getElementById('drptype').value;
+
+             var d = {
+                    "Id": Number(readid),
+                    "AgencySuperSetupId": Number(drptype),
+                    "StaffId": txtstaff,
+                    "AgencyOfficerDesig": txtdesg,
+                    "AgencyOfficerName": txtname,
+                    "Address1": txtaddr1,
+                    "Address2": txtaddr2,
+                    "NationalityId": Number(nationChange),
+                    "StatesId": Number(myState),
+                    "City": Number(myLGA),
+                    "ZipCode": Number(txtzip),
+                    "PhoneNo": txtphone1,
+                    "Email": txtemail,
+                    //"Deactivate": txtdrpdeact,
+                    //"Datedectivated": txtdeactDate,
+                   
+             };
+            var t = serialNo - 1;
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/SupervisoryAgencies/' + readid,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(" Record Updated Successfully");
+                    $('.readid.' + t).text(data["id"]);
+                    $('.tabagename.' + t).text(data["agencySuperSetupId"]);
+                    $('.tabstaff.' + t).text(data["staffId"]);
+                    $('.taboffname.' + t).text(data["agencyOfficerName"]);
+                    $('.taboffdesg.' + t).text(data["agencyOfficerDesig"]);
+                    formClear();
+                    $('#txtstaff').prop("readonly", true);
+                    document.getElementById('divgrid').style.display = "block";
+                    document.getElementById('divinput').style.display = "none";
+                    location.reload();
+                },
+            });
+        });
+         $("#tabId").on('click', '#myEdit', function () {
+             var editindex = $(this).attr('AddreEdit');
+             var readid = $('.readid.' + editindex).val();
+             document.getElementById('divinput').style.display = "block";
+            document.getElementById('divgrid').style.display = "none";
+            serialNo = $(this).closest('tr').find('.se_no').text();
+             var d = {
+                    "Id": readid
+                };
+                var baseUrl = window.location.origin;
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/SupervisoryAgencies/' + readid,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        // populate txtbox
+                        $("#Btnsave").hide();
+                        $("#Btnupdate").show();
+                        $("#drptype").val(data["agencySuperSetupId"]);
+                        $('#readid').val(data["id"]);
+                        $('#txtstaff').val(data["staffId"]);
+                        $('#txtstaff').prop("readonly", true);
+                          $('#txtdesg').val(data["agencyOfficerDesig"]);
+                         $("#txtname").val(data["agencyOfficerName"]);
+                        $("#txtaddr1").val(data["address1"]);
+                        $("#txtaddr2").val(data["address2"]);
+                        $('#nationChange').val(data["nationalityId"]);
+                        MyFunctionNationality();
+                        $("#myState").val(data["statesId"]);
+                        MyFunctionState();
+                        $("#myLGA").val(data["city"]);
+                        $("#txtzip").val(data["zipCode"]);
+                        $("#txtphone1").val(data["phoneNo"]);
+                        $("#txtemail").val(data["email"]);
+                        document.getElementById('divinput').style.display = "block";
+                        document.getElementById('divgrid').style.display = "none";
+                        serialNo = $(this).closest('tr').find('.se_no').text();
+                    },
+                });
+             return false;
+         })
+         $("#drptype1" ).on('change', function (e) {
+             e.preventDefault();
+            
+            // alert("i changee2");
+        var readid = document.getElementById('readid').value;
+        var txtstaff = document.getElementById('txtstaff').value;
+             if (readid == "")
+             {
+                  formNew();
+                 $('#txtstaff').prop("readonly", false);
+                 $('#txtstaff').val(txtstaff);
+                 $("#Btnsave").show();
+                 $("#Btnupdate").hide();
+                 return false;
+            }
+             else {
+                 //formNew();
+                 //$("#drptype").val("");
+                 var d = {
+                    "Id": readid
+                };
+                var baseUrl = window.location.origin;
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/SupervisoryAgencies/' + readid,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        // populate txtbox
+                        $("#Btnsave").hide();
+                        $("#Btnupdate").show();
+                         $("#Btnsave").hide();
+                        $("#Btnupdate").show();
+                        $("#drptype").val(data["agencySuperSetupId"]);
+                        $('#readid').val(data["id"]);
+                        $('#txtstaff').val(data["staffId"]);
+                        $('#txtstaff').prop("readonly", true);
+                          $('#txtdesg').val(data["agencyOfficerDesig"]);
+                         $("#txtname").val(data["agencyOfficerName"]);
+                        $("#txtaddr1").val(data["address1"]);
+                        $("#txtaddr2").val(data["address2"]);
+                        $('#nationChange').val(data["nationalityId"]);
+                        MyFunctionNationality();
+                        $("#myState").val(data["statesId"]);
+                        MyFunctionState();
+                        $("#myLGA").val(data["city"]);
+                        $("#txtzip").val(data["zipCode"]);
+                        $("#txtphone1").val(data["phoneNo"]);
+                        $("#txtemail").val(data["email"]);
+                         
+                    },
+                });
+            }
+         })
+          var availableTags = [];
+         function addAvailableTags(lbl, val) {
+             availableTags.push({ label: lbl, value: val });
+        }
+         @{
+        if (Model.SupervisoryAgencyList != null)
+        {
+            foreach (var item in Model.SupervisoryAgencyList)
+            {
+                @:addAvailableTags('@item.StaffId', '@item.Id');
+            }
+        }
+        else
+        {
+
+        }
+        }
+        $("#txtcode" ).autocomplete({
+            source: availableTags,
+            select: function (event, ui) {
+                $('#txtcode').val(ui.item.label);
+                $('#readid').val(ui.item.value);
+                return false;
+            }
+        });
+     });
+     function MyFunctionNationality() {
+        var nationId = document.getElementById('nationChange').value;
+        var d = {
+            "Id": nationId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/States/' + nationId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                //console.log(data);
+                 $('#myState').empty();
+                $('#myState').append('<option value="">--Select--</option>');
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value="">--Select--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myState').empty();
+                    $('#myState').append('<option value="">--Select--</option>');
+                }
+                $('#myState').append(option);
+
+            },
+        });
+
+    }
+    function MyFunctionState() {
+        var stateId = document.getElementById('myState').value;
+        // alert(stateId);
+        var d = {
+            "Id": stateId
+        };
+        var baseUrl = window.location.origin;
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/Api/LGAs/' + stateId,
+            data: JSON.stringify(d),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: 'json',
+            error: function (data) {
+                alert(data.responseText);
+            },
+            failure: function (data) {
+                alert(data.responseText);
+            },
+            success: function (data) {
+                // console.log(data);
+                $('#myLGA').empty();
+                $('#myLGA').append('<option value="">--Select--</option>');
+                var option = '';
+                for (var i = 0; i < data.length; i++) {
+                    option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
+                }
+                //alert(option);
+                if (option == "") {
+                    $('#myLGA').empty();
+                    $('#myLGA').append('<option value="">--Select--</option>');
+                }
+
+                //$('#myLGA').append('<option value="">--Select LGA--</option>');
+                $('#myLGA').append(option);
+
+            },
+        });
+
+    }
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
