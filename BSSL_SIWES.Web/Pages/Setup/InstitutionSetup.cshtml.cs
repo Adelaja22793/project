@@ -37,7 +37,14 @@ namespace BSSL_SIWES.Web
             //ViewData["AffililateInst"] = new SelectList(_context.Affililate, "Id", "Name");
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
             InstitutionList = await _context.Institution.ToListAsync();
-            return Page();
+            if (InstitutionList == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Page();
+            }
         }
         public async Task<IActionResult> OnPostAsync(int? id, Institution Institution)
         {
