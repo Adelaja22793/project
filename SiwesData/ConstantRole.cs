@@ -12,6 +12,7 @@ namespace SiwesData
         public static string Admin = "Admin";
         public static string SchSuper = "SchSuper";
         public static string EmpSuper = "EmpSuper";
+        public static string AgencySuper = "AgencySuper";
 
     }
 }

@@ -17,6 +17,8 @@ namespace SiwesData.Setup
         public string Address2 { get; set; }
         public int? NationalityId { get; set; }
         public int? StatesId { get; set; }
+        public int? City { get; set; }
+        public int? ZipCode { get; set; }
         public string PhoneNo { get; set; }
         public string Email { get; set; }
 

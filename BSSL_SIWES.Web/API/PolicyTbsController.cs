@@ -71,7 +71,7 @@ namespace BSSL_SIWES.Web.API
                 }
             }
 
-            return NoContent();
+            return Ok(policyTb);
         }
 
         // POST: api/PolicyTbs

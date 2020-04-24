@@ -62,8 +62,15 @@ namespace BSSL_SIWES.Web
             if (!_context.Roles.Any(r => r.Name == ConstantRole.SchSuper))
             {
                 var role = new RoleTb();
-                role.Name = ConstantRole.SchSuper.ToString().Trim();
-                role.RoleId = "SchSuper";
+                role.Name ="School Supervisor";
+                role.RoleId = ConstantRole.SchSuper.ToString().Trim();
+                await _roleManager.CreateAsync(role);
+            }
+            if (!_context.Roles.Any(r => r.Name == ConstantRole.AgencySuper))
+            {
+                var role = new RoleTb();
+                role.Name = "Agency Supervisor";
+                role.RoleId = "Ags001";
                 await _roleManager.CreateAsync(role);
             }
             var getadmin = await _userManager.FindByEmailAsync("admin@bssl.com.ng");
