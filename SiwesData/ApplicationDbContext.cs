@@ -37,7 +37,7 @@ namespace SiwesData
         public DbSet<Students.Form8> Form8 { get; set; }
         public DbSet<Students.SupervisorVisit> SupervisorVisits { get; set; }
         //public DbSet<ITFStaff.ItfStaff> ItfStaff { get; set; }
-
+        public DbSet<Setup.BankSetUp> BankSetUp { get; set; }
         public DbSet<Employer.EmployerSuperSetup> EmployerSuperSetups { get; set; }
         public DbSet<Employer.EmployerSupervisor> EmployerSupervisors { get; set; }
 

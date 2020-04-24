@@ -31,6 +31,10 @@ namespace SiwesData.Students
         public int? EmployerSuperSetupId { get; set; }
         public int? OldInstitutionOfficerId { get; set; }
         public DateTime DateChanged { get; set; }
+        public int? BankSetUpId { get; set; }
+        public string AccountNo { get; set; }
+        public string AccountName { get; set; }
+        public string SwitchCode { get; set; }
         public Setup.Courses Courses { get; set; }
         //public Setup.Nationality Nationalities { get; set; }
         public Setup.LGA LGA { get; set; }
@@ -38,5 +42,6 @@ namespace SiwesData.Students
         //public Setup.State State { get; set; }
         public Setup.InstitutionOfficer InstitutionOfficer { get; set; }
         public Employer.EmployerSuperSetup EmployerSuperSetup { get; set; }
+        public Setup.BankSetUp BankSetUp { get; set; }
     }
 }

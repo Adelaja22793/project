@@ -1,0 +1,50 @@
+﻿@page
+@model BSSL_SIWES.Web.Pages.Employer.EmployerListModel
+@{
+    ViewData["Title"] = "EmployerList";
+}
+    <div class="col-md-12">
+        <form role="form" method="post">
+            <div class="justify-content-center" style="margin-left:40%; margin-top:0.1%;margin-bottom:1%">
+                <button type="submit" asp-page-handler="CreateNewStudent" class="btn btn-warning">Create/Update Employer Record</button>
+            </div>
+        </form>
+        <div class="card card-primary">
+
+            <div style="display:table; margin:0 auto; width:100%; font-size:medium" id="printer">
+                <table id="officerTab" class="table table-bordered" border="0">
+                    <thead style="background-color:steelblue;">
+                        <tr>
+                            <th style="width:0.25%; text-align:center">S/N</th>
+                            <th style="width:10%; text-align:center">RC. Number</th>
+                            <th style="width:20%; text-align:center">Employer Name</th>
+                            <th style="width:10%; text-align:center">State</th>
+                            <th style="width:20%; text-align:center">Address</th>
+                            <th style="width:12%; text-align:center">Phone No.</th>
+                            <th style="width:10%; text-align:center">Official Email</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size:x-small">
+                        @for (int i = 0; i < Model.EmployerSuperSetupList.Count; i++)
+                        {
+                            var items = Model.EmployerSuperSetupList[i];
+                            <tr>
+
+                                <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                <td class="offName @i" style="width:10%; text-align:left">@items.Code</td>
+                                <td class="instName @i" style="width:20%; text-align:left">@items.Name</td>
+                                <td class="courseName @i" style="width:10%; text-align:left">@items.LGA.State.Name</td>
+                                <td class="schoolName @i" style="width:20%; text-align:left">@items.Address1</td>
+                                <td class="level @i" style="width:10%; text-align:left">@items.PhoneNo</td>
+                                <td class="supervisedBy @i" style="width:10%; text-align:left">@items.Email</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="justify-content-center" style="margin-left:40%; margin-bottom:3%;">
+                <button type="button" class="btn btn-success" onclick="printDiv()"> Print and Preview Employer List</button>
+            </div>
+        </div>
+    </div>
+

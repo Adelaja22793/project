@@ -16,18 +16,19 @@ namespace SiwesData.Setup
         public string IntOfficerDesig { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
-        public int? NationalityId { get; set; }
-        public int? StatesId { get; set; }
+        public int? LGAId { get; set; }
+       // public int? StatesId { get; set; }
         public string PhoneNo { get; set; }
         public string Email { get; set; }
-        public string BankName { get; set; }
+        public int? BankSetUpId { get; set; }
         public string AccountNo { get; set; }
         public string AccountName { get; set; }
         public string SwitchCode { get; set; }
         public int? NumberOfStudent { get; set; }
+        public string ReasonDeactivate { get; set; }
 
-        public Setup.Institution Institution { get; set; }
-        public Setup.Nationality Nationality { get; set; }
-        public Setup.State States { get; set; }
+        public Institution Institution { get; set; }
+        public LGA LGA { get; set; }
+        public BankSetUp BankSetUp { get; set; }
     }
 }

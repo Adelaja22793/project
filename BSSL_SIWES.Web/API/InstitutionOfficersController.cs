@@ -57,32 +57,43 @@ namespace BSSL_SIWES.Web.API
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInstitutionOfficer(int id, InstitutionOfficer institutionOfficer)
+        public async Task<IActionResult> PutInstitutionOfficer(int? id, InstitutionOfficer institutionOfficer)
         {
-            if (id != institutionOfficer.Id)
+            if (id == null)
             {
-                return BadRequest();
+                return BadRequest("Intitution Officer is Empty");
             }
-
-            _context.Entry(institutionOfficer).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InstitutionOfficerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var updateOfficerRecord = await _context.InstitutionOfficers.FirstOrDefaultAsync(m => m.Id == id);
 
-            return NoContent();
+                if (updateOfficerRecord == null)
+                {
+                    return NotFound($"Officer Not Found For The Selected Id {id}");
+                }
+                updateOfficerRecord.InstitutionId = institutionOfficer.InstitutionId;
+                updateOfficerRecord.OfficerType = institutionOfficer.OfficerType;
+                updateOfficerRecord.IntOfficerName = institutionOfficer.IntOfficerName;
+                updateOfficerRecord.Address1 = institutionOfficer.Address1;
+                updateOfficerRecord.IntOfficerDesig = institutionOfficer.IntOfficerDesig;
+                updateOfficerRecord.PhoneNo = institutionOfficer.PhoneNo;
+                updateOfficerRecord.Email = institutionOfficer.Email;
+                //Change the stateID to LGA
+                updateOfficerRecord.LGAId = institutionOfficer.LGAId;
+                updateOfficerRecord.AccountName = institutionOfficer.AccountName;
+                updateOfficerRecord.BankSetUpId = institutionOfficer.BankSetUpId;
+                updateOfficerRecord.AccountNo = institutionOfficer.AccountNo;
+                updateOfficerRecord.SwitchCode = institutionOfficer.SwitchCode;
+                updateOfficerRecord.NumberOfStudent = institutionOfficer.NumberOfStudent;
+                await _context.SaveChangesAsync();
+
+                return Ok(updateOfficerRecord);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST: api/InstitutionOfficers
@@ -103,9 +114,9 @@ namespace BSSL_SIWES.Web.API
                     PhoneNo = institutionOfficer.PhoneNo,
                     Email = institutionOfficer.Email,
                     //Change the stateID to LGA
-                    StaffId = institutionOfficer.StaffId, 
+                    LGAId = institutionOfficer.LGAId, 
                     AccountName = institutionOfficer.AccountName,
-                    //BankName = institutionOfficer.BankName,
+                    BankSetUpId = institutionOfficer.BankSetUpId,
                     AccountNo = institutionOfficer.AccountNo,
                     SwitchCode=institutionOfficer.SwitchCode,
                     NumberOfStudent = institutionOfficer.NumberOfStudent,
