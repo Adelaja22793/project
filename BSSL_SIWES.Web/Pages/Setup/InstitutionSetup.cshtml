@@ -7,338 +7,321 @@
     ViewData["Title"] = "InstitutionSetup";
 }
 
-<div class="col-md-12">
-    <!-- general form elements -->
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Institution Setup</h3>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <form role="form" method="post">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Institution Type</label>
-                            <select asp-for="Institution.InstTypeSetupId" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                    asp-items="ViewBag.Types" style="width: 100%; text-transform:uppercase" id="drptype">
-                                <option selected="selected" value="">-- Select--</option>
-                            </select>
-                            <span asp-validation-for="Institution.InstTypeSetupId" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Institution Code</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.Code" type="text" id="txtcode" class="form-control" onchange="MyFunctionChange()">
-                                <input id="readid" type="hidden" class="form-control" />
-                            </div>
-                            <span asp-validation-for="Institution.Code" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Short Code</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.ShortCode" type="text" id="txtshortcode" class="form-control" placeholder="Short Code">
-                            </div>
-                            <span asp-validation-for="Institution.ShortCode" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Institution Name</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input asp-for="Institution.Name" type="text" id="txtinstiname" class="form-control" placeholder="Institution Name">
-                            </div>
-                            <span asp-validation-for="Institution.Name" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Address 1</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.Address1" type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
-                            </div>
-                            <span asp-validation-for="Institution.Address1" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Address 2</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input  asp-for="Institution.Address2" type="text" id="txtaddr2" class="form-control" placeholder="Address 2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Country</label>
-                            <div class="select2-purple">
-
-                                @if (ViewBag.NationalityId != null)
-                                {
-                                    <select asp-for="Institution.Country" class="form-control"
-                                            asp-items="ViewBag.NationalityId" style="width: 100%; text-transform:uppercase"
-                                            onchange="MyFunctionNationality()" id="nationChange">
-                                        <option selected="selected" value="">-- Select Nationality--</option>
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Institution Setup</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="post">
+                <div class="card-body">
+                    <div id="divinput">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Institution Type</label>
+                                    <select asp-for="Institution.InstTypeSetupId" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.Types" style="width: 100%; text-transform:uppercase" id="drptype">
+                                        <option selected="selected" value="">-- Select--</option>
                                     </select>
-                                    <span asp-validation-for="Institution.Country" class="text-danger"></span>
-                                }
-                                else
-                                {
-                                    <select class="form-control"
-                                            style="width: 100%; text-transform:uppercase"
-                                            id="nationChange">
-                                        <option selected="selected" value="">-- Select Nationality--</option>
-                                    </select>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>State</label>
-                            <div class="select2-purple">
-                                <select asp-for="Institution.State" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                        id="myState" style="width: 100%;" onchange="MyFunctionState()">
-                                    <option selected="selected" value="">-- Select--</option>
-                                </select>
-                            </div>
-                            <span asp-validation-for="Institution.State" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>City</label>
-                            <div class="select2-purple">
-                                <select asp-for="Institution.City" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                        id="myLGA" style="width: 100%;">
-                                    <option selected="selected" value="">--Select--</option>
-                                </select>
-                            </div>
-                            <span asp-validation-for="Institution.City" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Zip Cope</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.ZipCode" type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.PhoneNo1" type="text" id="txtphone1" class="form-control" placeholder="Enter Phone No.">
-                            </div>
-                            <span asp-validation-for="Institution.PhoneNo1" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.PhoneNo2" type="text" id="txtphone2" class="form-control" placeholder="Enter Phone No.">
-                            </div>
-                            <span asp-validation-for="Institution.PhoneNo2" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.Email" type="text" id="txtemail" class="form-control">
-                            </div>
-                            <span asp-validation-for="Institution.Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Website</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.Website"  type="text" id="txtwebsite" class="form-control" placeholder="Website">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @*<div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Name of Contact Person</label>
-                                <div class="input-group">
-                                    <input type="text" id="txtContactname" class="form-control" placeholder="Name of Contact Person">
+                                    <span asp-validation-for="Institution.InstTypeSetupId" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Phone Number</label>
-                                <div class="input-group">
-                                    <input type="text" id="txtContactphone" class="form-control" placeholder="Phone Number of Contact Person">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>E-mail</label>
-                                <div class="input-group">
-                                    <input type="text" id="txtContactemail" class="form-control" placeholder="E-mail">
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Supervisory Agency Officer</label>
-                            <select asp-for="Institution.Superagency" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                    asp-items="ViewBag.SuperAgencies" style="width: 100%; text-transform:uppercase" id="drpSuperagency">
-                                <option selected="selected" value="">-- Select--</option>
-                            </select>
-                            <span asp-validation-for="Institution.Superagency" class="text-danger"></span>
-                        </div>
-                    </div>
-               
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="exampleInputFile">ITF Area Office Attached to</label>
-                            <select asp-for="Institution.AreaOffice" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                    asp-items="ViewBag.AreaOffices" style="width: 100%; text-transform:uppercase" id="drpareaoffice">
-                                <option selected="selected" value="">-- Select--</option>
-                            </select>
-                            <span asp-validation-for="Institution.AreaOffice" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Specify Affiliate Institution</label>
-                            <select asp-for="Institution.AffiliateInst" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                    asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpaffiliate">
-                                <option selected="selected" value="">-- Select--</option>
-                            </select>
-                            <span asp-validation-for="Institution.AffiliateInst" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Specify Carrying Capacity</label>
-                            <div class="input-group">
-                                <input asp-for="Institution.CapacityNo" type="text" id="txtcapacity" class="form-control" placeholder="">
-                            </div>
-                            <span asp-validation-for="Institution.CapacityNo" class="text-danger"></span>
-                        </div>
-                    </div>
-                    @*<div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Deactivate Agency?</label>
-                                <div class="select2-purple">
-                                    <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                            style="width: 100%;" id="txtdrpdeact">
-                                        <option selected="selected" value="0">NO</option>
-                                        <option value="1">YES</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="exampleInputFile">Date Deactivated</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Institution Code</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.Code" type="text" id="txtcode" class="form-control" onchange="MyFunctionChange()">
+                                        <input id="readid" type="hidden" class="form-control" />
                                     </div>
-                                    <input type="date" id="txtdeactDate" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
+                                    <span asp-validation-for="Institution.Code" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>*@
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Short Code</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.ShortCode" type="text" id="txtshortcode" class="form-control" placeholder="Short Code">
+                                    </div>
+                                    <span asp-validation-for="Institution.ShortCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Institution Name</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.Name" type="text" id="txtinstiname" class="form-control" placeholder="Institution Name">
+                                    </div>
+                                    <span asp-validation-for="Institution.Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Address 1</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.Address1" type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
+                                    </div>
+                                    <span asp-validation-for="Institution.Address1" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Address 2</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.Address2" type="text" id="txtaddr2" class="form-control" placeholder="Address 2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <div class="select2-purple">
+
+                                        @if (ViewBag.NationalityId != null)
+                                        {
+                                            <select asp-for="Institution.Country" class="form-control"
+                                                    asp-items="ViewBag.NationalityId" style="width: 100%;"
+                                                    onchange="MyFunctionNationality()" id="nationChange">
+                                                <option selected="selected" value="">-- Select --</option>
+                                            </select>
+                                            <span asp-validation-for="Institution.Country" class="text-danger"></span>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-control"
+                                                    style="width: 100%; text-transform:uppercase"
+                                                    id="nationChange">
+                                                <option selected="selected" value="">-- Select Nationality--</option>
+                                            </select>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    <div class="select2-purple">
+                                        <select asp-for="Institution.State" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                                id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                            <option selected="selected" value="">-- Select--</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Institution.State" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <div class="select2-purple">
+                                        <select asp-for="Institution.City" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                                id="myLGA" style="width: 100%;">
+                                            <option selected="selected" value="">--Select--</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Institution.City" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Zip Cope</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.ZipCode" type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.PhoneNo1" type="text" id="txtphone1" class="form-control" placeholder="Enter Phone No.">
+                                    </div>
+                                    <span asp-validation-for="Institution.PhoneNo1" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.PhoneNo2" type="text" id="txtphone2" class="form-control" placeholder="Enter Phone No.">
+                                    </div>
+                                    <span asp-validation-for="Institution.PhoneNo2" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.Email" type="text" id="txtemail" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="Institution.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Website</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.Website" type="text" id="txtwebsite" class="form-control" placeholder="Website">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Name of Contact Person</label>
+                    <div class="input-group">
+                        <input type="text" id="txtContactname" class="form-control" placeholder="Name of Contact Person">
+                    </div>
                 </div>
             </div>
-            <!-- /.card-body -->
-            <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
-                <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
-                <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="input-group">
+                        <input type="text" id="txtContactphone" class="form-control" placeholder="Phone Number of Contact Person">
+                    </div>
+                </div>
             </div>
-        </form>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <div class="input-group">
+                        <input type="text" id="txtContactemail" class="form-control" placeholder="E-mail">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Supervisory Agency Officer</label>
+                                    <select asp-for="Institution.Superagency" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.SuperAgencies" style="width: 100%; text-transform:uppercase" id="drpSuperagency">
+                                        <option selected="selected" value="">-- Select--</option>
+                                    </select>
+                                    <span asp-validation-for="Institution.Superagency" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">ITF Area Office Attached to</label>
+                                    <select asp-for="Institution.AreaOffice" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.AreaOffices" style="width: 100%; text-transform:uppercase" id="drpareaoffice">
+                                        <option selected="selected" value="">-- Select--</option>
+                                    </select>
+                                    <span asp-validation-for="Institution.AreaOffice" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Specify Affiliate Institution</label>
+                                    <select asp-for="Institution.AffiliateInst" class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                            asp-items="ViewBag.CourseGroup" style="width: 100%; text-transform:uppercase" id="drpaffiliate">
+                                        <option selected="selected" value="">-- Select--</option>
+                                    </select>
+                                    <span asp-validation-for="Institution.AffiliateInst" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Specify Carrying Capacity</label>
+                                    <div class="input-group">
+                                        <input asp-for="Institution.CapacityNo" type="text" id="txtcapacity" class="form-control" placeholder="">
+                                    </div>
+                                    <span asp-validation-for="Institution.CapacityNo" class="text-danger"></span>
+                                </div>
+                            </div>
+                            @*<div class="col-sm-4">
+                <div class="form-group">
+                    <label>Deactivate Agency?</label>
+                    <div class="select2-purple">
+                        <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                style="width: 100%;" id="txtdrpdeact">
+                            <option selected="selected" value="0">NO</option>
+                            <option value="1">YES</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="exampleInputFile">Date Deactivated</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="date" id="txtdeactDate" onchange="MyFunctionCommDate()" class="form-control" placeholder="Enter Date">
+                    </div>
+                </div>
+            </div>*@
+                        </div>
+
+                        <!-- /.card-body -->
+                        <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                            <button type="button" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
+                            <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                            <button type="button" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                        </div>
+                    </div>
+                    <div class="row" id="divgrid" style="display:none">
+                        <div class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                            <button type="button" id="BtnNew" class="btn btn-primary button button4">Create New Records</button>
+                        </div>
+
+                        <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                            <table id="tabId" class="table table-bordered" border="0">
+                                <thead style="background-color:steelblue;">
+                                    <tr>
+                                        <th style="width:0.25%; text-align:center">S/N</th>
+                                        <th style="width:10%; text-align:center">Actions</th>
+                                        <th style="width:20%; text-align:center">Code</th>
+                                        <th style="width:40%; text-align:center">Name</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.InstitutionList.Count; i++)
+                                    {
+                                        var items = Model.InstitutionList[i];
+                                        <tr>
+                                            <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                            <td style="width:5%;">
+                                                <input type="hidden" class="readid @i" value="@items.Id">
+                                                <a id="myEdit" href="/Setup/InstitutionSetup" AddreEdit="@i">Edit</a>
+                                            </td>
+                                            <td class="tabcode @i" style="width:20%; text-align:left">@items.Code</td>
+                                            <td class="tabname @i" style="width:60%; text-align:left">@items.Name</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
     </div>
 </div>
 <script type="text/javascript">
      $(document).ready(function () {
          formClear();
-         function MyFunctionChange() {
-        var readid = document.getElementById('readid').value;
-        var txtcode = document.getElementById('txtcode').value;
-             if (readid == "")
-             {
-                  $('#txtcode').prop("readonly", false);
-                 $('#txtcode').val(txtcode);
-                 $("#Btnsave").show();
-                 $("#Btnupdate").hide();
-            //var confirmation = confirm("Institution DO NOT EXIST. DO YOU WANT " + courseName.toUpperCase() + " TO BE SET UP AS A COURSE?");
-            //if (confirmation === false) {
-            //    return false;
-            //}
-            //else {
-            //    $("#loginModal").modal('show');
-
-            //    $('#courseAddReq').val(courseName);
-            //    return false;
-            //}
-            }
-             else {
-                 var d = {
-                    "Id": readid
-                };
-                var baseUrl = window.location.origin;
-                $.ajax({
-                    type: "GET",
-                    url: baseUrl + '/Api/Institutions/' + readid,
-                    data: JSON.stringify(d),
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    contentType: 'json',
-                    error: function (data) {
-                        alert(data.responseText);
-                    },
-                    failure: function (data) {
-                        alert(data.responseText);
-                    },
-                    success: function (data) {
-                        // populate txtbox
-                        $("#Btnsave").hide();
-                        $("#Btnupdate").show();
-                        $('#txtcode').val(txtcode);
-                        $('#txtcode').prop("readonly", true);
-                        $('#txtshortcode').val(data["id"]);
-                    },
-                });
-            }
-    }
          function formClear() {
             // $("#drpcate").val("");
              $("#drptype").val("");
@@ -355,9 +338,6 @@
              $("#txtphone2").val("");
              $("#txtemail").val("");
              $("#txtwebsite").val("");
-             //$("#txtContactname").val("");
-             //$("#txtContactphone").val("");
-             //$("#txtContactemail").val("");
              $("#drpSuperagency").val("");
              $("#drpareaoffice").val("");
              $("#drpaffiliate").val("");
@@ -367,7 +347,20 @@
 
              $("#Btnsave").show();
              $("#Btnupdate").hide();
+             document.getElementById('divgrid').style.display = "block";
+             document.getElementById('divinput').style.display = "none";
          }
+          $('#BtnNew').on('click', function (e) {
+                document.getElementById('divinput').style.display = "block";
+                document.getElementById('divgrid').style.display = "none";
+                e.preventDefault();
+            });
+            $('#BtnCancel').on('click', function (e) {
+                document.getElementById('divgrid').style.display = "block";
+                document.getElementById('divinput').style.display = "none";
+                e.preventDefault();
+                formClear();
+            });
          $('#Btnsave1').on('click', function (e) {
              e.preventDefault();
              var txtcode = document.getElementById('txtcode').value;
@@ -434,7 +427,7 @@
                  },
              });
          });
-         $('#Btnupdate1').on('click', function (e) {
+         $('#Btnupdate').on('click', function (e) {
             e.preventDefault();
              var readid = document.getElementById('readid').value;
              var txtcode = document.getElementById('txtcode').value;
@@ -475,19 +468,17 @@
                     "Website": txtwebsite,
                     "Superagency": drpSuperagency,
                     "AreaOffice": drpareaoffice,
-                  "AffiliateInst": drpaffiliate,
-                  "CapacityNo": Number(txtcapacity),
+                    "AffiliateInst": drpaffiliate,
+                    "CapacityNo": Number(txtcapacity),
                     //"Deactivate": txtdrpdeact,
                     //"Datedectivated": txtdeactDate,
                     "InstTypeSetupId": drptype,
              };
-            //alert(editindex); alert(txtname); alert(txtcode); alert(drpListCat); alert(drpAgency);
-            //return false;
             var t = serialNo - 1;
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "PUT",
-                url: baseUrl + '/Api/Institutions/ ' + readid,
+                url: baseUrl + '/Api/Institutions/' + readid,
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true
@@ -501,12 +492,135 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                   // $('.readid.' + t).text(data["id"]);
+                    alert(" Record Updated Successfully");
+                    $('.readid.' + t).text(data["id"]);
+                        $('.tabcode.' + t).text(data["code"]);
+                        $('.tabname.' + t).text(data["name"]);
+                        formClear();
                     $('#txtcode').prop("readonly", true);
-                    formClear();
+                    document.getElementById('divgrid').style.display = "block";
+                    document.getElementById('divinput').style.display = "none";
+                    location.reload();
                 },
             });
-         });
+        });
+         $("#tabId").on('click', '#myEdit', function () {
+             var editindex = $(this).attr('AddreEdit');
+             var readid = $('.readid.' + editindex).val();
+             document.getElementById('divinput').style.display = "block";
+            document.getElementById('divgrid').style.display = "none";
+            serialNo = $(this).closest('tr').find('.se_no').text();
+             var d = {
+                    "Id": readid
+                };
+                var baseUrl = window.location.origin;
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/Institutions/' + readid,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        // populate txtbox
+                        $("#Btnsave").hide();
+                        $("#Btnupdate").show();
+                        $("#drptype").val(data["InstTypeSetupId"]);
+                        $('#readid').val(data["id"]);
+                        $('#txtcode').val(data["code"]);
+                        $('#txtcode').prop("readonly", true);
+                          $('#txtshortcode').val(data["shortCode"]);
+                         $("#txtinstiname").val("");
+                        $("#txtaddr1").val(data["address1"]);
+                        $("#txtaddr2").val(data["address2"]);
+                        $('#nationChange').val(data["country"]);
+                        MyFunctionNationality();
+                        $("#myState").val(data["state"]);
+                        MyFunctionState();
+                        $("#myLGA").val(data["city"]);
+                        $("#txtzip").val(data["zipCode"]);
+                        $("#txtphone1").val(data["phoneNo"]);
+                        $("#txtemail").val(data["email"]);
+                        $("#txtwebsite").val(data["webAddress"]);
+                        
+                         $("#drpSuperagency").val(data["superAgency"]);
+                         $("#drpareaoffice").val(data["areaOffice"]);
+                         $("#drpaffiliate").val(data["affiliateInst"]);
+                        $("#txtcapacity").val(data["capacityNo"]);
+                        document.getElementById('divinput').style.display = "block";
+                        document.getElementById('divgrid').style.display = "none";
+                        serialNo = $(this).closest('tr').find('.se_no').text();
+                    },
+                });
+             return false;
+         })
+         $("#txtcode" ).on('change', function (e) {
+             e.preventDefault();
+            // alert("i changee2");
+        var readid = document.getElementById('readid').value;
+        var txtcode = document.getElementById('txtcode').value;
+             if (readid == "")
+             {
+                 $('#txtcode').prop("readonly", false);
+                 $('#txtcode').val(txtcode);
+                 $("#Btnsave").show();
+                 $("#Btnupdate").hide();
+            }
+             else {
+                 var d = {
+                    "Id": readid
+                };
+                var baseUrl = window.location.origin;
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/Institutions/' + readid,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        // populate txtbox
+                        $("#Btnsave").hide();
+                        $("#Btnupdate").show();
+                        $("#drptype").val(data["InstTypeSetupId"]);
+                        $('#readid').val(data["id"]);
+                        $('#txtcode').val(data["code"]);
+                        $('#txtcode').prop("readonly", true);
+                          $('#txtshortcode').val(data["shortCode"]);
+                         $("#txtinstiname").val("");
+                        $("#txtaddr1").val(data["address1"]);
+                        $("#txtaddr2").val(data["address2"]);
+                        $('#nationChange').val(data["country"]);
+                        MyFunctionNationality();
+                        $("#myState").val(data["state"]);
+                        MyFunctionState();
+                        $("#myLGA").val(data["city"]);
+                        $("#txtzip").val(data["zipCode"]);
+                        $("#txtphone1").val(data["phoneNo"]);
+                        $("#txtemail").val(data["email"]);
+                        $("#txtwebsite").val(data["webAddress"]);
+                        $("#drpSuperagency").val(data["superAgency"]);
+                         $("#drpareaoffice").val(data["areaOffice"]);
+                         $("#drpaffiliate").val(data["affiliateInst"]);
+                        $("#txtcapacity").val(data["capacityNo"]);
+                    },
+                });
+            }
+         })
           var availableTags = [];
          function addAvailableTags(lbl, val) {
              availableTags.push({ label: lbl, value: val });

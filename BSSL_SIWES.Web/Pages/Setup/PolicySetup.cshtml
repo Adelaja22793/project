@@ -187,7 +187,165 @@
 
     </div>
 </div>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        formClear();
+        function formClear() {
+             $("#txtcode").val("");
+             $("#txtshortcode").val("");
+             $("#txtname").val("");
+             $("#txtaddr1").val("");
+             $("#txtaddr2").val("");
+             $("#nationChange").val("");
+             $("#myState").val("");
+             $("#myLGA").val("");
+             $("#txtzip").val("");
+             $("#txtphone1").val("");
+             $("#txtemail").val("");
+             $("#txtwebsite").val("");
+             $("#txtContactname").val("");
+             $("#txtContactphone").val("");
+             $("#txtContactemail").val("");
+             //$("#txtdrpdeact").val("0");
+             //$("#txtdeactDate").val("");
 
+             $("#Btnsave").show();
+             $("#Btnupdate").hide();
+            }
+        $('#BtnCancel').on('click', function (e) {
+                e.preventDefault();
+                formClear();
+            });
+        $('#Btnupdate').on('click', function (e) {
+            e.preventDefault();
+             var readid = document.getElementById('readid').value;
+              var txtcode = document.getElementById('txtcode').value;
+             var txtshortcode = document.getElementById('txtshortcode').value;
+             var txtname = document.getElementById('txtname').value;
+             var txtaddr1 = document.getElementById('txtaddr1').value;
+             var txtaddr2 = document.getElementById('txtaddr2').value;
+             var nationChange = document.getElementById('nationChange').value;
+             var myState = document.getElementById('myState').value;
+             var myLGA = document.getElementById('myLGA').value;
+             var txtzip = document.getElementById('txtzip').value;
+             var txtphone1 = document.getElementById('txtphone1').value;
+             var txtemail = document.getElementById('txtemail').value;
+             var txtwebsite = document.getElementById('txtwebsite').value;
+             var txtContactname = document.getElementById('txtContactname').value;
+             var txtContactphone = document.getElementById('txtContactphone').value;
+             var txtContactemail = document.getElementById('txtContactemail').value;
+             //var txtdrpdeact = document.getElementById('txtdrpdeact').value;
+             //var txtdeactDate = document.getElementById('txtdeactDate').value;
+
+              var d = {
+                    "Id": Number(readid),
+                "Code": txtcode,
+                "ShortCode": txtshortcode,
+                "Name": txtname,
+                "Address1": txtaddr1,
+                "Address2": txtaddr2,
+                "Country": nationChange,
+                "State": myState,
+                "City": myLGA,
+                "ZipCode": txtzip,
+                "PhoneNo": txtphone1,
+                "Email": txtemail,
+                "WebAddress": txtwebsite,
+                "NameOfCPerson": txtContactname,
+                "CPersonPhone": txtContactphone,
+                "CPersonEmail": txtContactemail,
+                //"Deactivate": txtdrpdeact,
+                //"DeactDate": txtdeactDate,
+             };
+            //alert(editindex); alert(txtname); alert(txtcode); alert(drpListCat); alert(drpAgency);
+            //return false;
+            var t = serialNo - 1;
+            var baseUrl = window.location.origin;
+            $.ajax({
+                type: "PUT",
+                url: baseUrl + '/Api/AgencySuperSetups/' + readid,
+                data: JSON.stringify(d),
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json; charset=utf-8",
+                error: function (data) {
+                    alert(data.responseText);
+
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                },
+                success: function (data) {
+                    alert(" Record Updated Successfully");
+                    $('.readid.' + t).text(data["id"]);
+                        $('.tabcode.' + t).text(data["code"]);
+                        $('.tabname.' + t).text(data["name"]);
+                        formClear();
+                    $('#txtcode').prop("readonly", true);
+                    document.getElementById('divgrid').style.display = "block";
+                    document.getElementById('divinput').style.display = "none";
+                    location.reload();
+                },
+            });
+        });
+         $("#txtcode" ).on('change', function (e) {
+             e.preventDefault();
+            // alert("i changee2");
+        var readid = document.getElementById('readid').value;
+        var txtcode = document.getElementById('txtcode').value;
+             if (readid == "")
+             {
+                 $('#txtcode').prop("readonly", false);
+                 $('#txtcode').val(txtcode);
+                 $("#Btnsave").show();
+                 $("#Btnupdate").hide();
+            }
+             else {
+                 var d = {
+                    "Id": readid
+                };
+                var baseUrl = window.location.origin;
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/AgencySuperSetups/' + readid,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        // populate txtbox
+                        $("#Btnsave").hide();
+                        $("#Btnupdate").show();
+                        $('#txtcode').val(txtcode);
+                        $('#txtcode').prop("readonly", true);
+                        $('#txtshortcode').val(data["txtshortcode"]);
+                        $("#txtname").val(data["Name"]);
+                        $("#txtaddr1").val(data["Address1"]);
+                        $("#txtaddr2").val(data["Address2"]);
+                        $('#nationChange').val(data["country"]);
+                        $("#myState").val(data["State"]);
+                        $("#myLGA").val(data["City"]);
+                        $("#txtzip").val(data["ZipCode"]);
+                        $("#txtphone1").val(data["PhoneNo"]);
+                        $("#txtemail").val(data["Email"]);
+                        $("#txtwebsite").val(data["WebAddress"]);
+                        $("#txtContactname").val(data["NameOfCPerson"]);
+                        $("#txtContactphone").val(data["CPersonPhone"]);
+                        $("#txtContactemail").val(data["CPersonEmail"]);
+                    },
+                });
+            }
+         })
+    });
+    </script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

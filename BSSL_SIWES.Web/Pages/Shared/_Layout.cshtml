@@ -373,224 +373,224 @@
                 </li>
             </ul>
         </li>*@
-                        
-                        @if (currole != null )
+
+                        @if (currole != null)
                         {
                             if (currole[0] == ConstantRole.Admin)
                             {
-                        <li class="nav-item has-treeview">
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+                                            Set Up Menu And Sub-menu
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-page="/Setup/Menu" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Menu</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-page="/Setup/Submenu" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Sub-menu</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                        @if (menulist != null)
+                        {
+                            @foreach (var row in menulist)
+                            {
+                                <li class="nav-item has-treeview">
+
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+
+                                        <p>
+                                            @row.MenuName.ToString().Trim()
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+
+                                    </a>
+                                    @foreach (var rsub in menulist3)
+                                    {
+                                        if (row.Menuid.ToString() == rsub.Menuid.ToString()
+                                            && string.IsNullOrEmpty(rsub.Pageurl.ToString().Trim()) == false)
+                                        {
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a asp-page=@rsub.Pageurl.ToString().Trim() class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>
+                                                            @rsub.SubMenuName.ToString()
+                                                            @if (rsub.FormId.ToString().Trim() == "CS001")
+                                                            {
+                                                                <span class="badge-pill badge-danger"> @Counting</span>
+                                                            }
+                                                            @if (rsub.FormId.ToString().Trim() == "EM001")
+                                                            {
+                                                                <span class="badge-pill badge-danger"> @CountingEmployer</span>
+                                                            }
+                                                            @if (rsub.FormId.ToString().Trim() == "CF001")
+                                                            {
+                                                                <span class="badge-pill badge-danger"> @CountingEmployerStudent</span>
+                                                            }
+                                                        </p>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        }
+                                    }
+
+                                </li>
+                            }
+                        }
+                        @* <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
-                                    Set Up Menu And Sub-menu
+                                    Setup
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Setup/Menu" class="nav-link">
+                                    <a asp-page="/Setup/AssignMenu" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Menu</p>
+                                        <p>Assign Menu to Role/Group</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Setup/Submenu" class="nav-link">
+                                    <a asp-page="/Setup/Menu" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Sub-menu</p>
+                                        <p>Setup Menu</p>
                                     </a>
                                 </li>
-                                </ul>
-                            </li>
-                            }
-                        }
-                                @if (menulist != null)
-                                {
-                                    @foreach (var row in menulist)
-                                    {
-                                        <li class="nav-item has-treeview">
-
-                                            <a href="#" class="nav-link">
-                                                <i class="nav-icon fas fa-edit"></i>
-
-                                                <p>
-                                                    @row.MenuName.ToString().Trim()
-                                                    <i class="fas fa-angle-left right"></i>
-                                                </p>
-
-                                            </a>
-                                            @foreach (var rsub in menulist3)
-                                            {
-                                                if (row.Menuid.ToString() == rsub.Menuid.ToString()
-                                                    && string.IsNullOrEmpty(rsub.Pageurl.ToString().Trim()) == false)
-                                                {
-                                                    <ul class="nav nav-treeview">
-                                                        <li class="nav-item">
-                                                            <a asp-page=@rsub.Pageurl.ToString().Trim() class="nav-link">
-                                                                <i class="far fa-circle nav-icon"></i>
-                                                                <p>
-                                                                    @rsub.SubMenuName.ToString()
-                                                                @if (rsub.FormId.ToString().Trim() == "CS001")
-                                                                {
-                                                                    <span class="badge-pill badge-danger"> @Counting</span>
-                                                                }
-                                                                @if (rsub.FormId.ToString().Trim() == "EM001")
-                                                                {
-                                                                    <span class="badge-pill badge-danger"> @CountingEmployer</span>
-                                                                }
-                                                                @if (rsub.FormId.ToString().Trim() == "CF001")
-                                                                {
-                                                                    <span class="badge-pill badge-danger"> @CountingEmployerStudent</span>
-                                                                }
-                                                            </p>
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            }
-                                        }
-
-                                        </li>
-                                    }
-                                }
-                                @*<li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Setup
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a asp-page="/Setup/AssignMenu" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Assign Menu to Role/Group</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/Menu" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Setup Menu</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Setup/SubMenu" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Setup Sub-Menu</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Setup/ProfileRole" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Creating Group/Roles</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/InstitutionCategory" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Institution Category Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/InstitutionTypeSetup" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Institution Type Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/InstitutionSetup" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Institution Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/InstitutionStudyLevel" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Level of Study Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/CourseGrpSetup" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Course Group Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/CourseSetup" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Course Setup<span class="badge-pill badge-danger"> @Counting</span></p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/SupervisoryAgency" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Supervisory Agency Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Institution/SetUpInstOfficer" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>School Cordinator Bio-data</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/PolicySetup" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Policy Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Setup/InstitutionCapacity" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Institution Capacity Setup</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Employer
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a asp-page="/Employer/EmployerSetup" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Employer Setup<span class="badge-pill badge-danger"> @CountingEmployer</span></p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Employer/EmployerSupervisor" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Employer Supervisor Setup</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Employer/Scaff_Form" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Commencement Form<span class="badge-pill badge-danger"> @CountingEmployerStudent</span></p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-page="/Employer/SupervisorCerif" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Approvals</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="/Employer/EmployerForm8" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>ITF FORM 8</p>
-                            </a>
-                        </li>
-                    </ul>
-
-                </li>*@
+                                <li class="nav-item">
+                                    <a href="/Setup/SubMenu" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Setup Sub-Menu</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Setup/ProfileRole" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Creating Group/Roles</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/InstitutionCategory" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Institution Category Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/InstitutionTypeSetup" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Institution Type Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/InstitutionSetup" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Institution Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/InstitutionStudyLevel" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Level of Study Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/CourseGrpSetup" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Course Group Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/CourseSetup" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Course Setup<span class="badge-pill badge-danger"> @Counting</span></p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/SupervisoryAgency" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Supervisory Agency Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Institution/SetUpInstOfficer" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>School Cordinator Bio-data</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/PolicySetup" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Policy Setup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-page="/Setup/InstitutionCapacity" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Institution Capacity Setup</p>
+                                    </a>
+                                </li>
                             </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                    Employer
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a asp-page="/Employer/EmployerSetup" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Employer Setup<span class="badge-pill badge-danger"> @CountingEmployer</span></p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Employer/EmployerSupervisor" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Employer Supervisor Setup</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Employer/Scaff_Form" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Commencement Form<span class="badge-pill badge-danger"> @CountingEmployerStudent</span></p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="/Employer/SupervisorCerif" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Approvals</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Employer/EmployerForm8" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>ITF FORM 8</p>
+                    </a>
+                </li>
+            </ul>
+
+        </li>*@
+                    </ul>
 </nav>
                 <!-- /.sidebar-menu -->
             </div>

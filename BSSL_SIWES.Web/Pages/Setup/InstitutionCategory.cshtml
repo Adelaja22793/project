@@ -35,14 +35,18 @@
                             <span asp-validation-for="InstCatSetup.Name" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <!-- /.card-body -->
+                    <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="button" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
+                        <button type="button" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                        <button type="button" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                    </div>
                 </div>
-                <!-- /.card-body -->
-                <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
-                    <button type="button" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
-                    <button type="button" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
-                    <button type="button" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
-                </div>
-                <div class="row" id="divgrid">
+                <div class="row" id="divgrid" style="display:none">
+                    <div class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="button" id="BtnNew" class="btn btn-primary button button4">Create New Records</button>
+                    </div>
                     <div style="display:table; margin:0 auto; width:100%; font-size:medium">
                         <table id="tabId" class="table table-bordered" border="0">
                             <thead style="background-color:steelblue;">
@@ -92,6 +96,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             formClear();
+            
             function formClear() {
                 $("#txtcode").val("");
                 $("#txtname").val("");
@@ -100,8 +105,18 @@
                 $("#Btnsave").show();
                 $("#Btnupdate").hide();
                 $('#txtcode').prop("readonly", false);
+                document.getElementById('divgrid').style.display = "block";
+                document.getElementById('divinput').style.display = "none";
             }
+            $('#BtnNew').on('click', function (e) {
+                document.getElementById('divinput').style.display = "block";
+                document.getElementById('divgrid').style.display = "none";
+                e.preventDefault();
+                formClear();
+            });
             $('#BtnCancel').on('click', function (e) {
+                document.getElementById('divgrid').style.display = "block";
+                document.getElementById('divinput').style.display = "none";
                 e.preventDefault();
                 formClear();
             });
@@ -180,6 +195,8 @@
                 $('#rowIndex').val(selectedIndex);
                 $('#txtcode').prop("readonly", true);
                 serialNo = $(this).closest('tr').find('.se_no').text();
+                document.getElementById('divinput').style.display = "block";
+                document.getElementById('divgrid').style.display = "none";
                 return false;
 
             });
@@ -197,7 +214,7 @@
                 var baseUrl = window.location.origin;
                 $.ajax({
                     type: "PUT",
-                    url: baseUrl + '/Api/InstCatSetups/ ' + editindex,
+                    url: baseUrl + '/Api/InstCatSetups/' + editindex,
                     data: JSON.stringify(d),
                     xhrFields: {
                         withCredentials: true
