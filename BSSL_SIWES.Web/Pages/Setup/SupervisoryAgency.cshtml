@@ -17,194 +17,233 @@
         <!-- form start -->
         <form role="form" method="post">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Agency Code</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.Code" type="text" id="txtcode" class="form-control"
-                                       style="width: 100%; text-transform:uppercase">
-                                <input id="readid" type="hidden" class="form-control" />
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.Code" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Short Code</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.ShortCode" type="text" id="txtshortcode" class="form-control" placeholder="Short Code">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Agency Name</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.Name" type="text" id="txtname" class="form-control" placeholder="Agency Name">
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.Name" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Address 1</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.Address1" type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.Address1" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Address 2</label>
-                            <div class="input-group">
-                                <input type="text" asp-for="AgencySuperSetup.Address2" id="txtaddr2" class="form-control" placeholder="Address 2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Country</label>
-                            <select class="form-control" asp-for="AgencySuperSetup.Country"
-                                    asp-items="ViewBag.NationalityId" onchange="MyFunctionNationality()" id="nationChange">
-                                <option selected="selected" value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="AgencySuperSetup.Country" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>State</label>
-                            <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                    asp-for="AgencySuperSetup.State" id="myState" style="width: 100%;" onchange="MyFunctionState()">
-                                <option selected="selected" value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="AgencySuperSetup.State" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>City</label>
-                            <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
-                                    asp-for="AgencySuperSetup.City" id="myLGA" style="width: 100%;">
-                                <option selected="selected" value="">--Select--</option>
-                            </select>
-                            <span asp-validation-for="AgencySuperSetup.City" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Zip Cope</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.ZipCode" type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.PhoneNo" type="text" id="txtphone1" class="form-control" placeholder="Enter Phone No.">
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.PhoneNo" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.Email" type="text" id="txtemail" class="form-control">
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Website</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.WebAddress" type="text" id="txtwebsite" class="form-control" placeholder="Website">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Name of Contact Person</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.NameOfCPerson" type="text" id="txtContactname" class="form-control" placeholder="Name of Contact Person">
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.NameOfCPerson" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.CPersonPhone" type="text" id="txtContactphone" class="form-control" placeholder="Phone Number of Contact Person">
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.CPersonPhone" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>E-mail</label>
-                            <div class="input-group">
-                                <input asp-for="AgencySuperSetup.CPersonEmail" type="text" id="txtContactemail" class="form-control" placeholder="E-mail">
-                            </div>
-                            <span asp-validation-for="AgencySuperSetup.CPersonEmail" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    @*<div class="form-group">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" asp-for="AgencySuperSetup.Deactivate" data-val="true" name="Deactivate" data-val-required="The Fever field is required." id="txtdrpdeact" value="true"> Deactivate Agency?
-                                    </label>
-                                </div>
-                            </div>
-                        </div>*@
-                    @*<div class="col-sm-4">
+                <div id="divinput">
+                    <div class="row">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Deactivate Agency?</label>
-                                <div class="select2-purple">
-                                    <select class="form-control select2 select2-purple" id="txtdrpdeact" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                        <option selected="selected" value="0">NO</option>
-                                        <option value="1">YES</option>
-                                    </select>
+                                <label>Agency Code</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.Code" type="text" id="txtcode" class="form-control"
+                                           style="width: 100%; text-transform:uppercase">
+                                    <input id="readid" type="hidden" class="form-control" />
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.Code" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Short Code</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.ShortCode" type="text" id="txtshortcode" class="form-control" placeholder="Short Code">
                                 </div>
                             </div>
                         </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Date Deactivated</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Agency Name</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.Name" type="text" id="txtname" class="form-control" placeholder="Agency Name">
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Address 1</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.Address1" type="text" id="txtaddr1" class="form-control" placeholder="Address 1">
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.Address1" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Address 2</label>
+                                <div class="input-group">
+                                    <input type="text" asp-for="AgencySuperSetup.Address2" id="txtaddr2" class="form-control" placeholder="Address 2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <select class="form-control" asp-for="AgencySuperSetup.Country"
+                                        asp-items="ViewBag.NationalityId" onchange="MyFunctionNationality()" id="nationChange">
+                                    <option selected="selected" value="">--Select--</option>
+                                </select>
+                                <span asp-validation-for="AgencySuperSetup.Country" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>State</label>
+                                <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                        asp-for="AgencySuperSetup.State" id="myState" style="width: 100%;" onchange="MyFunctionState()">
+                                    <option selected="selected" value="">--Select--</option>
+                                </select>
+                                <span asp-validation-for="AgencySuperSetup.State" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>City</label>
+                                <select class="form-control select2 select2-purple" data-dropdown-css-class="select2-purple"
+                                        asp-for="AgencySuperSetup.City" id="myLGA" style="width: 100%;">
+                                    <option selected="selected" value="">--Select--</option>
+                                </select>
+                                <span asp-validation-for="AgencySuperSetup.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Zip Cope</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.ZipCode" type="text" id="txtzip" class="form-control" placeholder="Enter Zip Code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.PhoneNo" type="text" id="txtphone1" class="form-control" placeholder="Enter Phone No.">
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.PhoneNo" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.Email" type="text" id="txtemail" class="form-control">
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Website</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.WebAddress" type="text" id="txtwebsite" class="form-control" placeholder="Website">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Name of Contact Person</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.NameOfCPerson" type="text" id="txtContactname" class="form-control" placeholder="Name of Contact Person">
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.NameOfCPerson" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.CPersonPhone" type="text" id="txtContactphone" class="form-control" placeholder="Phone Number of Contact Person">
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.CPersonPhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>E-mail</label>
+                                <div class="input-group">
+                                    <input asp-for="AgencySuperSetup.CPersonEmail" type="text" id="txtContactemail" class="form-control" placeholder="E-mail">
+                                </div>
+                                <span asp-validation-for="AgencySuperSetup.CPersonEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @*<div class="form-group">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" asp-for="AgencySuperSetup.Deactivate" data-val="true" name="Deactivate" data-val-required="The Fever field is required." id="txtdrpdeact" value="true"> Deactivate Agency?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @*<div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Deactivate Agency?</label>
+                                    <div class="select2-purple">
+                                        <select class="form-control select2 select2-purple" id="txtdrpdeact" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <option selected="selected" value="0">NO</option>
+                                            <option value="1">YES</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputFile">Date Deactivated</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                    </div>
+                                                    <input type="date" id="txtdeactDate" class="form-control" placeholder="Enter Date">
                                                 </div>
-                                                <input type="date" id="txtdeactDate" class="form-control" placeholder="Enter Date">
                                             </div>
-                                        </div>
-                                    </div>*@
+                                        </div>*@
+                    </div>
+
+                    <!-- /.card-body -->
+                    <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="button" id="BtnCancel" class="btn btn-primary button button4">Cancel Records</button>
+                        <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
+                        <button type="button" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                    </div>
                 </div>
-            </div>
-            <!-- /.card-body -->
-            <div id="divadd" class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
-                <button type="submit" id="Btnsave" class="btn btn-primary button button4">Add New Records</button>
-                <button type="submit" id="Btnupdate" class="btn btn-primary button button4">Update Record</button>
+                <div class="row" id="divgrid" style="display:none">
+                    <div class="justify-content-center" style="margin-left:35%; margin-bottom:1%;">
+                        <button type="button" id="BtnNew" class="btn btn-primary button button4">Create New Records</button>
+                    </div>
+
+                    <div style="display:table; margin:0 auto; width:100%; font-size:medium">
+                        <table id="tabId" class="table table-bordered" border="0">
+                            <thead style="background-color:steelblue;">
+                                <tr>
+                                    <th style="width:0.25%; text-align:center">S/N</th>
+                                    <th style="width:10%; text-align:center">Actions</th>
+                                    <th style="width:20%; text-align:center">Code</th>
+                                    <th style="width:40%; text-align:center">Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.AgencySuperSetupList.Count; i++)
+                                {
+                                    var items = Model.AgencySuperSetupList[i];
+                                    <tr>
+                                        <td class="se_no @i" style="width:0.25%; text-align:left">@(i + 1)</td>
+                                        <td style="width:5%;">
+                                            <input type="hidden" class="readid @i" value="@items.Id">
+                                            <a id="myEdit" href="/Setup/SupervisoryAgency" AddreEdit="@i">Edit</a>
+                                        </td>
+                                        <td class="tabcode @i" style="width:20%; text-align:left">@items.Code</td>
+                                        <td class="tabname @i" style="width:60%; text-align:left">@items.Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -233,7 +272,20 @@
 
              $("#Btnsave").show();
              $("#Btnupdate").hide();
-         }
+             document.getElementById('divgrid').style.display = "block";
+             document.getElementById('divinput').style.display = "none";
+            }
+        $('#BtnNew').on('click', function (e) {
+            document.getElementById('divinput').style.display = "block";
+            document.getElementById('divgrid').style.display = "none";
+            e.preventDefault();
+        });
+        $('#BtnCancel').on('click', function (e) {
+                document.getElementById('divgrid').style.display = "block";
+                document.getElementById('divinput').style.display = "none";
+                e.preventDefault();
+                formClear();
+            });
         $('#Btnsave1').on('click', function (e) {
            // alert("i change3"); return false;
              e.preventDefault();
@@ -295,8 +347,7 @@
                  },
              });
          });
-        $('#Btnupdate1').on('click', function (e) {
-            alert("i click");
+        $('#Btnupdate').on('click', function (e) {
             e.preventDefault();
              var readid = document.getElementById('readid').value;
               var txtcode = document.getElementById('txtcode').value;
@@ -343,7 +394,7 @@
             var baseUrl = window.location.origin;
             $.ajax({
                 type: "PUT",
-                url: baseUrl + '/Api/AgencySuperSetups/ ' + readid,
+                url: baseUrl + '/Api/AgencySuperSetups/' + readid,
                 data: JSON.stringify(d),
                 xhrFields: {
                     withCredentials: true
@@ -357,12 +408,72 @@
                     alert(data.responseText);
                 },
                 success: function (data) {
-                   // $('.readid.' + t).text(data["id"]);
+                    alert(" Record Updated Successfully");
+                    $('.readid.' + t).text(data["id"]);
+                        $('.tabcode.' + t).text(data["code"]);
+                        $('.tabname.' + t).text(data["name"]);
+                        formClear();
                     $('#txtcode').prop("readonly", true);
-                    formClear();
+                    document.getElementById('divgrid').style.display = "block";
+                    document.getElementById('divinput').style.display = "none";
+                    location.reload();
                 },
             });
-         });
+        });
+        $("#tabId").on('click', '#myEdit', function () {
+             var editindex = $(this).attr('AddreEdit');
+             var readid = $('.readid.' + editindex).val();
+             document.getElementById('divinput').style.display = "block";
+            document.getElementById('divgrid').style.display = "none";
+            serialNo = $(this).closest('tr').find('.se_no').text();
+             var d = {
+                    "Id": readid
+                };
+                var baseUrl = window.location.origin;
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + '/Api/AgencySuperSetups/' + readid,
+                    data: JSON.stringify(d),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: 'json',
+                    error: function (data) {
+                        alert(data.responseText);
+                    },
+                    failure: function (data) {
+                        alert(data.responseText);
+                    },
+                    success: function (data) {
+                        // populate txtbox
+                        $("#Btnsave").hide();
+                        $("#Btnupdate").show();
+                        $('#readid').val(data["id"]);
+                        $('#txtcode').val(data["code"]);
+                        $('#txtcode').prop("readonly", true);
+                        $('#txtshortcode').val(data["shortCode"]);
+                        $("#txtname").val(data["name"]);
+                        $("#txtaddr1").val(data["address1"]);
+                        $("#txtaddr2").val(data["address2"]);
+                        $('#nationChange').val(data["country"]);
+                        MyFunctionNationality();
+                        $("#myState").val(data["state"]);
+                        MyFunctionState();
+                        $("#myLGA").val(data["city"]);
+                        $("#txtzip").val(data["zipCode"]);
+                        $("#txtphone1").val(data["phoneNo"]);
+                        $("#txtemail").val(data["email"]);
+                        $("#txtwebsite").val(data["webAddress"]);
+                        $("#txtContactname").val(data["nameOfCPerson"]);
+                        $("#txtContactphone").val(data["cPersonPhone"]);
+                        $("#txtContactemail").val(data["cPersonEmail"]);
+                        document.getElementById('divinput').style.display = "block";
+                        document.getElementById('divgrid').style.display = "none";
+                        serialNo = $(this).closest('tr').find('.se_no').text();
+                    },
+                });
+             return false;
+         })
          $("#txtcode" ).on('change', function (e) {
              e.preventDefault();
             // alert("i changee2");
@@ -400,8 +511,20 @@
                         $("#Btnupdate").show();
                         $('#txtcode').val(txtcode);
                         $('#txtcode').prop("readonly", true);
-                        $('#txtshortcode').val(data["id"]);
+                        $('#txtshortcode').val(data["txtshortcode"]);
+                        $("#txtname").val(data["Name"]);
+                        $("#txtaddr1").val(data["Address1"]);
+                        $("#txtaddr2").val(data["Address2"]);
                         $('#nationChange').val(data["country"]);
+                        $("#myState").val(data["State"]);
+                        $("#myLGA").val(data["City"]);
+                        $("#txtzip").val(data["ZipCode"]);
+                        $("#txtphone1").val(data["PhoneNo"]);
+                        $("#txtemail").val(data["Email"]);
+                        $("#txtwebsite").val(data["WebAddress"]);
+                        $("#txtContactname").val(data["NameOfCPerson"]);
+                        $("#txtContactphone").val(data["CPersonPhone"]);
+                        $("#txtContactemail").val(data["CPersonEmail"]);
                     },
                 });
             }
@@ -455,9 +578,9 @@
             success: function (data) {
                 //console.log(data);
                 $('#myState').empty();
-                $('#myState').append('<option value=-1>--Select--</option>');
+                $('#myState').append('<option value=>--Select--</option>');
                 $('#myLGA').empty();
-                $('#myLGA').append('<option value=-1>--Select--</option>');
+                $('#myLGA').append('<option value=>--Select--</option>');
                 var option = '';
                 for (var i = 0; i < data.length; i++) {
                     option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
@@ -465,7 +588,10 @@
                 //alert(option);
                 if (option == "") {
                     $('#myState').empty();
-                    $('#myState').append('<option value=-1>--Select--</option>');
+                    $('#myState').append('<option value=>--Select--</option>');
+                }
+                else {
+                   // $('#myState').val(data["state"]);
                 }
                 $('#myState').append(option);
 
@@ -497,7 +623,7 @@
             success: function (data) {
                 // console.log(data);
                 $('#myLGA').empty();
-                $('#myLGA').append('<option value=-1>--Select--</option>');
+                $('#myLGA').append('<option value=>--Select--</option>');
                 var option = '';
                 for (var i = 0; i < data.length; i++) {
                     option += '<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>';
@@ -505,7 +631,7 @@
                 //alert(option);
                 if (option == "") {
                     $('#myLGA').empty();
-                    $('#myLGA').append('<option value=-1>--Select--</option>');
+                    $('#myLGA').append('<option value=>--Select--</option>');
                 }
 
                 $('#myLGA').append(option);
