@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SiwesData.Setup;
 
 namespace BSSL_SIWES.Web
@@ -17,16 +18,24 @@ namespace BSSL_SIWES.Web
         {
             _context = context;
         }
-
-        public IActionResult OnGet()
-        {
-            ViewData["InstituTypes"] = new SelectList(_context.InstTypeSetup, "Id", "Name");
-            return Page();
-        }
-
         [BindProperty]
         public PolicyTb PolicyTb { get; set; }
+        public List<PolicyTb> PolicyTbList { get; set; }
+        public async Task<IActionResult> OnGetAsync()
+        {
+            ViewData["InstituTypes"] = new SelectList(_context.InstTypeSetup, "Id", "Name");
+            PolicyTbList = await _context.PolicyTb.ToListAsync();
+            if (PolicyTbList == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Page();
+            }
+        }
 
+        
         public async Task<IActionResult> OnPostAsync(int? id, PolicyTb PolicyTb)
         {
             //if (!ModelState.IsValid)
@@ -38,7 +47,7 @@ namespace BSSL_SIWES.Web
             await _context.SaveChangesAsync();
             ModelState.Clear();
             return Page();
-           // return RedirectToPage("./Index");
+            // return RedirectToPage("./Index");
         }
     }
 }
