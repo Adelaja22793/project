@@ -113,7 +113,7 @@
                 <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
                     <button type="button" class="btn btn-primary" id="mySubmitForm">Assign Supervisor</button>
                     <button type="button" style="display:none" id="myChangeForm" class="btn btn-warning">Change Student Supervisor</button>
-                    <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
+                    <a asp-page="./StudentList" asp-route-id="@Model.InstitutionOfficer.InstitutionId" type="button" class="btn btn-warning">View Student List</a>
                 </div>
             </div>
         </form>

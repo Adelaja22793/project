@@ -42,7 +42,7 @@ namespace BSSL_SIWES.Web
         public ScafViewModels ScafViewModels { get; set; }
         public List<Courses> ListOfCourses { get; set; }
         public string NewCourseToApprove { get; set; }
-        public Institution Institution { get; set; }
+        public InstitutionOfficer InstitutionOfficer { get; set; }
         public IList<StudentSetUp> ListOfStudent { get; set; }
         public IEnumerable<string> ImageFiles { get; set; }
 
@@ -60,7 +60,11 @@ namespace BSSL_SIWES.Web
             //var userEmail = await _userManager.GetUserNameAsync(loginUser);
             var userEmail = _userManager.GetUserName(User);
 
-            InstitutionId = await _context.Institution.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
+            InstitutionId = await _context.InstitutionOfficers.Include(x =>x.Institution)
+                .Where(x => x.Email == userEmail && x.InstitutionId == x.Institution.Id).Select(x => x.InstitutionId).FirstOrDefaultAsync();
+
+            InstitutionOfficer = await _context.InstitutionOfficers.Include(x => x.Institution)
+                .Where(x => x.Email == userEmail && x.InstitutionId == x.Institution.Id && x.OfficerType == "Coordinator").FirstOrDefaultAsync();
 
             if (InstitutionId == null)
             {
