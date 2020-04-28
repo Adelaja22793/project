@@ -352,7 +352,7 @@
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
                                 <input type="email" id="orgEmail" class="form-control" readonly="readonly">
-                                <input type="hidden" id="InstitutionId" asp-for="Institution.Id" />
+                                <input type="hidden" id="InstitutionId" asp-for="InstitutionOfficer.InstitutionId" />
                             </div>
                         </div>
                     </div>
@@ -395,9 +395,9 @@
             <!-- /.card-body -->
 
             <div class="justify-content-center" style="margin-left:35%; margin-bottom:3%;">
-                <button type="submit" asp-route-id="@Model.Institution.Id" class="btn btn-primary" id="mySubmitForm">Submit Student Record</button>
+                <button type="submit" asp-route-id="@Model.InstitutionOfficer.InstitutionId" class="btn btn-primary" id="mySubmitForm">Submit Student Record</button>
                 <button type="button" id="myUpdateForm" style="display:none" class="btn btn-primary">Update Student Record</button>
-                <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
+                <a asp-page="./StudentList" asp-route-id="@Model.InstitutionOfficer.InstitutionId" type="button" class="btn btn-warning">View Student List</a>
             </div>
         </form>
         <form role="form" method="post" enctype="multipart/form-data" id="excel" style="display:none">
@@ -419,8 +419,8 @@
                     </div>
                 </div>
                 <div class="justify-content-center" style="margin-left:30%; margin-bottom:3%;">
-                    <button type="button" class="btn btn-primary" asp-route-id="@Model.Institution.Id" id="mySubmitForm">Upload File</button>
-                    <a asp-page="./StudentList" asp-route-id="@Model.Institution.Id" type="button" class="btn btn-warning">View Student List</a>
+                    <button type="button" class="btn btn-primary" asp-route-id="@Model.InstitutionOfficer.InstitutionId" id="mySubmitForm">Upload File</button>
+                    <a asp-page="./StudentList" asp-route-id="@Model.InstitutionOfficer.InstitutionId" type="button" class="btn btn-warning">View Student List</a>
                 </div>
             </div>
         </form>

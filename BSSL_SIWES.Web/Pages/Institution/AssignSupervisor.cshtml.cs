@@ -33,7 +33,7 @@ namespace BSSL_SIWES.Web.Pages.Institution
             _logger = logger;
         }
         public IList<InstitutionOfficer> InstitutionOfficers { get; set; }
-        public SiwesData.Setup.Institution Institution { get; set; }
+        public SiwesData.Setup.InstitutionOfficer InstitutionOfficer { get; set; }
         public string Message { get; set; }
         public IList<StudentSetUp> ListOfStudent { get; set; }
         public async Task<IActionResult> OnGetAsync(int? InstitutionId)
@@ -43,8 +43,12 @@ namespace BSSL_SIWES.Web.Pages.Institution
             //var userEmail = await _userManager.GetUserNameAsync(loginUser);
             var userEmail = _userManager.GetUserName(User);
 
-            InstitutionId = await _context.Institution.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
+            //InstitutionId = await _context.Institution.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
+            InstitutionId = await _context.InstitutionOfficers.Include(x => x.Institution)
+               .Where(x => x.Email == userEmail && x.InstitutionId == x.Institution.Id).Select(x => x.InstitutionId).FirstOrDefaultAsync();
 
+            InstitutionOfficer = await _context.InstitutionOfficers.Include(x => x.Institution)
+                .Where(x => x.Email == userEmail && x.InstitutionId == x.Institution.Id).FirstOrDefaultAsync();
             if (InstitutionId == null)
             {
                 return NotFound();
@@ -57,7 +61,7 @@ namespace BSSL_SIWES.Web.Pages.Institution
 
             InstitutionOfficers = await _context.InstitutionOfficers.Include(x => x.Institution)
                 .Where(x => x.InstitutionId == x.Institution.Id && x.InstitutionId == InstitutionId
-                 && x.Deactivate == false).ToListAsync();
+                 && x.OfficerType == "Supervisor" && x.Deactivate == false).ToListAsync();
 
             Message = "ALL STUDENT HAVE BEEN ASSIGNED SUPERVISOR OR THERE ARE NO STUDENT";
             return Page();

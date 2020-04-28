@@ -40,6 +40,7 @@ namespace BSSL_SIWES.Web
             var userEmail = _userManager.GetUserName(User);
 
             InstitutionOfficerId = await _context.InstitutionOfficers.Where(x => x.Email == userEmail).Select(x => x.Id).FirstOrDefaultAsync();
+            InstitutionOfficer = await _context.InstitutionOfficers.Where(x => x.Email == userEmail).FirstOrDefaultAsync();
             if (InstitutionOfficerId < 0)
             {
                 return RedirectToPage("./InstitusionSupervisor");

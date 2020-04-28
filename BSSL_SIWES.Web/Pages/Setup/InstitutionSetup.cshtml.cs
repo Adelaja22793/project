@@ -33,7 +33,7 @@ namespace BSSL_SIWES.Web
             ViewData["Categories"] = new SelectList(_context.InstCatSetup, "Id", "Name");
             ViewData["Types"] = new SelectList(_context.InstTypeSetup, "Id", "Name");
             ViewData["SuperAgencies"] = new SelectList(_context.SupervisoryAgencies, "Id", "Name");
-            ViewData["AreaOffices"] = new SelectList(_context.AreaOffices, "Id", "Name");
+            ViewData["AreaOffices"] = new SelectList(_context.AreaOffices, "Id", "Description");
             //ViewData["AffililateInst"] = new SelectList(_context.Affililate, "Id", "Name");
             ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
             InstitutionList = await _context.Institution.ToListAsync();
