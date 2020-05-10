@@ -17,18 +17,15 @@ namespace SiwesData
         public DbSet<Setup.InstLevelStudy> InstLevelStudy { get; set; }
         public DbSet<Setup.InstTypeSetup> InstTypeSetup { get; set; }
         public DbSet<Setup.PolicyTb> PolicyTb { get; set; }
-
         public DbSet<Setup.Nationality> Nationalities { get; set; }
         public DbSet<Setup.State> States { get; set; }
         public DbSet<Setup.LGA> LGAs { get; set; }
-
         public DbSet<Menu.Menu> Menu { get; set; }
         public DbSet<Menu.MenuAccess> MenuAccess { get; set; }
         public DbSet<Menu.SubMenu> SubMenu { get; set; }
         public DbSet<Setup.AreaOffice> AreaOffices { get; set; }
         public DbSet<Setup.BusinessLine> businessLine { get; set; }
         public DbSet<Employer.EmployerSetupMain> EmployerSetupMain { get; set; }
-
         public DbSet<Students.Scaf> Scafs { get; set; }
         public DbSet<Students.StudentSetUp> StudentSetUps { get; set; }
         public DbSet<Students.DailyActivities> DailyActivities { get; set; }
